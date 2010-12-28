@@ -3,7 +3,7 @@ package ru.gelin.android.weather;
 /**
  *  Contains current, high and low temperature values.
  */
-public interface WeatherTemp {
+public interface Temperature {
 
     /**
      *  Current temperature.
@@ -19,5 +19,10 @@ public interface WeatherTemp {
      *  Low forecast temperature.
      */
     int getLow();
+    
+    /**
+     *  Units of this weather.
+     */
+    UnitSystem getUnit();
     
 }

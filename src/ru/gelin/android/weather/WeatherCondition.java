@@ -20,12 +20,12 @@ public interface WeatherCondition {
     /**
      *  Returns the temperature in default units.
      */
-    WeatherTemp getTemp();
+    Temperature getTemperature();
     
     /**
      *  Returns the temperature in specified units.
      */
-    WeatherTemp getTemp(UnitSystem units);
+    Temperature getTemperature(UnitSystem units);
     
     /**
      *  Returns humidity as a human readable text.

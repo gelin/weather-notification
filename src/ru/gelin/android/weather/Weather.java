@@ -17,12 +17,12 @@ public interface Weather {
     /**
      *  Returns the current weather timestamp.
      */
-    Date getCurrentTime();
+    Date getTime();
     
     /**
      *  Returns default unit system (SI or US).
      */
-    UnitSystem getDefaultUnitSystem();
+    UnitSystem getUnitSystem();
     
     /**
      *  Returns weather conditions starting from the current weather 
