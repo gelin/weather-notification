@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Weather notification</string>
+    <string name="notification">Notification</string>
+    <string name="enable_notification">Enable notification</string>
+    <string name="refresh_interval">Refresh interval</string>
+    <string name="location">Location</string>
+    <string name="auto_location">Auto detect</string>
+    <string name="auto_location_summary_on">Automatically detect the current location</string>
+    <string name="auto_location_summary_off">Define the weather location manually</string>
+    <string name="manual_location">Weather location</string>
+    <string name="unit_system">Temperature units</string>
 </resources>

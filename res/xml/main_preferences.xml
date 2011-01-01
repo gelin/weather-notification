@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/notification">
+    
+        <CheckBoxPreference android:key="enable_notification"
+            android:value="true"
+            android:title="@string/enable_notification"
+            android:enabled="false"/>
+    
+        <ru.gelin.android.preference.SummaryListPreference 
+                android:key="refresh_interval"
+                android:title="@string/refresh_interval"
+                android:entries="@array/refresh_interval_entries"
+                android:entryValues="@array/refresh_interval_values"
+                android:defaultValue="1H"/>
+    
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/location">
+    
+        <CheckBoxPreference android:key="auto_location"
+            android:value="false"
+            android:title="@string/auto_location"
+            android:summaryOn="@string/auto_location_summary_on"
+            android:summaryOff="@string/auto_location_summary_off"
+            android:enabled="false"/>
+            
+        <ru.gelin.android.preference.SummaryTextPreference android:key="location"
+            android:title="@string/manual_location"/>
+            
+        <ru.gelin.android.preference.SummaryListPreference 
+                android:key="unit_system"
+                android:title="@string/unit_system"
+                android:entries="@array/unit_system_entries"
+                android:entryValues="@array/unit_system_values"
+                android:defaultValue="SI"/>
+    
+    </PreferenceCategory>
+
+</PreferenceScreen>
