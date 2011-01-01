@@ -51,6 +51,16 @@ public class SimpleTemperatureTest {
     }
     
     @Test
+    public void testSetCurrent2() {
+        SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
+        temp.setLow(25, UnitSystem.SI);
+        temp.setHigh(28, UnitSystem.SI);
+        assertEquals(25, temp.getLow());
+        assertEquals(28, temp.getHigh());
+        assertEquals(27, temp.getCurrent());
+    }
+    
+    @Test
     public void testSetAll() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(25, UnitSystem.SI);

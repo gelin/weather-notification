@@ -57,7 +57,7 @@ public class SimpleTemperature implements Temperature {
     @Override
     public int getCurrent() {
         if (this.current == UNKNOWN) {
-            return Math.round((getLow() + getHigh()) / 2); 
+            return Math.round((getLow() + getHigh()) / 2f); 
         }
         return this.current;
     }

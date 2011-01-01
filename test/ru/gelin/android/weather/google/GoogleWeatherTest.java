@@ -27,6 +27,8 @@ public class GoogleWeatherTest {
         assertEquals(calendar.getTime(), weather.getTime());
         assertEquals(UnitSystem.US, weather.getUnitSystem());
         
+        assertEquals(4, weather.getConditions().size());
+        
         WeatherCondition condition0 = weather.getConditions().get(0);
         assertEquals("Clear", condition0.getConditionText());
         Temperature temp0 = condition0.getTemperature();
@@ -39,7 +41,7 @@ public class GoogleWeatherTest {
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Snow Showers", condition1.getConditionText());
         Temperature temp1 = condition1.getTemperature();
-        assertEquals(3, temp1.getCurrent());
+        assertEquals(7, temp1.getCurrent());
         assertEquals(-7, temp1.getLow());
         assertEquals(20, temp1.getHigh());
         
