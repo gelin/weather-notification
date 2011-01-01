@@ -13,7 +13,7 @@
                 android:title="@string/refresh_interval"
                 android:entries="@array/refresh_interval_entries"
                 android:entryValues="@array/refresh_interval_values"
-                android:defaultValue="1H"/>
+                android:defaultValue="REFRESH_1H"/>
     
     </PreferenceCategory>
     
