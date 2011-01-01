@@ -135,7 +135,7 @@ public class GoogleWeather implements Weather {
             } else if ("temp_c".equals(qName)) {
                 if (UnitSystem.SI.equals(GoogleWeather.this.unit)) {
                     try {
-                        temperature.setCurrent(Integer.parseInt(data), UnitSystem.US);
+                        temperature.setCurrent(Integer.parseInt(data), UnitSystem.SI);
                     } catch (NumberFormatException e) {
                         throw new SAXException("invalid 'temp_c' format: " + data, e);
                     }
