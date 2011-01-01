@@ -31,7 +31,7 @@ import ru.gelin.android.weather.WeatherException;
 public class GoogleWeather implements Weather {
 
     /** Format for times in the XML */
-    static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     
     Location location;
     Date time;
