@@ -22,6 +22,7 @@ public class GoogleWeatherTest {
         Weather weather = new GoogleWeather(xml);
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         assertEquals(calendar.getTime(), weather.getTime());
         assertEquals(UnitSystem.US, weather.getUnitSystem());

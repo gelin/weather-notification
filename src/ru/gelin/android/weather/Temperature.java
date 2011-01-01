@@ -5,6 +5,9 @@ package ru.gelin.android.weather;
  */
 public interface Temperature {
 
+    /** Unknown temperature value */
+    static int UNKNOWN = Integer.MIN_VALUE;
+    
     /**
      *  Current temperature.
      */
@@ -23,6 +26,6 @@ public interface Temperature {
     /**
      *  Units of this weather.
      */
-    UnitSystem getUnit();
+    UnitSystem getUnitSystem();
     
 }
