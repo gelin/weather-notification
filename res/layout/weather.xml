@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <LinearLayout android:id="@+id/current_condition" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <TextView android:id="@+id/update_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceSmall"
+                android:textColor="?android:attr/textColorTertiary"
+                android:text="updated"/>
+                
+            <TextView android:id="@+id/location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceLarge"
+                android:text="Here"/>
+            
+            <TextView android:id="@+id/condition"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceMedium"
+                android:text="Weather condition"/>
+                
+            <TextView android:id="@+id/humidity"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Humidity"/>
+                
+            <TextView android:id="@+id/wind"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Wind"/>
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            
+            <TextView android:id="@+id/current_temp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/textAppearanceLarge"
+                android:text="X&#x00B0;"/>
+                
+            <TextView android:id="@+id/high_low_temp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="X&#x00B0; / X&#x00B0;"/>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    
+</LinearLayout>
