@@ -1,13 +1,11 @@
 package ru.gelin.android.weather.notification;
 
-import java.util.Date;
-
-import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  *  Utility to layout weather values.
