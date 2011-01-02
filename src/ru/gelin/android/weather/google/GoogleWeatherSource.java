@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -43,7 +44,9 @@ public class GoogleWeatherSource implements WeatherSource {
             throw new WeatherException("invalid URL: " + fullUrl, mue);
         }
         try {
-            return new GoogleWeather(url.openStream());
+            URLConnection connection = url.openConnection();
+            connection.addRequestProperty("Accept-Charset", "UTF-8");
+            return new GoogleWeather(connection.getInputStream());
         } catch (IOException ie) {
             throw new WeatherException("cannot read URL: " + fullUrl, ie);
         }
