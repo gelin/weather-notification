@@ -36,7 +36,7 @@ public class UpdateService extends Service {
         WeatherSource source = new GoogleWeatherSource();
         try {
             Weather weather = source.query(location);
-            Log.i(TAG, "received weather: " + weather.getTime() + " " + weather.getLocation().getText());
+            Log.i(TAG, "received weather: " + weather.getTime());
             storage.save(weather);
         } catch (Exception e) {
             Log.w(TAG, "failed to update weather", e);
