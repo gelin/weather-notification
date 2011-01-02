@@ -19,7 +19,7 @@
     <string name="unit_system">Temperature units</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
-    <string name="update_time_format">%tA &lt;%tY-&lt;%tm-&lt;%td &lt;%tH:&lt;%tM</string>
+    <string name="update_time_format">%tA %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
     <string name="current_temp_format">%d&#x00B0;</string>
     <string name="high_low_temp_format">%d&#x00B0; / %d&#x00B0;</string>
 </resources>

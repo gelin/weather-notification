@@ -1,5 +1,7 @@
 package ru.gelin.android.weather.notification;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +34,9 @@ public class WeatherLayout {
         TextView location = (TextView)view.findViewById(R.id.location);
         setText(location, weather.getLocation().getText());
         
+        if (weather.getConditions().size() <= 0) {
+            return;
+        }
         WeatherCondition currentCondition = weather.getConditions().get(0);
         TextView condition = (TextView)view.findViewById(R.id.condition);
         setText(condition, currentCondition.getConditionText());
