@@ -4,16 +4,20 @@
     <PreferenceCategory android:title="@string/notification">
     
         <CheckBoxPreference android:key="enable_notification"
-            android:value="true"
+            android:value="false"
             android:title="@string/enable_notification"
+            android:disableDependentsState="false"
             android:enabled="false"/>
+            <!-- android:value="true" -->
     
         <ru.gelin.android.preference.SummaryListPreference 
-                android:key="refresh_interval"
-                android:title="@string/refresh_interval"
-                android:entries="@array/refresh_interval_entries"
-                android:entryValues="@array/refresh_interval_values"
-                android:defaultValue="REFRESH_1H"/>
+            android:key="refresh_interval"
+            android:title="@string/refresh_interval"
+            android:entries="@array/refresh_interval_entries"
+            android:entryValues="@array/refresh_interval_values"
+            android:defaultValue="REFRESH_1H"
+            android:dependency="enable_notification"
+            android:enabled="false"/>
     
     </PreferenceCategory>
     
@@ -24,10 +28,13 @@
             android:title="@string/auto_location"
             android:summaryOn="@string/auto_location_summary_on"
             android:summaryOff="@string/auto_location_summary_off"
+            android:disableDependentsState="true"
             android:enabled="false"/>
+            <!-- android:value="true" -->
             
         <ru.gelin.android.preference.SummaryTextPreference android:key="location"
             android:title="@string/manual_location"/>
+            <!-- android:dependency="auto_location" -->
             
         <ru.gelin.android.preference.SummaryListPreference 
                 android:key="unit_system"

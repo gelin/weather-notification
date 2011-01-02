@@ -5,7 +5,9 @@
         <item>@string/refresh_1h</item>
         <item>@string/refresh_2h</item>
         <item>@string/refresh_3h</item>
+        <!--
         <item>@string/refresh_4h</item>
+        -->
         <item>@string/refresh_6h</item>
         <item>@string/refresh_12h</item>
         <item>@string/refresh_1d</item>
@@ -14,7 +16,9 @@
         <item>REFRESH_1H</item>
         <item>REFRESH_2H</item>
         <item>REFRESH_3H</item>
+        <!--
         <item>REFRESH_4H</item>
+        -->
         <item>REFRESH_6H</item>
         <item>REFRESH_12H</item>
         <item>REFRESH_1D</item>

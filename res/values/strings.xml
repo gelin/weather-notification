@@ -4,10 +4,19 @@
     <string name="notification">Notification</string>
     <string name="enable_notification">Enable notification</string>
     <string name="refresh_interval">Refresh interval</string>
+    <string name="refresh_1h">Every hour</string>
+    <string name="refresh_2h">Every two hours</string>
+    <string name="refresh_3h">Every three hours</string>
+    <string name="refresh_4h">Every four hours</string>
+    <string name="refresh_6h">Every six hours</string>
+    <string name="refresh_12h">Every twelve hours</string>
+    <string name="refresh_1d">Every day</string>
     <string name="location">Location</string>
     <string name="auto_location">Auto detect</string>
     <string name="auto_location_summary_on">Automatically detect the current location</string>
     <string name="auto_location_summary_off">Define the weather location manually</string>
     <string name="manual_location">Weather location</string>
     <string name="unit_system">Temperature units</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
 </resources>
