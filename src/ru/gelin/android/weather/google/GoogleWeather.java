@@ -1,8 +1,7 @@
 package ru.gelin.android.weather.google;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,16 +34,16 @@ public class GoogleWeather implements Weather {
     /** Format for times in the XML */
     static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     
-    Location location;
-    Date time;
-    UnitSystem unit;
+    Location location = new SimpleLocation("");
+    Date time = new Date(0);
+    UnitSystem unit = UnitSystem.SI;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     
     /**
      *  Creates the weather from the input stream with XML
      *  received from API.
      */
-    public GoogleWeather(InputStream xml) throws WeatherException {
+    public GoogleWeather(Reader xml) throws WeatherException {
         try {
             parse(xml);
         } catch (Exception e) {
@@ -72,7 +71,7 @@ public class GoogleWeather implements Weather {
         return this.conditions;
     }
     
-    void parse(InputStream xml) 
+    void parse(Reader xml) 
             throws SAXException, ParserConfigurationException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(false);   //WTF??? Harmony's Expat is so...
@@ -80,8 +79,7 @@ public class GoogleWeather implements Weather {
         factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
         SAXParser parser = factory.newSAXParser();
         //explicitly decoding from UTF-8 because Google misses encoding in XML preamble
-        parser.parse(new InputSource(new InputStreamReader(xml, "UTF-8")),
-                new ApiXmlHandler());
+        parser.parse(new InputSource(xml), new ApiXmlHandler());
     }
     
     static enum HandlerState {
