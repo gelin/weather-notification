@@ -3,11 +3,14 @@ package ru.gelin.android.weather.notification;
 import ru.gelin.android.weather.Weather;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class WeatherPreference extends Preference {
+public class WeatherPreference extends Preference implements OnSharedPreferenceChangeListener {
 
     public WeatherPreference(Context context) {
         super(context);
@@ -21,7 +24,7 @@ public class WeatherPreference extends Preference {
         super(context, attrs, defStyle);
         setLayoutResource(R.layout.weather);
     }
-    
+
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
@@ -37,6 +40,22 @@ public class WeatherPreference extends Preference {
         super.onClick();
         Context context = getContext();
         context.startService(new Intent(context, UpdateService.class));
+    }
+    
+    @Override
+    protected void onAttachedToHierarchy(PreferenceManager preferenceManager) {
+        super.onAttachedToHierarchy(preferenceManager);
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+    
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+            String key) {
+        if (!getKey().equals(key)) {
+            return;
+        }
+        callChangeListener(sharedPreferences.getAll().get(key));
+        notifyChanged();
     }
 
 }
