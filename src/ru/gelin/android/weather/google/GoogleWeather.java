@@ -74,9 +74,9 @@ public class GoogleWeather implements Weather {
     void parse(Reader xml) 
             throws SAXException, ParserConfigurationException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setNamespaceAware(false);   //WTF??? Harmony's Expat is so...
-        factory.setFeature("http://xml.org/sax/features/namespaces", false);
-        factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+        factory.setNamespaceAware(true);   //WTF??? Harmony's Expat is so...
+        //factory.setFeature("http://xml.org/sax/features/namespaces", false);
+        //factory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
         SAXParser parser = factory.newSAXParser();
         //explicitly decoding from UTF-8 because Google misses encoding in XML preamble
         parser.parse(new InputSource(xml), new ApiXmlHandler());
@@ -96,20 +96,20 @@ public class GoogleWeather implements Weather {
         public void startElement(String uri, String localName,
                 String qName, Attributes attributes) throws SAXException {
             String data = attributes.getValue("data");
-            if ("city".equals(qName)) {
+            if ("city".equals(localName)) {
                 GoogleWeather.this.location = new SimpleLocation(data);
-            } else if ("current_date_time".equals(qName)) {
+            } else if ("current_date_time".equals(localName)) {
                 try {
                     GoogleWeather.this.time = TIME_FORMAT.parse(data);
                 } catch (ParseException e) {
                     throw new SAXException("invalid 'current_date_time' format: " + data, e);
                 }
-            } else if ("unit_system".equals(qName)) {
+            } else if ("unit_system".equals(localName)) {
                 GoogleWeather.this.unit = UnitSystem.valueOf(data);
-            } else if ("current_conditions".equals(qName)) {
+            } else if ("current_conditions".equals(localName)) {
                 state = HandlerState.CURRENT_CONDITIONS;
                 addCondition();
-            } else if ("forecast_conditions".equals(qName)) {
+            } else if ("forecast_conditions".equals(localName)) {
                 switch (state) {
                 case CURRENT_CONDITIONS:
                     state = HandlerState.FIRST_FORECAST;
@@ -121,7 +121,7 @@ public class GoogleWeather implements Weather {
                 default:
                     addCondition();
                 }
-            } else if ("condition".equals(qName)) {
+            } else if ("condition".equals(localName)) {
                 switch (state) {
                 case FIRST_FORECAST:
                     //skipping update of condition, because the current conditions are already set
@@ -129,7 +129,7 @@ public class GoogleWeather implements Weather {
                 default:
                     condition.setConditionText(data);
                 }
-            } else if ("temp_f".equalsIgnoreCase(qName)) {
+            } else if ("temp_f".equalsIgnoreCase(localName)) {
                 if (UnitSystem.US.equals(GoogleWeather.this.unit)) {
                     try {
                         temperature.setCurrent(Integer.parseInt(data), UnitSystem.US);
@@ -137,7 +137,7 @@ public class GoogleWeather implements Weather {
                         throw new SAXException("invalid 'temp_f' format: " + data, e);
                     }
                 }
-            } else if ("temp_c".equals(qName)) {
+            } else if ("temp_c".equals(localName)) {
                 if (UnitSystem.SI.equals(GoogleWeather.this.unit)) {
                     try {
                         temperature.setCurrent(Integer.parseInt(data), UnitSystem.SI);
@@ -145,17 +145,17 @@ public class GoogleWeather implements Weather {
                         throw new SAXException("invalid 'temp_c' format: " + data, e);
                     }
                 }
-            } else if ("humidity".equals(qName)) {
+            } else if ("humidity".equals(localName)) {
                 condition.setHumidityText(data);
-            } else if ("wind_condition".equals(qName)) {
+            } else if ("wind_condition".equals(localName)) {
                 condition.setWindText(data);
-            } else if ("low".equals(qName)) {
+            } else if ("low".equals(localName)) {
                 try {
                     temperature.setLow(Integer.parseInt(data), GoogleWeather.this.unit);
                 } catch (NumberFormatException e) {
                     throw new SAXException("invalid 'low' format: " + data, e);
                 }
-            } else if ("high".equals(qName)) {
+            } else if ("high".equals(localName)) {
                 try {
                     temperature.setHigh(Integer.parseInt(data), GoogleWeather.this.unit);
                 } catch (NumberFormatException e) {
@@ -163,6 +163,12 @@ public class GoogleWeather implements Weather {
                 }
             }
         }
+        
+        //@Override
+        //public void endElement(String uri, String localName, String qName)
+        //        throws SAXException {
+        //    boolean dummy = true;
+        //}
         
         void addCondition() {
             condition = new SimpleWeatherCondition();
