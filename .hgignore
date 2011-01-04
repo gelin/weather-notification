@@ -1,2 +1,6 @@
 glob:bin/*
 glob:gen/*
+glob:.settings/*
+glob:local.properties
+glob:build.properties
+glob:upload.credentials.properties

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="weather-notification-android-upload" default="all">
+
+    <property file="local.properties"/>
+    <property file="upload.credentials.properties"/>
+    <xmlproperty file="AndroidManifest.xml"/>
+
+    <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload"
+	classpath="${sdk.dir}/ant-googlecode-0.0.2.jar"/>
+
+    <target name="all" depends="debug, release"/>
+
+    <target name="debug" description="Upload weather-notification-android-debug.apk">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="bin/weather-notification-android-debug.apk" 
+    	    targetfilename="weather-notification-android-debug.apk"
+    	    summary="Latest build (${manifest(android:versionName)}, signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="bin/weather-notification-android-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="release" description="Upload weather-notification-android.apk">
+
+	<copy file="bin/weather-notification-android-release.apk"
+	    tofile="bin/weather-notification-android.apk"/>
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="bin/weather-notification-android.apk" 
+    	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
+    	    summary="Latest build (${manifest(android:versionName)})"
+    	    labels="Featured, Type-Package, OpSys-Android_1.5" />
+
+	<copy file="bin/weather-notification-android.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+
+</project>
