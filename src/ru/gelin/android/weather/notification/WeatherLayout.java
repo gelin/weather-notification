@@ -1,9 +1,14 @@
 package ru.gelin.android.weather.notification;
 
+import java.util.Date;
+
 import ru.gelin.android.weather.Temperature;
+import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +16,9 @@ import android.widget.TextView;
  *  Utility to layout weather values.
  */
 public class WeatherLayout {
+    
+    /** Unit system preference key */
+    static final String UNIT_SYSTEM = "unit_system";
     
     /** Current context */
     Context context;
@@ -27,8 +35,13 @@ public class WeatherLayout {
      */
     public void bind(Weather weather, View view) {
         TextView time = (TextView)view.findViewById(R.id.update_time);
-        setText(time, this.context.getString(
-                R.string.update_time_format, weather.getTime()));
+        Date timeValue = weather.getTime();
+        if (timeValue.getTime() == 0) {
+            setText(time, "");
+        } else {
+            setText(time, this.context.getString(
+                R.string.update_time_format, timeValue));
+        }
         TextView location = (TextView)view.findViewById(R.id.location);
         setText(location, weather.getLocation().getText());
         
@@ -43,13 +56,17 @@ public class WeatherLayout {
         TextView wind = (TextView)view.findViewById(R.id.wind);
         setText(wind, currentCondition.getWindText());
         
-        Temperature temp = currentCondition.getTemperature();
+        SharedPreferences preferences = 
+                PreferenceManager.getDefaultSharedPreferences(this.context);
+        UnitSystem unit = UnitSystem.valueOf(preferences.getString(UNIT_SYSTEM, "SI"));
+        
+        Temperature temp = currentCondition.getTemperature(unit);
         TextView currentTemp = (TextView)view.findViewById(R.id.current_temp);
-        setText(currentTemp, this.context.getString(
-                R.string.current_temp_format, temp.getCurrent()));
-        TextView highLowTemp = (TextView)view.findViewById(R.id.high_low_temp);
-        setText(highLowTemp, this.context.getString(
-                R.string.high_low_temp_format, temp.getLow(), temp.getHigh()));
+        setText(currentTemp, formatTemp(temp.getCurrent()));
+        TextView highTemp = (TextView)view.findViewById(R.id.high_temp);
+        setText(highTemp, formatTemp(temp.getHigh()));
+        TextView lowTemp = (TextView)view.findViewById(R.id.low_temp);
+        setText(lowTemp, formatTemp(temp.getLow()));
     }
     
     void setText(TextView view, String text) {
@@ -61,6 +78,19 @@ public class WeatherLayout {
             return;
         }
         view.setText(text);
+    }
+    
+    String formatTemp(int temp) {
+        if (temp == Temperature.UNKNOWN) {
+            return "";
+        }
+        if (temp > 0) {
+            return "+" + String.valueOf(temp) + "\u00B0";
+        }
+        if (temp < 0) {
+            return String.valueOf(temp) + "\u00B0";
+        }
+        return "0\u00B0";
     }
 
 }

@@ -62,7 +62,7 @@ public class WeatherStorage {
      */
     public void save(Weather weather) {
         Editor editor = preferences.edit();
-        editor.putLong(WEATHER, weather.getTime().getTime());   //"weather" is the same as "weather_time"
+        editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
