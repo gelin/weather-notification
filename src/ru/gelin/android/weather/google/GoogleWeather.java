@@ -71,6 +71,11 @@ public class GoogleWeather implements Weather {
         return this.conditions;
     }
     
+    @Override
+    public boolean isEmpty() {
+        return this.conditions.isEmpty();
+    }
+    
     void parse(Reader xml) 
             throws SAXException, ParserConfigurationException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();

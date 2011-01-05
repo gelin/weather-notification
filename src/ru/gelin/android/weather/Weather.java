@@ -29,5 +29,10 @@ public interface Weather {
      *  and following some forecasts.
      */
     List<WeatherCondition> getConditions();
+    
+    /**
+     *  Returns true if this weather doesn't contains any actual values.
+     */
+    boolean isEmpty();
 
 }

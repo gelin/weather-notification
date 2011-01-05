@@ -64,5 +64,10 @@ public class SimpleWeather implements Weather {
     public List<WeatherCondition> getConditions() {
         return this.conditions;
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return time == null || time.getTime() == 0;
+    }
 
 }

@@ -34,6 +34,15 @@ public class WeatherLayout {
      *  Lays out the weather values on specified view.
      */
     public void bind(Weather weather, View view) {
+        if (weather.isEmpty()) {
+            emptyViews(view);
+        } else {
+            bindViews(weather, view);
+        }
+
+    }
+    
+    void bindViews(Weather weather, View view) {
         TextView time = (TextView)view.findViewById(R.id.update_time);
         Date timeValue = weather.getTime();
         if (timeValue.getTime() == 0) {
@@ -61,6 +70,8 @@ public class WeatherLayout {
         UnitSystem unit = UnitSystem.valueOf(preferences.getString(UNIT_SYSTEM, "SI"));
         
         Temperature temp = currentCondition.getTemperature(unit);
+        View tempSection = view.findViewById(R.id.temp);
+        tempSection.setVisibility(View.VISIBLE);
         TextView currentTemp = (TextView)view.findViewById(R.id.current_temp);
         setText(currentTemp, formatTemp(temp.getCurrent()));
         TextView highTemp = (TextView)view.findViewById(R.id.high_temp);
@@ -91,6 +102,22 @@ public class WeatherLayout {
             return String.valueOf(temp) + "\u00B0";
         }
         return "0\u00B0";
+    }
+    
+    void emptyViews(View view) {
+        TextView time = (TextView)view.findViewById(R.id.update_time);
+        time.setText("");
+        TextView location = (TextView)view.findViewById(R.id.location);
+        location.setText("");
+        TextView condition = (TextView)view.findViewById(R.id.condition);
+        condition.setText(R.string.unknown_weather);
+        TextView humidity = (TextView)view.findViewById(R.id.humidity);
+        humidity.setText("");
+        TextView wind = (TextView)view.findViewById(R.id.wind);
+        wind.setText("");
+        
+        View tempSection = view.findViewById(R.id.temp);
+        tempSection.setVisibility(View.INVISIBLE);
     }
 
 }

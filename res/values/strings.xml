@@ -20,4 +20,5 @@
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="update_time_format">%tA, %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
+    <string name="unknown_weather">Weather is unknown</string>
 </resources>
