@@ -10,7 +10,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,15 +22,36 @@ import android.widget.Toast;
  *  Just start it. The new weather values will be wrote to SharedPreferences
  *  (use {@link WeatherStorage} to extract them).
  */
-public class UpdateService extends Service {
+public class UpdateService extends Service implements Runnable {
 
     /** Manual location preferences key */
     static final String LOCATION = "location";
     /** Verbose extra name for the service start intent. */
     public static String EXTRA_VERBOSE = "verbose";
+    /** Success update message */
+    static final int SUCCESS = 0;
+    /** Failure update message */
+    static final int FAILURE = 1;
+    
+    
+    /**
+     *  Lock used when maintaining update thread.
+     */
+    private static Object staticLock = new Object();
+    /**
+     *  Flag if there is an update thread already running. We only launch a new
+     *  thread if one isn't already running.
+     */
+    static boolean threadRunning = false;
     
     /** Verbose flag */
     boolean verbose = false;
+    /** Queried location */
+    Location location;
+    /** Updated weather */
+    Weather weather;
+    /** Weather update error */
+    Exception updateError;
     
     /**
      *  Starts the service. Convenience method.
@@ -51,34 +74,83 @@ public class UpdateService extends Service {
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
         
-        this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
-        
+        synchronized(this) {
+            this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
+        }
+
+        synchronized(staticLock) {
+            if (threadRunning) {
+                return;     // only start processing thread if not already running
+            }
+            //TODO: insert conditions to skip update
+            if (!threadRunning) {
+                threadRunning = true;
+                new Thread(this).start();
+            }
+        }
+    }
+    
+    @Override
+    public void run() {
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        Location location = new SimpleLocation(preferences.getString(LOCATION, ""));
-     
-        WeatherStorage storage = new WeatherStorage(this);
-        
+            PreferenceManager.getDefaultSharedPreferences(this);
+        synchronized(this) {
+            this.location = new SimpleLocation(preferences.getString(LOCATION, ""));
+        }
+ 
         WeatherSource source = new GoogleWeatherSource();
         try {
             Weather weather = source.query(location);
-            Log.i(TAG, "received weather: " + weather.getTime());
-            if (verbose && weather.isEmpty()) {
-                Toast.makeText(this, 
-                        getString(R.string.weather_update_empty, location.getText()), 
-                        Toast.LENGTH_LONG).show();
+            synchronized(this) {
+                this.weather = weather;
             }
-            storage.save(weather);
+            internalHandler.sendEmptyMessage(SUCCESS);
         } catch (Exception e) {
-            if (verbose) {
-                Toast.makeText(this, 
-                        getString(R.string.weather_update_failed, e.getMessage()), 
-                        Toast.LENGTH_LONG).show();
+            synchronized(this) {
+                this.updateError = e;
             }
-            Log.w(TAG, "failed to update weather", e);
+            internalHandler.sendEmptyMessage(FAILURE);
         }
     }
-
+    
+    /**
+     *  Handles weather update result.
+     */
+    final Handler internalHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            synchronized(staticLock) {
+                threadRunning = false;
+            }
+            switch (msg.what) {
+            case SUCCESS:
+                synchronized(UpdateService.this) {
+                    Log.i(TAG, "received weather: " + 
+                            weather.getLocation().getText() + " " + weather.getTime());
+                    WeatherStorage storage = new WeatherStorage(UpdateService.this);
+                    storage.save(weather);
+                    if (verbose && weather.isEmpty()) {
+                        Toast.makeText(UpdateService.this, 
+                                getString(R.string.weather_update_empty, location.getText()), 
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case FAILURE:
+                synchronized(UpdateService.this) {
+                    if (verbose) {
+                        Toast.makeText(UpdateService.this, 
+                                getString(R.string.weather_update_failed, updateError.getMessage()), 
+                                Toast.LENGTH_LONG).show();
+                    }
+                    Log.w(TAG, "failed to update weather", updateError);
+                }
+                break;
+            }
+            stopSelf();
+        }
+    };
+    
+    
     @Override
     public IBinder onBind(Intent intent) {
         return null;
