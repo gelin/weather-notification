@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.notification;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ru.gelin.android.weather.Temperature;
@@ -71,13 +72,74 @@ public class WeatherLayout {
         
         Temperature temp = currentCondition.getTemperature(unit);
         View tempSection = view.findViewById(R.id.temp);
-        tempSection.setVisibility(View.VISIBLE);
+        setVisibility(tempSection, View.VISIBLE);
         TextView currentTemp = (TextView)view.findViewById(R.id.current_temp);
         setText(currentTemp, formatTemp(temp.getCurrent()));
         TextView highTemp = (TextView)view.findViewById(R.id.high_temp);
         setText(highTemp, formatTemp(temp.getHigh()));
         TextView lowTemp = (TextView)view.findViewById(R.id.low_temp);
         setText(lowTemp, formatTemp(temp.getLow()));
+        
+        bindForecast(weather, view, unit, 1,
+                R.id.forecast_1, R.id.forecast_day_1,
+                R.id.forecast_condition_1,
+                R.id.forecast_high_temp_1, R.id.forecast_low_temp_1);
+        bindForecast(weather, view, unit, 2,
+                R.id.forecast_2, R.id.forecast_day_2,
+                R.id.forecast_condition_2,
+                R.id.forecast_high_temp_2, R.id.forecast_low_temp_2);
+        bindForecast(weather, view, unit, 3,
+                R.id.forecast_3, R.id.forecast_day_3,
+                R.id.forecast_condition_3,
+                R.id.forecast_high_temp_3, R.id.forecast_low_temp_3);
+        
+    }
+    
+    void bindForecast(Weather weather, View view, 
+            UnitSystem unit, int i, 
+            int groupId, int dayId, int conditionId, 
+            int highTempId, int lowTempId) {
+        if (weather.getConditions().size() > i) {
+            View forecast1 = view.findViewById(groupId);
+            setVisibility(forecast1, View.VISIBLE);
+            Date tomorrow = addDays(weather.getTime(), i);
+            TextView forecastDay = (TextView)view.findViewById(dayId);
+            setText(forecastDay, context.getString(R.string.forecast_day_format, tomorrow));
+            WeatherCondition forecastCondition = weather.getConditions().get(i);
+            TextView forecastConditionText = (TextView)view.findViewById(conditionId);
+            setText(forecastConditionText, forecastCondition.getConditionText());
+            Temperature forecastTemp = forecastCondition.getTemperature(unit);
+            TextView forecastHighTemp = (TextView)view.findViewById(highTempId);
+            setText(forecastHighTemp, formatTemp(forecastTemp.getHigh()));
+            TextView forecastLowTemp = (TextView)view.findViewById(lowTempId);
+            setText(forecastLowTemp, formatTemp(forecastTemp.getLow()));
+        } else {
+            View forecast1 = view.findViewById(R.id.forecast_1);
+            setVisibility(forecast1, View.GONE);
+        }
+    }
+    
+    void emptyViews(View view) {
+        TextView time = (TextView)view.findViewById(R.id.update_time);
+        setText(time, "");
+        TextView location = (TextView)view.findViewById(R.id.location);
+        setText(location, "");
+        TextView condition = (TextView)view.findViewById(R.id.condition);
+        setText(condition, context.getString(R.string.unknown_weather));
+        TextView humidity = (TextView)view.findViewById(R.id.humidity);
+        setText(humidity, "");
+        TextView wind = (TextView)view.findViewById(R.id.wind);
+        setText(wind, "");
+        
+        View tempSection = view.findViewById(R.id.temp);
+        setVisibility(tempSection, View.INVISIBLE);
+        
+        View forecast1 = view.findViewById(R.id.forecast_1);
+        setVisibility(forecast1, View.GONE);
+        View forecast2 = view.findViewById(R.id.forecast_2);
+        setVisibility(forecast2, View.GONE);
+        View forecast3 = view.findViewById(R.id.forecast_3);
+        setVisibility(forecast3, View.GONE);
     }
     
     void setText(TextView view, String text) {
@@ -89,6 +151,13 @@ public class WeatherLayout {
             return;
         }
         view.setText(text);
+    }
+    
+    void setVisibility(View view, int visibility) {
+        if (view == null) {
+            return;
+        }
+        view.setVisibility(visibility);
     }
     
     String formatTemp(int temp) {
@@ -104,20 +173,11 @@ public class WeatherLayout {
         return "0\u00B0";
     }
     
-    void emptyViews(View view) {
-        TextView time = (TextView)view.findViewById(R.id.update_time);
-        time.setText("");
-        TextView location = (TextView)view.findViewById(R.id.location);
-        location.setText("");
-        TextView condition = (TextView)view.findViewById(R.id.condition);
-        condition.setText(R.string.unknown_weather);
-        TextView humidity = (TextView)view.findViewById(R.id.humidity);
-        humidity.setText("");
-        TextView wind = (TextView)view.findViewById(R.id.wind);
-        wind.setText("");
-        
-        View tempSection = view.findViewById(R.id.temp);
-        tempSection.setVisibility(View.INVISIBLE);
+    Date addDays(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, days);
+        return calendar.getTime();
     }
 
 }

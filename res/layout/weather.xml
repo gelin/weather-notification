@@ -96,4 +96,100 @@
         
     </LinearLayout>
     
+    <LinearLayout android:id="@+id/forecast_1" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5sp">
+
+        <TextView android:id="@+id/forecast_day_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/forecast_condition_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"/>
+
+        <TextView android:id="@+id/forecast_high_temp_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"/>
+
+        <TextView android:id="@+id/forecast_low_temp_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout android:id="@+id/forecast_2" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5sp">
+
+        <TextView android:id="@+id/forecast_day_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/forecast_condition_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"/>
+
+        <TextView android:id="@+id/forecast_high_temp_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"/>
+
+        <TextView android:id="@+id/forecast_low_temp_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout android:id="@+id/forecast_3" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5sp">
+
+        <TextView android:id="@+id/forecast_day_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView android:id="@+id/forecast_condition_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"/>
+
+        <TextView android:id="@+id/forecast_high_temp_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"/>
+
+        <TextView android:id="@+id/forecast_low_temp_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+    </LinearLayout>
+    
 </LinearLayout>
