@@ -123,6 +123,16 @@ public class WeatherStorage {
         return weather;
     }
     
+    /**
+     *  Updates just "weather" preference to signal that the weather update is performed,
+     *  but nothing is changed.
+     */
+    public void updateTime() {
+        Editor editor = preferences.edit();
+        editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
+        editor.commit();
+    }
+    
     void putOrRemove(Editor editor, String key, String value) {
         if (value == null || "".equals(value)) {
             editor.remove(key);

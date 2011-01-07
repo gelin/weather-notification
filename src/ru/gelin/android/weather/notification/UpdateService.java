@@ -121,12 +121,13 @@ public class UpdateService extends Service implements Runnable {
             synchronized(staticLock) {
                 threadRunning = false;
             }
+            
+            WeatherStorage storage = new WeatherStorage(UpdateService.this);
             switch (msg.what) {
             case SUCCESS:
                 synchronized(UpdateService.this) {
                     Log.i(TAG, "received weather: " + 
                             weather.getLocation().getText() + " " + weather.getTime());
-                    WeatherStorage storage = new WeatherStorage(UpdateService.this);
                     storage.save(weather);
                     if (verbose && weather.isEmpty()) {
                         Toast.makeText(UpdateService.this, 
@@ -137,12 +138,13 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case FAILURE:
                 synchronized(UpdateService.this) {
+                    Log.w(TAG, "failed to update weather", updateError);
+                    storage.updateTime();
                     if (verbose) {
                         Toast.makeText(UpdateService.this, 
                                 getString(R.string.weather_update_failed, updateError.getMessage()), 
                                 Toast.LENGTH_LONG).show();
                     }
-                    Log.w(TAG, "failed to update weather", updateError);
                 }
                 break;
             }
