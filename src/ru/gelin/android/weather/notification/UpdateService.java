@@ -10,6 +10,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -78,9 +80,22 @@ public class UpdateService extends Service implements Runnable {
             this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
         }
 
+        WeatherStorage storage = new WeatherStorage(UpdateService.this);
+        
         synchronized(staticLock) {
             if (threadRunning) {
                 return;     // only start processing thread if not already running
+            }
+            if (!isNetworkAvailable()) {    //no network
+                stopSelf();
+                Log.d(TAG, "skipping update, no network");
+                storage.updateTime();
+                if (verbose) {
+                    Toast.makeText(UpdateService.this, 
+                            getString(R.string.weather_update_no_network), 
+                            Toast.LENGTH_LONG).show();
+                }
+                return;
             }
             //TODO: insert conditions to skip update
             if (!threadRunning) {
@@ -152,6 +167,19 @@ public class UpdateService extends Service implements Runnable {
         }
     };
     
+    /**
+     *  Check availability of network connections.
+     *  Returns true if any network connection is available.
+     */
+    boolean isNetworkAvailable() {
+        ConnectivityManager manager = 
+            (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (info == null) {
+            return false;
+        }
+        return info.isAvailable();
+    }
     
     @Override
     public IBinder onBind(Intent intent) {
