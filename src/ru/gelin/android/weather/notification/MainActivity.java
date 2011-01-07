@@ -13,6 +13,8 @@ public class MainActivity extends PreferenceActivity
 
     /** Manual location preference name */
     static final String LOCATION = "location";
+    /** Unit system preference name */
+    static final String UNIT_SYSTEM = "unit_system";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class MainActivity extends PreferenceActivity
         weatherPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
+        Preference unitPreference = findPreference(UNIT_SYSTEM);
+        unitPreference.setOnPreferenceChangeListener(this);
         
         startUpdate();
     }
@@ -49,6 +53,11 @@ public class MainActivity extends PreferenceActivity
         }
         if (LOCATION.equals(key)) {
             startUpdate();
+            return true;
+        }
+        if (UNIT_SYSTEM.equals(key)) {
+            WeatherStorage storage = new WeatherStorage(this);
+            storage.updateTime();   //force redraw weather
             return true;
         }
         return false;
