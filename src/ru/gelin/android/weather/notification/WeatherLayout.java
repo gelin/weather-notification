@@ -80,6 +80,8 @@ public class WeatherLayout {
         TextView lowTemp = (TextView)view.findViewById(R.id.low_temp);
         setText(lowTemp, formatTemp(temp.getLow()));
         
+        View forecasts = view.findViewById(R.id.forecasts);
+        setVisibility(forecasts, View.VISIBLE);
         bindForecast(weather, view, unit, 1,
                 R.id.forecast_1, R.id.forecast_day_1,
                 R.id.forecast_condition_1,
@@ -134,12 +136,8 @@ public class WeatherLayout {
         View tempSection = view.findViewById(R.id.temp);
         setVisibility(tempSection, View.INVISIBLE);
         
-        View forecast1 = view.findViewById(R.id.forecast_1);
-        setVisibility(forecast1, View.GONE);
-        View forecast2 = view.findViewById(R.id.forecast_2);
-        setVisibility(forecast2, View.GONE);
-        View forecast3 = view.findViewById(R.id.forecast_3);
-        setVisibility(forecast3, View.GONE);
+        View forecasts = view.findViewById(R.id.forecasts);
+        setVisibility(forecasts, View.GONE);
     }
     
     void setText(TextView view, String text) {
