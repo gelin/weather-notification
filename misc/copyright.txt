@@ -1,0 +1,2 @@
+weather-icon.gif
+http://dahab.tc/wp-content/themes/dtc/images/icons/weather.gif
