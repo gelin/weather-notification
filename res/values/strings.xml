@@ -24,5 +24,6 @@
     <string name="weather_update_empty">Weather for \"%s\" is unknown</string>
     <string name="weather_update_failed">Weather update failed: %s</string>
     <string name="weather_update_no_network">Weather update failed: no network connections</string>
+    <string name="weather_update_unknown_location">Weather update failed: location is unknown</string>
     <string name="forecast_day_format">%ta</string>
 </resources>

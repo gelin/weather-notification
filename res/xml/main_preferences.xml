@@ -27,17 +27,15 @@
     <PreferenceCategory android:title="@string/location">
     
         <CheckBoxPreference android:key="auto_location"
-            android:value="false"
+            android:value="true"
             android:title="@string/auto_location"
             android:summaryOn="@string/auto_location_summary_on"
             android:summaryOff="@string/auto_location_summary_off"
-            android:disableDependentsState="true"
-            android:enabled="false"/>
-            <!-- android:value="true" -->
-            
+            android:disableDependentsState="true"/>
+
         <ru.gelin.android.preference.SummaryTextPreference android:key="location"
-            android:title="@string/manual_location"/>
-            <!-- android:dependency="auto_location" -->
+            android:title="@string/manual_location"
+            android:dependency="auto_location"/>
             
         <ru.gelin.android.preference.SummaryListPreference 
                 android:key="unit_system"

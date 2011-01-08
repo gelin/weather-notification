@@ -1,6 +1,9 @@
 package ru.gelin.android.weather.notification;
 
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+import static ru.gelin.android.weather.notification.UpdateService.AUTO_LOCATION;
+import static ru.gelin.android.weather.notification.UpdateService.LOCATION;
+
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -11,8 +14,6 @@ import android.view.Window;
 public class MainActivity extends PreferenceActivity 
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
-    /** Manual location preference name */
-    static final String LOCATION = "location";
     /** Unit system preference name */
     static final String UNIT_SYSTEM = "unit_system";
     
@@ -25,6 +26,8 @@ public class MainActivity extends PreferenceActivity
         Preference weatherPreference = findPreference(WEATHER);
         weatherPreference.setOnPreferenceClickListener(this);
         weatherPreference.setOnPreferenceChangeListener(this);
+        Preference autoLocationPreference = findPreference(AUTO_LOCATION);
+        autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
         Preference unitPreference = findPreference(UNIT_SYSTEM);
@@ -51,7 +54,7 @@ public class MainActivity extends PreferenceActivity
             setProgressBarIndeterminateVisibility(false);
             return true;
         }
-        if (LOCATION.equals(key)) {
+        if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
             startUpdate();
             return true;
         }
