@@ -54,8 +54,12 @@ public class GoogleWeatherSource implements WeatherSource {
             //connection.addRequestProperty("Accept-Charset", "UTF-8");
             //connection.addRequestProperty("Accept-Language", locale.getLanguage());
             charset = getCharset(connection);
-            return new GoogleWeather(new InputStreamReader(
+            GoogleWeather weather = new GoogleWeather(new InputStreamReader(
                     connection.getInputStream(), charset));
+            if (weather.getLocation().isEmpty()) {
+                weather.setLocation(location);  //set original location
+            }
+            return weather; 
         } catch (UnsupportedEncodingException uee) {
             throw new WeatherException("unsupported charset: " + charset, uee);
         } catch (IOException ie) {

@@ -24,5 +24,10 @@ public class SimpleLocation implements Location {
     public String getText() {
         return this.text;
     }
+    
+    @Override
+    public boolean isEmpty() {
+        return this.text == null || this.text.length() == 0;
+    }
 
 }

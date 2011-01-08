@@ -78,6 +78,11 @@ public class AndroidGoogleLocation implements Location {
         return result.toString();
     }
     
+    @Override
+    public boolean isEmpty() {
+        return this.location == null;
+    }
+    
     int convertGeo(double geo) {
         return (int)(geo * 1000000);
     }

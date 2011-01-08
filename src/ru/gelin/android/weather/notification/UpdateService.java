@@ -126,16 +126,13 @@ public class UpdateService extends Service implements Runnable {
         if (autoLocation) {
             location = queryLocation();
         } else {
-            String manualLocation = preferences.getString(LOCATION, "");
-            if (manualLocation.length() > 0) {
-                location = new SimpleLocation(manualLocation);
-            }
+            location = new SimpleLocation(preferences.getString(LOCATION, ""));
         }
         synchronized(this) {
             this.location = location;
         }
         
-        if (location == null) {
+        if (location == null || location.isEmpty()) {
             internalHandler.sendEmptyMessage(UNKNOWN_LOCATION);
             return;
         }

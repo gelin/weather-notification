@@ -87,6 +87,14 @@ public class GoogleWeather implements Weather {
         parser.parse(new InputSource(xml), new ApiXmlHandler());
     }
     
+    /**
+     *  Sets the location.
+     *  Used by the weather source if the location, returned from API is empty.
+     */
+    void setLocation(Location location) {
+        this.location = location;
+    }
+    
     static enum HandlerState {
         CURRENT_CONDITIONS, FIRST_FORECAST, NEXT_FORECAST;
     }
