@@ -1,5 +1,7 @@
 package ru.gelin.android.weather.notification;
 
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,9 +19,6 @@ import android.widget.TextView;
  *  Utility to layout weather values.
  */
 public class WeatherLayout {
-    
-    /** Unit system preference key */
-    static final String UNIT_SYSTEM = "unit_system";
     
     /** Current context */
     Context context;

@@ -1,10 +1,10 @@
 package ru.gelin.android.weather.notification;
 
+import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
-import static ru.gelin.android.weather.notification.WeatherNotification.ENABLE_NOTIFICATION;
-import static ru.gelin.android.weather.notification.UpdateService.AUTO_LOCATION;
-import static ru.gelin.android.weather.notification.UpdateService.LOCATION;
-
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -15,9 +15,6 @@ import android.view.Window;
 public class MainActivity extends PreferenceActivity 
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
-    /** Unit system preference name */
-    static final String UNIT_SYSTEM = "unit_system";
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!

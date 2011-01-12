@@ -1,6 +1,7 @@
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.WeatherLayout.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherLayout.formatTemp;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
@@ -17,8 +18,6 @@ import android.preference.PreferenceManager;
  */
 public class WeatherNotification extends Notification {
 
-    /** Enabled notification preference key */
-    public static final String ENABLE_NOTIFICATION = "enable_notification";
     /** Notification ID */
     static final int ID = 1;
     /** Temperature image prefix */

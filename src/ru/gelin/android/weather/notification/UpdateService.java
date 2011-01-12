@@ -1,5 +1,7 @@
 package ru.gelin.android.weather.notification;
 
+import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.Tag.TAG;
 
 import java.io.IOException;
@@ -34,10 +36,6 @@ import android.widget.Toast;
  */
 public class UpdateService extends Service implements Runnable {
 
-    /** Auto location preferences key */
-    static final String AUTO_LOCATION = "auto_location";
-    /** Manual location preferences key */
-    static final String LOCATION = "location";
     /** Verbose extra name for the service start intent. */
     public static String EXTRA_VERBOSE = "verbose";
     /** Success update message */
