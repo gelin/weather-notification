@@ -158,7 +158,7 @@ public class WeatherLayout {
         view.setVisibility(visibility);
     }
     
-    String formatTemp(int temp) {
+    static String formatTemp(int temp) {
         if (temp == Temperature.UNKNOWN) {
             return "";
         }

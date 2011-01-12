@@ -198,6 +198,7 @@ public class UpdateService extends Service implements Runnable {
                 }
                 break;
             }
+            WeatherNotification.update(UpdateService.this);
             stopSelf();
         }
     };

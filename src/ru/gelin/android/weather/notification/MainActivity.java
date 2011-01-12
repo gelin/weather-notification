@@ -1,6 +1,7 @@
 package ru.gelin.android.weather.notification;
 
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+import static ru.gelin.android.weather.notification.WeatherNotification.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.UpdateService.AUTO_LOCATION;
 import static ru.gelin.android.weather.notification.UpdateService.LOCATION;
 
@@ -26,6 +27,8 @@ public class MainActivity extends PreferenceActivity
         Preference weatherPreference = findPreference(WEATHER);
         weatherPreference.setOnPreferenceClickListener(this);
         weatherPreference.setOnPreferenceChangeListener(this);
+        Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
+        notificationPreference.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
         autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
@@ -54,6 +57,10 @@ public class MainActivity extends PreferenceActivity
             setProgressBarIndeterminateVisibility(false);
             return true;
         }
+        if (ENABLE_NOTIFICATION.equals(key)) {
+            WeatherNotification.update(this, Boolean.TRUE.equals(newValue));
+            return true;
+        }
         if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
             startUpdate();
             return true;
@@ -63,7 +70,7 @@ public class MainActivity extends PreferenceActivity
             storage.updateTime();   //force redraw weather
             return true;
         }
-        return false;
+        return true;
     }
     
     void startUpdate() {

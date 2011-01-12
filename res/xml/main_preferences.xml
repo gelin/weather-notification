@@ -7,11 +7,9 @@
     <PreferenceCategory android:title="@string/notification">
     
         <CheckBoxPreference android:key="enable_notification"
-            android:value="false"
+            android:value="true"
             android:title="@string/enable_notification"
-            android:disableDependentsState="false"
-            android:enabled="false"/>
-            <!-- android:value="true" -->
+            android:disableDependentsState="false"/>
     
         <ru.gelin.android.preference.SummaryListPreference 
             android:key="refresh_interval"
