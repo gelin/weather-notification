@@ -22,6 +22,8 @@ public class WeatherNotification extends Notification {
     static final int ID = 1;
     /** Temperature image prefix */
     static final String RES_PREFIX="temp";
+    /** Icon level shift relative to temp value */
+    static final int ICON_LEVEL_SHIFT = 100;
     
     /** Current context */
     Context context;
@@ -66,14 +68,24 @@ public class WeatherNotification extends Notification {
         WeatherStorage storage = new WeatherStorage(context);
         Weather weather = storage.load();
         
-        this.icon = R.drawable.icon;
-        this.tickerText = formatTicker(weather, unit);
+        if (weather.isEmpty()) {
+            this.icon = R.drawable.icon;
+            this.tickerText = context.getString(R.string.unknown_weather);
+        } else {
+            this.icon = R.drawable.temp_icon;
+            //http://code.google.com/p/android/issues/detail?id=6560
+            //adding a hundred
+            this.iconLevel = weather.getConditions().get(0).
+                    getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
+            this.tickerText = formatTicker(weather, unit);
+        }
+
         this.when = weather.getTime().getTime();
         this.flags |= FLAG_NO_CLEAR;
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         setLatestEventInfo(context, this.tickerText,
-                this.tickerText, pendingIntent);
+                "", pendingIntent);
     }
 
     /*
