@@ -6,6 +6,7 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -15,6 +16,9 @@ import android.view.Window;
 public class MainActivity extends PreferenceActivity 
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
+    /** Handler to take notification update actions */
+    Handler handler = new Handler();
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
@@ -55,7 +59,7 @@ public class MainActivity extends PreferenceActivity
             return true;
         }
         if (ENABLE_NOTIFICATION.equals(key)) {
-            WeatherNotification.update(this, Boolean.TRUE.equals(newValue));
+            updateNotification();
             return true;
         }
         if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
@@ -65,6 +69,7 @@ public class MainActivity extends PreferenceActivity
         if (UNIT_SYSTEM.equals(key)) {
             WeatherStorage storage = new WeatherStorage(this);
             storage.updateTime();   //force redraw weather
+            updateNotification();
             return true;
         }
         return true;
@@ -73,6 +78,20 @@ public class MainActivity extends PreferenceActivity
     void startUpdate() {
         setProgressBarIndeterminateVisibility(true);
         UpdateService.start(this, true);
+    }
+    
+    /**
+     *  Performs the deferred update of the notification,
+     *  which allows to return from onPreferenceChange handler to update
+     *  preference value and update the notification later.
+     */
+    void updateNotification() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                WeatherNotification.update(MainActivity.this);
+            }
+        });
     }
 
 }

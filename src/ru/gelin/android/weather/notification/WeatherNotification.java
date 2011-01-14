@@ -29,20 +29,12 @@ public class WeatherNotification extends Notification {
     Context context;
 
     /**
-     *  Updates the notification using the notification enable
-     *  flag saved in preferences.
+     *  Updates the notification.
      */
     public static void update(Context context) {
-        update(context, isEnabled(context));
-    }
-    
-    /**
-     *  Updates the notification using the specified notification enable flag.
-     */
-    public static void update(Context context, boolean enable) {
         NotificationManager manager = (NotificationManager)
         context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (!enable) {
+        if (!isEnabled(context)) {
             manager.cancel(ID);
             return;
         }
@@ -87,38 +79,6 @@ public class WeatherNotification extends Notification {
         setLatestEventInfo(context, this.tickerText,
                 "", pendingIntent);
     }
-
-    /*
-    static int getIconResource(Context context, Resources res, float temperature) {
-        int temp = (int)temperature;
-        if (temp < -50) {
-            temp = -50;
-        }
-        if (temp > 50) {
-            temp = 50;
-        }
-        StringBuilder resName = new StringBuilder();
-
-        SharedPreferences prefs =
-            PreferenceManager.getDefaultSharedPreferences(context);
-        if (HTC.equals(prefs.getString(STYLE, ""))) {
-            resName.append("htc_");
-        }
-
-        resName.append(RES_PREFIX);
-
-        if (temp < 0) {
-            resName.append("_minus");
-        } else if (temp > 0) {
-
-            resName.append("_plus");
-        }
-        resName.append("_").append(String.valueOf(Math.abs(temp)));
-        Log.d(TAG, "notification image: " + resName);
-        return res.getIdentifier(resName.toString(),
-                "drawable", R.class.getPackage().getName());
-    }
-    */
 
     String formatTicker(Weather weather, UnitSystem unit) {
         return this.context.getString(R.string.notification_ticker,
