@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- TODO: change default icon -->
-    <item android:drawable="@drawable/icon"/>
+    <item android:drawable="@drawable/status_icon"/>
     <!-- http://code.google.com/p/android/issues/detail?id=6560 -->
     <!-- adding a hundred to temp value -->
     <item android:maxLevel="40" android:drawable="@drawable/temp_minus_60"/>
