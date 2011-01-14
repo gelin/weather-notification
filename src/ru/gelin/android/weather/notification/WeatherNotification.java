@@ -75,7 +75,7 @@ public class WeatherNotification extends Notification {
         this.when = weather.getTime().getTime();
         this.flags |= FLAG_NO_CLEAR;
         
-        this.contentView = new RemoteViews(context.getPackageName(), R.layout.weather);
+        this.contentView = new RemoteViews(context.getPackageName(), R.layout.notification);
         RemoteWeatherLayout layout = new RemoteWeatherLayout(context, this.contentView);
         layout.bind(weather);
         
