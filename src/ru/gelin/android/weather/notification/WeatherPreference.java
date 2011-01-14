@@ -29,9 +29,9 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
         super.onBindView(view);
         Context context = getContext();
         WeatherStorage storage = new WeatherStorage(context);
-        WeatherLayout layout = new WeatherLayout(context);
+        WeatherLayout layout = new WeatherLayout(context, view);
         Weather weather = storage.load();
-        layout.bind(weather, view);
+        layout.bind(weather);
     }
     
     @Override

@@ -7,7 +7,7 @@
     <PreferenceCategory android:title="@string/notification">
     
         <CheckBoxPreference android:key="enable_notification"
-            android:value="true"
+            android:defaultValue="true"
             android:title="@string/enable_notification"
             android:disableDependentsState="false"/>
     
@@ -25,7 +25,7 @@
     <PreferenceCategory android:title="@string/location">
     
         <CheckBoxPreference android:key="auto_location"
-            android:value="true"
+            android:defaultValue="true"
             android:title="@string/auto_location"
             android:summaryOn="@string/auto_location_summary_on"
             android:summaryOff="@string/auto_location_summary_off"

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.RemoteViews;
 
 /**
  *  Represents the weather notification.
@@ -60,11 +61,10 @@ public class WeatherNotification extends Notification {
         WeatherStorage storage = new WeatherStorage(context);
         Weather weather = storage.load();
         
+        this.icon = R.drawable.temp_icon;
         if (weather.isEmpty()) {
-            this.icon = R.drawable.icon;
             this.tickerText = context.getString(R.string.unknown_weather);
         } else {
-            this.icon = R.drawable.temp_icon;
             //http://code.google.com/p/android/issues/detail?id=6560
             //adding a hundred
             this.iconLevel = weather.getConditions().get(0).
@@ -74,10 +74,16 @@ public class WeatherNotification extends Notification {
 
         this.when = weather.getTime().getTime();
         this.flags |= FLAG_NO_CLEAR;
+        
+        this.contentView = new RemoteViews(context.getPackageName(), R.layout.weather);
+        RemoteWeatherLayout layout = new RemoteWeatherLayout(context, this.contentView);
+        layout.bind(weather);
+        
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        setLatestEventInfo(context, this.tickerText,
-                "", pendingIntent);
+        this.contentIntent = pendingIntent;
+        //setLatestEventInfo(context, this.tickerText,
+        //        "", pendingIntent);
     }
 
     String formatTicker(Weather weather, UnitSystem unit) {
