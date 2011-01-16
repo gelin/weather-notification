@@ -1,7 +1,9 @@
 package ru.gelin.android.weather.notification;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION_DEFAULT;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION_DEFAULT;
 import static ru.gelin.android.weather.notification.Tag.TAG;
 
 import java.io.IOException;
@@ -119,12 +121,12 @@ public class UpdateService extends Service implements Runnable {
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         
-        boolean autoLocation = preferences.getBoolean(AUTO_LOCATION, true);
+        boolean autoLocation = preferences.getBoolean(AUTO_LOCATION, AUTO_LOCATION_DEFAULT);
         Location location = null;
         if (autoLocation) {
             location = queryLocation();
         } else {
-            location = new SimpleLocation(preferences.getString(LOCATION, ""));
+            location = new SimpleLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         }
         synchronized(this) {
             this.location = location;

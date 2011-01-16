@@ -1,6 +1,7 @@
 package ru.gelin.android.weather.notification;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -61,7 +62,8 @@ public abstract class AbstractWeatherLayout {
         
         SharedPreferences preferences = 
                 PreferenceManager.getDefaultSharedPreferences(this.context);
-        UnitSystem unit = UnitSystem.valueOf(preferences.getString(UNIT_SYSTEM, "SI"));
+        UnitSystem unit = UnitSystem.valueOf(preferences.getString(
+                UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT));
         
         Temperature temp = currentCondition.getTemperature(unit);
         setVisibility(R.id.temp, View.VISIBLE);

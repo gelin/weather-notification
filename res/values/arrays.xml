@@ -24,6 +24,15 @@
         <item>REFRESH_1D</item>
     </string-array>
     
+    <string-array name="notification_style_entries">
+        <item>@string/notification_style_black_text</item>
+        <item>@string/notification_style_white_text</item>
+    </string-array>
+    <string-array name="notification_style_values">
+        <item>BLACK_TEXT</item>
+        <item>WHITE_TEXT</item>
+    </string-array>
+    
     <string-array name="unit_system_entries">
         <item>@string/celsius</item>
         <item>@string/fahrenheit</item>

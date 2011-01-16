@@ -3,6 +3,7 @@ package ru.gelin.android.weather.notification;
 import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE;
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class MainActivity extends PreferenceActivity
         weatherPreference.setOnPreferenceChangeListener(this);
         Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
         notificationPreference.setOnPreferenceChangeListener(this);
+        Preference stylePreference = findPreference(NOTIFICATION_STYLE);
+        stylePreference.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
         autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
@@ -58,7 +61,7 @@ public class MainActivity extends PreferenceActivity
             setProgressBarIndeterminateVisibility(false);
             return true;
         }
-        if (ENABLE_NOTIFICATION.equals(key)) {
+        if (ENABLE_NOTIFICATION.equals(key) || NOTIFICATION_STYLE.equals(key)) {
             updateNotification();
             return true;
         }

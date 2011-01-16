@@ -19,6 +19,14 @@
             android:defaultValue="REFRESH_1H"
             android:dependency="enable_notification"
             android:enabled="false"/>
+            
+        <ru.gelin.android.preference.SummaryListPreference 
+            android:key="notification_style"
+            android:title="@string/notification_style"
+            android:entries="@array/notification_style_entries"
+            android:entryValues="@array/notification_style_values"
+            android:defaultValue="BLACK_TEXT"
+            android:dependency="enable_notification"/>
     
     </PreferenceCategory>
     

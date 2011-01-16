@@ -11,6 +11,9 @@
     <string name="refresh_6h">Every six hours</string>
     <string name="refresh_12h">Every twelve hours</string>
     <string name="refresh_1d">Every day</string>
+    <string name="notification_style">Icon style</string>
+    <string name="notification_style_black_text">Black text</string>
+    <string name="notification_style_white_text">White text</string>
     <string name="location">Location</string>
     <string name="auto_location">Auto detect</string>
     <string name="auto_location_summary_on">Automatically detect the current location</string>

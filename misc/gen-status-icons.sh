@@ -9,7 +9,13 @@ do
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "-$t°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_minus_$t.png
+        res/drawable/white_temp_minus_$t.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "-$t°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_minus_$t.png
     #echo $t
     t=$(expr $t - 1)
 done
@@ -23,7 +29,13 @@ do
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "-$t°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_minus_$t.png
+        res/drawable/white_temp_minus_$t.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "-$t°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_minus_$t.png
     #echo $t
     t=$(expr $t - 1)
 done
@@ -34,8 +46,14 @@ done
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "0°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_0.png
-
+        res/drawable/white_temp_0.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "0°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_0.png
+        
 #1 - 9
 t=1
 while [ $t -le 9 ]
@@ -45,7 +63,13 @@ do
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "+$t°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_plus_$t.png
+        res/drawable/white_temp_plus_$t.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "+$t°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done
@@ -59,7 +83,13 @@ do
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "+$t°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_plus_$t.png
+        res/drawable/white_temp_plus_$t.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "+$t°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done
@@ -73,7 +103,13 @@ do
         -gravity center -pointsize 22 \
         -fill white -stroke none -annotate 0 "+$t°" \
         -trim +repage -bordercolor transparent -border 1x5 \
-        res/drawable/temp_plus_$t.png
+        res/drawable/white_temp_plus_$t.png
+    convert -size 200x25 xc:transparent \
+        -font Liberation-Sans-Bold \
+        -gravity center -pointsize 22 \
+        -fill black -stroke none -annotate 0 "+$t°" \
+        -trim +repage -bordercolor transparent -border 1x5 \
+        res/drawable/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done

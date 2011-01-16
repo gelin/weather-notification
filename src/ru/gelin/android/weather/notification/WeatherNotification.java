@@ -1,8 +1,11 @@
 package ru.gelin.android.weather.notification;
 
+import static ru.gelin.android.weather.notification.AbstractWeatherLayout.formatTemp;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE;
+import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
-import static ru.gelin.android.weather.notification.WeatherLayout.formatTemp;
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import android.app.Notification;
@@ -56,12 +59,15 @@ public class WeatherNotification extends Notification {
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(context);
         
-        UnitSystem unit = UnitSystem.valueOf(prefs.getString(UNIT_SYSTEM, "SI"));
+        UnitSystem unit = UnitSystem.valueOf(prefs.getString(
+                UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT));
+        NotificationStyle style = NotificationStyle.valueOf(prefs.getString(
+                NOTIFICATION_STYLE, NOTIFICATION_STYLE_DEFAULT));
         
         WeatherStorage storage = new WeatherStorage(context);
         Weather weather = storage.load();
         
-        this.icon = R.drawable.temp_icon;
+        this.icon = style.getIconRes();
         if (weather.isEmpty()) {
             this.tickerText = context.getString(R.string.unknown_weather);
         } else {
