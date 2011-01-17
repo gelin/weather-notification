@@ -77,6 +77,7 @@ public class WeatherNotification extends Notification {
                     getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
             this.tickerText = formatTicker(weather, unit);
         }
+        //this.iconLevel = 223;//debug
 
         this.when = weather.getTime().getTime();
         this.flags |= FLAG_NO_CLEAR;
