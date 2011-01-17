@@ -40,11 +40,15 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     boolean skipView(int viewId) {
         switch (viewId) {
-        case R.id.update_time:
-        case R.id.location:
-            return true;
-        default:
+        case R.id.condition:
+        case R.id.humidity:
+        case R.id.wind:
+        case R.id.current_temp:
+        case R.id.high_temp:
+        case R.id.low_temp:
             return false;
+        default:
+            return true;
         }
     }
 
