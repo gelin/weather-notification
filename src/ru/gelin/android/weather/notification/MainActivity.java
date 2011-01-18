@@ -40,7 +40,7 @@ public class MainActivity extends PreferenceActivity
         Preference unitPreference = findPreference(UNIT_SYSTEM);
         unitPreference.setOnPreferenceChangeListener(this);
         
-        startUpdate();
+        startUpdate(false);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MainActivity extends PreferenceActivity
             return true;
         }
         if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
-            startUpdate();
+            startUpdate(true);
             return true;
         }
         if (UNIT_SYSTEM.equals(key)) {
@@ -78,9 +78,9 @@ public class MainActivity extends PreferenceActivity
         return true;
     }
     
-    void startUpdate() {
+    void startUpdate(boolean force) {
         setProgressBarIndeterminateVisibility(true);
-        UpdateService.start(this, true);
+        UpdateService.start(this, true, force);
     }
     
     /**

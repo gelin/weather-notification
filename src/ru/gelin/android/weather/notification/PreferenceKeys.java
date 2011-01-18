@@ -15,7 +15,7 @@ public interface PreferenceKeys {
     /** Refresh interval preference key */
     public static final String REFRESH_INTERVAL = "refresh_interval";
     /** Refresh interval default value */
-    public static final String REFRESH_INTERVAL_DEFAULT = "1H"; //change to enum
+    public static final String REFRESH_INTERVAL_DEFAULT = RefreshInterval.REFRESH_1H.toString();
     
     /** Notification style preference key */
     public static final String NOTIFICATION_STYLE = "notification_style";

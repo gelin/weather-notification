@@ -2,11 +2,16 @@ package ru.gelin.android.weather.notification;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION_DEFAULT;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION_DEFAULT;
+import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
+import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL_DEFAULT;
 import static ru.gelin.android.weather.notification.Tag.TAG;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import ru.gelin.android.weather.Location;
@@ -15,6 +20,8 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.google.AndroidGoogleLocation;
 import ru.gelin.android.weather.google.GoogleWeatherSource;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +47,8 @@ public class UpdateService extends Service implements Runnable {
 
     /** Verbose extra name for the service start intent. */
     public static String EXTRA_VERBOSE = "verbose";
+    /** Force extra name for the service start intent. */
+    public static String EXTRA_FORCE = "force";
     /** Success update message */
     static final int SUCCESS = 0;
     /** Failure update message */
@@ -59,6 +68,8 @@ public class UpdateService extends Service implements Runnable {
     
     /** Verbose flag */
     boolean verbose = false;
+    /** Force flag */
+    boolean force = false;
     /** Queried location */
     Location location;
     /** Updated weather */
@@ -67,19 +78,29 @@ public class UpdateService extends Service implements Runnable {
     Exception updateError;
     
     /**
-     *  Starts the service. Convenience method.
+     *  Starts the service.
      */
     public static void start(Context context) {
-        start(context, false);
+        start(context, false, false);
     }
     
     /**
-     *  Starts the service. Convenience method.
-     *  If the verbose is true, the update errors will be displayed as toasts. 
+     *  Starts the service.
      */
     public static void start(Context context, boolean verbose) {
+        start(context, verbose, false);
+    }
+    
+    /**
+     *  Starts the service.
+     *  If the verbose is true, the update errors will be displayed as toasts.
+     *  If the force is true, the update will start even when the weather is
+     *  not expired. 
+     */
+    public static void start(Context context, boolean verbose, boolean force) {
         Intent startIntent = new Intent(context, UpdateService.class);
         startIntent.putExtra(EXTRA_VERBOSE, verbose);
+        startIntent.putExtra(EXTRA_FORCE, force);
         context.startService(startIntent);
     }
     
@@ -89,9 +110,14 @@ public class UpdateService extends Service implements Runnable {
         
         synchronized(this) {
             this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
+            this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
         }
 
         WeatherStorage storage = new WeatherStorage(UpdateService.this);
+        Weather weather = storage.load();
+        long lastUpdate = weather.getTime().getTime();
+        
+        scheduleNextRun(lastUpdate);
         
         synchronized(staticLock) {
             if (threadRunning) {
@@ -108,7 +134,12 @@ public class UpdateService extends Service implements Runnable {
                 }
                 return;
             }
-            //TODO: insert conditions to skip update
+            if (!force && !isExpired(lastUpdate)) {
+                stopSelf();
+                Log.d(TAG, "skipping update, not expired");
+                storage.updateTime();
+                return;
+            }
             if (!threadRunning) {
                 threadRunning = true;
                 new Thread(this).start();
@@ -215,6 +246,49 @@ public class UpdateService extends Service implements Runnable {
             return false;
         }
         return info.isAvailable();
+    }
+    
+    /**
+     *  Returns true if the last update time is expired.
+     *  @param  timestamp  timestamp value to check
+     */
+    boolean isExpired(long timestamp) {
+        long now = System.currentTimeMillis();
+        RefreshInterval interval = getRefreshInterval();
+        return timestamp + interval.getInterval() < now;
+    }
+    
+    void scheduleNextRun(long lastUpdate) {
+        long now = System.currentTimeMillis();
+        RefreshInterval interval = getRefreshInterval();
+        long nextUpdate = lastUpdate + interval.getInterval();
+        if (nextUpdate <= now) {
+            nextUpdate = now + interval.getInterval();
+        }
+
+        Intent intent = new Intent(this, UpdateService.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getService(this, 0, intent, 0);
+
+        boolean notificationEnabled = PreferenceManager.getDefaultSharedPreferences(this).
+                getBoolean(ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
+        
+        AlarmManager alarmManager = (AlarmManager)getSystemService(
+                Context.ALARM_SERVICE);
+        if (notificationEnabled) {
+            Log.d(TAG, "scheduling update to " + new Date(nextUpdate));
+            alarmManager.set(AlarmManager.RTC, nextUpdate, pendingIntent);
+        } else {
+            Log.d(TAG, "cancelling update schedule");
+            alarmManager.cancel(pendingIntent);
+        }
+    }
+    
+    RefreshInterval getRefreshInterval() {
+        SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        return RefreshInterval.valueOf(preferences.getString(
+                REFRESH_INTERVAL, REFRESH_INTERVAL_DEFAULT));
     }
     
     /**

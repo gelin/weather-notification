@@ -17,8 +17,7 @@
             android:entries="@array/refresh_interval_entries"
             android:entryValues="@array/refresh_interval_values"
             android:defaultValue="REFRESH_1H"
-            android:dependency="enable_notification"
-            android:enabled="false"/>
+            android:dependency="enable_notification"/>
             
         <ru.gelin.android.preference.SummaryListPreference 
             android:key="notification_style"

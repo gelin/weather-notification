@@ -37,7 +37,7 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
     @Override
     protected void onClick() {
         super.onClick();
-        UpdateService.start(getContext(), true);
+        UpdateService.start(getContext(), true, true);
     }
     
     @Override
