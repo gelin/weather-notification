@@ -87,6 +87,7 @@ public class WeatherNotification extends Notification {
         layout.bind(weather);
         
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         this.contentIntent = pendingIntent;
         //setLatestEventInfo(context, this.tickerText,
