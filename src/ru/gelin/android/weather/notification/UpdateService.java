@@ -213,7 +213,7 @@ public class UpdateService extends Service implements Runnable {
                     storage.save(weather);
                     scheduleNextRun(weather.getTime().getTime());
                     if (verbose && weather.isEmpty()) {
-                        Toast.makeText(UpdateService.this, 
+                        Toast.makeText(UpdateService.this,
                                 getString(R.string.weather_update_empty, location.getText()), 
                                 Toast.LENGTH_LONG).show();
                     }
