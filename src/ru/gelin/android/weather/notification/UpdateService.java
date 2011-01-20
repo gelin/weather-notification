@@ -55,6 +55,8 @@ public class UpdateService extends Service implements Runnable {
     static final int FAILURE = 1;
     /** Update message when location is unknown */
     static final int UNKNOWN_LOCATION = 2;
+    /** Update message when querying new location */
+    static final int QUERY_LOCATION = 3;
     
     /**
      *  Lock used when maintaining update thread.
@@ -76,6 +78,8 @@ public class UpdateService extends Service implements Runnable {
     Weather weather;
     /** Weather update error */
     Exception updateError;
+    /** Intent which starts the service */
+    Intent startIntent;
     
     /**
      *  Starts the service.
@@ -109,10 +113,13 @@ public class UpdateService extends Service implements Runnable {
         super.onStart(intent, startId);
         
         synchronized(this) {
+            this.startIntent = intent;
             this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
             this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
         }
-
+        
+        removeLocationUpdates();
+        
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         
@@ -168,6 +175,10 @@ public class UpdateService extends Service implements Runnable {
         Location location = null;
         if (autoLocation) {
             location = queryLocation();
+            if (location == null) {
+                internalHandler.sendEmptyMessage(QUERY_LOCATION);
+                return;
+            }
         } else {
             location = new SimpleLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         }
@@ -241,6 +252,12 @@ public class UpdateService extends Service implements Runnable {
                     }
                 }
                 break;
+            case QUERY_LOCATION:
+                synchronized(UpdateService.this) {
+                    Log.d(TAG, "quering new location");
+                    //storage.updateTime();     //don't signal about update
+                }
+                break;
             }
             WeatherNotification.update(UpdateService.this);
             stopSelf();
@@ -279,9 +296,7 @@ public class UpdateService extends Service implements Runnable {
             nextUpdate = now + interval.getInterval();
         }
 
-        Intent intent = new Intent(this, UpdateService.class);
-        PendingIntent pendingIntent =
-                PendingIntent.getService(this, 0, intent, 0);
+        PendingIntent pendingIntent = getPendingIntent(null);   //don't inherit extra flags
 
         boolean notificationEnabled = PreferenceManager.getDefaultSharedPreferences(this).
                 getBoolean(ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
@@ -311,8 +326,11 @@ public class UpdateService extends Service implements Runnable {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         android.location.Location androidLocation = 
                 manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        //TODO: query location if last location is unknown or too old (check update interval)
-        if (androidLocation == null) {
+        //Log.d(TAG, "location time: " + new Date(androidLocation.getTime()));
+        //if (!this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+        if (androidLocation == null || isExpired(androidLocation.getTime())) {
+            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 
+                    0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
             return null;
         }
         
@@ -329,6 +347,33 @@ public class UpdateService extends Service implements Runnable {
         }
         
         return new AndroidGoogleLocation(androidLocation, addresses.get(0));
+    }
+    
+    /**
+     *  Unsubscribes from location updates.
+     */
+    void removeLocationUpdates() {
+        if (this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+            //android.location.Location location = (android.location.Location)this.startIntent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+            //Log.d(TAG, "location updated: " + new Date(location.getTime()));
+            Log.d(TAG, "location updated");
+            LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            manager.removeUpdates(getPendingIntent(this.startIntent));
+        }
+    }
+
+    /**
+     *  Returns pending intent to start the service.
+     *  @param  intent to wrap into the pending intent or null
+     */
+    PendingIntent getPendingIntent(Intent intent) {
+        Intent serviceIntent;
+        if (intent == null) {
+            serviceIntent = new Intent(this, UpdateService.class);
+        } else {
+            serviceIntent = new Intent(intent);
+        }
+        return PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
     
     @Override
