@@ -43,6 +43,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         case R.id.condition:
         case R.id.humidity:
         case R.id.wind:
+        case R.id.temp:
         case R.id.current_temp:
         case R.id.high_temp:
         case R.id.low_temp:
