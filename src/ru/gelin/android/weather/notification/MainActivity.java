@@ -4,12 +4,14 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE;
+import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.Window;
@@ -26,11 +28,19 @@ public class MainActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main_preferences);
         
+        /*  TODO: why this doesn't work?
+        PreferenceScreen screen = getPreferenceScreen();
+        screen.setOnPreferenceClickListener(this);
+        screen.setOnPreferenceChangeListener(this); 
+        */
+        
         Preference weatherPreference = findPreference(WEATHER);
         weatherPreference.setOnPreferenceClickListener(this);
         weatherPreference.setOnPreferenceChangeListener(this);
         Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
         notificationPreference.setOnPreferenceChangeListener(this);
+        Preference refreshInterval = findPreference(REFRESH_INTERVAL);
+        refreshInterval.setOnPreferenceChangeListener(this);
         Preference stylePreference = findPreference(NOTIFICATION_STYLE);
         stylePreference.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
@@ -57,15 +67,20 @@ public class MainActivity extends PreferenceActivity
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         if (WEATHER.equals(key)) {
-            //Log.d(TAG, String.valueOf(newValue));
             setProgressBarIndeterminateVisibility(false);
             return true;
         }
-        if (ENABLE_NOTIFICATION.equals(key) || NOTIFICATION_STYLE.equals(key)) {
+        if (ENABLE_NOTIFICATION.equals(key) || REFRESH_INTERVAL.equals(key)) {
+            //force reschedule service start
+            startUpdate(false);
+            return true;
+        }
+        if (NOTIFICATION_STYLE.equals(key)) {
             updateNotification();
             return true;
         }
-        if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
+        if (AUTO_LOCATION.equals(key) || 
+                LOCATION.equals(key)) {
             startUpdate(true);
             return true;
         }

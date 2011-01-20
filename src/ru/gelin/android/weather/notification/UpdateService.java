@@ -113,9 +113,14 @@ public class UpdateService extends Service implements Runnable {
             this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
         }
 
+        SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        
         WeatherStorage storage = new WeatherStorage(UpdateService.this);
         Weather weather = storage.load();
         long lastUpdate = weather.getTime().getTime();
+        boolean notificationEnabled = preferences.getBoolean(
+                ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
         
         scheduleNextRun(lastUpdate);
         
@@ -123,10 +128,16 @@ public class UpdateService extends Service implements Runnable {
             if (threadRunning) {
                 return;     // only start processing thread if not already running
             }
+            if (!force && !notificationEnabled) {
+                skipUpdate(storage, "skipping update, notification disabled");
+                return;
+            }
+            if (!force && !isExpired(lastUpdate)) {
+                skipUpdate(storage, "skipping update, not expired");
+                return;
+            }
             if (!isNetworkAvailable()) {    //no network
-                stopSelf();
-                Log.d(TAG, "skipping update, no network");
-                storage.updateTime();
+                skipUpdate(storage, "skipping update, no network");
                 if (verbose) {
                     Toast.makeText(UpdateService.this, 
                             getString(R.string.weather_update_no_network), 
@@ -134,17 +145,18 @@ public class UpdateService extends Service implements Runnable {
                 }
                 return;
             }
-            if (!force && !isExpired(lastUpdate)) {
-                stopSelf();
-                Log.d(TAG, "skipping update, not expired");
-                storage.updateTime();
-                return;
-            }
             if (!threadRunning) {
                 threadRunning = true;
                 new Thread(this).start();
             }
         }
+    }
+    
+    void skipUpdate(WeatherStorage storage, String logMessage) {
+        stopSelf();
+        Log.d(TAG, logMessage);
+        storage.updateTime();
+        WeatherNotification.update(this);
     }
     
     @Override
@@ -199,6 +211,7 @@ public class UpdateService extends Service implements Runnable {
                     Log.i(TAG, "received weather: " + 
                             weather.getLocation().getText() + " " + weather.getTime());
                     storage.save(weather);
+                    scheduleNextRun(weather.getTime().getTime());
                     if (verbose && weather.isEmpty()) {
                         Toast.makeText(UpdateService.this, 
                                 getString(R.string.weather_update_empty, location.getText()), 
