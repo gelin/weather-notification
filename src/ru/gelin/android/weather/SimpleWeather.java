@@ -1,5 +1,6 @@
 package ru.gelin.android.weather;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,12 +63,21 @@ public class SimpleWeather implements Weather {
     
     @Override
     public List<WeatherCondition> getConditions() {
+        if (this.conditions == null) {
+            return new ArrayList<WeatherCondition>();
+        }
         return this.conditions;
     }
     
     @Override
     public boolean isEmpty() {
-        return time == null || time.getTime() == 0;
+        if (this.time == null || this.time.getTime() == 0) {
+            return true;
+        }
+        if (this.conditions == null || this.conditions.size() == 0) {
+            return true;
+        }
+        return false;
     }
 
 }

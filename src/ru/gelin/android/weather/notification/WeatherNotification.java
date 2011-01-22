@@ -68,7 +68,7 @@ public class WeatherNotification extends Notification {
         Weather weather = storage.load();
         
         this.icon = style.getIconRes();
-        if (weather.isEmpty()) {
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             this.tickerText = context.getString(R.string.unknown_weather);
         } else {
             //http://code.google.com/p/android/issues/detail?id=6560
