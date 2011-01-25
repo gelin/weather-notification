@@ -1,5 +1,16 @@
 package ru.gelin.android.weather.notification;
 
+import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.CONDITION_TEXT;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.CURRENT_TEMP;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.HIGH_TEMP;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_TEXT;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_TEXT;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,24 +39,6 @@ public class WeatherStorage {
     /** Preference name for weather (this fake preference is updated 
      *  to call preference change listeners) */
     static final String WEATHER = "weather";
-    /** Preference name for location. */
-    static final String LOCATION = "weather_location";
-    /** Preference name for time. */
-    static final String TIME = "weather_time";
-    /** Preference name for unit system. */
-    static final String UNIT_SYSTEM = "weather_unit_system";
-    /** Preference name pattern for condition text. */
-    static final String CONDITION_TEXT = "weather_%d_condition_text";
-    /** Preference name pattern for current temp. */
-    static final String CURRENT_TEMP = "weather_%d_current_temp";
-    /** Preference name pattern for low temp. */
-    static final String LOW_TEMP = "weather_%d_low_temp";
-    /** Preference name pattern for high temp. */
-    static final String HIGH_TEMP = "weather_%d_high_temp";
-    /** Preference name pattern for humidity text. */
-    static final String HUMIDITY_TEXT = "weather_%d_humidity_text";
-    /** Preference name pattern for wind text. */
-    static final String WIND_TEXT = "weather_%d_wind_text";
     
     /** SharedPreferences to store weather. */
     SharedPreferences preferences;
@@ -91,13 +84,13 @@ public class WeatherStorage {
      *  The values of the saved weather are restored, not exact classes.
      */
     public Weather load() {
-        SimpleWeather weather = new SimpleWeather();
+        SimpleWeather weather = new ParcelableWeather();
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
         weather.setUnitSystem(UnitSystem.valueOf(
-                preferences.getString(UNIT_SYSTEM, "SI")));
+                preferences.getString(UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT)));
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
