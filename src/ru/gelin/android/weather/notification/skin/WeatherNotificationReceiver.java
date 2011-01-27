@@ -1,6 +1,11 @@
 package ru.gelin.android.weather.notification.skin;
 
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.MainActivity;
+import ru.gelin.android.weather.notification.Tag;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,19 +37,20 @@ public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
 
     /** Intent action which should be accepted by the receiver */ 
     public static final String ACTION_WEATHER_UPDATE =
-        WeatherNotificationReceiver.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE";
+        Tag.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE";
     /** Intent extra which contains {@link Weather} */ 
     public static final String EXTRA_WEATHER =
-        WeatherNotificationReceiver.class.getPackage().getName() + ".EXTRA_WEATHER";
+        Tag.class.getPackage().getName() + ".EXTRA_WEATHER";
     /** Intent extra which contains boolean flag */ 
     public static final String EXTRA_ENABLE_NOTIFICATION =
-        WeatherNotificationReceiver.class.getPackage().getName() + ".EXTRA_ENABLE_NOTIFICATION";
+        Tag.class.getPackage().getName() + ".EXTRA_ENABLE_NOTIFICATION";
     
     /**
      *  Verifies the intent, extracts extras, calls {@link #notify} or {@link #cancel} methods.
      */
     @Override
     public void onReceive(Context context, Intent intent) {
+        //Log.d(TAG, "received: " + intent);
         if (intent == null) {
             return;
         }
@@ -65,12 +71,34 @@ public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
     
     /**
      *  Is called when a new weather value is received.
+     *  @param  context current context
+     *  @param  weather weather value to be displayed
      */
     protected abstract void notify(Context context, Weather weather);
     
     /**
      *  Is called when a weather notification should be canceled.
+     *  @param  context current context
      */
     protected abstract void cancel(Context context);
+    
+    /**
+     *  Returns notification manager, selected from the context.
+     *  @param  context current context
+     */
+    protected static NotificationManager getNotificationManager(Context context) {
+        return (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+    
+    /**
+     *  Returns the PendingIntent which starts the main WeatherNotification activity.
+     *  You can use it as {@link Notification#contentIntent}.
+     *  @param  context current context
+     */
+    protected static PendingIntent getMainActivityPendingIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return PendingIntent.getActivity(context, 0, intent, 0);
+    }
 
 }

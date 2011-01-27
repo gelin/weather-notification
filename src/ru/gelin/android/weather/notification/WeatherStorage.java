@@ -46,7 +46,7 @@ public class WeatherStorage {
     /**
      *  Creates the storage for context.
      */
-    WeatherStorage(Context context) {
+    public WeatherStorage(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
     

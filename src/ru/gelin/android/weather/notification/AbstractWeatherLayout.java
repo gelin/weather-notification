@@ -117,16 +117,17 @@ public abstract class AbstractWeatherLayout {
         setVisibility(R.id.forecasts, View.GONE);
     }
     
-    abstract void setText(int viewId, String text);
+    protected abstract void setText(int viewId, String text);
     
-    abstract void setVisibility(int viewId, int visibility);
+    protected abstract void setVisibility(int viewId, int visibility);
     
-    static String formatTemp(int temp) {
+    public static String formatTemp(int temp) {
         if (temp == Temperature.UNKNOWN) {
             return "";
         }
         if (temp > 0) {
-            return "+" + String.valueOf(temp) + "\u00B0";
+            //return "+" + String.valueOf(temp) + "\u00B0";
+            return String.valueOf(temp) + "\u00B0";
         }
         if (temp < 0) {
             return String.valueOf(temp) + "\u00B0";

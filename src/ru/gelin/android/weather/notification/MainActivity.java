@@ -7,11 +7,11 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
 import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.Window;
@@ -107,7 +107,7 @@ public class MainActivity extends PreferenceActivity
         handler.post(new Runnable() {
             @Override
             public void run() {
-                WeatherNotification.update(MainActivity.this);
+                WeatherNotificationManager.update(MainActivity.this);
             }
         });
     }

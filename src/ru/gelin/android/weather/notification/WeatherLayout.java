@@ -21,7 +21,7 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
     
     @Override
-    void setText(int viewId, String text) {
+    protected void setText(int viewId, String text) {
         TextView textView = (TextView)this.view.findViewById(viewId);
         if (textView == null) {
             return;
@@ -33,7 +33,8 @@ public class WeatherLayout extends AbstractWeatherLayout {
         textView.setText(text);
     }
     
-    void setVisibility(int viewId, int visibility) {
+    @Override
+    protected void setVisibility(int viewId, int visibility) {
         View view = this.view.findViewById(viewId);
         if (view == null) {
             return;

@@ -1,5 +1,7 @@
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.skin.builtin;
 
+import ru.gelin.android.weather.notification.AbstractWeatherLayout;
+import ru.gelin.android.weather.notification.R;
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -20,7 +22,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     @Override
-    void setText(int viewId, String text) {
+    protected void setText(int viewId, String text) {
         if (skipView(viewId)) { //TODO: how to determine if the view is absent?
             return;
         }
@@ -31,7 +33,8 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         views.setTextViewText(viewId, text);
     }
     
-    void setVisibility(int viewId, int visibility) {
+    @Override
+    protected void setVisibility(int viewId, int visibility) {
         if (skipView(viewId)) { //TODO: how to determine if the view is absent?
             return;
         }

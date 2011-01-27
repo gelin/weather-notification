@@ -15,7 +15,7 @@ public class SimpleWeatherTest {
         assertTrue(weather.isEmpty());
         weather.time = new Date();
         assertTrue(weather.isEmpty());
-        weather.conditions = new ArrayList();
+        weather.conditions = new ArrayList<WeatherCondition>();
         assertTrue(weather.isEmpty());
         weather.conditions.add(new SimpleWeatherCondition());
         assertFalse(weather.isEmpty()); //????

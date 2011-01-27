@@ -13,6 +13,7 @@ import ru.gelin.android.weather.SimpleWeather;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,6 +21,51 @@ import android.os.Parcelable;
 public class ParcelableWeather extends SimpleWeather implements Parcelable {
 
     public ParcelableWeather() {
+    }
+    
+    /**
+     *  Copy constructor.
+     */
+    public ParcelableWeather(Weather weather) {
+        Location location = weather.getLocation();
+        if (location == null) {
+            setLocation(new SimpleLocation(null));
+        } else {
+            setLocation(new SimpleLocation(location.getText()));
+        }
+        Date time = weather.getTime();
+        if (time == null) {
+            setTime(new Date(0));
+        } else {
+            setTime(time);
+        }
+        UnitSystem unit = weather.getUnitSystem();
+        if (unit == null) {
+            setUnitSystem(UnitSystem.valueOf(UNIT_SYSTEM_DEFAULT));
+        } else {
+            setUnitSystem(unit);
+        }
+        List<WeatherCondition> conditions = weather.getConditions();
+        if (conditions == null) {
+            return;
+        }
+        List<WeatherCondition> copyConditions = new ArrayList<WeatherCondition>();
+        for (WeatherCondition condition : conditions) {
+            SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
+            copyCondition.setConditionText(condition.getConditionText());
+            Temperature temp = condition.getTemperature();
+            SimpleTemperature copyTemp = new SimpleTemperature(unit);
+            if (temp != null) {
+                copyTemp.setCurrent(temp.getCurrent(), unit);
+                copyTemp.setLow(temp.getLow(), unit);
+                copyTemp.setHigh(temp.getHigh(), unit);
+            }
+            copyCondition.setTemperature(copyTemp);
+            copyCondition.setHumidityText(condition.getHumidityText());
+            copyCondition.setWindText(condition.getWindText());
+            copyConditions.add(copyCondition);
+        }
+        setConditions(copyConditions);
     }
     
     @Override

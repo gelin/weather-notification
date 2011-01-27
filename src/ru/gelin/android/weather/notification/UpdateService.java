@@ -20,6 +20,7 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.google.AndroidGoogleLocation;
 import ru.gelin.android.weather.google.GoogleWeatherSource;
+import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -163,7 +164,7 @@ public class UpdateService extends Service implements Runnable {
         stopSelf();
         Log.d(TAG, logMessage);
         storage.updateTime();
-        WeatherNotification.update(this);
+        WeatherNotificationManager.update(this);
     }
     
     @Override
@@ -259,7 +260,7 @@ public class UpdateService extends Service implements Runnable {
                 }
                 break;
             }
-            WeatherNotification.update(UpdateService.this);
+            WeatherNotificationManager.update(UpdateService.this);
             stopSelf();
         }
     };
