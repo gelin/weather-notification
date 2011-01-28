@@ -51,11 +51,11 @@
             android:dependency="auto_location"/>
             
         <ru.gelin.android.preference.SummaryListPreference 
-                android:key="unit_system"
-                android:title="@string/unit_system"
-                android:entries="@array/unit_system_entries"
-                android:entryValues="@array/unit_system_values"
-                android:defaultValue="SI"/>
+                android:key="temp_unit"
+                android:title="@string/temp_unit"
+                android:entries="@array/temp_unit_entries"
+                android:entryValues="@array/temp_unit_values"
+                android:defaultValue="C"/>
     
     </PreferenceCategory>
 

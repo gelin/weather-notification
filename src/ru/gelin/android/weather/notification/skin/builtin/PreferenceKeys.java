@@ -1,7 +1,5 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
-import ru.gelin.android.weather.UnitSystem;
-
 /**
  *  Constants for preference keys.
  */
@@ -17,9 +15,9 @@ public interface PreferenceKeys {
     /** Notification text style default value */
     public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
     
-    /** Unit system preference name */
-    static final String UNIT_SYSTEM = "unit_system";
-    /** Unit system default value */
-    static final String UNIT_SYSTEM_DEFAULT = UnitSystem.SI.toString();
+    /** Temperature unit preference name */
+    static final String TEMP_UNIT = "temp_unit";
+    /** Temperature unit default value */
+    static final String TEMP_UNIT_DEFAULT = TemperatureUnit.C.toString();
 
 }

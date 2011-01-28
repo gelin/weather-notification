@@ -7,7 +7,7 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTER
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +50,7 @@ public class MainActivity extends PreferenceActivity
         autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
-        Preference unitPreference = findPreference(UNIT_SYSTEM);
+        Preference unitPreference = findPreference(TEMP_UNIT);
         unitPreference.setOnPreferenceChangeListener(this);
         
         startUpdate(false);
@@ -87,7 +87,7 @@ public class MainActivity extends PreferenceActivity
             startUpdate(true);
             return true;
         }
-        if (UNIT_SYSTEM.equals(key)) {
+        if (TEMP_UNIT.equals(key)) {
             WeatherStorage storage = new WeatherStorage(this);
             storage.updateTime();   //force redraw weather
             updateNotification();

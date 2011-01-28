@@ -20,9 +20,11 @@
     <string name="auto_location_summary_on">Автоматически определять текущее местоположение</string>
     <string name="auto_location_summary_off">Задать местоположение вручную</string>
     <string name="manual_location">Местоположение</string>
-    <string name="unit_system">Единица изменения температуры</string>
+    <string name="temp_unit">Единица изменения температуры</string>
     <string name="celsius">Градусы Цельсия</string>
     <string name="fahrenheit">Градусы Фаренгейта</string>
+    <string name="celsius_and_fahrenheit">Градусы Цельсия и Фаренгейта С&#x00B0;(F&#x00B0;)</string>
+    <string name="fahrenheit_and_celsius">Градусы Фаренгейта и Цельсия F&#x00B0;(C&#x00B0;)</string>
     <string name="update_time_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
     <string name="unknown_weather">Погода неизвестна</string>
     <string name="weather_update_empty">Погода для \"%s\" неизвестна</string>

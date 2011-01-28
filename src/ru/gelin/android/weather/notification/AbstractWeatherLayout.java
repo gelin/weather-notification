@@ -1,7 +1,7 @@
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT_DEFAULT;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +10,7 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.notification.skin.builtin.TemperatureUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -62,25 +63,29 @@ public abstract class AbstractWeatherLayout {
         
         SharedPreferences preferences = 
                 PreferenceManager.getDefaultSharedPreferences(this.context);
-        UnitSystem unit = UnitSystem.valueOf(preferences.getString(
-                UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT));
+        TemperatureUnit unit = TemperatureUnit.valueOf(preferences.getString(
+                TEMP_UNIT, TEMP_UNIT_DEFAULT));
         
-        Temperature temp = currentCondition.getTemperature(unit);
+        Temperature tempC = currentCondition.getTemperature(UnitSystem.SI);
+        Temperature tempF = currentCondition.getTemperature(UnitSystem.US);
+        UnitSystem mainUnit = unit.getUnitSystem();
+        Temperature mainTemp = currentCondition.getTemperature(mainUnit);
+        
         setVisibility(R.id.temp, View.VISIBLE);
-        setText(R.id.current_temp, formatTemp(temp.getCurrent()));
-        setText(R.id.high_temp, formatTemp(temp.getHigh()));
-        setText(R.id.low_temp, formatTemp(temp.getLow()));
+        setText(R.id.current_temp, formatTemp(tempC.getCurrent(), tempF.getCurrent(), unit));
+        setText(R.id.high_temp, formatTemp(mainTemp.getHigh()));
+        setText(R.id.low_temp, formatTemp(mainTemp.getLow()));
         
         setVisibility(R.id.forecasts, View.VISIBLE);
-        bindForecast(weather, unit, 1,
+        bindForecast(weather, mainUnit, 1,
                 R.id.forecast_1, R.id.forecast_day_1,
                 R.id.forecast_condition_1,
                 R.id.forecast_high_temp_1, R.id.forecast_low_temp_1);
-        bindForecast(weather, unit, 2,
+        bindForecast(weather, mainUnit, 2,
                 R.id.forecast_2, R.id.forecast_day_2,
                 R.id.forecast_condition_2,
                 R.id.forecast_high_temp_2, R.id.forecast_low_temp_2);
-        bindForecast(weather, unit, 3,
+        bindForecast(weather, mainUnit, 3,
                 R.id.forecast_3, R.id.forecast_day_3,
                 R.id.forecast_condition_3,
                 R.id.forecast_high_temp_3, R.id.forecast_low_temp_3);
@@ -125,14 +130,24 @@ public abstract class AbstractWeatherLayout {
         if (temp == Temperature.UNKNOWN) {
             return "";
         }
-        if (temp > 0) {
-            //return "+" + String.valueOf(temp) + "\u00B0";
-            return String.valueOf(temp) + "\u00B0";
+        return temp + "\u00B0";
+    }
+    
+    public static String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
+        if (tempC == Temperature.UNKNOWN || tempF == Temperature.UNKNOWN) {
+            return "";
         }
-        if (temp < 0) {
-            return String.valueOf(temp) + "\u00B0";
+        switch (unit) {
+        case C:
+            return tempC + "\u00B0C";
+        case F:
+            return tempC + "\u00B0F";
+        case CF:
+            return tempC + "\u00B0C(" + tempF + "\u00B0F)";
+        case FC:
+            return tempF + "\u00B0F(" + tempC + "\u00B0C)";
         }
-        return "0\u00B0";
+        return "";
     }
     
     Date addDays(Date date, int days) {

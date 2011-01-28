@@ -20,9 +20,11 @@
     <string name="auto_location_summary_on">Automatically detect the current location</string>
     <string name="auto_location_summary_off">Define the weather location manually</string>
     <string name="manual_location">Weather location</string>
-    <string name="unit_system">Temperature units</string>
+    <string name="temp_unit">Temperature units</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
+    <string name="celsius_and_fahrenheit">Celsius(Fahrenheit)</string>
+    <string name="fahrenheit_and_celsius">Fahrenheit(Celsius)</string>
     <string name="update_time_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
     <string name="unknown_weather">Weather is unknown</string>
     <string name="weather_update_empty">Weather for \"%s\" is unknown</string>
