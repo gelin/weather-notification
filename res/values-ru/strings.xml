@@ -11,7 +11,8 @@
     <string name="refresh_6h">Каждые шесть часов</string>
     <string name="refresh_12h">Каждые двенадцать часов</string>
     <string name="refresh_1d">Каждый день</string>
-    <string name="notification_style">Стиль значка</string>
+    <string name="notification_icon_style">Цвет текста значка</string>
+    <string name="notification_text_style">Цвет текста уведомления</string>
     <string name="notification_style_black_text">Черный текст</string>
     <string name="notification_style_white_text">Белый текст</string>
     <string name="location">Местоположение</string>

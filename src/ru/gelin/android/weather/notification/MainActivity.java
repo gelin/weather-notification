@@ -3,10 +3,11 @@ package ru.gelin.android.weather.notification;
 import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE;
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,8 +42,10 @@ public class MainActivity extends PreferenceActivity
         notificationPreference.setOnPreferenceChangeListener(this);
         Preference refreshInterval = findPreference(REFRESH_INTERVAL);
         refreshInterval.setOnPreferenceChangeListener(this);
-        Preference stylePreference = findPreference(NOTIFICATION_STYLE);
-        stylePreference.setOnPreferenceChangeListener(this);
+        Preference iconStylePreference = findPreference(NOTIFICATION_ICON_STYLE);
+        iconStylePreference.setOnPreferenceChangeListener(this);
+        Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
+        textStylePreference.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
         autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
@@ -75,7 +78,7 @@ public class MainActivity extends PreferenceActivity
             startUpdate(false);
             return true;
         }
-        if (NOTIFICATION_STYLE.equals(key)) {
+        if (NOTIFICATION_ICON_STYLE.equals(key) || NOTIFICATION_TEXT_STYLE.equals(key)) {
             updateNotification();
             return true;
         }

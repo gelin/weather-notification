@@ -1,6 +1,5 @@
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.CONDITION_TEXT;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.CURRENT_TEMP;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.HIGH_TEMP;
@@ -90,7 +89,7 @@ public class WeatherStorage {
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
         weather.setUnitSystem(UnitSystem.valueOf(
-                preferences.getString(UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT)));
+                preferences.getString(UNIT_SYSTEM, "SI")));
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {

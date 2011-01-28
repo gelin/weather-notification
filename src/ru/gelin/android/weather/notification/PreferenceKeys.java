@@ -1,7 +1,5 @@
 package ru.gelin.android.weather.notification;
 
-import ru.gelin.android.weather.UnitSystem;
-
 /**
  *  Constants for preference keys.
  */
@@ -17,11 +15,6 @@ public interface PreferenceKeys {
     /** Refresh interval default value */
     public static final String REFRESH_INTERVAL_DEFAULT = RefreshInterval.REFRESH_1H.toString();
     
-    /** Notification style preference key */
-    public static final String NOTIFICATION_STYLE = "notification_style";
-    /** Notification style default value */
-    public static final String NOTIFICATION_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
-    
     /** Auto location preferences key */
     static final String AUTO_LOCATION = "auto_location";
     /** Auto location default value */
@@ -31,10 +24,5 @@ public interface PreferenceKeys {
     static final String LOCATION = "location";
     /** Manual location default value */
     static final String LOCATION_DEFAULT = "";
-    
-    /** Unit system preference name */
-    static final String UNIT_SYSTEM = "unit_system";
-    /** Unit system default value */
-    static final String UNIT_SYSTEM_DEFAULT = UnitSystem.SI.toString();
 
 }

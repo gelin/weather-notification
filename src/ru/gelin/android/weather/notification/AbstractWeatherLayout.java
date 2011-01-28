@@ -1,7 +1,7 @@
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
 
 import java.util.Calendar;
 import java.util.Date;

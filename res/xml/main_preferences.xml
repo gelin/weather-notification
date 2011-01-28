@@ -20,8 +20,16 @@
             android:dependency="enable_notification"/>
             
         <ru.gelin.android.preference.SummaryListPreference 
-            android:key="notification_style"
-            android:title="@string/notification_style"
+            android:key="notification_icon_style"
+            android:title="@string/notification_icon_style"
+            android:entries="@array/notification_style_entries"
+            android:entryValues="@array/notification_style_values"
+            android:defaultValue="BLACK_TEXT"
+            android:dependency="enable_notification"/>
+            
+        <ru.gelin.android.preference.SummaryListPreference 
+            android:key="notification_text_style"
+            android:title="@string/notification_text_style"
             android:entries="@array/notification_style_entries"
             android:entryValues="@array/notification_style_values"
             android:defaultValue="BLACK_TEXT"

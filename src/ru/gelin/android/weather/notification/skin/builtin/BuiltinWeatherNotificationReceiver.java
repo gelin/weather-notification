@@ -1,13 +1,14 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.AbstractWeatherLayout.formatTemp;
-import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE;
-import static ru.gelin.android.weather.notification.PreferenceKeys.NOTIFICATION_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM;
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.NotificationStyle;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
 import android.app.Notification;
@@ -39,12 +40,14 @@ public class BuiltinWeatherNotificationReceiver extends
     
         UnitSystem unit = UnitSystem.valueOf(prefs.getString(
             UNIT_SYSTEM, UNIT_SYSTEM_DEFAULT));
-        NotificationStyle style = NotificationStyle.valueOf(prefs.getString(
-            NOTIFICATION_STYLE, NOTIFICATION_STYLE_DEFAULT));
+        NotificationStyle iconStyle = NotificationStyle.valueOf(prefs.getString(
+            NOTIFICATION_ICON_STYLE, NOTIFICATION_ICON_STYLE_DEFAULT));
+        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
+                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
-        notification.icon = style.getIconRes();
+        notification.icon = iconStyle.getIconRes();
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(R.string.unknown_weather);
@@ -60,7 +63,8 @@ public class BuiltinWeatherNotificationReceiver extends
         notification.when = weather.getTime().getTime();
         notification.flags |= Notification.FLAG_NO_CLEAR;
         
-        notification.contentView = new RemoteViews(context.getPackageName(), R.layout.notification);
+        notification.contentView = new RemoteViews(context.getPackageName(), 
+                textStyle.getLayoutRes());
         RemoteWeatherLayout layout = new RemoteWeatherLayout(context, notification.contentView);
         layout.bind(weather);
         

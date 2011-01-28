@@ -1,7 +1,5 @@
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.UNIT_SYSTEM_DEFAULT;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +39,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         }
         UnitSystem unit = weather.getUnitSystem();
         if (unit == null) {
-            setUnitSystem(UnitSystem.valueOf(UNIT_SYSTEM_DEFAULT));
+            setUnitSystem(UnitSystem.SI);
         } else {
             setUnitSystem(unit);
         }
@@ -119,7 +117,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         try {
             setUnitSystem(UnitSystem.valueOf(unit));
         } catch (Exception e) {
-            setUnitSystem(UnitSystem.valueOf(UNIT_SYSTEM_DEFAULT));
+            setUnitSystem(UnitSystem.SI);
         }
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (in.dataAvail() > 6) {    //each condition takes 6 positions
