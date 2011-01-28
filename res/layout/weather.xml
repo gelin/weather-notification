@@ -66,14 +66,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     style="?android:attr/textAppearanceLarge"
-                    android:textSize="30sp"/>
+                    android:textSize="25sp"/>
+                    <!-- android:text="X&#x00B0;" -->
+                    
+                <TextView android:id="@+id/current_temp_alt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="?android:attr/textColorPrimary"/>
                     <!-- android:text="X&#x00B0;" -->
                 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_horizontal">
+                    android:layout_gravity="center_horizontal">
                 
                     <TextView android:id="@+id/high_temp"
                         android:layout_width="wrap_content"

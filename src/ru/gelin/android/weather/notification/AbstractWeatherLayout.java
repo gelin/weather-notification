@@ -72,7 +72,22 @@ public abstract class AbstractWeatherLayout {
         Temperature mainTemp = currentCondition.getTemperature(mainUnit);
         
         setVisibility(R.id.temp, View.VISIBLE);
-        setText(R.id.current_temp, formatTemp(tempC.getCurrent(), tempF.getCurrent(), unit));
+        setText(R.id.current_temp, formatTemp(mainTemp.getCurrent(), unit));
+        switch(unit) {
+        case C: case F:
+            setVisibility(R.id.current_temp_alt, View.GONE);
+            break;
+        case CF:
+            setText(R.id.current_temp_alt, formatTemp(tempF.getCurrent(),
+                    TemperatureUnit.F));
+            setVisibility(R.id.current_temp_alt, View.VISIBLE);
+            break;
+        case FC:
+            setText(R.id.current_temp_alt, formatTemp(tempC.getCurrent(),
+                    TemperatureUnit.C));
+            setVisibility(R.id.current_temp_alt, View.VISIBLE);
+            break;
+        }
         setText(R.id.high_temp, formatTemp(mainTemp.getHigh()));
         setText(R.id.low_temp, formatTemp(mainTemp.getLow()));
         
@@ -133,6 +148,23 @@ public abstract class AbstractWeatherLayout {
         return temp + "\u00B0";
     }
     
+    public static String formatTemp(int temp, TemperatureUnit unit) {
+        if (temp == Temperature.UNKNOWN) {
+            return "";
+        }
+        switch (unit) {
+        case C:
+            return temp + "\u00B0C";
+        case F:
+            return temp + "\u00B0F";
+        case CF:
+            return temp + "\u00B0C";
+        case FC:
+            return temp + "\u00B0F";
+        }
+        return "";
+    }
+    
     public static String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
         if (tempC == Temperature.UNKNOWN || tempF == Temperature.UNKNOWN) {
             return "";
@@ -141,7 +173,7 @@ public abstract class AbstractWeatherLayout {
         case C:
             return tempC + "\u00B0C";
         case F:
-            return tempC + "\u00B0F";
+            return tempF + "\u00B0F";
         case CF:
             return tempC + "\u00B0C(" + tempF + "\u00B0F)";
         case FC:
