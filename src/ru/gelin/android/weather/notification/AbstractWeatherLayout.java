@@ -47,6 +47,9 @@ public abstract class AbstractWeatherLayout {
         Date timeValue = weather.getTime();
         if (timeValue.getTime() == 0) {
             setText(R.id.update_time, "");
+        } else if (isDate(timeValue)) {
+            setText(R.id.update_time, this.context.getString(
+                    R.string.update_date_format, timeValue));
         } else {
             setText(R.id.update_time, this.context.getString(
                 R.string.update_time_format, timeValue));
@@ -187,6 +190,18 @@ public abstract class AbstractWeatherLayout {
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, days);
         return calendar.getTime();
+    }
+    
+    /**
+     *  Returns true if the provided date has zero (0:00:00) time.
+     */
+    boolean isDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.HOUR) == 0 &&
+                calendar.get(Calendar.MINUTE) == 0 &&
+                calendar.get(Calendar.SECOND) == 0 &&
+                calendar.get(Calendar.MILLISECOND) == 0;
     }
 
 }
