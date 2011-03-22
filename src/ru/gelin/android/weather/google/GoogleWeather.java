@@ -31,10 +31,13 @@ import ru.gelin.android.weather.WeatherException;
  */
 public class GoogleWeather implements Weather {
 
+    /** Format for dates in the XML */
+    static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     /** Format for times in the XML */
     static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     
     Location location = new SimpleLocation("");
+    Date date = new Date(0);
     Date time = new Date(0);
     UnitSystem unit = UnitSystem.SI;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
@@ -58,7 +61,11 @@ public class GoogleWeather implements Weather {
     
     @Override
     public Date getTime() {
-        return this.time;
+        if (this.time.after(this.date)) {   //sometimes time is 0, but the date has correct value
+            return this.time;
+        } else {
+            return this.date;
+        }
     }
 
     @Override
@@ -111,6 +118,12 @@ public class GoogleWeather implements Weather {
             String data = attributes.getValue("data");
             if ("city".equals(localName)) {
                 GoogleWeather.this.location = new SimpleLocation(data);
+            } else if ("forecast_date".equals(localName)) {
+                try {
+                    GoogleWeather.this.date = DATE_FORMAT.parse(data);
+                } catch (ParseException e) {
+                    throw new SAXException("invalid 'forecast_date' format: " + data, e);
+                }
             } else if ("current_date_time".equals(localName)) {
                 try {
                     GoogleWeather.this.time = TIME_FORMAT.parse(data);

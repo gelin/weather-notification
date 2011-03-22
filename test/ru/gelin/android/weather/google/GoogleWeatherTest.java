@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.google;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
@@ -127,5 +128,48 @@ public class GoogleWeatherTest {
         assertEquals(-9, temp0.getLow());   //-23 * 9 / 5 + 32
         assertEquals(-4, temp0.getHigh());  //-20 * 9 / 5 + 32
     }
-
+    
+    @Test
+    public void testUnknownWeather() throws Exception {
+        InputStream xml = getClass().getResourceAsStream("google_weather_api_ru_2011-03.xml");
+        Weather weather = new GoogleWeather(new InputStreamReader(xml, "UTF-8"));
+        
+        assertFalse(weather.isEmpty());
+        
+        assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(2011, Calendar.MARCH, 22, 0, 0, 0);
+        assertEquals(calendar.getTime(), weather.getTime());
+        assertEquals(UnitSystem.SI, weather.getUnitSystem());
+        
+        assertEquals(4, weather.getConditions().size());
+        
+        WeatherCondition condition0 = weather.getConditions().get(0);
+        assertEquals("Преимущественно облачно", condition0.getConditionText());
+        Temperature temp0 = condition0.getTemperature();
+        assertEquals(-5, temp0.getCurrent());
+        assertEquals(-9, temp0.getLow());
+        assertEquals(-1, temp0.getHigh());
+        assertEquals("Влажность: 83 %", condition0.getHumidityText());
+        assertEquals("Ветер: Ю, 4 м/с", condition0.getWindText());
+        
+        WeatherCondition condition1 = weather.getConditions().get(1);
+        assertEquals("Переменная облачность", condition1.getConditionText());
+        Temperature temp1 = condition1.getTemperature();
+        assertEquals(-7, temp1.getLow());
+        assertEquals(-2, temp1.getHigh());
+        
+        WeatherCondition condition2 = weather.getConditions().get(2);
+        assertEquals("Преимущественно облачно", condition2.getConditionText());
+        Temperature temp2 = condition2.getTemperature();
+        assertEquals(-7, temp2.getLow());
+        assertEquals(3, temp2.getHigh());
+        
+        WeatherCondition condition3 = weather.getConditions().get(3);
+        assertEquals("Ливневый снег", condition3.getConditionText());
+        Temperature temp3 = condition3.getTemperature();
+        assertEquals(-3, temp3.getLow());
+        assertEquals(2, temp3.getHigh());
+    }
 }
