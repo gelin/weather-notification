@@ -65,6 +65,7 @@ public class BuiltinWeatherNotificationReceiver extends
 
         notification.when = weather.getTime().getTime();
         notification.flags |= Notification.FLAG_NO_CLEAR;
+        notification.flags |= Notification.FLAG_ONGOING_EVENT;
         
         notification.contentView = new RemoteViews(context.getPackageName(), 
                 textStyle.getLayoutRes());
