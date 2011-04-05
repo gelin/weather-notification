@@ -4,6 +4,8 @@
     <string name="notification">Уведомление</string>
     <string name="enable_notification">Включить уведомление</string>
     <string name="refresh_interval">Период обновления</string>
+    <string name="refresh_15m">Каждые пятнадцать минут</string>
+    <string name="refresh_30m">Каждые тридцать минут</string>
     <string name="refresh_1h">Каждый час</string>
     <string name="refresh_2h">Каждые два часа</string>
     <string name="refresh_3h">Каждые три часа</string>

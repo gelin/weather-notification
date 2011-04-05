@@ -2,6 +2,8 @@
 <resources>
 
     <string-array name="refresh_interval_entries">
+        <item>@string/refresh_15m</item>
+        <item>@string/refresh_30m</item>
         <item>@string/refresh_1h</item>
         <item>@string/refresh_2h</item>
         <item>@string/refresh_3h</item>
@@ -13,6 +15,8 @@
         <item>@string/refresh_1d</item>
     </string-array>
     <string-array name="refresh_interval_values">
+        <item>REFRESH_15M</item>
+        <item>REFRESH_30M</item>
         <item>REFRESH_1H</item>
         <item>REFRESH_2H</item>
         <item>REFRESH_3H</item>

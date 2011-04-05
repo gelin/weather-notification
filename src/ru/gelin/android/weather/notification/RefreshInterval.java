@@ -6,6 +6,8 @@ package ru.gelin.android.weather.notification;
  */
 public enum RefreshInterval {
     
+    REFRESH_15M(900 * 1000),
+    REFRESH_30M(1800 * 1000),
     REFRESH_1H(3600 * 1000),
     REFRESH_2H(2 * 3600 * 1000),
     REFRESH_3H(3 * 3600 * 1000),

@@ -4,6 +4,8 @@
     <string name="notification">Notification</string>
     <string name="enable_notification">Enable notification</string>
     <string name="refresh_interval">Refresh interval</string>
+    <string name="refresh_15m">Every fifteen minutes</string>
+    <string name="refresh_30m">Every thirty minutes</string>
     <string name="refresh_1h">Every hour</string>
     <string name="refresh_2h">Every two hours</string>
     <string name="refresh_3h">Every three hours</string>
