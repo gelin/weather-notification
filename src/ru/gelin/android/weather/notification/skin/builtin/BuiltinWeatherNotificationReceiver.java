@@ -72,7 +72,8 @@ public class BuiltinWeatherNotificationReceiver extends
         RemoteWeatherLayout layout = new RemoteWeatherLayout(context, notification.contentView);
         layout.bind(weather);
         
-        notification.contentIntent = getMainActivityPendingIntent(context);
+        notification.contentIntent = WeatherInfoActivity.getPendingIntent(context);
+        //notification.contentIntent = getMainActivityPendingIntent(context);
         
         getNotificationManager(context).notify(ID, notification);
     }
