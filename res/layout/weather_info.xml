@@ -27,7 +27,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15sp">
+    android:padding="10sp">
     
     <LinearLayout android:id="@+id/current_condition" 
         android:layout_width="fill_parent"
@@ -129,8 +129,7 @@
     
     <TableLayout android:id="@+id/forecasts"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30sp">
+        android:layout_height="wrap_content">
     
         <TableRow android:id="@+id/forecast_1"
             android:layout_width="fill_parent"
@@ -230,6 +229,7 @@
     <LinearLayout android:id="@+id/current_condition" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
         android:orientation="horizontal">
     
         <ImageButton android:id="@+id/refresh_button"

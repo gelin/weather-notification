@@ -23,7 +23,9 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.UpdateService;
 import ru.gelin.android.weather.notification.WeatherLayout;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
@@ -31,6 +33,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
 public class WeatherInfoActivity extends Activity {
     
@@ -38,6 +43,25 @@ public class WeatherInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_info);
+        
+        ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
+        refreshButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateService.start(WeatherInfoActivity.this, true, true);
+            }
+        });
+        
+        ImageButton preferencesButton = (ImageButton)findViewById(R.id.preferences_button); 
+        preferencesButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(WeatherInfoActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
     }
     
     @Override

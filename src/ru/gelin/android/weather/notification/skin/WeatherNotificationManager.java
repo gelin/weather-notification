@@ -51,7 +51,7 @@ public class WeatherNotificationManager {
         }
         notify(context);
     }
-    
+
     /**
      *  Returns true if the notification is enabled.
      */
