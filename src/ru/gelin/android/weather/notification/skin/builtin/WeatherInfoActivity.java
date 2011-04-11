@@ -65,6 +65,14 @@ public class WeatherInfoActivity extends Activity {
                 startActivity(intent);
             }
         });
+        
+        View wholeActivity = findViewById(R.id.weather_info);
+        wholeActivity.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     
     @Override
