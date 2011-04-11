@@ -33,11 +33,15 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.notification.ParcelableWeather;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
 import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
@@ -51,6 +55,27 @@ public class BuiltinWeatherNotificationReceiver extends
     static final int ID = 1;
     /** Icon level shift relative to temp value */
     static final int ICON_LEVEL_SHIFT = 100;
+    /** Key to store the weather in the bundle */
+    static final String WEATHER_KEY = "weather";
+    
+    /** Handler to receive the weather */
+    static Handler handler;
+    
+    /**
+     *  Registers the handler to receive the new weather.
+     *  The handler is owned by activity which have initiated the update.
+     *  The handler is used to update the weather displayed by the activity. 
+     */
+    static synchronized void registerWeatherHandler(Handler handler) {
+        BuiltinWeatherNotificationReceiver.handler = handler;
+    }
+    
+    /**
+     *  Unregisters the weather update handler.
+     */
+    static synchronized void unregisterWeatherHandler() {
+        BuiltinWeatherNotificationReceiver.handler = null;
+    }
     
     @Override
     protected void cancel(Context context) {
@@ -98,6 +123,8 @@ public class BuiltinWeatherNotificationReceiver extends
         //notification.contentIntent = getMainActivityPendingIntent(context);
         
         getNotificationManager(context).notify(ID, notification);
+        
+        notifyHandler(weather);
     }
     
     String formatTicker(Context context, Weather weather, TemperatureUnit unit) {
@@ -107,6 +134,18 @@ public class BuiltinWeatherNotificationReceiver extends
         return context.getString(R.string.notification_ticker,
                 weather.getLocation().getText(),
                 formatTemp(tempC.getCurrent(), tempF.getCurrent(), unit));
+    }
+    
+    void notifyHandler(Weather weather) {
+        synchronized (BuiltinWeatherNotificationReceiver.class) {   //monitor of static methods
+            if (handler == null) {
+                return;
+            }
+            Message message = handler.obtainMessage();
+            Bundle bundle = message.getData();
+            bundle.putParcelable(WEATHER_KEY, new ParcelableWeather(weather));
+            message.sendToTarget();
+        }
     }
 
 }

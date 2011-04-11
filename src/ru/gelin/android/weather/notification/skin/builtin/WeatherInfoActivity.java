@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.builtin;
 
+import static ru.gelin.android.weather.notification.skin.builtin.BuiltinWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.R;
@@ -33,6 +34,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -67,10 +70,17 @@ public class WeatherInfoActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        BuiltinWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
         WeatherStorage storage = new WeatherStorage(this);
         WeatherLayout layout = new WeatherLayout(this, findViewById(R.id.weather_info));
         Weather weather = storage.load();
         layout.bind(weather);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BuiltinWeatherNotificationReceiver.unregisterWeatherHandler();
     }
     
     /**
@@ -82,5 +92,18 @@ public class WeatherInfoActivity extends Activity {
         //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
+
+    final Handler weatherHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Weather weather = (Weather)msg.getData().getParcelable(WEATHER_KEY);
+            if (weather == null) {
+                return;
+            }
+            WeatherLayout layout = new WeatherLayout(
+                    WeatherInfoActivity.this, findViewById(R.id.weather_info));
+            layout.bind(weather);
+        };
+    };
 
 }

@@ -233,6 +233,7 @@ public class UpdateService extends Service implements Runnable {
      *  Handles weather update result.
      */
     final Handler internalHandler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             synchronized(staticLock) {
                 threadRunning = false;
