@@ -73,6 +73,18 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         case R.id.current_temp_alt:
         case R.id.high_temp:
         case R.id.low_temp:
+        case R.id.forecast_1:
+        case R.id.forecast_2:
+        case R.id.forecast_3:
+        case R.id.forecast_day_1:
+        case R.id.forecast_day_2:
+        case R.id.forecast_day_3:
+        case R.id.forecast_high_temp_1:
+        case R.id.forecast_high_temp_2:
+        case R.id.forecast_high_temp_3:
+        case R.id.forecast_low_temp_1:
+        case R.id.forecast_low_temp_2:
+        case R.id.forecast_low_temp_3:
             return false;
         default:
             return true;
