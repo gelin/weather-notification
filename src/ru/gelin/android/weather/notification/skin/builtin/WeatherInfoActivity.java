@@ -40,6 +40,9 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 
 public class WeatherInfoActivity extends Activity {
@@ -50,10 +53,11 @@ public class WeatherInfoActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.weather_info);
         
-        ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
+        final ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
         refreshButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                startProgress();
                 UpdateService.start(WeatherInfoActivity.this, true, true);
             }
         });
@@ -109,6 +113,7 @@ public class WeatherInfoActivity extends Activity {
     final Handler weatherHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            stopProgress();
             Weather weather = (Weather)msg.getData().getParcelable(WEATHER_KEY);
             if (weather == null) {
                 return;
@@ -118,5 +123,17 @@ public class WeatherInfoActivity extends Activity {
             layout.bind(weather);
         };
     };
+    
+    void startProgress() {
+        View refreshButton = findViewById(R.id.refresh_button);
+        refreshButton.setEnabled(false);
+        //Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        //refreshButton.startAnimation(rotate);
+    }
+    
+    void stopProgress() {
+        View refreshButton = findViewById(R.id.refresh_button);
+        refreshButton.setEnabled(true);
+    }
 
 }
