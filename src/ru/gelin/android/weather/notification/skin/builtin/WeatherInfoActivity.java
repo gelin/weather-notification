@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.skin.builtin.BuiltinWeatherNotificationReceiver.WEATHER_KEY;
+import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.R;
@@ -37,6 +38,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
@@ -45,6 +47,7 @@ public class WeatherInfoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.weather_info);
         
         ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
@@ -83,6 +86,8 @@ public class WeatherInfoActivity extends Activity {
         WeatherLayout layout = new WeatherLayout(this, findViewById(R.id.weather_info));
         Weather weather = storage.load();
         layout.bind(weather);
+        //Location location = weather.getLocation();
+        //setTitle(location == null ? "" : location.getText());
     }
     
     @Override

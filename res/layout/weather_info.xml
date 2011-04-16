@@ -26,13 +26,37 @@
     android:id="@+id/weather_info"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10sp">
+    android:orientation="vertical">
+    <!-- android:padding="10sp" -->
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="20sp">
+    
+        <TextView android:id="@+id/location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/textAppearanceMedium"/>
+            <!-- android:text="Here" -->
+
+        <TextView android:id="@+id/update_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/textAppearanceSmall"/>
+            <!-- android:text="updated" -->
+    </LinearLayout>
     
     <LinearLayout android:id="@+id/current_condition" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp">
         
         <LinearLayout
             android:layout_width="fill_parent"
@@ -58,19 +82,6 @@
                 style="?android:attr/textAppearanceMedium"/>
                 <!-- android:text="Humidity" -->
 
-            <TextView android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/textAppearanceSmall"/>
-                <!-- android:text="Here" -->
-            
-            <TextView android:id="@+id/update_time"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorTertiary"/>
-                <!-- android:text="updated" -->
-            
         </LinearLayout>
         
         <FrameLayout android:id="@+id/temp"
@@ -129,7 +140,10 @@
     
     <TableLayout android:id="@+id/forecasts"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp">
     
         <TableRow android:id="@+id/forecast_1"
             android:layout_width="fill_parent"
@@ -226,10 +240,10 @@
     
     </TableLayout>
     
-    <LinearLayout android:id="@+id/current_condition" 
+    <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
+        android:layout_marginTop="30sp"
         android:orientation="horizontal">
     
         <ImageButton android:id="@+id/refresh_button"
