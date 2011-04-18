@@ -28,6 +28,19 @@
     android:orientation="vertical"
     android:padding="15sp">
     
+    <TextView android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/textAppearanceMedium"/>
+        <!-- android:text="Here" -->
+            
+    <TextView android:id="@+id/update_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorTertiary"/>
+        <!-- android:text="updated" -->
+    
     <LinearLayout android:id="@+id/current_condition" 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -57,19 +70,6 @@
                 style="?android:attr/textAppearanceMedium"/>
                 <!-- android:text="Humidity" -->
                 
-            <TextView android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/textAppearanceSmall"/>
-                <!-- android:text="Here" -->
-            
-            <TextView android:id="@+id/update_time"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorTertiary"/>
-                <!-- android:text="updated" -->
-            
         </LinearLayout>
         
         <FrameLayout android:id="@+id/temp"
@@ -126,6 +126,7 @@
         
     </LinearLayout>
     
+    <!--
     <TableLayout android:id="@+id/forecasts"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -225,5 +226,6 @@
         </TableRow>
     
     </TableLayout>
+    -->
     
 </LinearLayout>

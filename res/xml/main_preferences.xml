@@ -24,9 +24,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ru.gelin.android.weather.notification.WeatherPreference
-            android:key="weather"/>
-
     <PreferenceCategory android:title="@string/notification">
     
         <CheckBoxPreference android:key="enable_notification"
@@ -42,22 +39,6 @@
             android:defaultValue="REFRESH_1H"
             android:dependency="enable_notification"/>
             
-        <ru.gelin.android.preference.SummaryListPreference 
-            android:key="notification_icon_style"
-            android:title="@string/notification_icon_style"
-            android:entries="@array/notification_style_entries"
-            android:entryValues="@array/notification_style_values"
-            android:defaultValue="BLACK_TEXT"
-            android:dependency="enable_notification"/>
-            
-        <ru.gelin.android.preference.SummaryListPreference 
-            android:key="notification_text_style"
-            android:title="@string/notification_text_style"
-            android:entries="@array/notification_style_entries"
-            android:entryValues="@array/notification_style_values"
-            android:defaultValue="BLACK_TEXT"
-            android:dependency="enable_notification"/>
-    
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/location">
@@ -72,7 +53,34 @@
         <ru.gelin.android.preference.SummaryTextPreference android:key="location"
             android:title="@string/manual_location"
             android:dependency="auto_location"/>
-            
+
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/weather">
+    
+        <ru.gelin.android.weather.notification.WeatherPreference
+            android:key="weather"/>
+    
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/skin">
+    
+        <ru.gelin.android.preference.SummaryListPreference 
+            android:key="notification_icon_style"
+            android:title="@string/notification_icon_style"
+            android:entries="@array/notification_style_entries"
+            android:entryValues="@array/notification_style_values"
+            android:defaultValue="BLACK_TEXT"
+            android:dependency="enable_notification"/>
+
+        <ru.gelin.android.preference.SummaryListPreference 
+            android:key="notification_text_style"
+            android:title="@string/notification_text_style"
+            android:entries="@array/notification_style_entries"
+            android:entryValues="@array/notification_style_values"
+            android:defaultValue="BLACK_TEXT"
+            android:dependency="enable_notification"/>
+
         <ru.gelin.android.preference.SummaryListPreference 
                 android:key="temp_unit"
                 android:title="@string/temp_unit"
