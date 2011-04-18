@@ -105,8 +105,9 @@ public class WeatherInfoActivity extends Activity {
      */
     protected static PendingIntent getPendingIntent(Context context) {
         Intent intent = new Intent(context, WeatherInfoActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
