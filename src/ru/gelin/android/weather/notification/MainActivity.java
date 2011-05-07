@@ -78,7 +78,7 @@ public class MainActivity extends PreferenceActivity
         startUpdate(false);
     }
 
-    @Override
+    //@Override
     public boolean onPreferenceClick(Preference preference) {
         String key = preference.getKey();
         if (WEATHER.equals(key)) {
@@ -88,7 +88,7 @@ public class MainActivity extends PreferenceActivity
         return false;
     }
 
-    @Override
+    //@Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         if (WEATHER.equals(key)) {
@@ -130,7 +130,7 @@ public class MainActivity extends PreferenceActivity
      */
     void updateNotification() {
         handler.post(new Runnable() {
-            @Override
+            //@Override
             public void run() {
                 WeatherNotificationManager.update(MainActivity.this);
             }

@@ -37,17 +37,17 @@ public class SimpleLocation implements Location {
         this.text = text;
     }
     
-    @Override
+    //@Override
     public String getQuery() {
         return this.text;
     }
 
-    @Override
+    //@Override
     public String getText() {
         return this.text;
     }
     
-    @Override
+    //@Override
     public boolean isEmpty() {
         return this.text == null || this.text.length() == 0;
     }

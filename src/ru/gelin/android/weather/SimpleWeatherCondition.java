@@ -61,17 +61,17 @@ public class SimpleWeatherCondition implements WeatherCondition {
         this.humidityText = text;
     }
     
-    @Override
+    //@Override
     public String getConditionText() {
         return this.conditionText;
     }
 
-    @Override
+    //@Override
     public Temperature getTemperature() {
         return this.temperature;
     }
 
-    @Override
+    //@Override
     public Temperature getTemperature(UnitSystem unit) {
         if (this.temperature == null) {
             return null;
@@ -82,12 +82,12 @@ public class SimpleWeatherCondition implements WeatherCondition {
         return this.temperature.convert(unit);
     }
 
-    @Override
+    //@Override
     public String getWindText() {
         return this.windText;
     }
     
-    @Override
+    //@Override
     public String getHumidityText() {
         return this.humidityText;
     }

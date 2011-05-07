@@ -48,12 +48,12 @@ public class GoogleWeatherSource implements WeatherSource {
     /** Charset pattern */
     static final String CHARSET = "charset=";
     
-    @Override
+    //@Override
     public Weather query(Location location) throws WeatherException {
         return query(location, Locale.getDefault());
     }
 
-    @Override
+    //@Override
     public Weather query(Location location, Locale locale)
             throws WeatherException {
         String fullUrl;

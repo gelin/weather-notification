@@ -55,7 +55,7 @@ public class WeatherInfoActivity extends Activity {
         
         final ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
         refreshButton.setOnClickListener(new OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View v) {
                 startProgress();
                 UpdateService.start(WeatherInfoActivity.this, true, true);
@@ -64,7 +64,7 @@ public class WeatherInfoActivity extends Activity {
         
         ImageButton preferencesButton = (ImageButton)findViewById(R.id.preferences_button); 
         preferencesButton.setOnClickListener(new OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View v) {
                 finish();
                 Intent intent = new Intent(WeatherInfoActivity.this, MainActivity.class);
@@ -75,7 +75,7 @@ public class WeatherInfoActivity extends Activity {
         
         View wholeActivity = findViewById(R.id.weather_info);
         wholeActivity.setOnClickListener(new OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View v) {
                 finish();
             }

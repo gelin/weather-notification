@@ -68,22 +68,22 @@ public class SimpleWeather implements Weather {
         this.conditions = conditions;
     }
     
-    @Override
+    //@Override
     public Location getLocation() {
         return this.location;
     }
 
-    @Override
+    //@Override
     public Date getTime() {
         return this.time;
     }
 
-    @Override
+    //@Override
     public UnitSystem getUnitSystem() {
         return this.unit;
     }
     
-    @Override
+    //@Override
     public List<WeatherCondition> getConditions() {
         if (this.conditions == null) {
             return new ArrayList<WeatherCondition>();
@@ -91,7 +91,7 @@ public class SimpleWeather implements Weather {
         return this.conditions;
     }
     
-    @Override
+    //@Override
     public boolean isEmpty() {
         if (this.time == null || this.time.getTime() == 0) {
             return true;

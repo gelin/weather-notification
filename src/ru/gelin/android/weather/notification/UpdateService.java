@@ -189,7 +189,7 @@ public class UpdateService extends Service implements Runnable {
         WeatherNotificationManager.update(this);
     }
     
-    @Override
+    //@Override
     public void run() {
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);

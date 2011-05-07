@@ -57,7 +57,7 @@ public class AndroidGoogleLocation implements Location {
      *  Creates the query with geo coordinates. 
      *  For example: ",,,30670000,104019996"
      */
-    @Override
+    //@Override
     public String getQuery() {
         if (location == null) {
             return "";
@@ -76,7 +76,7 @@ public class AndroidGoogleLocation implements Location {
                 convertGeo(location.getLongitude()));
     }
 
-    @Override
+    //@Override
     public String getText() {
         if (location == null) {
             return "";
@@ -100,7 +100,7 @@ public class AndroidGoogleLocation implements Location {
         return result.toString();
     }
     
-    @Override
+    //@Override
     public boolean isEmpty() {
         return this.location == null;
     }

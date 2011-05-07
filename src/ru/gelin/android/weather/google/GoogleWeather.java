@@ -76,12 +76,12 @@ public class GoogleWeather implements Weather {
         }
     }
     
-    @Override
+    //@Override
     public Location getLocation() {
         return this.location;
     }
     
-    @Override
+    //@Override
     public Date getTime() {
         if (this.time.after(this.date)) {   //sometimes time is 0, but the date has correct value
             return this.time;
@@ -90,17 +90,17 @@ public class GoogleWeather implements Weather {
         }
     }
 
-    @Override
+    //@Override
     public UnitSystem getUnitSystem() {
         return this.unit;
     }
     
-    @Override
+    //@Override
     public List<WeatherCondition> getConditions() {
         return this.conditions;
     }
     
-    @Override
+    //@Override
     public boolean isEmpty() {
         return this.conditions.isEmpty();
     }

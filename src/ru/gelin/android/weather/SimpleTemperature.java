@@ -76,7 +76,7 @@ public class SimpleTemperature implements Temperature {
         }
     }
     
-    @Override
+    //@Override
     public int getCurrent() {
         if (this.current == UNKNOWN) {
             return Math.round((getLow() + getHigh()) / 2f); 
@@ -84,7 +84,7 @@ public class SimpleTemperature implements Temperature {
         return this.current;
     }
 
-    @Override
+    //@Override
     public int getHigh() {
         if (this.high == UNKNOWN) {
             if (this.current == UNKNOWN) {
@@ -96,7 +96,7 @@ public class SimpleTemperature implements Temperature {
         return this.high;
     }
 
-    @Override
+    //@Override
     public int getLow() {
         if (this.low == UNKNOWN) {
             if (this.current == UNKNOWN) {
@@ -108,7 +108,7 @@ public class SimpleTemperature implements Temperature {
         return this.low;
     }
 
-    @Override
+    //@Override
     public UnitSystem getUnitSystem() {
         return this.unit;
     }

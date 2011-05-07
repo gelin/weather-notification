@@ -88,12 +88,12 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         setConditions(copyConditions);
     }
     
-    @Override
+    //@Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
+    //@Override
     public void writeToParcel(Parcel dest, int flags) {
         Location location = getLocation();
         if (location == null) {

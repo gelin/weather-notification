@@ -68,7 +68,7 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
     
-    @Override
+    //@Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
         if (!getKey().equals(key)) {
