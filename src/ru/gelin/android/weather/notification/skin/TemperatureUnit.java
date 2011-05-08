@@ -20,21 +20,25 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin;
 
-/**
- *  Constants for preference keys.
- */
-public interface PreferenceKeys {
+import ru.gelin.android.weather.UnitSystem;
 
-    /** Notification icon style preference key */
-    public static final String NOTIFICATION_ICON_STYLE = "notification_icon_style";
-    /** Notification icon style default value */
-    public static final String NOTIFICATION_ICON_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+public enum TemperatureUnit {
+
+    C(UnitSystem.SI),
+    F(UnitSystem.US),
+    CF(UnitSystem.SI),
+    FC(UnitSystem.US);
     
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+    UnitSystem unit;
     
+    TemperatureUnit(UnitSystem unit) {
+        this.unit = unit;
+    }
+    
+    public UnitSystem getUnitSystem() {
+        return this.unit;
+    }
+
 }

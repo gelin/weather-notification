@@ -22,8 +22,9 @@
 
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,7 +33,7 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.notification.skin.builtin.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.TemperatureUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -165,47 +166,6 @@ public abstract class AbstractWeatherLayout {
     protected abstract void setText(int viewId, String text);
     
     protected abstract void setVisibility(int viewId, int visibility);
-    
-    public static String formatTemp(int temp) {
-        if (temp == Temperature.UNKNOWN) {
-            return "";
-        }
-        return temp + "\u00B0";
-    }
-    
-    public static String formatTemp(int temp, TemperatureUnit unit) {
-        if (temp == Temperature.UNKNOWN) {
-            return "";
-        }
-        switch (unit) {
-        case C:
-            return temp + "\u00B0C";
-        case F:
-            return temp + "\u00B0F";
-        case CF:
-            return temp + "\u00B0C";
-        case FC:
-            return temp + "\u00B0F";
-        }
-        return "";
-    }
-    
-    public static String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
-        if (tempC == Temperature.UNKNOWN || tempF == Temperature.UNKNOWN) {
-            return "";
-        }
-        switch (unit) {
-        case C:
-            return tempC + "\u00B0C";
-        case F:
-            return tempF + "\u00B0F";
-        case CF:
-            return tempC + "\u00B0C(" + tempF + "\u00B0F)";
-        case FC:
-            return tempF + "\u00B0F(" + tempC + "\u00B0C)";
-        }
-        return "";
-    }
     
     Date addDays(Date date, int days) {
         Calendar calendar = Calendar.getInstance();

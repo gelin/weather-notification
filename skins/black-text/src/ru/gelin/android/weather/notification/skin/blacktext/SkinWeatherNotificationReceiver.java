@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2010  Denis Nelubin aka Gelin
+ *  Copyright (C) 2011  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,15 +20,15 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.blacktext;
 
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.builtin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_ICON_STYLE;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_ICON_STYLE_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
@@ -49,7 +49,7 @@ import android.widget.RemoteViews;
 /**
  *  Weather notification receiver built into basic application.
  */
-public class BuiltinWeatherNotificationReceiver extends
+public class SkinWeatherNotificationReceiver extends
         WeatherNotificationReceiver {
 
     /** Notification ID */
@@ -68,14 +68,14 @@ public class BuiltinWeatherNotificationReceiver extends
      *  The handler is used to update the weather displayed by the activity. 
      */
     static synchronized void registerWeatherHandler(Handler handler) {
-        BuiltinWeatherNotificationReceiver.handler = handler;
+        SkinWeatherNotificationReceiver.handler = handler;
     }
     
     /**
      *  Unregisters the weather update handler.
      */
     static synchronized void unregisterWeatherHandler() {
-        BuiltinWeatherNotificationReceiver.handler = null;
+        SkinWeatherNotificationReceiver.handler = null;
     }
     
     @Override
@@ -138,7 +138,7 @@ public class BuiltinWeatherNotificationReceiver extends
     }
     
     void notifyHandler(Weather weather) {
-        synchronized (BuiltinWeatherNotificationReceiver.class) {   //monitor of static methods
+        synchronized (SkinWeatherNotificationReceiver.class) {   //monitor of static methods
             if (handler == null) {
                 return;
             }

@@ -20,25 +20,18 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin;
 
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.notification.skin.TemperatureUnit;
 
-public enum TemperatureUnit {
+/**
+ *  Constants for preference keys.
+ */
+public interface PreferenceKeys {
 
-    C(UnitSystem.SI),
-    F(UnitSystem.US),
-    CF(UnitSystem.SI),
-    FC(UnitSystem.US);
-    
-    UnitSystem unit;
-    
-    TemperatureUnit(UnitSystem unit) {
-        this.unit = unit;
-    }
-    
-    public UnitSystem getUnitSystem() {
-        return this.unit;
-    }
+    /** Temperature unit preference name */
+    static final String TEMP_UNIT = "temp_unit";
+    /** Temperature unit default value */
+    static final String TEMP_UNIT_DEFAULT = TemperatureUnit.C.toString();
 
 }

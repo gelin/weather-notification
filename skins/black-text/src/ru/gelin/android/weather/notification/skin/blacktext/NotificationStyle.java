@@ -20,21 +20,35 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.blacktext;
 
-/**
- *  Constants for preference keys.
- */
-public interface PreferenceKeys {
+import ru.gelin.android.weather.notification.R;
 
-    /** Notification icon style preference key */
-    public static final String NOTIFICATION_ICON_STYLE = "notification_icon_style";
-    /** Notification icon style default value */
-    public static final String NOTIFICATION_ICON_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+public enum NotificationStyle {
+
+    BLACK_TEXT(R.drawable.temp_icon_black, R.layout.notification_black),
+    WHITE_TEXT(R.drawable.temp_icon_white, R.layout.notification_white);
+
+    int iconRes;
+    int layoutRes;
     
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+    private NotificationStyle(int iconRes, int layoutRes) {
+        this.iconRes = iconRes;
+        this.layoutRes = layoutRes;
+    }
+    
+    /**
+     *  Returns resource ID of the status bar icon.
+     */
+    public int getIconRes() {
+        return this.iconRes;
+    }
+    
+    /**
+     *  Returns resource ID of the notification text layout.
+     */
+    public int getLayoutRes() {
+        return this.layoutRes;
+    }
     
 }

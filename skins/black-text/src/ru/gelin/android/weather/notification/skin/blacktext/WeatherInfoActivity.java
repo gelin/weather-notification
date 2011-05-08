@@ -20,9 +20,9 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.blacktext;
 
-import static ru.gelin.android.weather.notification.skin.builtin.BuiltinWeatherNotificationReceiver.WEATHER_KEY;
+import static ru.gelin.android.weather.notification.skin.blacktext.SkinWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.R;
@@ -81,7 +81,7 @@ public class WeatherInfoActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        BuiltinWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
+        SkinWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
         WeatherStorage storage = new WeatherStorage(this);
         WeatherLayout layout = new WeatherLayout(this, findViewById(R.id.weather_info));
         Weather weather = storage.load();
@@ -93,7 +93,7 @@ public class WeatherInfoActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        BuiltinWeatherNotificationReceiver.unregisterWeatherHandler();
+        SkinWeatherNotificationReceiver.unregisterWeatherHandler();
     }
     
     /**

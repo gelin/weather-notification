@@ -27,9 +27,9 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFI
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
