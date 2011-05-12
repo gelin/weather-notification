@@ -61,4 +61,6 @@
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
     <string name="skin">Skin</string>
+    <string name="skins">Skins</string>
+    <string name="skins_preferences">Skins preferences</string>
 </resources>

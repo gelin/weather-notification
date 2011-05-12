@@ -65,6 +65,12 @@
     
     <PreferenceCategory android:title="@string/skin">
     
+    	<Preference
+    		android:key="skins" 
+    		android:title="@string/skins"
+    		android:summary="@string/skins_preferences"
+    		android:persistent="false"/>
+    
         <ru.gelin.android.preference.SummaryListPreference 
             android:key="notification_icon_style"
             android:title="@string/notification_icon_style"

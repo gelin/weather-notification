@@ -46,5 +46,8 @@ public interface PreferenceKeys {
     static final String LOCATION = "location";
     /** Manual location default value */
     static final String LOCATION_DEFAULT = "";
+    
+    /** Skins preferences key */
+    static final String SKINS = "skins";
 
 }

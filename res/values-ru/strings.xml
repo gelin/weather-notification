@@ -61,4 +61,6 @@
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
     <string name="skin">Вид</string>
+	<string name="skins">Внешний вид</string>
+	<string name="skins_preferences">Настройки внешнего вида</string>
 </resources>

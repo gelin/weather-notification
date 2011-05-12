@@ -38,6 +38,9 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".SkinsActivity"
+                  android:label="@string/skins"/>
+        
         <service android:name=".UpdateService"/>
         
         <receiver android:name=".BootCompletedReceiver">

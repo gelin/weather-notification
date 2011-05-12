@@ -22,21 +22,50 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.Tag.TAG;
+import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.util.Log;
 
 /**
  * 	Contains methods to handle list of installed skins.
  */
 public class SkinManager {
+	
+	Context context;
+	
+	public SkinManager(Context context) {
+		this.context = context;
+	}
 
-	public static List<SkinInfo> getInstalledSkins() {
+	public List<SkinInfo> getInstalledSkins() {
+		List<SkinInfo> result = new ArrayList<SkinInfo>();
+		PackageManager pm = context.getPackageManager();
+		Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+		List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);	//without flags
+		for (ResolveInfo info : search) {
+			Log.d(TAG, String.valueOf(info));
+			SkinInfo skin = new SkinInfo(String.valueOf(info.loadLabel(pm)),
+					false, null, null);		//TODO fill params
+			result.add(skin);
+		}
+		return result;
+	}
+	
+	public List<SkinInfo> getEnabledSkins() {
 		//TODO
 		return null;
 	}
 	
-	public static List<SkinInfo> getEnabledSkins() {
+	public void setSkinEnabled(SkinInfo skin, boolean enabled) {
 		//TODO
-		return null;
 	}
 	
 }

@@ -26,11 +26,13 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
+import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
@@ -74,6 +76,9 @@ public class MainActivity extends PreferenceActivity
         locationPreference.setOnPreferenceChangeListener(this);
         Preference unitPreference = findPreference(TEMP_UNIT);
         unitPreference.setOnPreferenceChangeListener(this);
+        
+        Preference skinsPreference = findPreference(SKINS);
+        skinsPreference.setIntent(new Intent(MainActivity.this, SkinsActivity.class));
         
         startUpdate(false);
     }
