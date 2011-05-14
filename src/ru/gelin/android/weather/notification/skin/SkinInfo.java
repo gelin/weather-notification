@@ -27,20 +27,26 @@ package ru.gelin.android.weather.notification.skin;
  */
 public class SkinInfo {
 
-	String name;
+	String packageName;
 	boolean enabled;
 	String broadcastReceiverClass;
+	String broadcaseReceiverLabel;
 	String configActivityClass;
+	String configActivityLabel;
 	
-	SkinInfo(String name, boolean enabled, String broadcastReceiverClass, String configActivityClass) {
-		this.name = name;
+	SkinInfo(String packageName, boolean enabled,
+			String broadcastReceiverClass, String broadcaseReceiverLabel,
+			String configActivityClass, String configActivityLabel) {
+		this.packageName = packageName;
 		this.enabled = enabled;
 		this.broadcastReceiverClass = broadcastReceiverClass;
+		this.broadcaseReceiverLabel = broadcaseReceiverLabel;
 		this.configActivityClass = configActivityClass;
+		this.configActivityLabel = configActivityLabel;
 	}
 
-	public String getName() {
-		return name;
+	public String getPackageName() {
+		return packageName;
 	}
 	
 	public boolean isEnabled() {
@@ -50,9 +56,17 @@ public class SkinInfo {
 	public String getBroadcastReceiverClass() {
 		return broadcastReceiverClass;
 	}
+	
+	public String getBroadcaseReceiverLabel() {
+		return broadcaseReceiverLabel;
+	}
 
 	public String getConfigActivityClass() {
 		return configActivityClass;
+	}
+	
+	public String getConfigActivityLabel() {
+		return configActivityLabel;
 	}
 	
 }

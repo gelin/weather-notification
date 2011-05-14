@@ -27,6 +27,7 @@ import java.util.List;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
 import ru.gelin.android.weather.notification.skin.SkinManager;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -43,8 +44,8 @@ public class SkinsActivity extends PreferenceActivity {
         PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this); 
         for (SkinInfo skin : skins) {
         	//TODO
-        	Preference pref = new Preference(this);
-        	pref.setTitle(skin.getName());
+        	Preference pref = new CheckBoxPreference(this);
+        	pref.setTitle(skin.getBroadcaseReceiverLabel());
         	screen.addPreference(pref);
         }
         setPreferenceScreen(screen);

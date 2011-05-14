@@ -52,8 +52,15 @@ public class SkinManager {
 		List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);	//without flags
 		for (ResolveInfo info : search) {
 			Log.d(TAG, String.valueOf(info));
-			SkinInfo skin = new SkinInfo(String.valueOf(info.loadLabel(pm)),
-					false, null, null);		//TODO fill params
+			String packageName = info.activityInfo.packageName;
+			Log.d(TAG, "package: " + packageName);
+			SkinInfo skin = new SkinInfo(
+					packageName,
+					false,	//TODO
+					null,	//TODO
+					String.valueOf(info.loadLabel(pm)),
+					null,	//TODO
+					null);	//TODO fill params
 			result.add(skin);
 		}
 		return result;

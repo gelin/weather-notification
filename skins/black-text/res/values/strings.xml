@@ -25,4 +25,5 @@
 <resources>
 	<string name="app_name">Weather notification skin: black text</string>
 	<string name="weather">Weather</string>
+    <string name="skin_name">Black text</string>
 </resources>

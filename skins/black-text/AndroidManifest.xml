@@ -12,7 +12,8 @@
                   android:theme="@android:style/Theme.Dialog"
                   />
 
-        <receiver android:name=".SkinWeatherNotificationReceiver">
+        <receiver android:name=".SkinWeatherNotificationReceiver"
+        		android:label="@string/skin_name">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE"/>
             </intent-filter>

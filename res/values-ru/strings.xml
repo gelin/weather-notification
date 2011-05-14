@@ -63,4 +63,5 @@
     <string name="skin">Вид</string>
 	<string name="skins">Внешний вид</string>
 	<string name="skins_preferences">Настройки внешнего вида</string>
+    <string name="builtin_skin">Встроенный вид</string>
 </resources>
