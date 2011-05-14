@@ -66,14 +66,31 @@ public class SkinManager {
 		return result;
 	}
 	
+	/**
+	 *  Returns the list of enabled skins.
+	 */
 	public List<SkinInfo> getEnabledSkins() {
-		//TODO
-		return null;
+	    List<SkinInfo> result = new ArrayList<SkinInfo>();
+	    for (SkinInfo skin : this.skins.values()) {
+	        if (skin.isEnabled()) {
+	            result.add(skin);
+	        }
+	    }
+        return result;
 	}
 	
-	public void setSkinEnabled(SkinInfo skin, boolean enabled) {
-		//TODO
-	}
+	/**
+	 *  Returns the list of installed, but disabled skins.
+	 */
+	public List<SkinInfo> getDisabledSkins() {
+        List<SkinInfo> result = new ArrayList<SkinInfo>();
+        for (SkinInfo skin : this.skins.values()) {
+            if (!skin.isEnabled()) {
+                result.add(skin);
+            }
+        }
+        return result;
+    }
 	
 	/**
 	 *  Queries PackageManager for broadcast receivers which handles ACTION_WEATHER_UPDATE.
