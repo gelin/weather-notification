@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".SkinsActivity"
+        <activity android:name=".skin.SkinsActivity"
                   android:label="@string/skins"/>
         
         <service android:name=".UpdateService"/>

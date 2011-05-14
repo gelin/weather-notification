@@ -29,9 +29,14 @@ import ru.gelin.android.weather.notification.skin.TemperatureUnit;
  */
 public interface PreferenceKeys {
 
+    /** Pattern of the preference key for enabled skin flags */
+    static final String SKIN_ENABLED_PATTERN = "skin_enabled_%s";
+    
     /** Temperature unit preference name */
     static final String TEMP_UNIT = "temp_unit";
     /** Temperature unit default value */
     static final String TEMP_UNIT_DEFAULT = TemperatureUnit.C.toString();
+    
+    
 
 }

@@ -22,6 +22,10 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
+import android.content.Context;
+import android.preference.CheckBoxPreference;
+
 /**
  * 	Information about skin
  */
@@ -56,6 +60,16 @@ public class SkinInfo {
 	
 	public String getConfigActivityLabel() {
 		return configActivityLabel;
+	}
+	
+	/**
+	 *  Creates checkbox preference to enable/disable the activity.
+	 */
+	CheckBoxPreference getCheckBoxPreference(Context context) {
+	    CheckBoxPreference checkBox = new CheckBoxPreference(context);
+	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getPackageName()));
+        checkBox.setTitle(getBroadcastReceiverLabel());
+        return checkBox;
 	}
 	
 }

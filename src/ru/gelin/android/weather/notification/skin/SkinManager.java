@@ -23,18 +23,20 @@
 package ru.gelin.android.weather.notification.skin;
 
 import static ru.gelin.android.weather.notification.Tag.TAG;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -46,19 +48,21 @@ public class SkinManager {
 	/** Map of the skin package name to the skin info. Sorted by package name. */
 	Map<String, SkinInfo> skins = new TreeMap<String, SkinInfo>(); //sorted by the package name
 	
+	/**
+	 *  Creates the manager. Updates the list of installed skins.
+	 */
 	public SkinManager(Context context) {
 		this.context = context;
+		querySkinReceivers();
+		updateEnabledFlag();
 	}
 
 	/**
-	 *  Rereads the list of installed skins.
+	 *  Returns the list of installed skins.
 	 */
 	public List<SkinInfo> getInstalledSkins() {
-	    skins.clear();
-		querySkinReceivers();
-		
 		List<SkinInfo> result = new ArrayList<SkinInfo>();
-		result.addAll(skins.values());
+		result.addAll(this.skins.values());
 		return result;
 	}
 	
@@ -92,8 +96,20 @@ public class SkinManager {
             skin.broadcastReceiverLabel = label;
             skin.broadcastReceiverClass = receiverClass;
             
-            skins.put(packageName, skin);
+            this.skins.put(packageName, skin);
         }
+	}
+	
+	/**
+	 *  Checks preferences to found which skin is enabled.
+	 */
+	void updateEnabledFlag() {
+	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
+	    for (Map.Entry<String, SkinInfo> skin : this.skins.entrySet()) {
+	        String key = String.format(SKIN_ENABLED_PATTERN, skin.getKey());
+	        boolean enabled = prefs.getBoolean(key, false);
+	        skin.getValue().enabled = enabled;
+	    }
 	}
 	
 }
