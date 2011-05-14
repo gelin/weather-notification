@@ -30,21 +30,10 @@ public class SkinInfo {
 	String packageName;
 	boolean enabled;
 	String broadcastReceiverClass;
-	String broadcaseReceiverLabel;
+	String broadcastReceiverLabel;
 	String configActivityClass;
 	String configActivityLabel;
 	
-	SkinInfo(String packageName, boolean enabled,
-			String broadcastReceiverClass, String broadcaseReceiverLabel,
-			String configActivityClass, String configActivityLabel) {
-		this.packageName = packageName;
-		this.enabled = enabled;
-		this.broadcastReceiverClass = broadcastReceiverClass;
-		this.broadcaseReceiverLabel = broadcaseReceiverLabel;
-		this.configActivityClass = configActivityClass;
-		this.configActivityLabel = configActivityLabel;
-	}
-
 	public String getPackageName() {
 		return packageName;
 	}
@@ -57,8 +46,8 @@ public class SkinInfo {
 		return broadcastReceiverClass;
 	}
 	
-	public String getBroadcaseReceiverLabel() {
-		return broadcaseReceiverLabel;
+	public String getBroadcastReceiverLabel() {
+		return broadcastReceiverLabel;
 	}
 
 	public String getConfigActivityClass() {

@@ -26,7 +26,10 @@ import static ru.gelin.android.weather.notification.Tag.TAG;
 import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -40,29 +43,22 @@ import android.util.Log;
 public class SkinManager {
 	
 	Context context;
+	/** Map of the skin package name to the skin info. Sorted by package name. */
+	Map<String, SkinInfo> skins = new TreeMap<String, SkinInfo>(); //sorted by the package name
 	
 	public SkinManager(Context context) {
 		this.context = context;
 	}
 
+	/**
+	 *  Rereads the list of installed skins.
+	 */
 	public List<SkinInfo> getInstalledSkins() {
+	    skins.clear();
+		querySkinReceivers();
+		
 		List<SkinInfo> result = new ArrayList<SkinInfo>();
-		PackageManager pm = context.getPackageManager();
-		Intent intent = new Intent(ACTION_WEATHER_UPDATE);
-		List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);	//without flags
-		for (ResolveInfo info : search) {
-			Log.d(TAG, String.valueOf(info));
-			String packageName = info.activityInfo.packageName;
-			Log.d(TAG, "package: " + packageName);
-			SkinInfo skin = new SkinInfo(
-					packageName,
-					false,	//TODO
-					null,	//TODO
-					String.valueOf(info.loadLabel(pm)),
-					null,	//TODO
-					null);	//TODO fill params
-			result.add(skin);
-		}
+		result.addAll(skins.values());
 		return result;
 	}
 	
@@ -73,6 +69,31 @@ public class SkinManager {
 	
 	public void setSkinEnabled(SkinInfo skin, boolean enabled) {
 		//TODO
+	}
+	
+	/**
+	 *  Queries PackageManager for broadcast receivers which handles ACTION_WEATHER_UPDATE.
+	 *  Puts found data (skin package, receiver class and labed) into skins map. 
+	 */
+	void querySkinReceivers() {
+	    PackageManager pm = context.getPackageManager();
+        Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+        List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);   //without flags
+        
+        for (ResolveInfo info : search) {
+            //Log.d(TAG, String.valueOf(info));
+            String packageName = info.activityInfo.packageName;
+            String label = String.valueOf(info.loadLabel(pm));
+            String receiverClass = info.activityInfo.name;
+            //Log.d(TAG, "package: " + packageName);
+            Log.d(TAG, "class: " + packageName);
+            SkinInfo skin = new SkinInfo();
+            skin.packageName = packageName;
+            skin.broadcastReceiverLabel = label;
+            skin.broadcastReceiverClass = receiverClass;
+            
+            skins.put(packageName, skin);
+        }
 	}
 	
 }

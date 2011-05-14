@@ -45,7 +45,7 @@ public class SkinsActivity extends PreferenceActivity {
         for (SkinInfo skin : skins) {
         	//TODO
         	Preference pref = new CheckBoxPreference(this);
-        	pref.setTitle(skin.getBroadcaseReceiverLabel());
+        	pref.setTitle(skin.getBroadcastReceiverLabel());
         	screen.addPreference(pref);
         }
         setPreferenceScreen(screen);
