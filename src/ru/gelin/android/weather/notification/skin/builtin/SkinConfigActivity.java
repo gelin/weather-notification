@@ -25,19 +25,14 @@ package ru.gelin.android.weather.notification.skin.builtin;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import ru.gelin.android.weather.notification.R;
-import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
+import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 
-public class SkinConfigActivity extends PreferenceActivity 
+public class SkinConfigActivity extends UpdateNotificationActivity 
         implements OnPreferenceChangeListener {
 
-    /** Handler to take notification update actions */
-    Handler handler = new Handler();
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +58,6 @@ public class SkinConfigActivity extends PreferenceActivity
             return true;
         }
         return false;
-    }
-    
-    /**
-     *  Performs the deferred update of the notification,
-     *  which allows to return from onPreferenceChange handler to update
-     *  preference value and update the notification later.
-     */
-    void updateNotification() {
-        handler.post(new Runnable() {
-            //@Override
-            public void run() {
-                WeatherNotificationManager.update(SkinConfigActivity.this);
-            }
-        });
     }
 
 }

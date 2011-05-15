@@ -90,6 +90,8 @@ public class SkinInfo {
         Intent intent = new Intent(ACTION_WEATHER_SKIN_CONFIG);
         intent.setClassName(getPackageName(), getConfigActivityClass());
         pref.setIntent(intent);
+        //TODO
+        //pref.setDependency(String.format(SKIN_ENABLED_PATTERN, getPackageName()));  //disabled if skin is disabled
         return pref;
 	}
 	

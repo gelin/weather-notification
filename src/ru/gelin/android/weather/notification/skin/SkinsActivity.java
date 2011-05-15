@@ -22,14 +22,19 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
+
 import java.util.List;
 
+import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceChangeListener;
 
-public class SkinsActivity extends PreferenceActivity {
+public class SkinsActivity extends UpdateNotificationActivity 
+        implements OnPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,14 +45,20 @@ public class SkinsActivity extends PreferenceActivity {
      
         PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this); 
         for (SkinInfo skin : skins) {
-        	//TODO
-        	screen.addPreference(skin.getCheckBoxPreference(this));
+            CheckBoxPreference checkboxPref = skin.getCheckBoxPreference(this);
+            checkboxPref.setOnPreferenceChangeListener(this);
+        	screen.addPreference(checkboxPref);
         	Preference configPref = skin.getConfigPreference(this);
         	if (configPref != null) {
         	    screen.addPreference(configPref);
         	}
         }
         setPreferenceScreen(screen);
+    }
+    
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        updateNotification();
+        return true;
     }
 
 }

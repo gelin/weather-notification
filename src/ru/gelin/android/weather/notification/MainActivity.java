@@ -29,22 +29,16 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTER
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
-import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.Window;
 
-public class MainActivity extends PreferenceActivity 
+public class MainActivity extends UpdateNotificationActivity 
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
-    /** Handler to take notification update actions */
-    Handler handler = new Handler();
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
@@ -108,20 +102,6 @@ public class MainActivity extends PreferenceActivity
     void startUpdate(boolean force) {
         setProgressBarIndeterminateVisibility(true);
         UpdateService.start(this, true, force);
-    }
-    
-    /**
-     *  Performs the deferred update of the notification,
-     *  which allows to return from onPreferenceChange handler to update
-     *  preference value and update the notification later.
-     */
-    void updateNotification() {
-        handler.post(new Runnable() {
-            //@Override
-            public void run() {
-                WeatherNotificationManager.update(MainActivity.this);
-            }
-        });
     }
 
 }
