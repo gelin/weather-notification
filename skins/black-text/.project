@@ -31,4 +31,16 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>weather-notification-android_src</name>
+			<type>2</type>
+			<locationURI>_android_weather_notification_android_7a86b7c6/src</locationURI>
+		</link>
+		<link>
+			<name>weather-notification-android_test</name>
+			<type>2</type>
+			<locationURI>_android_weather_notification_android_7a86b7c6/test</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
