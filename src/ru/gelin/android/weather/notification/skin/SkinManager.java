@@ -22,15 +22,14 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
-import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import ru.gelin.android.weather.notification.Tag;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,12 +42,7 @@ import android.preference.PreferenceManager;
  */
 public class SkinManager {
 	
-    /** Intent action for the skin configuration activity */
-    public static final String ACTION_WEATHER_SKIN_CONFIG =
-        Tag.class.getPackage().getName() + ".ACTION_WEATHER_SKIN_CONFIG";
-    
-    
-	Context context;
+    Context context;
 	/** Map of the skin package name to the skin info. Sorted by package name. */
 	Map<String, SkinInfo> skins = new TreeMap<String, SkinInfo>(); //sorted by the package name
 	
@@ -144,7 +138,7 @@ public class SkinManager {
      */
     void querySkinConfigs() {
         PackageManager pm = context.getPackageManager();
-        Intent intent = new Intent(ACTION_WEATHER_SKIN_CONFIG);
+        Intent intent = new Intent(IntentParameters.ACTION_WEATHER_SKIN_CONFIG);
         List<ResolveInfo> search = pm.queryIntentActivities(intent, 0);   //without flags
         
         for (ResolveInfo info : search) {

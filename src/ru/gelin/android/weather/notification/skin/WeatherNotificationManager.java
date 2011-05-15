@@ -24,9 +24,9 @@ package ru.gelin.android.weather.notification.skin;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
-import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.EXTRA_ENABLE_NOTIFICATION;
-import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.EXTRA_WEATHER;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_WEATHER;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.ParcelableWeather;
 import ru.gelin.android.weather.notification.WeatherStorage;

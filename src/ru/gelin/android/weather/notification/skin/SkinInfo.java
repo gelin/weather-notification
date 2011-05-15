@@ -22,9 +22,9 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_SKIN_CONFIG;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
-import static ru.gelin.android.weather.notification.skin.SkinManager.ACTION_WEATHER_SKIN_CONFIG;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.CheckBoxPreference;

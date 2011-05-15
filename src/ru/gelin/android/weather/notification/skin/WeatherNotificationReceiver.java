@@ -24,7 +24,6 @@ package ru.gelin.android.weather.notification.skin;
 
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.Tag;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,14 +40,14 @@ import android.os.Parcelable;
  *  <li>display the Weather passed in the start intent extra using {@link NotificationManager}</li>
  *  <li>hide the weather notification if necessary</li>
  *  </ul>
- *  The intent, passed to the receiver, has action {@link #ACTION_WEATHER_UPDATE}.
+ *  The intent, passed to the receiver, has action {@link IntentParameters#ACTION_WEATHER_UPDATE}.
  *  The Weather Notification finds the broadcast receivers which accepts this intent type 
  *  as weather notification skins.
  *  <p>
  *  The intent contains the extras:
  *  <ul>
- *  <li>{@link #EXTRA_WEATHER} holds updated {@link Weather}</li>
- *  <li>{@link #EXTRA_ENABLE_NOTIFICATION} holds boolean flag about notification state,
+ *  <li>{@link IntentParameters#EXTRA_WEATHER} holds updated {@link Weather}</li>
+ *  <li>{@link IntentParameters#EXTRA_ENABLE_NOTIFICATION} holds boolean flag about notification state,
  *      if false the weather notification should be hidden.</li>
  *  </ul>
  *   The intent is sent to the receiver each time the weather notification 
@@ -57,16 +56,6 @@ import android.os.Parcelable;
  */
 public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
 
-    /** Intent action which should be accepted by the receiver */ 
-    public static final String ACTION_WEATHER_UPDATE =
-        Tag.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE";
-    /** Intent extra which contains {@link Weather} */ 
-    public static final String EXTRA_WEATHER =
-        Tag.class.getPackage().getName() + ".EXTRA_WEATHER";
-    /** Intent extra which contains boolean flag */ 
-    public static final String EXTRA_ENABLE_NOTIFICATION =
-        Tag.class.getPackage().getName() + ".EXTRA_ENABLE_NOTIFICATION";
-    
     /**
      *  Verifies the intent, extracts extras, calls {@link #notify} or {@link #cancel} methods.
      */
@@ -76,12 +65,12 @@ public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
         if (intent == null) {
             return;
         }
-        if (!ACTION_WEATHER_UPDATE.equals(intent.getAction())) {
+        if (!IntentParameters.ACTION_WEATHER_UPDATE.equals(intent.getAction())) {
             return;
         }
-        boolean enabled = intent.getBooleanExtra(EXTRA_ENABLE_NOTIFICATION, true);
+        boolean enabled = intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, true);
         if (enabled) {
-            Parcelable weather = intent.getParcelableExtra(EXTRA_WEATHER);
+            Parcelable weather = intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER);
             if (!(weather instanceof Weather)) {
                 return;
             }
