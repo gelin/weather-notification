@@ -73,6 +73,7 @@ public class SkinInfo {
 	    CheckBoxPreference checkBox = new CheckBoxPreference(context);
 	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getPackageName()));
         checkBox.setTitle(getBroadcastReceiverLabel());
+        checkBox.setChecked(isEnabled());
         return checkBox;
 	}
 	
