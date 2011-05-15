@@ -25,7 +25,6 @@ package ru.gelin.android.weather.notification.skin.blacktext;
 import static ru.gelin.android.weather.notification.skin.blacktext.SkinWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.UpdateService;
 import ru.gelin.android.weather.notification.WeatherLayout;
 import ru.gelin.android.weather.notification.WeatherStorage;

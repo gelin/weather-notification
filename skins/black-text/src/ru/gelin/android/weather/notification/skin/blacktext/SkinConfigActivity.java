@@ -20,43 +20,43 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin;
+package ru.gelin.android.weather.notification.skin.blacktext;
 
-import java.util.List;
-
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 
-public class SkinsActivity extends UpdateNotificationActivity 
+public class SkinConfigActivity extends UpdateNotificationActivity 
         implements OnPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.skin_preferences);
         
-        SkinManager sm = new SkinManager(this);
-        List<SkinInfo> skins = sm.getInstalledSkins();
-     
-        PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this); 
-        for (SkinInfo skin : skins) {
-            CheckBoxPreference checkboxPref = skin.getCheckBoxPreference(this);
-            checkboxPref.setOnPreferenceChangeListener(this);
-        	screen.addPreference(checkboxPref);
-        	Preference configPref = skin.getConfigPreference(this);
-        	if (configPref != null) {
-        	    screen.addPreference(configPref);
-        	}
-        }
-        setPreferenceScreen(screen);
+        /*  TODO: why this doesn't work?
+        PreferenceScreen screen = getPreferenceScreen();
+        screen.setOnPreferenceClickListener(this);
+        screen.setOnPreferenceChangeListener(this); 
+        */
+        
+        Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
+        textStylePreference.setOnPreferenceChangeListener(this);
+        Preference unitPreference = findPreference(TEMP_UNIT);
+        unitPreference.setOnPreferenceChangeListener(this);
     }
-    
+
+    //@Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        updateNotification();
-        return true;
+        String key = preference.getKey();
+        if (NOTIFICATION_TEXT_STYLE.equals(key) || TEMP_UNIT.equals(key)) {
+            updateNotification();
+            return true;
+        }
+        return false;
     }
 
 }

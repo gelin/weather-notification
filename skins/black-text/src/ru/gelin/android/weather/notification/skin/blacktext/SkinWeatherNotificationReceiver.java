@@ -23,8 +23,6 @@
 package ru.gelin.android.weather.notification.skin.blacktext;
 
 import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
-import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_ICON_STYLE;
-import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_ICON_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.TEMP_UNIT;
@@ -34,7 +32,6 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.TemperatureUnit;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
 import android.app.Notification;
@@ -91,14 +88,12 @@ public class SkinWeatherNotificationReceiver extends
         TemperatureUnit unit = TemperatureUnit.valueOf(prefs.getString(
             TEMP_UNIT, TEMP_UNIT_DEFAULT));
         UnitSystem mainUnit = unit.getUnitSystem();
-        NotificationStyle iconStyle = NotificationStyle.valueOf(prefs.getString(
-            NOTIFICATION_ICON_STYLE, NOTIFICATION_ICON_STYLE_DEFAULT));
         NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
-        notification.icon = iconStyle.getIconRes();
+        notification.icon = R.drawable.temp_icon_black;
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(R.string.unknown_weather);
