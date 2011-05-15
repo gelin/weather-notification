@@ -124,9 +124,13 @@ public class SkinManager {
 	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
 	    for (Map.Entry<String, SkinInfo> skin : this.skins.entrySet()) {
 	        String key = String.format(SKIN_ENABLED_PATTERN, skin.getKey());
-	        boolean enabled = prefs.getBoolean(key, false);
+	        boolean enabled = prefs.getBoolean(key, isBuiltinSkin(skin.getKey()));     //builtin skin is enabled by default
 	        skin.getValue().enabled = enabled;
 	    }
+	}
+	
+	boolean isBuiltinSkin(String packageName) {
+	    return packageName.equals(this.context.getPackageName());
 	}
 	
 }
