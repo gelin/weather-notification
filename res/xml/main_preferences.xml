@@ -71,29 +71,6 @@
     		android:summary="@string/skins_preferences"
     		android:persistent="false"/>
     
-        <ru.gelin.android.preference.SummaryListPreference 
-            android:key="notification_icon_style"
-            android:title="@string/notification_icon_style"
-            android:entries="@array/notification_style_entries"
-            android:entryValues="@array/notification_style_values"
-            android:defaultValue="BLACK_TEXT"
-            android:dependency="enable_notification"/>
-
-        <ru.gelin.android.preference.SummaryListPreference 
-            android:key="notification_text_style"
-            android:title="@string/notification_text_style"
-            android:entries="@array/notification_style_entries"
-            android:entryValues="@array/notification_style_values"
-            android:defaultValue="BLACK_TEXT"
-            android:dependency="enable_notification"/>
-
-        <ru.gelin.android.preference.SummaryListPreference 
-                android:key="temp_unit"
-                android:title="@string/temp_unit"
-                android:entries="@array/temp_unit_entries"
-                android:entryValues="@array/temp_unit_values"
-                android:defaultValue="C"/>
-    
     </PreferenceCategory>
 
 </PreferenceScreen>

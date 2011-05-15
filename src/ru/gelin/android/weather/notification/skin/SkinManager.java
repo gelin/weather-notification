@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.Tag.TAG;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 import static ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver.ACTION_WEATHER_UPDATE;
 
@@ -31,19 +30,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import ru.gelin.android.weather.notification.Tag;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 /**
  * 	Contains methods to handle list of installed skins.
  */
 public class SkinManager {
 	
+    /** Intent action for the skin configuration activity */
+    public static final String ACTION_WEATHER_SKIN_CONFIG =
+        Tag.class.getPackage().getName() + ".ACTION_WEATHER_SKIN_CONFIG";
+    
+    
 	Context context;
 	/** Map of the skin package name to the skin info. Sorted by package name. */
 	Map<String, SkinInfo> skins = new TreeMap<String, SkinInfo>(); //sorted by the package name
@@ -55,6 +59,7 @@ public class SkinManager {
 		this.context = context;
 		querySkinReceivers();
 		updateEnabledFlag();
+		querySkinConfigs();
 	}
 
 	/**
@@ -107,7 +112,7 @@ public class SkinManager {
             String label = String.valueOf(info.loadLabel(pm));
             String receiverClass = info.activityInfo.name;
             //Log.d(TAG, "package: " + packageName);
-            Log.d(TAG, "class: " + packageName);
+            //Log.d(TAG, "class: " + receiverClass);
             SkinInfo skin = new SkinInfo();
             skin.packageName = packageName;
             skin.broadcastReceiverLabel = label;
@@ -132,5 +137,31 @@ public class SkinManager {
 	boolean isBuiltinSkin(String packageName) {
 	    return packageName.equals(this.context.getPackageName());
 	}
+	
+	/**
+     *  Queries PackageManager for activities which handles ACTION_WEATHER_SKIN_CONFIG actions.
+     *  Updates the skin map according the package name. 
+     */
+    void querySkinConfigs() {
+        PackageManager pm = context.getPackageManager();
+        Intent intent = new Intent(ACTION_WEATHER_SKIN_CONFIG);
+        List<ResolveInfo> search = pm.queryIntentActivities(intent, 0);   //without flags
+        
+        for (ResolveInfo info : search) {
+            //Log.d(TAG, String.valueOf(info));
+            String packageName = info.activityInfo.packageName;
+            String label = String.valueOf(info.loadLabel(pm));
+            String activityClass = info.activityInfo.name;
+            //Log.d(TAG, "package: " + packageName);
+            //Log.d(TAG, "class: " + activityClass);
+            SkinInfo skin = this.skins.get(packageName);
+            if (skin == null) {
+                continue;
+            }
+            skin.packageName = packageName;
+            skin.configActivityLabel = label;
+            skin.configActivityClass = activityClass;
+        }
+    }
 	
 }

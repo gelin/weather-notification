@@ -28,9 +28,6 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.content.Intent;
@@ -67,16 +64,10 @@ public class MainActivity extends PreferenceActivity
         notificationPreference.setOnPreferenceChangeListener(this);
         Preference refreshInterval = findPreference(REFRESH_INTERVAL);
         refreshInterval.setOnPreferenceChangeListener(this);
-        Preference iconStylePreference = findPreference(NOTIFICATION_ICON_STYLE);
-        iconStylePreference.setOnPreferenceChangeListener(this);
-        Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
-        textStylePreference.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
         autoLocationPreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
-        Preference unitPreference = findPreference(TEMP_UNIT);
-        unitPreference.setOnPreferenceChangeListener(this);
         
         Preference skinsPreference = findPreference(SKINS);
         skinsPreference.setIntent(new Intent(MainActivity.this, SkinsActivity.class));
@@ -106,19 +97,9 @@ public class MainActivity extends PreferenceActivity
             startUpdate(false);
             return true;
         }
-        if (NOTIFICATION_ICON_STYLE.equals(key) || NOTIFICATION_TEXT_STYLE.equals(key)) {
-            updateNotification();
-            return true;
-        }
         if (AUTO_LOCATION.equals(key) || 
                 LOCATION.equals(key)) {
             startUpdate(true);
-            return true;
-        }
-        if (TEMP_UNIT.equals(key)) {
-            WeatherStorage storage = new WeatherStorage(this);
-            storage.updateTime();   //force redraw weather
-            updateNotification();
             return true;
         }
         return true;

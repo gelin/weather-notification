@@ -22,9 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin;
 
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
+import static ru.gelin.android.weather.notification.skin.SkinManager.ACTION_WEATHER_SKIN_CONFIG;
 import android.content.Context;
+import android.content.Intent;
 import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 
 /**
  * 	Information about skin
@@ -70,6 +74,23 @@ public class SkinInfo {
 	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getPackageName()));
         checkBox.setTitle(getBroadcastReceiverLabel());
         return checkBox;
+	}
+	
+	/**
+	 *  Creates preference to open skin settings.
+	 *  Can return null if the skin has no configuraion.
+	 */
+	Preference getConfigPreference(Context context) {
+	    if (getConfigActivityClass() == null) {
+	        return null;
+	    }
+	    Preference pref = new Preference(context);
+        pref.setKey(String.format(SKIN_CONFIG_PATTERN, getPackageName()));
+        pref.setTitle(getConfigActivityLabel() == null ? getBroadcastReceiverLabel() : getConfigActivityLabel());
+        Intent intent = new Intent(ACTION_WEATHER_SKIN_CONFIG);
+        intent.setClassName(getPackageName(), getConfigActivityClass());
+        pref.setIntent(intent);
+        return pref;
 	}
 	
 }

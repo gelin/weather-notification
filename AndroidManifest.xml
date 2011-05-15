@@ -55,17 +55,26 @@
         </receiver>
         
         
-        <activity android:name=".skin.builtin.WeatherInfoActivity"
-                  android:label="@string/weather"
-                  android:theme="@android:style/Theme.Dialog"
-                  />
-
+        <!-- Built-in skin -->
+        
         <receiver android:name=".skin.builtin.BuiltinWeatherNotificationReceiver"
         		android:label="@string/builtin_skin">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE"/>
             </intent-filter>
         </receiver>
+        
+        <activity android:name=".skin.builtin.SkinConfigActivity"
+                  android:label="@string/builtin_skin_preferences">
+            <intent-filter>
+                <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_CONFIG"/>
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".skin.builtin.WeatherInfoActivity"
+                  android:label="@string/weather"
+                  android:theme="@android:style/Theme.Dialog"
+                  />
         
     </application>
     

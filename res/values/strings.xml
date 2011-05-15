@@ -64,4 +64,5 @@
     <string name="skins">Skins</string>
     <string name="skins_preferences">Skins preferences</string>
     <string name="builtin_skin">Built-in skin</string>
+    <string name="builtin_skin_preferences">Built-in skin preferences</string>
 </resources>
