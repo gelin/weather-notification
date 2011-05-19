@@ -24,8 +24,6 @@ package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.builtin.TempFormatter.formatTemp;
@@ -90,26 +88,18 @@ public class BuiltinWeatherNotificationReceiver extends
     
         TemperatureUnit unit = TemperatureUnit.valueOf(prefs.getString(
             TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        UnitSystem mainUnit = unit.getUnitSystem();
-        NotificationStyle iconStyle = NotificationStyle.valueOf(prefs.getString(
-            NOTIFICATION_ICON_STYLE, NOTIFICATION_ICON_STYLE_DEFAULT));
         NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
-        notification.icon = iconStyle.getIconRes();
+        notification.icon = R.drawable.status_icon;
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(R.string.unknown_weather);
         } else {
-            //http://code.google.com/p/android/issues/detail?id=6560
-            //adding a hundred
-            notification.iconLevel = weather.getConditions().get(0).
-                    getTemperature(mainUnit).getCurrent() + ICON_LEVEL_SHIFT;
             notification.tickerText = formatTicker(context, weather, unit);
         }
-        //this.iconLevel = 223;//debug
 
         notification.when = weather.getTime().getTime();
         notification.flags |= Notification.FLAG_NO_CLEAR;
