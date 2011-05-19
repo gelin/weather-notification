@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="ru.gelin.android.weather.notification.skin.blacktext"
+      package="ru.gelin.android.weather.notification.skin.whitetext"
       android:versionCode="2"
       android:versionName="0.2-alpha1"
       android:installLocation="preferExternal">
