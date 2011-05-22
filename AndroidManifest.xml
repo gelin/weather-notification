@@ -44,7 +44,11 @@
                   android:label="@string/skins"/>
         
         <service android:name=".UpdateService"
-                android:permission="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
+                android:permission="ru.gelin.android.weather.notification.START_UPDATE_SERVICE">
+            <intent-filter>
+                <action android:name="ru.gelin.android.weather.notification.ACTION_START_UPDATE_SERVICE"/>
+            </intent-filter>
+        </service>
         
         <receiver android:name=".BootCompletedReceiver">
             <intent-filter>

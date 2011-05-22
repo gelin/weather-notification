@@ -68,6 +68,8 @@ import android.widget.Toast;
  */
 public class UpdateService extends Service implements Runnable {
 
+    /** Activity action to start the service */
+    public static String ACTION_START_UPDATE_SERVICE = Tag.class.getPackage().getName() + ".ACTION_START_UPDATE_SERVICE";
     /** Verbose extra name for the service start intent. */
     public static String EXTRA_VERBOSE = "verbose";
     /** Force extra name for the service start intent. */
@@ -125,8 +127,8 @@ public class UpdateService extends Service implements Runnable {
      *  not expired. 
      */
     public static void start(Context context, boolean verbose, boolean force) {
-        Intent startIntent = new Intent();
-        startIntent.setClassName(UpdateService.class.getPackage().getName(), UpdateService.class.getName());    //package is hardcoded
+        Intent startIntent = new Intent(ACTION_START_UPDATE_SERVICE);
+        //startIntent.setClassName(UpdateService.class.getPackage().getName(), UpdateService.class.getName());
         startIntent.putExtra(EXTRA_VERBOSE, verbose);
         startIntent.putExtra(EXTRA_FORCE, force);
         context.startService(startIntent);
