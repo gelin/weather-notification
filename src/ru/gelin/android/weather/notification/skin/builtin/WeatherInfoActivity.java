@@ -63,9 +63,7 @@ public class WeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(WeatherInfoActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                MainActivity.start(WeatherInfoActivity.this);
             }
         });
         

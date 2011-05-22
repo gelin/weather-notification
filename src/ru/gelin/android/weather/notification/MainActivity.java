@@ -29,6 +29,7 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTER
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -102,6 +103,16 @@ public class MainActivity extends UpdateNotificationActivity
     void startUpdate(boolean force) {
         setProgressBarIndeterminateVisibility(true);
         UpdateService.start(this, true, force);
+    }
+    
+    /**
+     *  Starts the main activity.
+     */
+    public static void start(Context context) {
+        Intent startIntent = new Intent();
+        startIntent.setClassName(Tag.class.getPackage().getName(), MainActivity.class.getName());
+        startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(startIntent);
     }
 
 }
