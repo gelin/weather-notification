@@ -33,18 +33,53 @@
 
     <target name="all" depends="debug, release"/>
 
-    <target name="debug" description="Upload weather-notification-android-debug.apk">
+    <target name="debug" depends="core-debug, black-text-skin-debug, white-text-skin-debug"
+	    description="Upload debug .apk files"/>
+
+    <target name="core-debug">
 
 	<gcupload 
 	    username="${gc.username}"
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android-debug.apk" 
-    	    targetfilename="weather-notification-android-debug.apk"
-    	    summary="Latest build (${manifest(android:versionName)}, signed by debug key)"
+    	    targetfilename="weather-notification-android-${manifest(android:versionName)}-debug.apk"
+    	    summary="Latest Core App build (${manifest(android:versionName)}), signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="bin/weather-notification-android-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="black-text-skin-debug">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/black-text/bin/weather-notification-skin-black-text-debug.apk" 
+    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}-debug.apk"
+    	    summary="Latest Black Text Skin build (${manifest(android:versionName)}), signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/black-text/bin/weather-notification-skin-black-text-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="white-text-skin-debug">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/white-text/bin/weather-notification-skin-white-text-debug.apk" 
+    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}-debug.apk"
+    	    summary="Latest White Text Skin build (${manifest(android:versionName)}), signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/white-text/bin/weather-notification-skin-white-text-debug.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>
