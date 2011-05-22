@@ -19,7 +19,7 @@
         <activity android:name=".SkinConfigActivity"
                   android:label="@string/skin_preferences">
             <intent-filter>
-                <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_CONFIG"/>
+                <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_PREFERENCES"/>
             </intent-filter>
         </activity>
         
@@ -29,6 +29,8 @@
                   />
 
     </application>
+    
+    <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
     
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8"/>
     <supports-screens/>

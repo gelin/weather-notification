@@ -125,7 +125,8 @@ public class UpdateService extends Service implements Runnable {
      *  not expired. 
      */
     public static void start(Context context, boolean verbose, boolean force) {
-        Intent startIntent = new Intent(context, UpdateService.class);
+        Intent startIntent = new Intent();
+        startIntent.setClassName(UpdateService.class.getPackage().getName(), UpdateService.class.getName());    //package is hardcoded
         startIntent.putExtra(EXTRA_VERBOSE, verbose);
         startIntent.putExtra(EXTRA_FORCE, force);
         context.startService(startIntent);

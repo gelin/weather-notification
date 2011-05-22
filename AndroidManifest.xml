@@ -24,8 +24,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ru.gelin.android.weather.notification"
-      android:versionCode="18"
-      android:versionName="0.2-alpha1"
+      android:versionCode="19"
+      android:versionName="0.2-alpha2"
       android:sharedUserId="ru.gelin.android.weather.notification">
     
     <application android:icon="@drawable/icon" android:label="@string/app_name"
@@ -43,7 +43,8 @@
         <activity android:name=".skin.SkinsActivity"
                   android:label="@string/skins"/>
         
-        <service android:name=".UpdateService"/>
+        <service android:name=".UpdateService"
+                android:permission="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
         
         <receiver android:name=".BootCompletedReceiver">
             <intent-filter>
@@ -69,7 +70,7 @@
         <activity android:name=".skin.builtin.SkinConfigActivity"
                   android:label="@string/builtin_skin_preferences">
             <intent-filter>
-                <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_CONFIG"/>
+                <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_PREFERENCES"/>
             </intent-filter>
         </activity>
         
@@ -80,6 +81,13 @@
         
     </application>
     
+    <permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"
+            android:label="@string/start_update_service_permission"
+            android:description="@string/start_update_service_permission_description"
+            android:permissionGroup="android.permission-group.DEVELOPMENT_TOOLS"
+            android:protectionLevel="normal"/>
+    
+    <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

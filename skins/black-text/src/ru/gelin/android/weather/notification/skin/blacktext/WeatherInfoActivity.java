@@ -53,7 +53,7 @@ public class WeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 startProgress();
-                UpdateService.start(WeatherInfoActivity.this, true, true);
+                UpdateService.start(WeatherInfoActivity.this.getApplicationContext(), true, true);
             }
         });
         
