@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_SKIN_CONFIG;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 import android.content.Context;
@@ -88,7 +88,7 @@ public class SkinInfo {
 	    Preference pref = new Preference(context);
         pref.setKey(String.format(SKIN_CONFIG_PATTERN, getPackageName()));
         pref.setTitle(getConfigActivityLabel() == null ? getBroadcastReceiverLabel() : getConfigActivityLabel());
-        Intent intent = new Intent(ACTION_WEATHER_SKIN_CONFIG);
+        Intent intent = new Intent(ACTION_WEATHER_SKIN_PREFERENCES);
         intent.setClassName(getPackageName(), getConfigActivityClass());
         pref.setIntent(intent);
         //TODO

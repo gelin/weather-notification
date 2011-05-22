@@ -18,7 +18,7 @@ public class IntentParameters {
         Tag.class.getPackage().getName() + ".EXTRA_ENABLE_NOTIFICATION";
     
     /** Intent action for the skin configuration activity */
-    public static final String ACTION_WEATHER_SKIN_CONFIG =
-        Tag.class.getPackage().getName() + ".ACTION_WEATHER_SKIN_CONFIG";
+    public static final String ACTION_WEATHER_SKIN_PREFERENCES =
+        Tag.class.getPackage().getName() + ".ACTION_WEATHER_SKIN_PREFERENCES";
 
 }

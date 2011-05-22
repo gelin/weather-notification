@@ -138,7 +138,7 @@ public class SkinManager {
      */
     void querySkinConfigs() {
         PackageManager pm = context.getPackageManager();
-        Intent intent = new Intent(IntentParameters.ACTION_WEATHER_SKIN_CONFIG);
+        Intent intent = new Intent(IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES);
         List<ResolveInfo> search = pm.queryIntentActivities(intent, 0);   //without flags
         
         for (ResolveInfo info : search) {
