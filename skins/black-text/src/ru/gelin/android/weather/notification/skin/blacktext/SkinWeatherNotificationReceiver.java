@@ -32,6 +32,7 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
+import ru.gelin.android.weather.notification.WeatherStorage;
 import ru.gelin.android.weather.notification.skin.TemperatureUnit;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
 import android.app.Notification;
@@ -82,6 +83,9 @@ public class SkinWeatherNotificationReceiver extends
 
     @Override
     protected void notify(Context context, Weather weather) {
+        WeatherStorage storage = new WeatherStorage(context);
+        storage.save(weather);
+        
         SharedPreferences prefs =
             PreferenceManager.getDefaultSharedPreferences(context);
     
