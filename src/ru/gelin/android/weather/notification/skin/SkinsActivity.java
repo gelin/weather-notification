@@ -24,7 +24,6 @@ package ru.gelin.android.weather.notification.skin;
 
 import java.util.List;
 
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
