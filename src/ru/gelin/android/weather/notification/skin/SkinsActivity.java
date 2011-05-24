@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin;
 
 import java.util.List;
 
+import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -41,7 +42,8 @@ public class SkinsActivity extends UpdateNotificationActivity
         SkinManager sm = new SkinManager(this);
         List<SkinInfo> skins = sm.getInstalledSkins();
      
-        PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this); 
+        PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
+        setPreferenceScreen(screen);
         for (SkinInfo skin : skins) {
             CheckBoxPreference checkboxPref = skin.getCheckBoxPreference(this);
             checkboxPref.setOnPreferenceChangeListener(this);
@@ -49,9 +51,9 @@ public class SkinsActivity extends UpdateNotificationActivity
         	Preference configPref = skin.getConfigPreference(this);
         	if (configPref != null) {
         	    screen.addPreference(configPref);
+        	    configPref.setDependency(checkboxPref.getKey());  //disabled if skin is disabled
         	}
         }
-        setPreferenceScreen(screen);
     }
     
     public boolean onPreferenceChange(Preference preference, Object newValue) {
