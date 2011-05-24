@@ -49,5 +49,7 @@ public interface PreferenceKeys {
     
     /** Skins preferences key */
     static final String SKINS = "skins";
+    /** Skins install preferences key */
+    static final String SKINS_INSTALL = "skins_install";
 
 }

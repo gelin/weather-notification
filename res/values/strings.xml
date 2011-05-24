@@ -63,6 +63,7 @@
     <string name="skin">Skin</string>
     <string name="skins">Skins</string>
     <string name="skins_preferences">Skins preferences</string>
+    <string name="skins_install">Install skins</string>
     <string name="builtin_skin">Built-in skin</string>
     <string name="builtin_skin_preferences">Built-in skin preferences</string>
     <string name="start_update_service_permission">start weather update service</string>

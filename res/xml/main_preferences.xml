@@ -67,9 +67,13 @@
     
     	<Preference
     		android:key="skins" 
-    		android:title="@string/skins"
-    		android:summary="@string/skins_preferences"
+    		android:title="@string/skins_preferences"
     		android:persistent="false"/>
+            
+        <Preference
+            android:key="skins_install" 
+            android:title="@string/skins_install"
+            android:persistent="false"/>
     
     </PreferenceCategory>
 
