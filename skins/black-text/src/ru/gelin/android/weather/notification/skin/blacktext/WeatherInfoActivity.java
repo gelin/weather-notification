@@ -97,7 +97,8 @@ public class WeatherInfoActivity extends Activity {
      *  Returns the PendingIntent which starts this activity.
      */
     protected static PendingIntent getPendingIntent(Context context) {
-        Intent intent = new Intent(context, WeatherInfoActivity.class);
+        Intent intent = new Intent();
+        intent.setClassName(WeatherInfoActivity.class.getPackage().getName(), WeatherInfoActivity.class.getName());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
