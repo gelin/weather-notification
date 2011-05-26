@@ -2,7 +2,7 @@
 
 #
 #   Android Weather Notification.
-#   Copyright (C) 2010  Denis Nelubin aka Gelin
+#   Copyright (C) 2010 gelin, 2011 mihovilic
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,15 +22,25 @@
 #   mailto:den@gelin.ru
 #
 
+font=Droid-Sans-Bold
+
+size=12
+sizehdpi=19
+
 #-60 - -10
 t=60
 while [ $t -ge 10 ]
 do
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "-$t°" \
         res/drawable/black_temp_minus_$t.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "-$t°" \
+        res/drawable-hdpi/black_temp_minus_$t.png
     #echo $t
     t=$(expr $t - 1)
 done
@@ -40,30 +50,45 @@ t=9
 while [ $t -ge 1 ]
 do
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "-$t°" \
         res/drawable/black_temp_minus_$t.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "-$t°" \
+        res/drawable-hdpi/black_temp_minus_$t.png
     #echo $t
     t=$(expr $t - 1)
 done
 
 #0
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "0°" \
         res/drawable/black_temp_0.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "0°" \
+        res/drawable-hdpi/black_temp_0.png
         
 #1 - 9
 t=1
 while [ $t -le 9 ]
 do
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "$t°" \
         res/drawable/black_temp_plus_$t.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "$t°" \
+        res/drawable-hdpi/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done
@@ -73,10 +98,15 @@ t=10
 while [ $t -le 99 ]
 do
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "$t°" \
         res/drawable/black_temp_plus_$t.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "$t°" \
+        res/drawable-hdpi/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done
@@ -86,10 +116,15 @@ t=100
 while [ $t -le 130 ]
 do
     convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
+        -font $font \
+        -gravity center -pointsize $size \
         -fill black -stroke none -annotate 0 "$t°" \
         res/drawable/black_temp_plus_$t.png
+    convert -size 38x38 xc:transparent \
+        -font $font \
+        -gravity center -pointsize $sizehdpi \
+        -fill black -stroke none -annotate 0 "$t°" \
+        res/drawable-hdpi/black_temp_plus_$t.png
     #echo $t
     t=$(expr $t + 1)
 done
