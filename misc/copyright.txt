@@ -1,2 +1,2 @@
-weather-icon.gif
-http://dahab.tc/wp-content/themes/dtc/images/icons/weather.gif
+weather-few-clouds.svg Public Domain
+http://www.openclipart.org/people/warszawianka/weather-few-clouds.svg
