@@ -2,7 +2,7 @@
 
 #
 #   Android Weather Notification.
-#   Copyright (C) 2010  Denis Nelubin aka Gelin
+#   Copyright (C) 2010 gelin, 2011 mihovilic
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,15 +22,35 @@
 #   mailto:den@gelin.ru
 #
 
+font=Droid-Sans-Bold
+
+hdpi_params="38x38 19 drawable-hdpi"
+mdpi_params="25x25 12 drawable"
+ldpi_params="19x19 9 drawable-ldpi"
+
+gen_image() {
+    img_size=$1
+    point_size=$2
+    res_folder=$3
+    text=$4
+    file_suffix=$5
+    
+    echo "Generating res/$res_folder/black_temp_$file_suffix.png"
+    
+    convert -size $img_size xc:transparent \
+        -font $font \
+        -gravity center -pointsize $point_size \
+        -fill black -stroke none -annotate 0 "$text" \
+        res/$res_folder/black_temp_$file_suffix.png
+}
+
 #-60 - -10
 t=60
 while [ $t -ge 10 ]
 do
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "-$t°" \
-        res/drawable/black_temp_minus_$t.png
+    gen_image $hdpi_params "-$t°" minus_$t
+    gen_image $mdpi_params "-$t°" minus_$t
+    gen_image $ldpi_params "-$t°" minus_$t
     #echo $t
     t=$(expr $t - 1)
 done
@@ -39,31 +59,25 @@ done
 t=9
 while [ $t -ge 1 ]
 do
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "-$t°" \
-        res/drawable/black_temp_minus_$t.png
+    gen_image $hdpi_params "-$t°" minus_$t
+    gen_image $mdpi_params "-$t°" minus_$t
+    gen_image $ldpi_params "-$t°" minus_$t
     #echo $t
     t=$(expr $t - 1)
 done
 
 #0
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "0°" \
-        res/drawable/black_temp_0.png
+    gen_image $hdpi_params "0°" 0
+    gen_image $mdpi_params "0°" 0
+    gen_image $ldpi_params "0°" 0
         
 #1 - 9
 t=1
 while [ $t -le 9 ]
 do
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "+$t°" \
-        res/drawable/black_temp_plus_$t.png
+    gen_image $hdpi_params "+$t°" plus_$t
+    gen_image $mdpi_params "+$t°" plus_$t
+    gen_image $ldpi_params "+$t°" plus_$t
     #echo $t
     t=$(expr $t + 1)
 done
@@ -72,11 +86,9 @@ done
 t=10
 while [ $t -le 99 ]
 do
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "+$t°" \
-        res/drawable/black_temp_plus_$t.png
+    gen_image $hdpi_params "+$t°" plus_$t
+    gen_image $mdpi_params "+$t°" plus_$t
+    gen_image $ldpi_params "+$t°" plus_$t
     #echo $t
     t=$(expr $t + 1)
 done
@@ -85,11 +97,9 @@ done
 t=100
 while [ $t -le 130 ]
 do
-    convert -size 25x25 xc:transparent \
-        -font Liberation-Sans-Bold \
-        -gravity center -pointsize 12 \
-        -fill black -stroke none -annotate 0 "$t°" \
-        res/drawable/black_temp_plus_$t.png
+    gen_image $hdpi_params "$t°" plus_$t
+    gen_image $mdpi_params "$t°" plus_$t
+    gen_image $ldpi_params "$t°" plus_$t
     #echo $t
     t=$(expr $t + 1)
 done
