@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.blacktextplus.TempFormatter.formatTemp;
 import static ru.gelin.android.weather.notification.skin.blacktextplus.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.blacktextplus.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.blacktextplus.PreferenceKeys.TEMP_UNIT;

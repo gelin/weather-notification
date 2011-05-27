@@ -26,7 +26,7 @@ import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNI
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.builtin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;

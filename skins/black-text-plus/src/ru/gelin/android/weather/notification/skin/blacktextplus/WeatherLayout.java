@@ -24,18 +24,18 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
 
 import ru.gelin.android.weather.notification.skin.TemperatureUnit;
 import android.content.Context;
-import android.widget.RemoteViews;
+import android.view.View;
 
 /**
- *  Utility to layout weather values to remove view.
+ *  Utility to layout weather values to view.
  */
-public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.skin.builtin.RemoteWeatherLayout {
+public class WeatherLayout extends ru.gelin.android.weather.notification.WeatherLayout {
     
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views) {
-        super(context, views);
+    public WeatherLayout(Context context, View view) {
+        super(context, view);
     }
     
     protected String formatTemp(int temp) {

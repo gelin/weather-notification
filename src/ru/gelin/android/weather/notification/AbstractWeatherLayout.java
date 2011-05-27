@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
 
@@ -34,6 +33,7 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.skin.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.TempFormatter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -184,6 +184,18 @@ public abstract class AbstractWeatherLayout {
                 calendar.get(Calendar.MINUTE) == 0 &&
                 calendar.get(Calendar.SECOND) == 0 &&
                 calendar.get(Calendar.MILLISECOND) == 0;
+    }
+    
+    protected String formatTemp(int temp) {
+        return TempFormatter.formatTemp(temp);
+    }
+    
+    protected String formatTemp(int temp, TemperatureUnit unit) {
+        return TempFormatter.formatTemp(temp, unit);
+    }
+    
+    protected String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
+        return TempFormatter.formatTemp(tempC, tempF, unit);
     }
 
 }
