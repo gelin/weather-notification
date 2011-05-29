@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2010  Denis Nelubin aka Gelin
+ *  Copyright (C) 2011  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,25 +20,7 @@
  *  mailto:den@gelin.ru
  */
 
+/**
+ *  Classes to manage skins.
+ */
 package ru.gelin.android.weather.notification.skin;
-
-import ru.gelin.android.weather.UnitSystem;
-
-public enum TemperatureUnit {
-
-    C(UnitSystem.SI),
-    F(UnitSystem.US),
-    CF(UnitSystem.SI),
-    FC(UnitSystem.US);
-    
-    UnitSystem unit;
-    
-    TemperatureUnit(UnitSystem unit) {
-        this.unit = unit;
-    }
-    
-    public UnitSystem getUnitSystem() {
-        return this.unit;
-    }
-
-}

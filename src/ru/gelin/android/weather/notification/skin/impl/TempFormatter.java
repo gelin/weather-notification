@@ -1,4 +1,4 @@
-package ru.gelin.android.weather.notification.skin;
+package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.Temperature;
 

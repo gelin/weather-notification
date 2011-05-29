@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.TEMP_UNIT_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,8 +32,8 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.notification.skin.TemperatureUnit;
-import ru.gelin.android.weather.notification.skin.TempFormatter;
+import ru.gelin.android.weather.notification.skin.impl.TempFormatter;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

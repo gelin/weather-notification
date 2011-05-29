@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2010  Denis Nelubin aka Gelin
+ *  Copyright (C) 2011  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,17 +20,7 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
-
 /**
- *  Constants for preference keys.
- *  Contains references to notification styles, so cannot be inherited by another application.
+ *  Built-in skin.
  */
-public final class PreferenceKeys {
-
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
-    
-}
+package ru.gelin.android.weather.notification.skin.builtin;

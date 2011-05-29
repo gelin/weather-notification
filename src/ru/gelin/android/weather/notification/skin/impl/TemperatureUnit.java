@@ -20,17 +20,25 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.impl;
 
-/**
- *  Constants for preference keys.
- *  Contains references to notification styles, so cannot be inherited by another application.
- */
-public final class PreferenceKeys {
+import ru.gelin.android.weather.UnitSystem;
 
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+public enum TemperatureUnit {
+
+    C(UnitSystem.SI),
+    F(UnitSystem.US),
+    CF(UnitSystem.SI),
+    FC(UnitSystem.US);
     
+    UnitSystem unit;
+    
+    TemperatureUnit(UnitSystem unit) {
+        this.unit = unit;
+    }
+    
+    public UnitSystem getUnitSystem() {
+        return this.unit;
+    }
+
 }

@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import ru.gelin.android.weather.notification.skin.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 
 /**
  *  Constants for preference keys.

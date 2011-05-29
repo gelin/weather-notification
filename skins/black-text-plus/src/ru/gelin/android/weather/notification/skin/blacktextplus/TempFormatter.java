@@ -1,7 +1,7 @@
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.notification.skin.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 
 public class TempFormatter {
 	

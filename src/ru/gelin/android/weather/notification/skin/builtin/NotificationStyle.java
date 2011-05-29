@@ -24,6 +24,10 @@ package ru.gelin.android.weather.notification.skin.builtin;
 
 import ru.gelin.android.weather.notification.R;
 
+/**
+ *  Enumeration with notification styles. 
+ *  Contains references to resources, so cannot be inherited by another application.
+ */
 public enum NotificationStyle {
 
     BLACK_TEXT(R.layout.notification_black),

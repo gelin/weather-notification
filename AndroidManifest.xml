@@ -64,7 +64,7 @@
         
         <!-- Built-in skin -->
         
-        <receiver android:name=".skin.builtin.BuiltinWeatherNotificationReceiver"
+        <receiver android:name=".skin.builtin.SkinWeatherNotificationReceiver"
         		android:label="@string/builtin_skin">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE"/>

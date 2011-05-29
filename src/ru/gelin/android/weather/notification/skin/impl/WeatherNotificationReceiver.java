@@ -20,10 +20,11 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin;
+package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
+import ru.gelin.android.weather.notification.skin.IntentParameters;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

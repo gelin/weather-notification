@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.blacktext;
 
-import static ru.gelin.android.weather.notification.skin.TempFormatter.formatTemp;
+import static ru.gelin.android.weather.notification.skin.impl.TempFormatter.formatTemp;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.blacktext.PreferenceKeys.TEMP_UNIT;
@@ -33,8 +33,8 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
 import ru.gelin.android.weather.notification.WeatherStorage;
-import ru.gelin.android.weather.notification.skin.TemperatureUnit;
-import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.impl.WeatherNotificationReceiver;
 import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;

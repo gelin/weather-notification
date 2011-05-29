@@ -22,8 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import ru.gelin.android.weather.notification.skin.TemperatureUnit;
-
 /**
  *  Constants for preference keys.
  */
@@ -33,12 +31,5 @@ public interface PreferenceKeys {
     static final String SKIN_ENABLED_PATTERN = "skin_enabled_%s";
     /** Pattern of the preference key for preference to start skin config activity */
     static final String SKIN_CONFIG_PATTERN = "skin_config_%s";
-    
-    /** Temperature unit preference name */
-    static final String TEMP_UNIT = "temp_unit";
-    /** Temperature unit default value */
-    static final String TEMP_UNIT_DEFAULT = TemperatureUnit.C.toString();
-    
-    
 
 }
