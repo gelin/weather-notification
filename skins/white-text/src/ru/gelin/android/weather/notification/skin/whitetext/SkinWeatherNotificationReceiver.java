@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin.whitetext;
 
-import static ru.gelin.android.weather.notification.skin.impl.TempFormatter.formatTemp;
 import static ru.gelin.android.weather.notification.skin.whitetext.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.whitetext.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.whitetext.PreferenceKeys.TEMP_UNIT;
@@ -33,6 +32,7 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
 import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureFormatter;
 import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 import ru.gelin.android.weather.notification.skin.impl.WeatherNotificationReceiver;
 import android.app.Notification;
@@ -59,6 +59,8 @@ public class SkinWeatherNotificationReceiver extends
     
     /** Handler to receive the weather */
     static Handler handler;
+    /** Temperature formatter */
+    static TemperatureFormatter tempFormat = new TemperatureFormatter();
     
     /**
      *  Registers the handler to receive the new weather.
@@ -133,7 +135,7 @@ public class SkinWeatherNotificationReceiver extends
         Temperature tempF = condition.getTemperature(UnitSystem.US);
         return context.getString(R.string.notification_ticker,
                 weather.getLocation().getText(),
-                formatTemp(tempC.getCurrent(), tempF.getCurrent(), unit));
+                tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
     }
     
     void notifyHandler(Weather weather) {

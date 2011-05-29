@@ -46,6 +46,8 @@ public abstract class AbstractWeatherLayout {
     protected Context context;
     /** ID factory */
     ResourceIdFactory ids;
+    /** Temperature formatter */
+    TemperatureFormatter tempFormat;
     
     /**
      *  Creates the utility for specified context.
@@ -53,6 +55,7 @@ public abstract class AbstractWeatherLayout {
     protected AbstractWeatherLayout(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
+        this.tempFormat = createTemperatureFormatter();
     }
     
     /**
@@ -113,24 +116,24 @@ public abstract class AbstractWeatherLayout {
         Temperature mainTemp = currentCondition.getTemperature(mainUnit);
         
         setVisibility(id("temp"), View.VISIBLE);
-        setText(id("current_temp"), formatTemp(mainTemp.getCurrent(), unit));
+        setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), unit));
         switch(unit) {
         case C: case F:
             setVisibility(id("current_temp_alt"), View.GONE);
             break;
         case CF:
-            setText(id("current_temp_alt"), formatTemp(tempF.getCurrent(),
+            setText(id("current_temp_alt"), tempFormat.format(tempF.getCurrent(),
                     TemperatureUnit.F));
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         case FC:
-            setText(id("current_temp_alt"), formatTemp(tempC.getCurrent(),
+            setText(id("current_temp_alt"), tempFormat.format(tempC.getCurrent(),
                     TemperatureUnit.C));
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         }
-        setText(id("high_temp"), formatTemp(mainTemp.getHigh()));
-        setText(id("low_temp"), formatTemp(mainTemp.getLow()));
+        setText(id("high_temp"), tempFormat.format(mainTemp.getHigh()));
+        setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
         
         setVisibility(id("forecasts"), View.VISIBLE);
         bindForecast(weather, mainUnit, 1,
@@ -159,8 +162,8 @@ public abstract class AbstractWeatherLayout {
             WeatherCondition forecastCondition = weather.getConditions().get(i);
             setText(conditionId, forecastCondition.getConditionText());
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
-            setText(highTempId, formatTemp(forecastTemp.getHigh()));
-            setText(lowTempId, formatTemp(forecastTemp.getLow()));
+            setText(highTempId, tempFormat.format(forecastTemp.getHigh()));
+            setText(lowTempId, tempFormat.format(forecastTemp.getLow()));
         } else {
             setVisibility(groupId, View.GONE);
         }
@@ -201,16 +204,11 @@ public abstract class AbstractWeatherLayout {
                 calendar.get(Calendar.MILLISECOND) == 0;
     }
     
-    protected String formatTemp(int temp) {
-        return TempFormatter.formatTemp(temp);
+    /**
+     *  Creates the temperature formatter.
+     */
+    protected TemperatureFormatter createTemperatureFormatter() {
+        return new TemperatureFormatter();
     }
     
-    protected String formatTemp(int temp, TemperatureUnit unit) {
-        return TempFormatter.formatTemp(temp, unit);
-    }
-    
-    protected String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
-        return TempFormatter.formatTemp(tempC, tempF, unit);
-    }
-
 }
