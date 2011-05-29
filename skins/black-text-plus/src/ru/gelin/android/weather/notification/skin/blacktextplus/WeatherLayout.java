@@ -29,7 +29,7 @@ import android.view.View;
 /**
  *  Utility to layout weather values to view.
  */
-public class WeatherLayout extends ru.gelin.android.weather.notification.WeatherLayout {
+public class WeatherLayout extends ru.gelin.android.weather.notification.skin.impl.WeatherLayout {
     
     /**
      *  Creates the utility for specified context.

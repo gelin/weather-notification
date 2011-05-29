@@ -28,7 +28,7 @@ import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.Tag;
 import ru.gelin.android.weather.notification.UpdateService;
-import ru.gelin.android.weather.notification.WeatherLayout;
+import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
 import android.app.PendingIntent;

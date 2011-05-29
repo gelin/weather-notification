@@ -29,7 +29,7 @@ public class ResourceIdFactory {
     /**
      *  Returns the instance of the factory for the context.
      */
-    static ResourceIdFactory getInstance(Context context) {
+    public static ResourceIdFactory getInstance(Context context) {
         String packageName = context.getPackageName();
         ResourceIdFactory factory = instances.get(packageName);
         if (factory == null) {

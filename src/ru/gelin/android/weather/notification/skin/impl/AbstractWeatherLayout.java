@@ -20,7 +20,7 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
@@ -32,8 +32,6 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.notification.skin.impl.TempFormatter;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -46,12 +44,29 @@ public abstract class AbstractWeatherLayout {
     
     /** Current context */
     protected Context context;
+    /** ID factory */
+    ResourceIdFactory ids;
     
     /**
      *  Creates the utility for specified context.
      */
     protected AbstractWeatherLayout(Context context) {
         this.context = context;
+        this.ids = ResourceIdFactory.getInstance(context);
+    }
+    
+    /**
+     *  Retreives "id/<name>" resource ID.
+     */
+    protected int id(String name) {
+        return this.ids.id(name);
+    }
+    
+    /**
+     *  Retreives "string/<name>" resource ID.
+     */
+    protected int string(String name) {
+        return this.ids.id("string", name);
     }
     
     /**
@@ -69,23 +84,23 @@ public abstract class AbstractWeatherLayout {
     void bindViews(Weather weather) {
         Date timeValue = weather.getTime();
         if (timeValue.getTime() == 0) {
-            setText(R.id.update_time, "");
+            setText(id("update_time"), "");
         } else if (isDate(timeValue)) {
-            setText(R.id.update_time, this.context.getString(
-                    R.string.update_date_format, timeValue));
+            setText(id("update_time"), this.context.getString(
+                    string("update_date_format"), timeValue));
         } else {
-            setText(R.id.update_time, this.context.getString(
-                R.string.update_time_format, timeValue));
+            setText(id("update_time"), this.context.getString(
+                string("update_time_format"), timeValue));
         }
-        setText(R.id.location, weather.getLocation().getText());
+        setText(id("location"), weather.getLocation().getText());
         
         if (weather.getConditions().size() <= 0) {
             return;
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
-        setText(R.id.condition, currentCondition.getConditionText());
-        setText(R.id.humidity, currentCondition.getHumidityText());
-        setText(R.id.wind, currentCondition.getWindText());
+        setText(id("condition"), currentCondition.getConditionText());
+        setText(id("humidity"), currentCondition.getHumidityText());
+        setText(id("wind"), currentCondition.getWindText());
         
         SharedPreferences preferences = 
                 PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -97,39 +112,39 @@ public abstract class AbstractWeatherLayout {
         UnitSystem mainUnit = unit.getUnitSystem();
         Temperature mainTemp = currentCondition.getTemperature(mainUnit);
         
-        setVisibility(R.id.temp, View.VISIBLE);
-        setText(R.id.current_temp, formatTemp(mainTemp.getCurrent(), unit));
+        setVisibility(id("temp"), View.VISIBLE);
+        setText(id("current_temp"), formatTemp(mainTemp.getCurrent(), unit));
         switch(unit) {
         case C: case F:
-            setVisibility(R.id.current_temp_alt, View.GONE);
+            setVisibility(id("current_temp_alt"), View.GONE);
             break;
         case CF:
-            setText(R.id.current_temp_alt, formatTemp(tempF.getCurrent(),
+            setText(id("current_temp_alt"), formatTemp(tempF.getCurrent(),
                     TemperatureUnit.F));
-            setVisibility(R.id.current_temp_alt, View.VISIBLE);
+            setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         case FC:
-            setText(R.id.current_temp_alt, formatTemp(tempC.getCurrent(),
+            setText(id("current_temp_alt"), formatTemp(tempC.getCurrent(),
                     TemperatureUnit.C));
-            setVisibility(R.id.current_temp_alt, View.VISIBLE);
+            setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         }
-        setText(R.id.high_temp, formatTemp(mainTemp.getHigh()));
-        setText(R.id.low_temp, formatTemp(mainTemp.getLow()));
+        setText(id("high_temp"), formatTemp(mainTemp.getHigh()));
+        setText(id("low_temp"), formatTemp(mainTemp.getLow()));
         
-        setVisibility(R.id.forecasts, View.VISIBLE);
+        setVisibility(id("forecasts"), View.VISIBLE);
         bindForecast(weather, mainUnit, 1,
-                R.id.forecast_1, R.id.forecast_day_1,
-                R.id.forecast_condition_1,
-                R.id.forecast_high_temp_1, R.id.forecast_low_temp_1);
+                id("forecast_1"), id("forecast_day_1"),
+                id("forecast_condition_1"),
+                id("forecast_high_temp_1"), id("forecast_low_temp_1"));
         bindForecast(weather, mainUnit, 2,
-                R.id.forecast_2, R.id.forecast_day_2,
-                R.id.forecast_condition_2,
-                R.id.forecast_high_temp_2, R.id.forecast_low_temp_2);
+                id("forecast_2"), id("forecast_day_2"),
+                id("forecast_condition_2"),
+                id("forecast_high_temp_2"), id("forecast_low_temp_2"));
         bindForecast(weather, mainUnit, 3,
-                R.id.forecast_3, R.id.forecast_day_3,
-                R.id.forecast_condition_3,
-                R.id.forecast_high_temp_3, R.id.forecast_low_temp_3);
+                id("forecast_3"), id("forecast_day_3"),
+                id("forecast_condition_3"),
+                id("forecast_high_temp_3"), id("forecast_low_temp_3"));
         
     }
     
@@ -140,7 +155,7 @@ public abstract class AbstractWeatherLayout {
         if (weather.getConditions().size() > i) {
             setVisibility(groupId, View.VISIBLE);
             Date tomorrow = addDays(weather.getTime(), i);
-            setText(dayId, context.getString(R.string.forecast_day_format, tomorrow));
+            setText(dayId, context.getString(string("forecast_day_format"), tomorrow));
             WeatherCondition forecastCondition = weather.getConditions().get(i);
             setText(conditionId, forecastCondition.getConditionText());
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
@@ -152,15 +167,15 @@ public abstract class AbstractWeatherLayout {
     }
     
     void emptyViews() {
-        setText(R.id.update_time, "");
-        setText(R.id.location, "");
-        setText(R.id.condition, context.getString(R.string.unknown_weather));
-        setText(R.id.humidity, "");
-        setText(R.id.wind, "");
+        setText(id("update_time"), "");
+        setText(id("location"), "");
+        setText(id("condition"), context.getString(string("unknown_weather")));
+        setText(id("humidity"), "");
+        setText(id("wind"), "");
         
-        setVisibility(R.id.temp, View.INVISIBLE);
+        setVisibility(id("temp"), View.INVISIBLE);
         
-        setVisibility(R.id.forecasts, View.GONE);
+        setVisibility(id("forecasts"), View.GONE);
     }
     
     protected abstract void setText(int viewId, String text);

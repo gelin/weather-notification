@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.notification.skin.builtin;
 
-import ru.gelin.android.weather.notification.AbstractWeatherLayout;
 import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.skin.impl.AbstractWeatherLayout;
 import android.content.Context;
 import android.widget.RemoteViews;
 

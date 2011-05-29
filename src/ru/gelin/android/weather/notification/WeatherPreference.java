@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification;
 
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;

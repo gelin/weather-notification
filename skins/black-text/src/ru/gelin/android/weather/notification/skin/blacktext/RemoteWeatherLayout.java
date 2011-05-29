@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.blacktext;
 
-import ru.gelin.android.weather.notification.AbstractWeatherLayout;
+import ru.gelin.android.weather.notification.skin.impl.AbstractWeatherLayout;
 import android.content.Context;
 import android.widget.RemoteViews;
 
