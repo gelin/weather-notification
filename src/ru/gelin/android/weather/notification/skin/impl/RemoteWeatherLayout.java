@@ -20,10 +20,11 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.impl;
 
-import ru.gelin.android.weather.notification.R;
-import ru.gelin.android.weather.notification.skin.impl.AbstractWeatherLayout;
+import java.util.HashSet;
+import java.util.Set;
+
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -35,12 +36,38 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     /** View to bind. */
     RemoteViews views;
     
+    /** Ids of views to update. */
+    final Set<Integer> ids = new HashSet<Integer>();
+    
     /**
      *  Creates the utility for specified context.
      */
     public RemoteWeatherLayout(Context context, RemoteViews views) {
         super(context);
         this.views = views;
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        this.ids.add(ids.id(""));
+        this.ids.add(ids.id("condition"));
+        this.ids.add(ids.id("humidity"));
+        this.ids.add(ids.id("wind"));
+        this.ids.add(ids.id("temp"));
+        this.ids.add(ids.id("current_temp"));
+        this.ids.add(ids.id("current_temp_alt"));
+        this.ids.add(ids.id("high_temp"));
+        this.ids.add(ids.id("low_temp"));
+        this.ids.add(ids.id("forecasts"));
+        this.ids.add(ids.id("forecast_1"));
+        this.ids.add(ids.id("forecast_2"));
+        this.ids.add(ids.id("forecast_3"));
+        this.ids.add(ids.id("forecast_day_1"));
+        this.ids.add(ids.id("forecast_day_2"));
+        this.ids.add(ids.id("forecast_day_3"));
+        this.ids.add(ids.id("forecast_high_temp_1"));
+        this.ids.add(ids.id("forecast_high_temp_2"));
+        this.ids.add(ids.id("forecast_high_temp_3"));
+        this.ids.add(ids.id("forecast_low_temp_1"));
+        this.ids.add(ids.id("forecast_low_temp_2"));
+        this.ids.add(ids.id("forecast_low_temp_3"));
     }
     
     @Override
@@ -64,32 +91,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     boolean skipView(int viewId) {
-        switch (viewId) {
-        case R.id.condition:
-        case R.id.humidity:
-        case R.id.wind:
-        case R.id.temp:
-        case R.id.current_temp:
-        case R.id.current_temp_alt:
-        case R.id.high_temp:
-        case R.id.low_temp:
-        case R.id.forecasts:
-        case R.id.forecast_1:
-        case R.id.forecast_2:
-        case R.id.forecast_3:
-        case R.id.forecast_day_1:
-        case R.id.forecast_day_2:
-        case R.id.forecast_day_3:
-        case R.id.forecast_high_temp_1:
-        case R.id.forecast_high_temp_2:
-        case R.id.forecast_high_temp_3:
-        case R.id.forecast_low_temp_1:
-        case R.id.forecast_low_temp_2:
-        case R.id.forecast_low_temp_3:
-            return false;
-        default:
-            return true;
-        }
+        return !this.ids.contains(viewId);
     }
 
 }

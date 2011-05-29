@@ -29,7 +29,7 @@ import android.widget.RemoteViews;
 /**
  *  Utility to layout weather values to remove view.
  */
-public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.skin.builtin.RemoteWeatherLayout {
+public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.skin.impl.RemoteWeatherLayout {
     
     /**
      *  Creates the utility for specified context.

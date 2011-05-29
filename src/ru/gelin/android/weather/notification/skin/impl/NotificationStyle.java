@@ -20,17 +20,28 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.builtin;
+package ru.gelin.android.weather.notification.skin.impl;
+
 
 /**
- *  Constants for preference keys.
- *  Contains references to notification styles, so cannot be inherited by another application.
+ *  Enumeration with notification styles. 
  */
-public final class PreferenceKeys {
+public enum NotificationStyle {
 
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+    BLACK_TEXT("notification_black"),
+    WHITE_TEXT("notification_white");
+
+    String layoutResName;
+    
+    private NotificationStyle(String layoutResName) {
+        this.layoutResName = layoutResName;
+    }
+
+    /**
+     *  Returns resource ID of the notification text layout.
+     */
+    public String getLayoutResName() {
+        return this.layoutResName;
+    }
     
 }

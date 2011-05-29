@@ -23,7 +23,7 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
