@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -69,7 +70,7 @@ public abstract class AbstractWeatherLayout {
      *  Retreives "string/<name>" resource ID.
      */
     protected int string(String name) {
-        return this.ids.id("string", name);
+        return this.ids.id(STRING, name);
     }
     
     /**

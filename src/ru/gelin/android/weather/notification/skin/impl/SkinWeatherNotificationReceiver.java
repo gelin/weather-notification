@@ -26,6 +26,8 @@ import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEM
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.DRAWABLE;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
@@ -96,7 +98,7 @@ public class SkinWeatherNotificationReceiver extends
 
         Notification notification = new Notification();
         
-        notification.icon = ids.id("drawable", "status_icon");
+        notification.icon = ids.id(DRAWABLE, "status_icon");
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(ids.id("string", "unknown_weather"));
@@ -126,7 +128,7 @@ public class SkinWeatherNotificationReceiver extends
         WeatherCondition condition = weather.getConditions().get(0);
         Temperature tempC = condition.getTemperature(UnitSystem.SI);
         Temperature tempF = condition.getTemperature(UnitSystem.US);
-        return context.getString(ids.id("string", "notification_ticker"),
+        return context.getString(ids.id(STRING, "notification_ticker"),
                 weather.getLocation().getText(),
                 tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
     }

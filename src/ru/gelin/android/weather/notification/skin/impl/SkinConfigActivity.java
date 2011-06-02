@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -38,8 +39,8 @@ public class SkinConfigActivity extends UpdateNotificationActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(
-                getResources().getIdentifier("skin_preferences", "xml", null));
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(this);
+        addPreferencesFromResource(ids.id(XML, "skin_preferences"));
         
         /*  TODO: why this doesn't work?
         PreferenceScreen screen = getPreferenceScreen();

@@ -14,6 +14,17 @@ import android.content.res.Resources;
  */
 public class ResourceIdFactory {
     
+    /** "id" resource type */
+    public static final String ID = "id";
+    /** "string" resource type */
+    public static final String STRING = "string";
+    /** "layout" resource type */
+    public static final String LAYOUT = "layout";
+    /** "xml" resource type */
+    public static final String XML = "xml";
+    /** "drawable" resource type */
+    public static final String DRAWABLE = "drawable";
+    
     /** Map of instances */
     static final Map<String, ResourceIdFactory> instances = new HashMap<String, ResourceIdFactory>();
     
@@ -64,7 +75,7 @@ public class ResourceIdFactory {
      *  Returns the "id/<name>" resource ID.
      */
     public int id(String name) {
-        return id("id", name);
+        return id(ID, name);
     }
 
 }

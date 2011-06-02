@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver.WEATHER_KEY;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.Tag;
@@ -52,7 +53,7 @@ public class WeatherInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(ids.id("layout", "weather_info"));
+        setContentView(ids.id(LAYOUT, "weather_info"));
         
         final ImageButton refreshButton = (ImageButton)findViewById(ids.id("refresh_button")); 
         refreshButton.setOnClickListener(new OnClickListener() {
