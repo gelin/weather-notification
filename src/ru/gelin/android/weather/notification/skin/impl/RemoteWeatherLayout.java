@@ -46,7 +46,6 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         super(context);
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        this.ids.add(ids.id(""));
         this.ids.add(ids.id("condition"));
         this.ids.add(ids.id("humidity"));
         this.ids.add(ids.id("wind"));

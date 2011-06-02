@@ -22,25 +22,23 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.DRAWABLE;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
-import ru.gelin.android.weather.notification.skin.impl.NotificationStyle;
-import ru.gelin.android.weather.notification.skin.impl.RemoteWeatherLayout;
-import ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureFormatter;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
-import ru.gelin.android.weather.notification.skin.impl.WeatherNotificationReceiver;
 import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,7 +49,7 @@ import android.widget.RemoteViews;
 /**
  *  Weather notification receiver built into basic application.
  */
-public class SkinWeatherNotificationReceiver extends
+abstract public class SkinWeatherNotificationReceiver extends
         WeatherNotificationReceiver {
 
     /** Notification ID */
@@ -101,7 +99,7 @@ public class SkinWeatherNotificationReceiver extends
         notification.icon = ids.id(DRAWABLE, "status_icon");
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
-            notification.tickerText = context.getString(ids.id("string", "unknown_weather"));
+            notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
         } else {
             notification.tickerText = formatTicker(context, weather, unit);
         }
@@ -111,17 +109,35 @@ public class SkinWeatherNotificationReceiver extends
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
         
         notification.contentView = new RemoteViews(context.getPackageName(), 
-                ids.id(textStyle.getLayoutResName()));
+                ids.id(LAYOUT, textStyle.getLayoutResName()));
         RemoteWeatherLayout layout = new RemoteWeatherLayout(context, notification.contentView);
         layout.bind(weather);
         
-        notification.contentIntent = WeatherInfoActivity.getPendingIntent(context);
+        notification.contentIntent = getContentIntent(context);
         //notification.contentIntent = getMainActivityPendingIntent(context);
         
         getNotificationManager(context).notify(ID, notification);
         
         notifyHandler(weather);
     }
+
+    /**
+     *  Returns the pending intent called on click on notification.
+     *  This intent starts the weather info activity.
+     */
+    protected PendingIntent getContentIntent(Context context) {
+        Intent intent = new Intent();
+        intent.setComponent(getWeatherInfoActivityComponentName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return PendingIntent.getActivity(context, 0, intent, 0);
+    }
+    
+    /**
+     *  Returns the component name of the weather info activity
+     */
+    abstract protected ComponentName getWeatherInfoActivityComponentName();
     
     String formatTicker(Context context, Weather weather, TemperatureUnit unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);

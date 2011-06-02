@@ -22,18 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver.WEATHER_KEY;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
+import static ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.Tag;
 import ru.gelin.android.weather.notification.UpdateService;
-import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,13 +40,14 @@ import android.widget.ImageButton;
 /**
  *  Base class for weather info activity.
  */
-public class WeatherInfoActivity extends Activity {
+abstract public class WeatherInfoActivity extends Activity {
     
-    ResourceIdFactory ids = ResourceIdFactory.getInstance(this);
+    ResourceIdFactory ids;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ids = ResourceIdFactory.getInstance(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(ids.id(LAYOUT, "weather_info"));
         
@@ -98,18 +94,6 @@ public class WeatherInfoActivity extends Activity {
     protected void onPause() {
         super.onPause();
         SkinWeatherNotificationReceiver.unregisterWeatherHandler();
-    }
-    
-    /**
-     *  Returns the PendingIntent which starts this activity.
-     */
-    protected static PendingIntent getPendingIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setClassName(Tag.class.getPackage().getName(), WeatherInfoActivity.class.getName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     final Handler weatherHandler = new Handler() {

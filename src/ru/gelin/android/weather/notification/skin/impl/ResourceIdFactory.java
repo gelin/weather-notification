@@ -1,10 +1,13 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
+import static ru.gelin.android.weather.notification.Tag.TAG;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 /**
  *  Retrieves the integers IDs of resources by the name.
@@ -67,6 +70,9 @@ public class ResourceIdFactory {
         if (id == null) {
             id = this.resources.getIdentifier(name, type, this.packageName);
             this.ids.put(key, id);
+        }
+        if (id == 0) {
+            Log.w(TAG, this.packageName + ":" + type + "/" + name + " not found");
         }
         return id;
     }

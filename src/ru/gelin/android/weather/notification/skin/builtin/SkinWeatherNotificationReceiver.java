@@ -22,6 +22,9 @@
 
 package ru.gelin.android.weather.notification.skin.builtin;
 
+import static ru.gelin.android.weather.notification.Tag.TAG;
+import android.content.ComponentName;
+
 
 /**
  *  Silently extends the basic notification receiver.
@@ -30,5 +33,10 @@ package ru.gelin.android.weather.notification.skin.builtin;
  */
 public class SkinWeatherNotificationReceiver extends 
         ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver {
+
+    @Override
+    protected ComponentName getWeatherInfoActivityComponentName() {
+        return new ComponentName(TAG, WeatherInfoActivity.class.getName());
+    }
 
 }
