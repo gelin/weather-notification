@@ -63,7 +63,9 @@
     
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/skin">
+    <PreferenceCategory
+        android:key="skins_category" 
+        android:title="@string/skin">
     
     	<Preference
     		android:key="skins" 

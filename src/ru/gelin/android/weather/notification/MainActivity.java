@@ -27,14 +27,20 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFI
 import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
+import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_CATEGORY;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_INSTALL;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+
+import java.util.prefs.PreferencesFactory;
+
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.Window;
@@ -70,12 +76,19 @@ public class MainActivity extends UpdateNotificationActivity
         
         Preference skinsPreference = findPreference(SKINS);
         skinsPreference.setIntent(new Intent(MainActivity.this, SkinsActivity.class));
+        
         Preference skinsInstallPreference = findPreference(SKINS_INSTALL);
-        skinsInstallPreference.setIntent(new Intent(Intent.ACTION_VIEW, SKIN_SEARCH_URI));
+        Intent skinsInstallIntent = new Intent(Intent.ACTION_VIEW, SKIN_SEARCH_URI);
+        skinsInstallPreference.setIntent(skinsInstallIntent);
+        ComponentName marketActivity = skinsInstallIntent.resolveActivity(getPackageManager());
+        if (marketActivity == null) {
+            PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
+            skinsCategory.removePreference(skinsInstallPreference);
+        }
         
         startUpdate(false);
     }
-
+    
     //@Override
     public boolean onPreferenceClick(Preference preference) {
         String key = preference.getKey();
