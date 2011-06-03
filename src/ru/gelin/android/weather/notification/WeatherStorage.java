@@ -69,6 +69,7 @@ public class WeatherStorage {
      */
     public WeatherStorage(Context context) {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        //Log.d(TAG, "storage for " + context.getPackageName());
     }
     
     /**

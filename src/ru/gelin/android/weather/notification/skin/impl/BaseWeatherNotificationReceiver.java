@@ -33,6 +33,7 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
+import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -84,6 +85,9 @@ abstract public class BaseWeatherNotificationReceiver extends
 
     @Override
     protected void notify(Context context, Weather weather) {
+        WeatherStorage storage = new WeatherStorage(context);
+        storage.save(weather);
+        
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         SharedPreferences prefs =
             PreferenceManager.getDefaultSharedPreferences(context);
