@@ -26,6 +26,7 @@ import static ru.gelin.android.weather.notification.Tag.TAG;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import android.content.ComponentName;
 
 
@@ -33,8 +34,7 @@ import android.content.ComponentName;
  *  Extends the basic notification receiver.
  *  Always displays the same notification icon.
  */
-public class SkinWeatherNotificationReceiver extends 
-        ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver {
+public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationReceiver {
 
     @Override
     protected ComponentName getWeatherInfoActivityComponentName() {

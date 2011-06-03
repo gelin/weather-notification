@@ -27,6 +27,6 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
  *  Adds no more functionality.
  *  Used to declare a new class name to be inserted into manifest.
  */
-public class SkinConfigActivity extends ru.gelin.android.weather.notification.skin.impl.SkinConfigActivity {
+public class SkinConfigActivity extends ru.gelin.android.weather.notification.skin.impl.BaseConfigActivity {
 
 }

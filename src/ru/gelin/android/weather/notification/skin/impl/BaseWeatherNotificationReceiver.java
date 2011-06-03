@@ -48,7 +48,7 @@ import android.widget.RemoteViews;
 /**
  *  Weather notification receiver built into basic application.
  */
-abstract public class SkinWeatherNotificationReceiver extends
+abstract public class BaseWeatherNotificationReceiver extends
         WeatherNotificationReceiver {
 
     /** Notification ID */
@@ -67,14 +67,14 @@ abstract public class SkinWeatherNotificationReceiver extends
      *  The handler is used to update the weather displayed by the activity. 
      */
     static synchronized void registerWeatherHandler(Handler handler) {
-        SkinWeatherNotificationReceiver.handler = handler;
+        BaseWeatherNotificationReceiver.handler = handler;
     }
     
     /**
      *  Unregisters the weather update handler.
      */
     static synchronized void unregisterWeatherHandler() {
-        SkinWeatherNotificationReceiver.handler = null;
+        BaseWeatherNotificationReceiver.handler = null;
     }
     
     @Override
@@ -162,7 +162,7 @@ abstract public class SkinWeatherNotificationReceiver extends
     }
     
     void notifyHandler(Weather weather) {
-        synchronized (SkinWeatherNotificationReceiver.class) {   //monitor of static methods
+        synchronized (BaseWeatherNotificationReceiver.class) {   //monitor of static methods
             if (handler == null) {
                 return;
             }

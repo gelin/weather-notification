@@ -23,7 +23,7 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
-import static ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver.WEATHER_KEY;
+import static ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.UpdateService;
@@ -40,7 +40,7 @@ import android.widget.ImageButton;
 /**
  *  Base class for weather info activity.
  */
-abstract public class WeatherInfoActivity extends Activity {
+abstract public class BaseWeatherInfoActivity extends Activity {
     
     ResourceIdFactory ids;
     
@@ -56,7 +56,7 @@ abstract public class WeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 startProgress();
-                UpdateService.start(WeatherInfoActivity.this, true, true);
+                UpdateService.start(BaseWeatherInfoActivity.this, true, true);
             }
         });
         
@@ -65,7 +65,7 @@ abstract public class WeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 finish();
-                MainActivity.start(WeatherInfoActivity.this);
+                MainActivity.start(BaseWeatherInfoActivity.this);
             }
         });
         
@@ -81,7 +81,7 @@ abstract public class WeatherInfoActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        SkinWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
+        BaseWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
         WeatherStorage storage = new WeatherStorage(this);
         WeatherLayout layout = new WeatherLayout(this, findViewById(ids.id("weather_info")));
         Weather weather = storage.load();
@@ -93,7 +93,7 @@ abstract public class WeatherInfoActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        SkinWeatherNotificationReceiver.unregisterWeatherHandler();
+        BaseWeatherNotificationReceiver.unregisterWeatherHandler();
     }
 
     final Handler weatherHandler = new Handler() {
@@ -105,8 +105,8 @@ abstract public class WeatherInfoActivity extends Activity {
                 return;
             }
             WeatherLayout layout = new WeatherLayout(
-                    WeatherInfoActivity.this, findViewById(
-                            WeatherInfoActivity.this.ids.id("weather_info")));
+                    BaseWeatherInfoActivity.this, findViewById(
+                            BaseWeatherInfoActivity.this.ids.id("weather_info")));
             layout.bind(weather);
         };
     };

@@ -24,14 +24,14 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
 
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import android.content.ComponentName;
 
 /**
  *  Extends the basic notification receiver.
  *  Overwrites the weather info activity intent and getting of the icon resource.
  */
-public class SkinWeatherNotificationReceiver extends 
-        ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver {
+public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationReceiver {
 
     /** Icon level shift relative to temp value */
     static final int ICON_LEVEL_SHIFT = 100;

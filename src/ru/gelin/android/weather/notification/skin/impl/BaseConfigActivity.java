@@ -33,7 +33,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 /**
  *  Base class for skin configuration activity.
  */
-public class SkinConfigActivity extends UpdateNotificationActivity 
+public class BaseConfigActivity extends UpdateNotificationActivity 
         implements OnPreferenceChangeListener {
 
     @Override

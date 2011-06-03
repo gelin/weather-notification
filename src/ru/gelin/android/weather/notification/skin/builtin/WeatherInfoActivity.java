@@ -22,12 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin.builtin;
 
+import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
+
 /**
  *  Silently extends the basic weather info activity.
  *  Adds no more functionality.
  *  Used to declare a new class name to be inserted into manifest.
  */
-public class WeatherInfoActivity extends 
-        ru.gelin.android.weather.notification.skin.impl.WeatherInfoActivity {
+public class WeatherInfoActivity extends BaseWeatherInfoActivity {
 
 }
