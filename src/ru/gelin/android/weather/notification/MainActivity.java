@@ -30,9 +30,6 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_CATEGORY;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_INSTALL;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
-
-import java.util.prefs.PreferencesFactory;
-
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
 import android.content.ComponentName;
 import android.content.Context;

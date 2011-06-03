@@ -26,7 +26,6 @@ import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOT
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.DRAWABLE;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 import ru.gelin.android.weather.Temperature;
@@ -91,17 +90,19 @@ abstract public class SkinWeatherNotificationReceiver extends
     
         TemperatureUnit unit = TemperatureUnit.valueOf(prefs.getString(
             TEMP_UNIT, TEMP_UNIT_DEFAULT));
+        UnitSystem mainUnit = unit.getUnitSystem();
         NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
-        notification.icon = ids.id(DRAWABLE, "status_icon");
+        notification.icon = getNotificationIconId();
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
         } else {
             notification.tickerText = formatTicker(context, weather, unit);
+            notification.iconLevel = getNotificationIconLevel(weather, mainUnit);
         }
 
         notification.when = weather.getTime().getTime();
@@ -138,6 +139,17 @@ abstract public class SkinWeatherNotificationReceiver extends
      *  Returns the component name of the weather info activity
      */
     abstract protected ComponentName getWeatherInfoActivityComponentName();
+    
+    /**
+     *  Returns the ID of the notification icon.
+     */
+    abstract protected int getNotificationIconId();
+    
+    /**
+     *  Returns the notification icon level.
+     */
+    abstract protected int getNotificationIconLevel(Weather weather, UnitSystem unit);
+    
     
     String formatTicker(Context context, Weather weather, TemperatureUnit unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);

@@ -22,41 +22,11 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import ru.gelin.android.weather.notification.UpdateNotificationActivity;
-import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-
-public class SkinConfigActivity extends UpdateNotificationActivity 
-        implements OnPreferenceChangeListener {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.skin_preferences);
-        
-        /*  TODO: why this doesn't work?
-        PreferenceScreen screen = getPreferenceScreen();
-        screen.setOnPreferenceClickListener(this);
-        screen.setOnPreferenceChangeListener(this); 
-        */
-        
-        Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
-        textStylePreference.setOnPreferenceChangeListener(this);
-        Preference unitPreference = findPreference(TEMP_UNIT);
-        unitPreference.setOnPreferenceChangeListener(this);
-    }
-
-    //@Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        String key = preference.getKey();
-        if (NOTIFICATION_TEXT_STYLE.equals(key) || TEMP_UNIT.equals(key)) {
-            updateNotification();
-            return true;
-        }
-        return false;
-    }
+/**
+ *  Silently extends the basic config activity.
+ *  Adds no more functionality.
+ *  Used to declare a new class name to be inserted into manifest.
+ */
+public class SkinConfigActivity extends ru.gelin.android.weather.notification.skin.impl.SkinConfigActivity {
 
 }

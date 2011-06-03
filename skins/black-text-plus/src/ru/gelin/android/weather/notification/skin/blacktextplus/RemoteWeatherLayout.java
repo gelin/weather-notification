@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -38,16 +37,9 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
         super(context, views);
     }
     
-    protected String formatTemp(int temp) {
-        return TempFormatter.formatTemp(temp);
-    }
-    
-    protected String formatTemp(int temp, TemperatureUnit unit) {
-        return TempFormatter.formatTemp(temp, unit);
-    }
-    
-    protected String formatTemp(int tempC, int tempF, TemperatureUnit unit) {
-        return TempFormatter.formatTemp(tempC, tempF, unit);
+    @Override
+    protected TemperatureFormatter createTemperatureFormatter() {
+        return new TemperatureFormatter();
     }
 
 }

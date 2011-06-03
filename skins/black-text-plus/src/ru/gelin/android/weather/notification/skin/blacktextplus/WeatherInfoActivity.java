@@ -22,113 +22,12 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import static ru.gelin.android.weather.notification.skin.blacktextplus.SkinWeatherNotificationReceiver.WEATHER_KEY;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.UpdateService;
-import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
-import ru.gelin.android.weather.notification.WeatherStorage;
-import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
-
-public class WeatherInfoActivity extends Activity {
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.weather_info);
-        
-        final ImageButton refreshButton = (ImageButton)findViewById(R.id.refresh_button); 
-        refreshButton.setOnClickListener(new OnClickListener() {
-            //@Override
-            public void onClick(View v) {
-                startProgress();
-                UpdateService.start(WeatherInfoActivity.this, true, true);
-            }
-        });
-        
-        ImageButton preferencesButton = (ImageButton)findViewById(R.id.preferences_button); 
-        preferencesButton.setOnClickListener(new OnClickListener() {
-            //@Override
-            public void onClick(View v) {
-                finish();
-                MainActivity.start(WeatherInfoActivity.this);
-            }
-        });
-        
-        View wholeActivity = findViewById(R.id.weather_info);
-        wholeActivity.setOnClickListener(new OnClickListener() {
-            //@Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SkinWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
-        WeatherStorage storage = new WeatherStorage(this);
-        WeatherLayout layout = new WeatherLayout(this, findViewById(R.id.weather_info));
-        Weather weather = storage.load();
-        layout.bind(weather);
-        //Location location = weather.getLocation();
-        //setTitle(location == null ? "" : location.getText());
-    }
-    
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SkinWeatherNotificationReceiver.unregisterWeatherHandler();
-    }
-    
-    /**
-     *  Returns the PendingIntent which starts this activity.
-     */
-    protected static PendingIntent getPendingIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setClassName(WeatherInfoActivity.class.getPackage().getName(), WeatherInfoActivity.class.getName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        return PendingIntent.getActivity(context, 0, intent, 0);
-    }
-
-    final Handler weatherHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            stopProgress();
-            Weather weather = (Weather)msg.getData().getParcelable(WEATHER_KEY);
-            if (weather == null) {
-                return;
-            }
-            WeatherLayout layout = new WeatherLayout(
-                    WeatherInfoActivity.this, findViewById(R.id.weather_info));
-            layout.bind(weather);
-        };
-    };
-    
-    void startProgress() {
-        View refreshButton = findViewById(R.id.refresh_button);
-        refreshButton.setEnabled(false);
-        //Animation rotate = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        //refreshButton.startAnimation(rotate);
-    }
-    
-    void stopProgress() {
-        View refreshButton = findViewById(R.id.refresh_button);
-        refreshButton.setEnabled(true);
-    }
+/**
+ *  Silently extends the basic weather info activity.
+ *  Adds no more functionality.
+ *  Used to declare a new class name to be inserted into manifest.
+ */
+public class WeatherInfoActivity extends 
+        ru.gelin.android.weather.notification.skin.impl.WeatherInfoActivity {
 
 }

@@ -23,13 +23,15 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.Tag.TAG;
+import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.R;
 import android.content.ComponentName;
 
 
 /**
- *  Silently extends the basic notification receiver.
- *  Adds no more functionality.
- *  Used to declare a new class name to be inserted into manifest.
+ *  Extends the basic notification receiver.
+ *  Always displays the same notification icon.
  */
 public class SkinWeatherNotificationReceiver extends 
         ru.gelin.android.weather.notification.skin.impl.SkinWeatherNotificationReceiver {
@@ -37,6 +39,16 @@ public class SkinWeatherNotificationReceiver extends
     @Override
     protected ComponentName getWeatherInfoActivityComponentName() {
         return new ComponentName(TAG, WeatherInfoActivity.class.getName());
+    }
+
+    @Override
+    protected int getNotificationIconId() {
+        return R.drawable.status_icon;
+    }
+
+    @Override
+    protected int getNotificationIconLevel(Weather weather, UnitSystem unit) {
+        return 0;
     }
 
 }
