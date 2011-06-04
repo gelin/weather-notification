@@ -35,13 +35,13 @@ gen_image() {
     text=$4
     file_suffix=$5
     
-    echo "Generating res/$res_folder/black_temp_$file_suffix.png"
+    echo "Generating res/$res_folder/white_temp_$file_suffix.png"
     
     convert -size $img_size xc:transparent \
         -font $font \
         -gravity center -pointsize $point_size \
-        -fill black -stroke none -annotate 0 "$text" \
-        res/$res_folder/black_temp_$file_suffix.png
+        -fill white -stroke none -annotate 0 "$text" \
+        res/$res_folder/white_temp_$file_suffix.png
 }
 
 #-60 - -10
