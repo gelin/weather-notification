@@ -23,10 +23,10 @@
 -->
 
 <resources>
-	<string name="app_name">Weather notification skin: black text plus</string>
+	<string name="app_name">Weather notification skin: white text plus</string>
 	<string name="weather">Weather</string>
-    <string name="skin_name">Black text plus</string>
-    <string name="skin_preferences">Black text plus preferences</string>
+    <string name="skin_name">White text plus</string>
+    <string name="skin_preferences">White text plus preferences</string>
     <string name="notification_text_style">Notification text color</string>
     <string name="notification_style_black_text">Black text</string>
     <string name="notification_style_white_text">White text</string>
