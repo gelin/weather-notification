@@ -116,7 +116,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         
         notification.contentView = new RemoteViews(context.getPackageName(), 
                 ids.id(LAYOUT, textStyle.getLayoutResName()));
-        RemoteWeatherLayout layout = new RemoteWeatherLayout(context, notification.contentView);
+        RemoteWeatherLayout layout = createRemoteWeatherLayout(context, notification.contentView);
         layout.bind(weather);
         
         notification.contentIntent = getContentIntent(context);
@@ -182,6 +182,13 @@ abstract public class BaseWeatherNotificationReceiver extends
      */
     protected TemperatureFormatter createTemperatureFormatter() {
         return new TemperatureFormatter();
+    }
+    
+    /**
+     *  Creates the remove view layout for the notification.
+     */
+    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views) {
+        return new RemoteWeatherLayout(context, views);
     }
 
 }

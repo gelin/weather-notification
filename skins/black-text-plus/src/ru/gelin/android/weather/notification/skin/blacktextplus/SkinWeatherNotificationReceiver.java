@@ -26,6 +26,8 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import android.content.ComponentName;
+import android.content.Context;
+import android.widget.RemoteViews;
 
 /**
  *  Extends the basic notification receiver.
@@ -56,6 +58,11 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     @Override
     protected TemperatureFormatter createTemperatureFormatter() {
         return new TemperatureFormatter();
+    }
+    
+    @Override
+    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views) {
+        return new RemoteWeatherLayout(context, views);
     }
 
 }
