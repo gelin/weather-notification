@@ -29,6 +29,7 @@ import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.UpdateService;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,7 +84,7 @@ abstract public class BaseWeatherInfoActivity extends Activity {
         super.onResume();
         BaseWeatherNotificationReceiver.registerWeatherHandler(weatherHandler);
         WeatherStorage storage = new WeatherStorage(this);
-        WeatherLayout layout = new WeatherLayout(this, findViewById(ids.id("weather_info")));
+        WeatherLayout layout = createWeatherLayout(this, findViewById(ids.id("weather_info")));
         Weather weather = storage.load();
         layout.bind(weather);
         //Location location = weather.getLocation();
@@ -104,7 +105,7 @@ abstract public class BaseWeatherInfoActivity extends Activity {
             if (weather == null) {
                 return;
             }
-            WeatherLayout layout = new WeatherLayout(
+            WeatherLayout layout = createWeatherLayout(
                     BaseWeatherInfoActivity.this, findViewById(
                             BaseWeatherInfoActivity.this.ids.id("weather_info")));
             layout.bind(weather);
@@ -121,6 +122,13 @@ abstract public class BaseWeatherInfoActivity extends Activity {
     void stopProgress() {
         View refreshButton = findViewById(ids.id("refresh_button"));
         refreshButton.setEnabled(true);
+    }
+    
+    /**
+     *  Creates the weather layout to render activity.
+     */
+    protected WeatherLayout createWeatherLayout(Context context, View view) {
+        return new WeatherLayout(context, view);
     }
 
 }

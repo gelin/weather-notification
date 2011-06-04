@@ -22,18 +22,21 @@
 
 package ru.gelin.android.weather.notification.skin.whitetextplus;
 
-import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
 import android.content.Context;
 import android.view.View;
 
 /**
- *  Extends the basic weather info activity.
- *  Overrides weather layout to render temp values with "+" sign.
+ *  Utility to layout weather values to view.
  */
-public class WeatherInfoActivity extends BaseWeatherInfoActivity {
-
-    protected WeatherLayout createWeatherLayout(Context context, View view) {
-        return new WeatherLayout(context, view);
-    }
+public class WeatherLayout extends ru.gelin.android.weather.notification.skin.impl.WeatherLayout {
     
+    public WeatherLayout(Context context, View view) {
+        super(context, view);
+    }
+
+    @Override
+    protected TemperatureFormatter createTemperatureFormatter() {
+        return new TemperatureFormatter();
+    }
+
 }

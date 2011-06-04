@@ -22,13 +22,18 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
+import android.content.Context;
+import android.view.View;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
 
 /**
  *  Silently extends the basic weather info activity.
- *  Adds no more functionality.
- *  Used to declare a new class name to be inserted into manifest.
+ *  Overrides weather layout to render temp values with "+" sign.
  */
 public class WeatherInfoActivity extends BaseWeatherInfoActivity {
 
+    protected WeatherLayout createWeatherLayout(Context context, View view) {
+        return new WeatherLayout(context, view);
+    }
+    
 }
