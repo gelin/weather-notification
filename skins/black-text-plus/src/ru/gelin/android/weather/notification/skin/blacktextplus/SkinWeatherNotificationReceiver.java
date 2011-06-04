@@ -52,5 +52,10 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
         return weather.getConditions().get(0).
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
     }
+    
+    @Override
+    protected TemperatureFormatter createTemperatureFormatter() {
+        return new TemperatureFormatter();
+    }
 
 }

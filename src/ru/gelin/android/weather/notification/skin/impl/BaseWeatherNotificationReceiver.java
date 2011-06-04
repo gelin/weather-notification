@@ -59,8 +59,9 @@ abstract public class BaseWeatherNotificationReceiver extends
     
     /** Handler to receive the weather */
     static Handler handler;
+    
     /** Temperature formatter */
-    static TemperatureFormatter tempFormat = new TemperatureFormatter();
+    TemperatureFormatter tempFormat = createTemperatureFormatter();
     
     /**
      *  Registers the handler to receive the new weather.
@@ -139,22 +140,6 @@ abstract public class BaseWeatherNotificationReceiver extends
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
     
-    /**
-     *  Returns the component name of the weather info activity
-     */
-    abstract protected ComponentName getWeatherInfoActivityComponentName();
-    
-    /**
-     *  Returns the ID of the notification icon.
-     */
-    abstract protected int getNotificationIconId();
-    
-    /**
-     *  Returns the notification icon level.
-     */
-    abstract protected int getNotificationIconLevel(Weather weather, UnitSystem unit);
-    
-    
     String formatTicker(Context context, Weather weather, TemperatureUnit unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         WeatherCondition condition = weather.getConditions().get(0);
@@ -175,6 +160,28 @@ abstract public class BaseWeatherNotificationReceiver extends
             bundle.putParcelable(WEATHER_KEY, new ParcelableWeather(weather));
             message.sendToTarget();
         }
+    }
+    
+    /**
+     *  Returns the component name of the weather info activity
+     */
+    abstract protected ComponentName getWeatherInfoActivityComponentName();
+    
+    /**
+     *  Returns the ID of the notification icon.
+     */
+    abstract protected int getNotificationIconId();
+    
+    /**
+     *  Returns the notification icon level.
+     */
+    abstract protected int getNotificationIconLevel(Weather weather, UnitSystem unit);
+    
+    /**
+     *  Creates the temperature formatter.
+     */
+    protected TemperatureFormatter createTemperatureFormatter() {
+        return new TemperatureFormatter();
     }
 
 }
