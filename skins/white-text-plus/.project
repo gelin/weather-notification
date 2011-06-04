@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>weather-notification-skin-white-text-plus</name>
+	<comment></comment>
+	<projects>
+		<project>weather-notification-android</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.ResourceManagerBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.PreCompilerBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.android.ide.eclipse.adt.ApkBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>weather-notification-android_src</name>
+			<type>2</type>
+			<locationURI>_android_weather_notification_android_7a86b7c6/src</locationURI>
+		</link>
+		<link>
+			<name>weather-notification-android_test</name>
+			<type>2</type>
+			<locationURI>_android_weather_notification_android_7a86b7c6/test</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
