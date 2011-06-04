@@ -33,7 +33,7 @@
 
     <target name="all" depends="debug, release"/>
 
-    <target name="debug" depends="core-debug, black-text-skin-debug, white-text-skin-debug"
+    <target name="debug" depends="core-debug, black-text-skin-debug, white-text-skin-debug, black-text-plus-skin-debug, white-text-plus-skin-debug"
 	    description="Upload debug .apk files"/>
 
     <target name="core-debug">
@@ -80,6 +80,38 @@
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/white-text/bin/weather-notification-skin-white-text-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="black-text-plus-skin-debug">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-debug.apk" 
+    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}-debug.apk"
+    	    summary="Latest Black Text Plus Skin build (${manifest(android:versionName)}), signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="white-text-plus-skin-debug">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-debug.apk" 
+    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}-debug.apk"
+    	    summary="Latest White Text Plus Skin build (${manifest(android:versionName)}), signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-debug.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>

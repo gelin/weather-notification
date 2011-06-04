@@ -13,3 +13,5 @@ build_skin() {
 
 build_skin black-text
 build_skin white-text
+build_skin black-text-plus
+build_skin white-text-plus
