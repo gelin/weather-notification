@@ -103,8 +103,7 @@ public abstract class AbstractWeatherLayout {
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
         setText(id("condition"), currentCondition.getConditionText());
-        setText(id("humidity"), currentCondition.getHumidityText());
-        setText(id("wind"), currentCondition.getWindText());
+        bindWindHumidity(currentCondition);
         
         SharedPreferences preferences = 
                 PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -137,6 +136,11 @@ public abstract class AbstractWeatherLayout {
         setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
         
         bindForecasts(weather, mainUnit);
+    }
+    
+    protected void bindWindHumidity(WeatherCondition currentCondition) {
+        setText(id("humidity"), currentCondition.getHumidityText());
+        setText(id("wind"), currentCondition.getWindText());
     }
     
     protected void bindForecasts(Weather weather, UnitSystem unit) {
@@ -179,6 +183,7 @@ public abstract class AbstractWeatherLayout {
         setText(id("condition"), context.getString(string("unknown_weather")));
         setText(id("humidity"), "");
         setText(id("wind"), "");
+        setText(id("wind_humidity_text"), "");
         
         setVisibility(id("temp"), View.INVISIBLE);
         

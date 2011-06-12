@@ -57,8 +57,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         this.ids.add(ids.id("condition"));
-        this.ids.add(ids.id("humidity"));
-        this.ids.add(ids.id("wind"));
+        this.ids.add(ids.id("wind_humidity_text"));
         this.ids.add(ids.id("temp"));
         this.ids.add(ids.id("current_temp"));
         this.ids.add(ids.id("current_temp_alt"));
@@ -89,6 +88,14 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     boolean skipView(int viewId) {
         return !this.ids.contains(viewId);
+    }
+    
+    protected void bindWindHumidity(WeatherCondition currentCondition) {
+        StringBuilder text = new StringBuilder();
+        text.append(currentCondition.getWindText());
+        text.append(SEPARATOR);
+        text.append(currentCondition.getHumidityText());
+        setText(id("wind_humidity_text"), text.toString());
     }
     
     @Override

@@ -110,34 +110,13 @@
                 android:textColor="@android:color/white"/>
                 <!-- style="?android:attr/textAppearanceMediumInverse"-->
                 <!-- android:text="Weather condition" -->
-                
-            <LinearLayout
-                android:layout_width="fill_parent"
+
+            <TextView android:id="@+id/wind_humidity_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                
-                <TextView android:id="@+id/wind"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:textColor="@android:color/white"/>
-                    <!-- style="?android:attr/textAppearanceMediumInverse" -->
-                    <!-- android:text="Wind" -->
-                
-                <TextView android:id="@+id/humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:textColor="@android:color/white"/>
-                    <!-- style="?android:attr/textAppearanceMediumInverse" -->
-                    <!-- android:text="Humidity" -->
-                
-            </LinearLayout>
+                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:ellipsize="marquee"/>
             
             <TextView android:id="@+id/forecasts_text"
                 android:layout_width="wrap_content"
