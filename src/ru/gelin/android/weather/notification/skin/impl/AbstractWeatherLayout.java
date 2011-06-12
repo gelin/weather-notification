@@ -136,20 +136,23 @@ public abstract class AbstractWeatherLayout {
         setText(id("high_temp"), tempFormat.format(mainTemp.getHigh()));
         setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
         
+        bindForecasts(weather, mainUnit);
+    }
+    
+    protected void bindForecasts(Weather weather, UnitSystem unit) {
         setVisibility(id("forecasts"), View.VISIBLE);
-        bindForecast(weather, mainUnit, 1,
+        bindForecast(weather, unit, 1,
                 id("forecast_1"), id("forecast_day_1"),
                 id("forecast_condition_1"),
                 id("forecast_high_temp_1"), id("forecast_low_temp_1"));
-        bindForecast(weather, mainUnit, 2,
+        bindForecast(weather, unit, 2,
                 id("forecast_2"), id("forecast_day_2"),
                 id("forecast_condition_2"),
                 id("forecast_high_temp_2"), id("forecast_low_temp_2"));
-        bindForecast(weather, mainUnit, 3,
+        bindForecast(weather, unit, 3,
                 id("forecast_3"), id("forecast_day_3"),
                 id("forecast_condition_3"),
                 id("forecast_high_temp_3"), id("forecast_low_temp_3"));
-        
     }
     
     void bindForecast(Weather weather, 
@@ -180,6 +183,7 @@ public abstract class AbstractWeatherLayout {
         setVisibility(id("temp"), View.INVISIBLE);
         
         setVisibility(id("forecasts"), View.GONE);
+        setVisibility(id("forecasts_text"), View.GONE);
     }
     
     protected abstract void setText(int viewId, String text);

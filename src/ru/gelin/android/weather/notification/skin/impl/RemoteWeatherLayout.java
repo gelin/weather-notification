@@ -22,16 +22,26 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import ru.gelin.android.weather.Temperature;
+import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
+
 import android.content.Context;
+import android.view.View;
 import android.widget.RemoteViews;
 
 /**
  *  Utility to layout weather values to remove view.
  */
 public class RemoteWeatherLayout extends AbstractWeatherLayout {
+    
+    /** Separator between text values */
+    static final String SEPARATOR = "   ";
     
     /** View to bind. */
     RemoteViews views;
@@ -54,19 +64,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         this.ids.add(ids.id("current_temp_alt"));
         this.ids.add(ids.id("high_temp"));
         this.ids.add(ids.id("low_temp"));
-        this.ids.add(ids.id("forecasts"));
-        this.ids.add(ids.id("forecast_1"));
-        this.ids.add(ids.id("forecast_2"));
-        this.ids.add(ids.id("forecast_3"));
-        this.ids.add(ids.id("forecast_day_1"));
-        this.ids.add(ids.id("forecast_day_2"));
-        this.ids.add(ids.id("forecast_day_3"));
-        this.ids.add(ids.id("forecast_high_temp_1"));
-        this.ids.add(ids.id("forecast_high_temp_2"));
-        this.ids.add(ids.id("forecast_high_temp_3"));
-        this.ids.add(ids.id("forecast_low_temp_1"));
-        this.ids.add(ids.id("forecast_low_temp_2"));
-        this.ids.add(ids.id("forecast_low_temp_3"));
+        this.ids.add(ids.id("forecasts_text"));
     }
     
     @Override
@@ -91,6 +89,26 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     boolean skipView(int viewId) {
         return !this.ids.contains(viewId);
+    }
+    
+    @Override
+    protected void bindForecasts(Weather weather, UnitSystem unit) {
+        setVisibility(id("forecasts_text"), View.VISIBLE);
+        StringBuilder forecastsText = new StringBuilder();
+        for (int i = 1; i < 4; i++) {
+            if (weather.getConditions().size() <= i) {
+                break;
+            }
+            WeatherCondition forecast = weather.getConditions().get(i);
+            Temperature temp = forecast.getTemperature();
+            Date day = addDays(weather.getTime(), i);
+            forecastsText.append(context.getString(string("forecast_text"), 
+                    day, 
+                    tempFormat.format(temp.getHigh()), 
+                    tempFormat.format(temp.getLow())));
+            forecastsText.append(SEPARATOR);
+        }
+        setText(id("forecasts_text"), forecastsText.toString());
     }
 
 }

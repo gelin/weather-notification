@@ -40,4 +40,5 @@
     <string name="unknown_weather">Weather is unknown</string>
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
+    <string name="forecast_text" formatted="false">%ta: %s/%s</string>
 </resources>
