@@ -61,6 +61,7 @@
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
     <string name="forecast_text" formatted="false">%ta: %s/%s</string>
+    <string name="update_time_short" formatted="false">{0,choice,15#&lt;15m|30#&lt;30m|60#&lt;1h|120#&lt;1h|180#&lt;3h|240#&lt;4h|300#&lt;5h|360#&lt;6h|720#&lt;12h|1440#&lt;1d|2880#&lt;2d|2880&lt;old}</string>
     <string name="skin">Skin</string>
     <string name="skins">Skins</string>
     <string name="skins_preferences">Skins preferences</string>

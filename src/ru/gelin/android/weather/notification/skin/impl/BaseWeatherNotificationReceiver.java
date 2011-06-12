@@ -56,6 +56,8 @@ abstract public class BaseWeatherNotificationReceiver extends
     static final int ID = 1;
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
+    /** Suffix for layouts with last update time */
+    static final String LAYOUT_UPDATE_SUFFIX = "_update";
     
     /** Handler to receive the weather */
     static Handler handler;
@@ -115,8 +117,9 @@ abstract public class BaseWeatherNotificationReceiver extends
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
         
         notification.contentView = new RemoteViews(context.getPackageName(), 
-                ids.id(LAYOUT, textStyle.getLayoutResName()));
-        RemoteWeatherLayout layout = createRemoteWeatherLayout(context, notification.contentView);
+                getNotificationLayoutId(context, textStyle, unit));
+        RemoteWeatherLayout layout = createRemoteWeatherLayout(
+                context, notification.contentView, unit);
         layout.bind(weather);
         
         notification.contentIntent = getContentIntent(context);
@@ -185,10 +188,28 @@ abstract public class BaseWeatherNotificationReceiver extends
     }
     
     /**
+     *  Returns the notification layout id.
+     */
+    protected int getNotificationLayoutId(Context context, 
+            NotificationStyle textStyle, TemperatureUnit unit) {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        switch (unit) {
+        case C:
+        case F:
+            return ids.id(LAYOUT, textStyle.getLayoutResName() + LAYOUT_UPDATE_SUFFIX);
+        case CF:
+        case FC:
+            return ids.id(LAYOUT, textStyle.getLayoutResName());
+        }
+        return 0;   //unknown resource
+    }
+    
+    /**
      *  Creates the remove view layout for the notification.
      */
-    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views) {
-        return new RemoteWeatherLayout(context, views);
+    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views,
+            TemperatureUnit unit) {
+        return new RemoteWeatherLayout(context, views, unit);
     }
 
 }

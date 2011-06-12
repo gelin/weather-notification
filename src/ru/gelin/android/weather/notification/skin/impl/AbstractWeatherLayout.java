@@ -86,16 +86,7 @@ public abstract class AbstractWeatherLayout {
     }
     
     void bindViews(Weather weather) {
-        Date timeValue = weather.getTime();
-        if (timeValue.getTime() == 0) {
-            setText(id("update_time"), "");
-        } else if (isDate(timeValue)) {
-            setText(id("update_time"), this.context.getString(
-                    string("update_date_format"), timeValue));
-        } else {
-            setText(id("update_time"), this.context.getString(
-                string("update_time_format"), timeValue));
-        }
+        bindUpdateTime(weather.getTime());
         setText(id("location"), weather.getLocation().getText());
         
         if (weather.getConditions().size() <= 0) {
@@ -117,7 +108,7 @@ public abstract class AbstractWeatherLayout {
         
         setVisibility(id("temp"), View.VISIBLE);
         setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), unit));
-        switch(unit) {
+        switch(unit) {      //TODO: remove multiple appearance of this switch
         case C: case F:
             setVisibility(id("current_temp_alt"), View.GONE);
             break;
@@ -136,6 +127,18 @@ public abstract class AbstractWeatherLayout {
         setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
         
         bindForecasts(weather, mainUnit);
+    }
+    
+    protected void bindUpdateTime(Date update) {
+        if (update.getTime() == 0) {
+            setText(id("update_time"), "");
+        } else if (isDate(update)) {
+            setText(id("update_time"), this.context.getString(
+                    string("update_date_format"), update));
+        } else {
+            setText(id("update_time"), this.context.getString(
+                string("update_time_format"), update));
+        }
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {

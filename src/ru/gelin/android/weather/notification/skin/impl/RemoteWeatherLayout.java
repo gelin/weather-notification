@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +53,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views) {
+    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureUnit unit) {
         super(context);
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
@@ -60,10 +61,19 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         this.ids.add(ids.id("wind_humidity_text"));
         this.ids.add(ids.id("temp"));
         this.ids.add(ids.id("current_temp"));
-        this.ids.add(ids.id("current_temp_alt"));
         this.ids.add(ids.id("high_temp"));
         this.ids.add(ids.id("low_temp"));
         this.ids.add(ids.id("forecasts_text"));
+        switch(unit) {      //TODO: remove multiple appearance of this switch
+        case C:
+        case F:
+            this.ids.add(ids.id("update_time_short"));
+            break;
+        case CF:
+        case FC:
+            this.ids.add(ids.id("current_temp_alt"));
+            break;
+        }
     }
     
     @Override
@@ -88,6 +98,16 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     boolean skipView(int viewId) {
         return !this.ids.contains(viewId);
+    }
+    
+    protected void bindUpdateTime(Date update) {
+        if (update.getTime() == 0) {
+            setText(id("update_time_short"), "");
+            return;
+        }
+        long minutes = (new Date().getTime() - update.getTime()) / 60000;
+        String text = MessageFormat.format(this.context.getString(string("update_time_short")), minutes);
+        setText(id("update_time_short"), text);
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
