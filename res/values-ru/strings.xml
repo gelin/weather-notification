@@ -60,6 +60,8 @@
     <string name="weather_update_unknown_location">Не удалось обновить погоду: местоположение неизвестно</string>
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
+    <string name="forecast_text" formatted="false">%ta: %s/%s</string>
+    <string name="update_time_short" formatted="false">{0,choice,0#&lt;15м|15#&lt;30м|30#&lt;1ч|60#&lt;2ч|120#&lt;3ч|180#&lt;4ч|240#&lt;5ч|300#&lt;6ч|360#&lt;12ч|720#&lt;1д|1440#&lt;2д|2880#>2д}</string>
     <string name="skin">Вид</string>
 	<string name="skins">Внешний вид</string>
 	<string name="skins_preferences">Настройки внешнего вида</string>
