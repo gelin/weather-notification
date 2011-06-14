@@ -116,21 +116,86 @@
     
     </target>
     
-    <target name="release" description="Upload weather-notification-android.apk">
 
-	<copy file="bin/weather-notification-android-release.apk"
-	    tofile="bin/weather-notification-android.apk"/>
+    <target name="release" depends="core-release, black-text-skin-release, white-text-skin-release, black-text-plus-skin-release, white-text-plus-skin-release"
+	    description="Upload release .apk files"/>
+
+    <target name="core-release">
 
 	<gcupload 
 	    username="${gc.username}"
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
-    	    filename="bin/weather-notification-android.apk" 
+    	    filename="bin/weather-notification-android-release.apk" 
     	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
-    	    summary="Latest build (${manifest(android:versionName)})"
-    	    labels="Featured, Type-Package, OpSys-Android_1.5" />
+    	    summary="Latest Core App build (${manifest(android:versionName)}))"
+    	    labels="Type-Package, OpSys-Android_1.5" />
 
-	<copy file="bin/weather-notification-android.apk"
+	<copy file="bin/weather-notification-android-release.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="black-text-skin-release">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/black-text/bin/weather-notification-skin-black-text-release.apk" 
+    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}.apk"
+    	    summary="Latest Black Text Skin build (${manifest(android:versionName)}))"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/black-text/bin/weather-notification-skin-black-text-release.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="white-text-skin-release">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/white-text/bin/weather-notification-skin-white-text-release.apk" 
+    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}.apk"
+    	    summary="Latest White Text Skin build (${manifest(android:versionName)}))"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/white-text/bin/weather-notification-skin-white-text-release.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="black-text-plus-skin-release">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-release.apk" 
+    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}.apk"
+    	    summary="Latest Black Text Plus Skin build (${manifest(android:versionName)}))"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-release.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="white-text-plus-skin-release">
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-release.apk" 
+    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}.apk"
+    	    summary="Latest White Text Plus Skin build (${manifest(android:versionName)}))"
+    	    labels="Type-Package, OpSys-Android_1.5" />
+
+	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-release.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>
