@@ -127,7 +127,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
                 break;
             }
             WeatherCondition forecast = weather.getConditions().get(i);
-            Temperature temp = forecast.getTemperature();
+            Temperature temp = forecast.getTemperature(unit);
             Date day = addDays(weather.getTime(), i);
             forecastsText.append(context.getString(string("forecast_text"), 
                     day, 
