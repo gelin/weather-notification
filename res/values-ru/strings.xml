@@ -23,7 +23,7 @@
 -->
 
 <resources>
-    <string name="app_name">Уведомление о погоде</string>
+    <string name="app_name">Классическое уведомление о погоде</string>
     <string name="weather">Погода</string>
     <string name="notification">Уведомление</string>
     <string name="enable_notification">Включить уведомление</string>

@@ -23,7 +23,7 @@
 -->
 
 <resources>
-    <string name="app_name">Weather notification</string>
+    <string name="app_name">Classic Weather Notification</string>
     <string name="weather">Weather</string>
     <string name="notification">Notification</string>
     <string name="enable_notification">Enable notification</string>
