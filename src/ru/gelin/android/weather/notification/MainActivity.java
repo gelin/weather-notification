@@ -30,6 +30,11 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_CATEGORY;
 import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_INSTALL;
 import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
+
+import java.util.List;
+
+import ru.gelin.android.weather.notification.skin.SkinInfo;
+import ru.gelin.android.weather.notification.skin.SkinManager;
 import ru.gelin.android.weather.notification.skin.SkinsActivity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -41,6 +46,7 @@ import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.Window;
+import android.widget.Toast;
 
 public class MainActivity extends UpdateNotificationActivity 
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
@@ -81,6 +87,16 @@ public class MainActivity extends UpdateNotificationActivity
         if (marketActivity == null) {
             PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
             skinsCategory.removePreference(skinsInstallPreference);
+        }
+        
+        SkinManager sm = new SkinManager(this);
+        List<SkinInfo> skins = sm.getInstalledSkins();
+        if (skins.size() <= 1) {
+            Toast.makeText(this, 
+                    marketActivity == null ?
+                            R.string.skins_install_notice_no_market :
+                            R.string.skins_install_notice, 
+                    Toast.LENGTH_LONG).show();
         }
         
         startUpdate(false);
