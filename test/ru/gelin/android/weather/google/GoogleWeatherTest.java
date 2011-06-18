@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.google;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -42,6 +42,7 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.google.AndroidGoogleLocation;
 import ru.gelin.android.weather.google.GoogleWeatherSource;
+import ru.gelin.android.weather.notification.classic.R;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;

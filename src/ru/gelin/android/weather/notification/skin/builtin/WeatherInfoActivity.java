@@ -23,13 +23,12 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import static ru.gelin.android.weather.notification.skin.builtin.BuiltinWeatherNotificationReceiver.WEATHER_KEY;
-import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.UpdateService;
 import ru.gelin.android.weather.notification.WeatherLayout;
 import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.classic.R;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -40,9 +39,6 @@ import android.os.Message;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 
 public class WeatherInfoActivity extends Activity {

@@ -32,6 +32,7 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.notification.classic.R;
 import ru.gelin.android.weather.notification.skin.builtin.TemperatureUnit;
 import android.content.Context;
 import android.content.SharedPreferences;

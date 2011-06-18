@@ -30,6 +30,7 @@ import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_ICON_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.builtin.PreferenceKeys.TEMP_UNIT;
+import ru.gelin.android.weather.notification.classic.R;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Bundle;
 import android.os.Handler;

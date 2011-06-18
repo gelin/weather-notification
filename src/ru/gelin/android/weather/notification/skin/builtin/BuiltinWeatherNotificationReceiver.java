@@ -34,7 +34,7 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
-import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.classic.R;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationReceiver;
 import android.app.Notification;
 import android.content.Context;
