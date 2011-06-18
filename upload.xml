@@ -33,37 +33,37 @@
 
     <target name="all" depends="debug, release"/>
 
-    <target name="debug" description="Upload weather-notification-android-debug.apk">
+    <target name="debug" description="Upload weather-notification-android-classic-debug.apk">
 
 	<gcupload 
 	    username="${gc.username}"
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
-    	    filename="bin/weather-notification-android-debug.apk" 
-    	    targetfilename="weather-notification-android-debug.apk"
-    	    summary="Latest build (${manifest(android:versionName)}, signed by debug key)"
+    	    filename="bin/weather-notification-android-classic-debug.apk" 
+    	    targetfilename="weather-notification-android-classic-debug.apk"
+    	    summary="Classic Weather Notification (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
-	<copy file="bin/weather-notification-android-debug.apk"
+	<copy file="bin/weather-notification-android-classic-debug.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>
     
-    <target name="release" description="Upload weather-notification-android.apk">
+    <target name="release" description="Upload weather-notification-android-classic.apk">
 
-	<copy file="bin/weather-notification-android-release.apk"
-	    tofile="bin/weather-notification-android.apk"/>
+	<copy file="bin/weather-notification-android-classic-release.apk"
+	    tofile="bin/weather-notification-android-classic.apk"/>
 
 	<gcupload 
 	    username="${gc.username}"
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
-    	    filename="bin/weather-notification-android.apk" 
-    	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
-    	    summary="Latest build (${manifest(android:versionName)})"
+    	    filename="bin/weather-notification-android-classic.apk" 
+    	    targetfilename="weather-notification-android-classic-${manifest(android:versionName)}.apk"
+    	    summary="Classic Weather Notification (${manifest(android:versionName)})"
     	    labels="Featured, Type-Package, OpSys-Android_1.5" />
 
-	<copy file="bin/weather-notification-android.apk"
+	<copy file="bin/weather-notification-android-classic.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>
