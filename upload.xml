@@ -40,7 +40,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android-classic-debug.apk" 
-    	    targetfilename="weather-notification-android-classic-debug.apk"
+    	    targetfilename="weather-notification-android-classic-${manifest(android:versionName)}-debug.apk"
     	    summary="Classic Weather Notification (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
