@@ -27,6 +27,8 @@ package ru.gelin.android.weather;
  */
 public class WeatherException extends Exception {
 
+    private static final long serialVersionUID = -7139823134945463091L;
+
     public WeatherException() {
         super();
     }

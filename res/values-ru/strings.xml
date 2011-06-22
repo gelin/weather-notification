@@ -66,6 +66,8 @@
 	<string name="skins">Внешний вид</string>
 	<string name="skins_preferences">Настройки внешнего вида</string>
     <string name="skins_install">Скачать внешний вид</string>
+    <string name="skins_install_notice">Вам СЛЕДУЕТ УСТАНОВИТЬ \"ШКУРКУ\", чтобы получить больше возможностей. Пожалуйста, выберите \"Скачать внешний вид\" внизу этого экрана.</string>
+    <string name="skins_install_notice_no_market">Вам СЛЕДУЕТ УСТАНОВИТЬ \"ШКУРКУ\", чтобы получить больше возможностей. Найдите приложения с именем \"Weather Notification Skin\" в Android Market и установите их.</string>
     <string name="builtin_skin">Встроенный вид</string>
     <string name="builtin_skin_preferences">Настройки встроенного вида</string>
     <string name="start_update_service_permission">запускать сервис обновления погоды</string>
