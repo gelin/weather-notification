@@ -25,12 +25,14 @@ for row in lang_reader:
     lang = row[2]
     if not lang:
         continue
-    sample_file = os.path.join(samples_dir, ('%s.xml' % lang))
     sample_path = '/ig/api?weather=Omsk&hl=%s' % lang
-    print '%s -> %s' % (sample_path, sample_file)
-    connection = httplib.HTTPConnection("www.google.com")
-    connection.request("GET", sample_path)
+    connection = httplib.HTTPConnection('www.google.com')
+    connection.request('GET', sample_path)
     response = connection.getresponse()
+    encoding = response.getheader('Content-Type', 'text/xml; charset=utf8').split(';')[-1].split('=')[-1].strip()
+    sample_file = os.path.join(samples_dir, ('%s.%s.xml' % (lang, encoding)))
+    print '%s -> %s' % (sample_path, sample_file)
+    
     file = open(sample_file, 'w')
     file.write(response.read())
     file.close()
