@@ -31,10 +31,10 @@ import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.TEMPERATURE_UNIT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_VAL;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_DIR;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WSUNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED_UNIT;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,6 +70,10 @@ public class WeatherStorage {
     /** Preference name for weather (this fake preference is updated 
      *  to call preference change listeners) */
     static final String WEATHER = "weather";
+    /** Temperature unit used for serialization */
+    static final TemperatureUnit TUNIT = TemperatureUnit.C;
+    /** Wind speed unit used for serialization */
+    static final WindSpeedUnit WSUNIT = WindSpeedUnit.MPS;
     
     /** SharedPreferences to store weather. */
     SharedPreferences preferences;
@@ -86,18 +90,17 @@ public class WeatherStorage {
      *  Saves the weather.
      */
     public void save(Weather weather) {
+        //TODO: keep and verify backward compatibility
         Editor editor = preferences.edit();
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
-        WindSpeedUnit wsunit = weather.getWindSpeedUnit();
-        editor.putString(TEMPERATURE_UNIT, weather.getTemperatureUnit().toString());
-        editor.putString(WSUNIT_SYSTEM, wsunit.toString());
+        editor.putString(TEMPERATURE_UNIT, TUNIT.toString());
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
                     condition.getConditionText());
-            Temperature temp = condition.getTemperature(weather.getTemperatureUnit());
+            Temperature temp = condition.getTemperature(TUNIT);
             putOrRemove(editor, String.format(CURRENT_TEMP, i), 
                     temp.getCurrent());
             putOrRemove(editor, String.format(LOW_TEMP, i), 
@@ -109,8 +112,8 @@ public class WeatherStorage {
                     hum.getValue());
             putOrRemove(editor, String.format(HUMIDITY_TEXT, i), 
                     hum.getText());
-            Wind wind = condition.getWind(wsunit);
-            putOrRemove(editor, String.format(WIND_VAL, i), 
+            Wind wind = condition.getWind(WSUNIT);
+            putOrRemove(editor, String.format(WIND_SPEED, i), 
                     wind.getSpeed());
             putOrRemove(editor, String.format(WIND_DIR, i), 
                     wind.getDirection().toString());
@@ -126,28 +129,29 @@ public class WeatherStorage {
      *  The values of the saved weather are restored, not exact classes.
      */
     public Weather load() {
+        //TODO: keep and verify backward compatibility
         SimpleWeather weather = new ParcelableWeather();
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
-        weather.setTemperatureUnit(TemperatureUnit.valueOf(
-        		preferences.getString(TEMPERATURE_UNIT, "C")));
-        weather.setWindSpeedUnit(WindSpeedUnit.valueOf(
-                preferences.getString(WSUNIT_SYSTEM, "MPH")));
+        TemperatureUnit tunit = TemperatureUnit.valueOf(
+                preferences.getString(TEMPERATURE_UNIT, TUNIT.toString()));
+        WindSpeedUnit wsunit = WindSpeedUnit.valueOf(
+                preferences.getString(WIND_SPEED_UNIT, WSUNIT.toString()));
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(preferences.getString(
                     String.format(CONDITION_TEXT, i), ""));
-            SimpleTemperature temp = new SimpleTemperature(weather.getTemperatureUnit());
+            SimpleTemperature temp = new SimpleTemperature(tunit);
             temp.setCurrent(preferences.getInt(String.format(CURRENT_TEMP, i),
-                    Temperature.UNKNOWN), weather.getTemperatureUnit());
+                    Temperature.UNKNOWN), tunit);
             temp.setLow(preferences.getInt(String.format(LOW_TEMP, i),
-                    Temperature.UNKNOWN), weather.getTemperatureUnit());
+                    Temperature.UNKNOWN), tunit);
             temp.setHigh(preferences.getInt(String.format(HIGH_TEMP, i),
-                    Temperature.UNKNOWN), weather.getTemperatureUnit());
+                    Temperature.UNKNOWN), tunit);
             condition.setTemperature(temp);
             
             SimpleHumidity hum = new SimpleHumidity();
@@ -155,9 +159,9 @@ public class WeatherStorage {
             hum.setText(preferences.getString(String.format(HUMIDITY_TEXT, i), ""));
             condition.setHumidity(hum);
             
-            SimpleWind wind = new SimpleWind(weather.getWindSpeedUnit());
+            SimpleWind wind = new SimpleWind(wsunit);
             wind.setSpeed(preferences.getInt(
-                    String.format(WIND_VAL, i), Wind.UNKNOWN), weather.getWindSpeedUnit());
+                    String.format(WIND_SPEED, i), Wind.UNKNOWN), wsunit);
             wind.setDirection(WindDirection.valueOf(preferences.getString(
                     String.format(WIND_DIR, i), "N")));
             wind.setText(preferences.getString(String.format(WIND_TEXT, i), ""));

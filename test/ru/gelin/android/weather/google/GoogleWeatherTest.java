@@ -37,7 +37,6 @@ import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.WeatherParser;
 import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
@@ -51,7 +50,7 @@ public class GoogleWeatherTest {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_en.xml");
         //Weather weather = new GoogleWeather(new InputStreamReader(xml, "UTF-8"));
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new HandlerParserUser(weather));
         parser.parse(new InputStreamReader(xml, "UTF-8"), new HandlerParserInt(weather));
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
@@ -60,7 +59,7 @@ public class GoogleWeatherTest {
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         assertEquals(calendar.getTime(), weather.getTime());
         assertEquals(UnitSystem.US, weather.getUnitSystem());
-        assertEquals(TemperatureUnit.F, weather.getTemperatureUnit());
+        //assertEquals(TemperatureUnit.F, weather.getTemperatureUnit());
         assertEquals(4, weather.getConditions().size());
         
         WeatherCondition condition0 = weather.getConditions().get(0);
@@ -69,14 +68,14 @@ public class GoogleWeatherTest {
         assertEquals(-11, temp0old.getCurrent());
         assertEquals(-10, temp0old.getLow());
         assertEquals(-4, temp0old.getHigh());
-        Temperature temp0new = condition0.getTemperature(weather.getTemperatureUnit());
+        Temperature temp0new = condition0.getTemperature(TemperatureUnit.F);
         assertEquals(-11, temp0new.getCurrent());
         assertEquals(-10, temp0new.getLow());
         assertEquals(-4, temp0new.getHigh());
         assertEquals("Humidity: 66%", condition0.getHumidityText());
         assertEquals("Wind: SW at 2 mph", condition0.getWindText());
         assertEquals(66, condition0.getHumidity().getValue());
-        Wind wind = condition0.getWind(weather.getWindSpeedUnit());
+        Wind wind = condition0.getWind(WindSpeedUnit.MPH);
         assertEquals(WindDirection.SW, wind.getDirection());
         assertEquals(2, wind.getSpeed());
         assertEquals(WindUnit.MPH, wind.getSpeedUnit());
@@ -87,7 +86,7 @@ public class GoogleWeatherTest {
         assertEquals(7, temp1old.getCurrent());
         assertEquals(-7, temp1old.getLow());
         assertEquals(20, temp1old.getHigh());
-        Temperature temp1new = condition1.getTemperature(weather.getTemperatureUnit());
+        Temperature temp1new = condition1.getTemperature(TemperatureUnit.F);
         assertEquals(7, temp1new.getCurrent());
         assertEquals(-7, temp1new.getLow());
         assertEquals(20, temp1new.getHigh());
@@ -98,7 +97,7 @@ public class GoogleWeatherTest {
         assertEquals(-10, temp2old.getCurrent());
         assertEquals(-14, temp2old.getLow());
         assertEquals(-6, temp2old.getHigh());
-        Temperature temp2new = condition2.getTemperature(weather.getTemperatureUnit());
+        Temperature temp2new = condition2.getTemperature(TemperatureUnit.F);
         assertEquals(-10, temp2new.getCurrent());
         assertEquals(-14, temp2new.getLow());
         assertEquals(-6, temp2new.getHigh());
@@ -109,7 +108,7 @@ public class GoogleWeatherTest {
         assertEquals(-22, temp3old.getCurrent());
         assertEquals(-29, temp3old.getLow());
         assertEquals(-15, temp3old.getHigh());
-        Temperature temp3new = condition3.getTemperature(weather.getTemperatureUnit());
+        Temperature temp3new = condition3.getTemperature(TemperatureUnit.F);
         assertEquals(-22, temp3new.getCurrent());
         assertEquals(-29, temp3new.getLow());
         assertEquals(-15, temp3new.getHigh());
@@ -120,7 +119,7 @@ public class GoogleWeatherTest {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_en.xml");
 
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new HandlerParserUser(weather));
 
         WeatherCondition condition0 = weather.getConditions().get(0);
@@ -140,7 +139,7 @@ public class GoogleWeatherTest {
         InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_us.xml");
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xmlru, "UTF-8"), new HandlerParserUser(weather));
         parser.parse(new InputStreamReader(xmlus, "UTF-8"), new HandlerParserInt(weather));
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
@@ -149,7 +148,7 @@ public class GoogleWeatherTest {
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         assertEquals(calendar.getTime(), weather.getTime());
         assertEquals(UnitSystem.SI, weather.getUnitSystem());
-        assertEquals(TemperatureUnit.C, weather.getTemperatureUnit());
+        //assertEquals(TemperatureUnit.C, weather.getTemperatureUnit());
         
         assertEquals(4, weather.getConditions().size());
         
@@ -162,7 +161,7 @@ public class GoogleWeatherTest {
         assertEquals("Влажность: 66 %", condition0.getHumidityText());
         assertEquals("Ветер: ЮЗ, 1 м/с", condition0.getWindText());
         assertEquals(66, condition0.getHumidity().getValue());
-        Wind wind = condition0.getWind(weather.getWindSpeedUnit());
+        Wind wind = condition0.getWind(WindSpeedUnit.MPH);
         assertEquals(WindDirection.SW, wind.getDirection());
         assertEquals(2, wind.getSpeed());
         assertEquals(WindUnit.MPH, wind.getSpeedUnit());
@@ -193,7 +192,7 @@ public class GoogleWeatherTest {
     public void testTempConvertSI2US() throws Exception {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new HandlerParserUser(weather));
         WeatherCondition condition0 = weather.getConditions().get(0);
         Temperature temp0 = condition0.getTemperature(UnitSystem.US);
@@ -206,7 +205,7 @@ public class GoogleWeatherTest {
     public void testTempConvertC2F() throws Exception {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new HandlerParserUser(weather));
         WeatherCondition condition0 = weather.getConditions().get(0);
         Temperature temp0 = condition0.getTemperature(TemperatureUnit.F);
@@ -220,7 +219,7 @@ public class GoogleWeatherTest {
         InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_us.xml");
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xmlru, "UTF-8"), new HandlerParserUser(weather));
         parser.parse(new InputStreamReader(xmlus, "UTF-8"), new HandlerParserInt(weather));
         WeatherCondition condition0 = weather.getConditions().get(0);
@@ -235,7 +234,7 @@ public class GoogleWeatherTest {
         InputStream xmlun = getClass().getResourceAsStream("google_weather_api_ru_2011-03.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_us.xml");
         Weather weather = new GoogleWeather();
-        WeatherParser parser = new GoogleWeatherParser(weather);
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xmlun, "UTF-8"), new HandlerParserUser(weather));
         parser.parse(new InputStreamReader(xmlus, "UTF-8"), new HandlerParserInt(weather));
         assertFalse(weather.isEmpty());
@@ -246,7 +245,7 @@ public class GoogleWeatherTest {
         calendar.set(2011, Calendar.MARCH, 22, 0, 0, 0);
         assertEquals(calendar.getTime(), weather.getTime());
         assertEquals(UnitSystem.SI, weather.getUnitSystem());
-        assertEquals(TemperatureUnit.C, weather.getTemperatureUnit());
+        //assertEquals(TemperatureUnit.C, weather.getTemperatureUnit());
         
         assertEquals(4, weather.getConditions().size());
         
@@ -259,7 +258,7 @@ public class GoogleWeatherTest {
         assertEquals("Влажность: 83 %", condition0.getHumidityText());
         assertEquals("Ветер: Ю, 4 м/с", condition0.getWindText());
         assertEquals(83, condition0.getHumidity().getValue());
-        Wind wind = condition0.getWind(weather.getWindSpeedUnit());
+        Wind wind = condition0.getWind(WindSpeedUnit.MPH);
         assertEquals(WindDirection.S, wind.getDirection());
         assertEquals(9, wind.getSpeed());
         assertEquals(WindUnit.MPH, wind.getSpeedUnit());

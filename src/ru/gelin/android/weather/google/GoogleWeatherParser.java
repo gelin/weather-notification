@@ -11,10 +11,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ru.gelin.android.weather.WeatherParser;
 import ru.gelin.android.weather.Weather;
 
-public class GoogleWeatherParser implements WeatherParser{
+public class GoogleWeatherParser {
 
 	GoogleWeather weather;
 	

@@ -5,17 +5,17 @@ public interface Wind {
     static int UNKNOWN = Integer.MIN_VALUE;
     
     /**
-     *  Current localized direction.
+     *  Returns wind direction.
      */
     WindDirection getDirection();
     
     /**
-     *  Current wind speed in default units.
+     *  Returns wind speed.
      */
     int getSpeed();
     
     /**
-     *  Units of this weather.
+     *  Wind speed units for this instance.
      */
     WindSpeedUnit getSpeedUnit();
     
@@ -24,4 +24,5 @@ public interface Wind {
      *  Can return null.
      */
     String getText();
+    
 }
