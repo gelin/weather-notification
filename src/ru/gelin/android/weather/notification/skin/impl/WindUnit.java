@@ -2,6 +2,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.WindSpeedUnit;
 
+//TODO: Remove?
 public enum WindUnit {
 	MPH(WindSpeedUnit.MPH),
     MPS(WindSpeedUnit.MPS),

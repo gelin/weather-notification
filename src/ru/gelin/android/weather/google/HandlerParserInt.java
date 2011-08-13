@@ -9,7 +9,6 @@ import ru.gelin.android.weather.SimpleHumidity;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.WindSpeedUnit;
-import ru.gelin.android.weather.google.GoogleWeather.HandlerState;
 
 public class HandlerParserInt extends DefaultHandler {
 	HandlerState state;

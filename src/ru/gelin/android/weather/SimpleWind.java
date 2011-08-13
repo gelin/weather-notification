@@ -92,6 +92,7 @@ public class SimpleWind implements Wind {
      * Extract from string wind speed and direction value
      */
     void parseText(String text) {
+        //TODO: add tests
         Matcher matcher = PARSE_PATTERN.matcher(text);
         if (matcher.find()) {
             this.speed  = Integer.parseInt(matcher.group(2));   //TODO: catch when non-integer

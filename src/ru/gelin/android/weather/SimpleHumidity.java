@@ -58,6 +58,7 @@ public class SimpleHumidity implements Humidity {
      * Extract from string humidity value
      */
     void parseText(String text) {
+        //TODO: add tests
         Matcher matcher = PARSE_PATTERN.matcher(text);
         if (matcher.find()) {
             this.value  = Integer.parseInt(matcher.group(1));   //TODO: catch when non-integer

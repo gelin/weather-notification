@@ -9,14 +9,15 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ru.gelin.android.weather.SimpleHumidity;
 import ru.gelin.android.weather.SimpleWind;
+import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.SimpleTemperature;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.WindSpeedUnit;
-import ru.gelin.android.weather.google.GoogleWeather.HandlerState;
 
+@SuppressWarnings("deprecation")
 public class HandlerParserUser extends DefaultHandler {
 	HandlerState state;
     SimpleWeatherCondition condition;
@@ -54,9 +55,9 @@ public class HandlerParserUser extends DefaultHandler {
             }
         } else if ("unit_system".equals(localName)) {
         	if (data.equalsIgnoreCase("si")) {
-        		weather.tunit = TemperatureUnit.C;
+        		weather.unit = UnitSystem.SI;
         	} else {
-        		weather.tunit = TemperatureUnit.F;
+        		weather.unit = UnitSystem.US;
         	}
         } else if ("current_conditions".equals(localName)) {
             state = HandlerState.CURRENT_CONDITIONS;
@@ -82,7 +83,7 @@ public class HandlerParserUser extends DefaultHandler {
             	condition.setConditionText(data);
             }
         } else if ("temp_f".equalsIgnoreCase(localName)) {
-            if (TemperatureUnit.F.equals(weather.tunit)) {
+            if (UnitSystem.US.equals(weather.unit)) {
                 try {
                 	temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.F);
                 } catch (NumberFormatException e) {
@@ -90,7 +91,7 @@ public class HandlerParserUser extends DefaultHandler {
                 }
             }
         } else if ("temp_c".equals(localName)) {
-            if (TemperatureUnit.C.equals(weather.tunit)) {
+            if (UnitSystem.SI.equals(weather.unit)) {
                 try {
                     temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.C);
                 } catch (NumberFormatException e) {
@@ -99,13 +100,13 @@ public class HandlerParserUser extends DefaultHandler {
             }
         } else if ("low".equals(localName)) {
             try {
-            	temperature.setLow(Integer.parseInt(data), weather.tunit);
+            	temperature.setLow(Integer.parseInt(data), weather.unit);
             } catch (NumberFormatException e) {
                 throw new SAXException("invalid 'low' format: " + data, e);
             }
         } else if ("high".equals(localName)) {
             try {
-            	temperature.setHigh(Integer.parseInt(data), weather.tunit);
+            	temperature.setHigh(Integer.parseInt(data), weather.unit);
             } catch (NumberFormatException e) {
                 throw new SAXException("invalid 'high' format: " + data, e);
             }
@@ -118,7 +119,7 @@ public class HandlerParserUser extends DefaultHandler {
     
     void addCondition() {
     	condition = new SimpleWeatherCondition();
-    	temperature = new SimpleTemperature(weather.tunit);
+    	temperature = new SimpleTemperature(weather.unit);
     	humidity = new SimpleHumidity();
     	wind = new SimpleWind(WindSpeedUnit.MPH);
     	condition.setTemperature(temperature);

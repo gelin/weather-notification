@@ -28,11 +28,9 @@ import java.util.List;
 
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.WindSpeedUnit;
 
 /**
  *  Weather, provided by Google API.
@@ -43,21 +41,8 @@ public class GoogleWeather implements Weather {
     Location location = new SimpleLocation("");
     Date date = new Date(0);
     Date time = new Date(0);
-    TemperatureUnit tunit = TemperatureUnit.C;
-    WindSpeedUnit wsunit = WindSpeedUnit.MPH;
+    UnitSystem unit = UnitSystem.SI;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
-    
-    /**
-     *  Creates the weather from the input stream with XML
-     *  received from API.
-     */
-    /*public GoogleWeather(Reader xml1, Reader xml2) throws WeatherException {
-        try {
-            parse(xml1, xml2);
-        } catch (Exception e) {
-            throw new WeatherException("cannot parse user xml", e);
-        }
-    }*/
     
     //@Override
     public Location getLocation() {
@@ -76,18 +61,7 @@ public class GoogleWeather implements Weather {
     //@Override
     @Deprecated
     public UnitSystem getUnitSystem() {
-        //TODO: must return reasonable value
-        return null;
-    }
-    
-    //@Override
-    public TemperatureUnit getTemperatureUnit() {
-        return this.tunit;
-    }
-    
-    //@Override
-    public WindSpeedUnit getWindSpeedUnit() {
-        return this.wsunit;
+        return this.unit;
     }
     
     //@Override
@@ -108,10 +82,4 @@ public class GoogleWeather implements Weather {
         this.location = location;
     }
     
-    static enum HandlerState {
-        CURRENT_CONDITIONS, FIRST_FORECAST, NEXT_FORECAST;
-    }
-    
-    
-
 }
