@@ -67,11 +67,13 @@ public class SimpleWeatherCondition implements WeatherCondition {
     }
 
     //@Override
+    @Deprecated
     public Temperature getTemperature() {
         return this.temperature;
     }
 
     //@Override
+    @Deprecated
     public Temperature getTemperature(UnitSystem unit) {
         if (this.temperature == null) {
             return null;

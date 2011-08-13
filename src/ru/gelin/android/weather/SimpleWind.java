@@ -26,45 +26,6 @@ public class SimpleWind implements Wind {
         this.wsunit = wsunit;
     }
 
-    int Recalc(int speed, WindSpeedUnit unit)
-    {
-    	switch (wsunit){
-    	case MPH:{
-    		switch (unit){
-       		case KMPH: return (int)Math.round(speed * 0.6214);
-    		case MPH: return this.currentspeed;
-    		case MPS: return (int)Math.round(speed * 2.2370);
-    		}
-    	}
-    	case MPS:{
-    		switch (unit){
-       		case KMPH: return (int)Math.round(speed * 0.2778);
-    		case MPH: return (int)Math.round(speed * 0.4470);
-    		case MPS: return this.currentspeed;
-    		}
-    	}
-    	case KMPH:{
-    		switch (unit){
-       		case KMPH: return this.currentspeed;
-    		case MPH: return (int)Math.round(speed * 1.6093);
-    		case MPS: return (int)Math.round(speed * 3.6000);
-    		}
-    	}
-    	}
-    	return 0;
-    }
-
-    /*
-     * Extract from string wind speed and direction value
-     */
-    public void ParseText(String text) {
-        Matcher matcher = PARSE_PATTERN.matcher(text);
-        if (matcher.find()) {
-            this.currentspeed  = Integer.parseInt(matcher.group(2));
-            this.currentdir  = WindDirection.valueOf(matcher.group(1));
-        }
-    }
-    
     /**
      *  Creates new wind in another unit system.
      */
@@ -89,7 +50,7 @@ public class SimpleWind implements Wind {
      */
     public void setTextParse(String wind) {
     	if (wind.length() > 0) {
-           	ParseText(wind);
+           	parseText(wind);
     	}
     }
     
@@ -101,29 +62,64 @@ public class SimpleWind implements Wind {
     	if (this.wsunit.equals(unit)) {
             this.currentspeed = speed;
         } else {
-            this.currentspeed = Recalc(speed, unit);
+            this.currentspeed = recalc(speed, unit);
         }
     }
     
     
-	@Override
-	public WindDirection getDirection() {
-		return this.currentdir;
-	}
+    //@Override
+    public WindDirection getDirection() {
+        return this.currentdir;
+    }
 
-	@Override
-	public int getSpeed() {
-		return this.currentspeed;
-	}
+    //@Override
+    public int getSpeed() {
+        return this.currentspeed;
+    }
 
-	@Override
-	public WindSpeedUnit getSpeedUnit() {
-		return this.wsunit;
-	}
+    //@Override
+    public WindSpeedUnit getSpeedUnit() {
+        return this.wsunit;
+    }
 
-	@Override
-	public String getText() {
-		return this.windtext;
-	}
+    //@Override
+    public String getText() {
+        return this.windtext;
+    }
+    
+    /**
+     * Extract from string wind speed and direction value
+     */
+    void parseText(String text) {
+        Matcher matcher = PARSE_PATTERN.matcher(text);
+        if (matcher.find()) {
+            this.currentspeed  = Integer.parseInt(matcher.group(2));
+            this.currentdir  = WindDirection.valueOf(matcher.group(1));
+        }
+    }
+    
+    int recalc(int speed, WindSpeedUnit unit) {
+        switch (wsunit) {
+        case MPH:
+            switch (unit) {
+            case KMPH: return (int)Math.round(speed * 0.6214);
+            case MPH: return this.currentspeed;
+            case MPS: return (int)Math.round(speed * 2.2370);
+        }
+        case MPS:
+            switch (unit) {
+            case KMPH: return (int)Math.round(speed * 0.2778);
+            case MPH: return (int)Math.round(speed * 0.4470);
+            case MPS: return this.currentspeed;
+        }
+        case KMPH:
+            switch (unit) {
+            case KMPH: return this.currentspeed;
+            case MPH: return (int)Math.round(speed * 1.6093);
+            case MPS: return (int)Math.round(speed * 3.6000);
+            }
+        }
+        return 0;
+    }
 
 }

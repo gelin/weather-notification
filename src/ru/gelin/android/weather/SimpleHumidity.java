@@ -21,16 +21,6 @@ public class SimpleHumidity implements Humidity {
         this.current = hum;
     }
     
-    /*
-     * Extract from string humidity value
-     */
-    public void ParseText(String text) {
-        Matcher matcher = PARSE_PATTERN.matcher(text);
-        if (matcher.find()) {
-            this.current  = Integer.parseInt(matcher.group(1));
-        }
-    }
-    
     /**
      *  Sets the current humidity.
      */
@@ -45,21 +35,31 @@ public class SimpleHumidity implements Humidity {
      */
     public void setTextParse(String hum) {
     	if (hum.length() > 0) {
-    		ParseText(hum);
+    		parseText(hum);
     	}
     }
     
-	@Override
-	public int getValue() {
-		if (this.current == UNKNOWN) {
-			return 0; 
-		}
-		return this.current;
-	}
+    //@Override
+    public int getValue() {
+        if (this.current == UNKNOWN) {
+            return 0; 
+        }
+        return this.current;
+    }
 
-	@Override
-	public String getText() {
-		return this.humtext;
-	}
+    //@Override
+    public String getText() {
+        return this.humtext;
+    }
+    
+    /**
+     * Extract from string humidity value
+     */
+    void parseText(String text) {
+        Matcher matcher = PARSE_PATTERN.matcher(text);
+        if (matcher.find()) {
+            this.current  = Integer.parseInt(matcher.group(1));
+        }
+    }
 
 }

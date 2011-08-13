@@ -26,5 +26,15 @@ package ru.gelin.android.weather;
 public enum UnitSystem {
     
     SI, US;
+    
+    public static UnitSystem valueOf(TemperatureUnit unit) {
+        switch (unit) {
+        case C: 
+            return SI;
+        case F: 
+            return US;
+        }
+        return SI;
+    }
 
 }

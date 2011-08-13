@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.UnitSystem;
 
+@Deprecated
 public enum TemperatureUnit {
 
     C(UnitSystem.SI),

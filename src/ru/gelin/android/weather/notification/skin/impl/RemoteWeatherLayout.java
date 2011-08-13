@@ -30,14 +30,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindSpeedUnit;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -57,6 +56,12 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     /** Ids of views to update. */
     final Set<Integer> ids = new HashSet<Integer>();
+    
+    @Deprecated
+    public RemoteWeatherLayout(Context context, RemoteViews views, 
+            ru.gelin.android.weather.notification.skin.impl.TemperatureUnit unit) {
+        this(context, views, TemperatureType.valueOf(unit));
+    }
     
     /**
      *  Creates the utility for specified context.

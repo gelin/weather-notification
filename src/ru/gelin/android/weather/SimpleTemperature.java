@@ -35,20 +35,9 @@ public class SimpleTemperature implements Temperature {
     int low = UNKNOWN;
     int high = UNKNOWN;
     
-    /**
-     *  Constructs the temperature.
-     *  The stored values will be returned in the specified unit system.
-     */
-    TemperatureUnit us2tu(UnitSystem unit) {
-    	switch (unit) {
-    	case SI: return TemperatureUnit.C;
-    	case US: return TemperatureUnit.F;
-    	}
-    	return TemperatureUnit.C;
-    }
-    
+    @Deprecated
     public SimpleTemperature(UnitSystem unit) {
-        this.tunit = us2tu(unit);
+        this.tunit = TemperatureUnit.valueOf(unit);
     }
     
     public SimpleTemperature(TemperatureUnit unit) {
@@ -58,22 +47,25 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Sets the current temperature in specified unit system.
      */
+    @Deprecated
     public void setCurrent(int temp, UnitSystem unit) {
-    	setCurrent(temp, us2tu(unit));
+    	setCurrent(temp, TemperatureUnit.valueOf(unit));
     }
     
     /**
      *  Sets the low temperature in specified unit system.
      */
+    @Deprecated
     public void setLow(int temp, UnitSystem unit) {
-    	setLow(temp, us2tu(unit));
+    	setLow(temp, TemperatureUnit.valueOf(unit));
     }
     
     /**
      *  Sets the high temperature in specified unit system.
      */
+    @Deprecated
     public void setHigh(int temp, UnitSystem unit) {
-    	setHigh(temp, us2tu(unit));
+    	setHigh(temp, TemperatureUnit.valueOf(unit));
     }
     
     /**
@@ -144,10 +136,12 @@ public class SimpleTemperature implements Temperature {
     //@Override
     @Deprecated
     public UnitSystem getUnitSystem() {
-    	switch (this.tunit) {
-    	case C: return UnitSystem.SI;
-    	case F: return UnitSystem.US;
-    	}
+        switch (this.tunit) {
+        case C: 
+            return UnitSystem.SI;
+        case F: 
+            return UnitSystem.US;
+        }
         return UnitSystem.SI;
     }
     
@@ -159,8 +153,9 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Creates new temperature in another unit system.
      */
+    @Deprecated
     public SimpleTemperature convert(UnitSystem unit) {
-    	return convert(us2tu(unit));
+        return convert(TemperatureUnit.valueOf(unit));
     }
     
     public SimpleTemperature convert(TemperatureUnit unit) {
@@ -174,10 +169,6 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Converts the value from provided unit system into this temperature set unit system.
      */
-    int convertValue(int value, UnitSystem unit) {
-    	return convertValue(value, us2tu(unit));
-    }
-
     int convertValue(int value, TemperatureUnit unit) {
         if (this.tunit.equals(unit)) {
             return value;

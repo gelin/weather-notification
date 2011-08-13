@@ -37,6 +37,7 @@ import ru.gelin.android.weather.WindSpeedUnit;
 /**
  *  Weather, provided by Google API.
  */
+@SuppressWarnings("deprecation")
 public class GoogleWeather implements Weather {
 
     Location location = new SimpleLocation("");
@@ -73,7 +74,9 @@ public class GoogleWeather implements Weather {
     }
     
     //@Override
+    @Deprecated
     public UnitSystem getUnitSystem() {
+        //TODO: must return reasonable value
         return null;
     }
     

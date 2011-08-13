@@ -26,6 +26,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+@SuppressWarnings("deprecation")
 public class SimpleTemperatureTest {
     
     @Test

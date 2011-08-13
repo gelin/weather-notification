@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.whitetextplus;
 
-import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -34,8 +34,8 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureUnit unit) {
-        super(context, views, unit);
+    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType type) {
+        super(context, views, type);
     }
     
     @Override

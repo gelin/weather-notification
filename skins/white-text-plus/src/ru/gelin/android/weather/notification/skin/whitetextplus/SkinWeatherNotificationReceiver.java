@@ -22,10 +22,10 @@
 
 package ru.gelin.android.weather.notification.skin.whitetextplus;
 
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureUnit;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
@@ -51,7 +51,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     @Override
-    protected int getNotificationIconLevel(Weather weather, UnitSystem unit) {
+    protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
         return weather.getConditions().get(0).
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
     }
@@ -63,8 +63,8 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     
     @Override
     protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, 
-            RemoteViews views, TemperatureUnit unit) {
-        return new RemoteWeatherLayout(context, views, unit);
+            RemoteViews views, TemperatureType type) {
+        return new RemoteWeatherLayout(context, views, type);
     }
 
 }

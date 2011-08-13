@@ -40,5 +40,23 @@ public enum TemperatureType {
     public TemperatureUnit getTemperatureUnit() {
         return this.unit;
     }
+    
+    /**
+     *  Converts from deprecated class.
+     */
+    @SuppressWarnings("deprecation")
+    public static TemperatureType valueOf(ru.gelin.android.weather.notification.skin.impl.TemperatureUnit unit) {
+        switch (unit) {
+        case C:
+            return  TemperatureType.C;
+        case CF:
+            return TemperatureType.CF;
+        case F:
+            return TemperatureType.F;
+        case FC:
+            return TemperatureType.FC;
+        }
+        return TemperatureType.C;
+    }
 
 }

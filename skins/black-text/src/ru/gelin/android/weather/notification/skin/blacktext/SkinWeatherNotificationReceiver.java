@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.blacktext;
 
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import android.content.ComponentName;
@@ -48,7 +48,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     @Override
-    protected int getNotificationIconLevel(Weather weather, UnitSystem unit) {
+    protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
         return weather.getConditions().get(0).
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
     }

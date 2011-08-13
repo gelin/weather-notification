@@ -27,6 +27,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("deprecation")
 public class SimpleWeatherConditionTest {
     
     SimpleWeatherCondition condition;

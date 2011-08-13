@@ -22,14 +22,11 @@
 
 package ru.gelin.android.weather.google;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -44,9 +41,9 @@ import org.junit.Test;
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherException;
 import ru.gelin.android.weather.WeatherSource;
 
+@SuppressWarnings("deprecation")
 public class GoogleWeatherSourceTest {
     
     @Test

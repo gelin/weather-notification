@@ -36,14 +36,14 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.WeatherParser;
 import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
-import ru.gelin.android.weather.google.HandlerParserUser;
 import ru.gelin.android.weather.notification.skin.impl.WindUnit;
-import ru.gelin.android.weather.WeatherCondition;
 
+@SuppressWarnings("deprecation")
 public class GoogleWeatherTest {
     
     @Test
