@@ -42,24 +42,42 @@ public interface WeatherCondition {
     /**
      *  Returns the temperature in default units.
      */
+    @Deprecated
     Temperature getTemperature();
     
     /**
      *  Returns the temperature in specified units.
      */
+    @Deprecated
     Temperature getTemperature(UnitSystem units);
+    
+    /**
+     *  Returns the temperature in specified units.
+     */
+    Temperature getTemperature(TemperatureUnit unit);
     
     /**
      *  Returns humidity as a human readable text.
      *  Can return null. 
      */
+    @Deprecated
     String getHumidityText();
     
     /**
      *  Returns wind conditions as a human readable text.
      *  Can return null.
      */
+    @Deprecated
     String getWindText();
-    
 
+    /**
+     *  Returns humidity.
+     */
+    Humidity getHumidity();
+  
+    /**
+     *  Returns wind in default units.
+     */
+    
+    Wind getWind(WindSpeedUnit unit);
 }

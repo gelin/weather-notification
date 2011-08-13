@@ -29,7 +29,7 @@ import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEM
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather;
@@ -95,9 +95,9 @@ abstract public class BaseWeatherNotificationReceiver extends
         SharedPreferences prefs =
             PreferenceManager.getDefaultSharedPreferences(context);
     
-        TemperatureUnit unit = TemperatureUnit.valueOf(prefs.getString(
+        TemperatureType unit = TemperatureType.valueOf(prefs.getString(
             TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        UnitSystem mainUnit = unit.getUnitSystem();
+        TemperatureUnit mainUnit = unit.getTemperatureUnit();
         NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
@@ -143,11 +143,11 @@ abstract public class BaseWeatherNotificationReceiver extends
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
     
-    String formatTicker(Context context, Weather weather, TemperatureUnit unit) {
+    String formatTicker(Context context, Weather weather, TemperatureType unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         WeatherCondition condition = weather.getConditions().get(0);
-        Temperature tempC = condition.getTemperature(UnitSystem.SI);
-        Temperature tempF = condition.getTemperature(UnitSystem.US);
+        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
+        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
         return context.getString(ids.id(STRING, "notification_ticker"),
                 weather.getLocation().getText(),
                 tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
@@ -178,7 +178,7 @@ abstract public class BaseWeatherNotificationReceiver extends
     /**
      *  Returns the notification icon level.
      */
-    abstract protected int getNotificationIconLevel(Weather weather, UnitSystem unit);
+    abstract protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit);
     
     /**
      *  Creates the temperature formatter.
@@ -191,7 +191,7 @@ abstract public class BaseWeatherNotificationReceiver extends
      *  Returns the notification layout id.
      */
     protected int getNotificationLayoutId(Context context, 
-            NotificationStyle textStyle, TemperatureUnit unit) {
+            NotificationStyle textStyle, TemperatureType unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         switch (unit) {
         case C:
@@ -208,7 +208,7 @@ abstract public class BaseWeatherNotificationReceiver extends
      *  Creates the remove view layout for the notification.
      */
     protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views,
-            TemperatureUnit unit) {
+            TemperatureType unit) {
         return new RemoteWeatherLayout(context, views, unit);
     }
 

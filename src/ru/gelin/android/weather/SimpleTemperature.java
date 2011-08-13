@@ -30,7 +30,7 @@ package ru.gelin.android.weather;
  */
 public class SimpleTemperature implements Temperature {
 
-    UnitSystem unit;
+    TemperatureUnit tunit;
     int current = UNKNOWN;
     int low = UNKNOWN;
     int high = UNKNOWN;
@@ -39,15 +39,48 @@ public class SimpleTemperature implements Temperature {
      *  Constructs the temperature.
      *  The stored values will be returned in the specified unit system.
      */
+    TemperatureUnit us2tu(UnitSystem unit) {
+    	switch (unit) {
+    	case SI: return TemperatureUnit.C;
+    	case US: return TemperatureUnit.F;
+    	}
+    	return TemperatureUnit.C;
+    }
+    
     public SimpleTemperature(UnitSystem unit) {
-        this.unit = unit;
+        this.tunit = us2tu(unit);
+    }
+    
+    public SimpleTemperature(TemperatureUnit unit) {
+        this.tunit = unit;
     }
     
     /**
      *  Sets the current temperature in specified unit system.
      */
     public void setCurrent(int temp, UnitSystem unit) {
-        if (this.unit.equals(unit)) {
+    	setCurrent(temp, us2tu(unit));
+    }
+    
+    /**
+     *  Sets the low temperature in specified unit system.
+     */
+    public void setLow(int temp, UnitSystem unit) {
+    	setLow(temp, us2tu(unit));
+    }
+    
+    /**
+     *  Sets the high temperature in specified unit system.
+     */
+    public void setHigh(int temp, UnitSystem unit) {
+    	setHigh(temp, us2tu(unit));
+    }
+    
+    /**
+     *  Sets the current temperature in specified unit system.
+     */
+    public void setCurrent(int temp, TemperatureUnit unit) {
+        if (this.tunit.equals(unit)) {
             this.current = temp;
         } else {
             this.current = convertValue(temp, unit);
@@ -57,8 +90,8 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Sets the low temperature in specified unit system.
      */
-    public void setLow(int temp, UnitSystem unit) {
-        if (this.unit.equals(unit)) {
+    public void setLow(int temp, TemperatureUnit unit) {
+        if (this.tunit.equals(unit)) {
             this.low = temp;
         } else {
             this.low = convertValue(temp, unit);
@@ -68,8 +101,8 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Sets the high temperature in specified unit system.
      */
-    public void setHigh(int temp, UnitSystem unit) {
-        if (this.unit.equals(unit)) {
+    public void setHigh(int temp, TemperatureUnit unit) {
+        if (this.tunit.equals(unit)) {
             this.high = temp;
         } else {
             this.high = convertValue(temp, unit);
@@ -109,18 +142,32 @@ public class SimpleTemperature implements Temperature {
     }
 
     //@Override
+    @Deprecated
     public UnitSystem getUnitSystem() {
-        return this.unit;
+    	switch (this.tunit) {
+    	case C: return UnitSystem.SI;
+    	case F: return UnitSystem.US;
+    	}
+        return UnitSystem.SI;
+    }
+    
+    //@Override
+    public TemperatureUnit getTemperatureUnit() {
+    	return this.tunit;
     }
     
     /**
      *  Creates new temperature in another unit system.
      */
     public SimpleTemperature convert(UnitSystem unit) {
+    	return convert(us2tu(unit));
+    }
+    
+    public SimpleTemperature convert(TemperatureUnit unit) {
         SimpleTemperature result = new SimpleTemperature(unit);
-        result.setCurrent(this.getCurrent(), this.getUnitSystem());
-        result.setLow(this.getLow(), this.getUnitSystem());
-        result.setHigh(this.getHigh(), this.getUnitSystem());
+        result.setCurrent(this.getCurrent(), this.getTemperatureUnit());
+        result.setLow(this.getLow(), this.getTemperatureUnit());
+        result.setHigh(this.getHigh(), this.getTemperatureUnit());
         return result;
     }
     
@@ -128,14 +175,17 @@ public class SimpleTemperature implements Temperature {
      *  Converts the value from provided unit system into this temperature set unit system.
      */
     int convertValue(int value, UnitSystem unit) {
-        if (this.unit.equals(unit)) {
+    	return convertValue(value, us2tu(unit));
+    }
+
+    int convertValue(int value, TemperatureUnit unit) {
+        if (this.tunit.equals(unit)) {
             return value;
         }   
-        if (UnitSystem.SI.equals(unit)) {   //SI -> US
+        if (TemperatureUnit.C.equals(unit)) {   //C -> F
             return Math.round(value * 9f / 5f + 32);
-        } else {    //US -> SI
+        } else {    //F -> C
             return Math.round((value - 32) * 5f / 9f);
         }
     }
-
 }

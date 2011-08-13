@@ -72,4 +72,26 @@
     <string name="builtin_skin_preferences">Настройки встроенного вида</string>
     <string name="start_update_service_permission">запускать сервис обновления погоды</string>
     <string name="start_update_service_permission_description">Разрешает приложению запускать сервис обновления погоды, чтобы получать новые значения погоды.</string>
+    <string name="wind_dir_n">С</string>
+    <string name="wind_dir_nne">ССВ</string>
+    <string name="wind_dir_ne">СВ</string>
+    <string name="wind_dir_ene">ВСВ</string>
+    <string name="wind_dir_e">В</string>
+    <string name="wind_dir_ese">ВЮВ</string>
+    <string name="wind_dir_se">ЮВ</string>
+    <string name="wind_dir_sse">ЮЮВ</string>
+    <string name="wind_dir_s">Ю</string>
+    <string name="wind_dir_ssw">ЮЮЗ</string>
+    <string name="wind_dir_sw">ЮЗ</string>
+    <string name="wind_dir_wsw">ЗЮЗ</string>
+    <string name="wind_dir_w">З</string>
+    <string name="wind_dir_wnw">ЗСЗ</string>
+    <string name="wind_dir_nw">СЗ</string>
+    <string name="wind_dir_nnw">ССЗ</string>
+    <string name="wind_speed_unit">Единица изменения скорости ветра</string>
+    <string name="wind_speed_unit_mph">миль/ч</string>
+    <string name="wind_speed_unit_mps">м/с</string>
+    <string name="wind_speed_unit_kmph">км/ч</string>
+    <string name="humidity_caption" formatted="false">Влажность: %d%%</string>
+    <string name="wind_caption" formatted="false">Ветер: %s, %d %s</string>
 </resources>

@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather.google;
 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -32,11 +33,18 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Locale;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherException;
 import ru.gelin.android.weather.WeatherSource;
 
 public class GoogleWeatherSourceTest {
@@ -54,7 +62,7 @@ public class GoogleWeatherSourceTest {
         assertTrue(weather.getConditions().get(0).getWindText().startsWith("Ветер"));
     }
     
-    @Test
+    /*@Test
     public void testRawQueryRu() throws Exception {
         String apiUrl = "http://www.google.com/ig/api?weather=%s&hl=%s";
         String fullUrl = String.format(apiUrl, 
@@ -67,6 +75,34 @@ public class GoogleWeatherSourceTest {
         System.out.println(connection.getHeaderFields());
         Reader in = new InputStreamReader(
                 connection.getInputStream(), GoogleWeatherSource.getCharset(connection));
+        int c;
+        while ((c = in.read()) >= 0) {
+            System.out.print((char)c);
+        }
+        assertTrue(true);
+    }*/
+    
+    @Test
+    public void testRawQueryRu() throws Exception {
+        String apiUrl = "http://www.google.com/ig/api?weather=%s&hl=%s";
+        String fullUrl = String.format(apiUrl, 
+                URLEncoder.encode("Омск", "UTF-8"),
+                URLEncoder.encode("ru", "UTF-8"));
+        
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet(fullUrl);
+    	request.setHeader("User-Agent", "Google Weather/1.0 (Linux; Android)");
+    	HttpResponse response = client.execute(request);
+
+        StatusLine status = response.getStatusLine();
+        if (status.getStatusCode() != 200) {
+            assertTrue(false);
+        }
+
+        HttpEntity entity = response.getEntity();
+        String charset = GoogleWeatherSource.getCharset(entity);
+        System.out.println(response.getAllHeaders());
+        Reader in = new InputStreamReader(entity.getContent(), charset);
         int c;
         while ((c = in.read()) >= 0) {
             System.out.print((char)c);

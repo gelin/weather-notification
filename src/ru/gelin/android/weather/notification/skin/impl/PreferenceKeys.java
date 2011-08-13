@@ -35,6 +35,9 @@ public interface PreferenceKeys {
     /** Temperature unit preference name */
     static final String TEMP_UNIT = "temp_unit";
     /** Temperature unit default value */
-    static final String TEMP_UNIT_DEFAULT = TemperatureUnit.C.toString();
+    static final String TEMP_UNIT_DEFAULT = TemperatureType.C.toString();
+    /** Wind speed unit preference name */
+    static final String WS_UNIT = "ws_unit";
+    static final String WS_UNIT_DEFAULT = WindUnit.MPH.toString();
 
 }

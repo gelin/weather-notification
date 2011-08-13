@@ -26,15 +26,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.SimpleHumidity;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.SimpleTemperature;
 import ru.gelin.android.weather.SimpleWeather;
 import ru.gelin.android.weather.SimpleWeatherCondition;
+import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.Wind;
+import ru.gelin.android.weather.WindDirection;
+import ru.gelin.android.weather.WindSpeedUnit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -59,12 +65,18 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } else {
             setTime(time);
         }
-        UnitSystem unit = weather.getUnitSystem();
+        
+        TemperatureUnit unit = weather.getTemperatureUnit();
         if (unit == null) {
-            setUnitSystem(UnitSystem.SI);
-        } else {
-            setUnitSystem(unit);
+            unit = TemperatureUnit.C;
         }
+        setTemperatureUnit(unit);
+        
+        WindSpeedUnit wsunit = weather.getWindSpeedUnit();
+        if (wsunit == null) {
+            wsunit = WindSpeedUnit.MPH;
+        }
+        setWindSpeedUnit(wsunit);
         List<WeatherCondition> conditions = weather.getConditions();
         if (conditions == null) {
             return;
@@ -73,7 +85,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         for (WeatherCondition condition : conditions) {
             SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
             copyCondition.setConditionText(condition.getConditionText());
-            Temperature temp = condition.getTemperature();
+            Temperature temp = condition.getTemperature(unit);
             SimpleTemperature copyTemp = new SimpleTemperature(unit);
             if (temp != null) {
                 copyTemp.setCurrent(temp.getCurrent(), unit);
@@ -81,8 +93,23 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
                 copyTemp.setHigh(temp.getHigh(), unit);
             }
             copyCondition.setTemperature(copyTemp);
-            copyCondition.setHumidityText(condition.getHumidityText());
-            copyCondition.setWindText(condition.getWindText());
+            
+            Humidity hum = condition.getHumidity();
+            SimpleHumidity copyHum = new SimpleHumidity();
+            if (hum != null) {
+                copyHum.setValue(hum.getValue());
+                copyHum.setText(hum.getText());
+            }
+            copyCondition.setHumidity(copyHum);
+            
+            Wind wind = condition.getWind(wsunit);
+            SimpleWind copyWind = new SimpleWind(wsunit);
+            if (wind != null) {
+                copyWind.setSpeed(wind.getSpeed(), wsunit);
+                copyWind.setDirection(wind.getDirection());
+                copyWind.setText(wind.getText());
+            }
+            copyCondition.setWind(copyWind);
             copyConditions.add(copyCondition);
         }
         setConditions(copyConditions);
@@ -107,27 +134,35 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } else {
             dest.writeLong(time.getTime());
         }
-        UnitSystem unit = getUnitSystem();
+        TemperatureUnit unit = getTemperatureUnit();
         if (unit == null) {
             dest.writeString(null);
         } else {
             dest.writeString(unit.toString());
         }
+        WindSpeedUnit wsunit = getWindSpeedUnit();
+        if (wsunit == null) {
+            wsunit = WindSpeedUnit.MPH;
+        }
+        dest.writeString(wsunit.toString());
         int i = 0;
         if (getConditions() == null) {
             return;
         }
         for (WeatherCondition condition : getConditions()) {
             dest.writeString(condition.getConditionText());
-            Temperature temp = condition.getTemperature();
+            Temperature temp = condition.getTemperature(unit);
             if (temp == null) {
                 continue;
             }
             dest.writeInt(temp.getCurrent());
             dest.writeInt(temp.getLow());
             dest.writeInt(temp.getHigh());
-            dest.writeString(condition.getHumidityText());
-            dest.writeString(condition.getWindText());
+            dest.writeInt(condition.getHumidity().getValue());
+            dest.writeString(condition.getHumidity().getText());
+            dest.writeInt(condition.getWind(wsunit).getSpeed());
+            dest.writeString(condition.getWind(wsunit).getDirection().toString());
+            dest.writeString(condition.getWind(wsunit).getText());
             i++;
         }
     }
@@ -137,21 +172,36 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         setTime(new Date(in.readLong()));
         String unit = in.readString();
         try {
-            setUnitSystem(UnitSystem.valueOf(unit));
+            setTemperatureUnit(TemperatureUnit.valueOf(unit));
         } catch (Exception e) {
-            setUnitSystem(UnitSystem.SI);
+            setTemperatureUnit(TemperatureUnit.C);
+        }
+        String wsunit = in.readString();
+        try {
+            setWindSpeedUnit(WindSpeedUnit.valueOf(wsunit));
+        } catch (Exception e) {
+        	setWindSpeedUnit(WindSpeedUnit.MPH);
         }
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (in.dataAvail() > 6) {    //each condition takes 6 positions
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(in.readString());
-            SimpleTemperature temp = new SimpleTemperature(getUnitSystem());
-            temp.setCurrent(in.readInt(), getUnitSystem());
-            temp.setLow(in.readInt(), getUnitSystem());
-            temp.setHigh(in.readInt(), getUnitSystem());
+            SimpleTemperature temp = new SimpleTemperature(getTemperatureUnit());
+            temp.setCurrent(in.readInt(), getTemperatureUnit());
+            temp.setLow(in.readInt(), getTemperatureUnit());
+            temp.setHigh(in.readInt(), getTemperatureUnit());
             condition.setTemperature(temp);
-            condition.setHumidityText(in.readString());
-            condition.setWindText(in.readString());
+            
+            SimpleHumidity hum = new SimpleHumidity();
+            hum.setValue(in.readInt());
+            hum.setText(in.readString());
+            condition.setHumidity(hum);
+            
+            SimpleWind wind = new SimpleWind(getWindSpeedUnit());
+            wind.setSpeed(in.readInt(), getWindSpeedUnit());
+            wind.setDirection(WindDirection.valueOf(in.readString()));
+            wind.setText(in.readString());
+            condition.setWind(wind);
             conditions.add(condition);
         }
         setConditions(conditions);

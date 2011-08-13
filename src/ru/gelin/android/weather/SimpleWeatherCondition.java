@@ -30,8 +30,8 @@ public class SimpleWeatherCondition implements WeatherCondition {
 
     String conditionText;
     SimpleTemperature temperature;
-    String windText;
-    String humidityText;
+    SimpleWind wind;
+    SimpleHumidity humidity;
     
     /**
      *  Sets the condition text.
@@ -50,15 +50,15 @@ public class SimpleWeatherCondition implements WeatherCondition {
     /**
      *  Sets the wind text.
      */
-    public void setWindText(String text) {
-        this.windText = text;
+    public void setWind(SimpleWind wind) {
+        this.wind = wind;
     }
     
     /**
      *  Sets the humidity text.
      */
-    public void setHumidityText(String text) {
-        this.humidityText = text;
+    public void setHumidity(SimpleHumidity hum) {
+        this.humidity = hum;
     }
     
     //@Override
@@ -82,14 +82,42 @@ public class SimpleWeatherCondition implements WeatherCondition {
         return this.temperature.convert(unit);
     }
 
+    public Temperature getTemperature(TemperatureUnit unit) {
+    	if (this.temperature == null) {
+            return null;
+        }
+        if (this.temperature.getTemperatureUnit().equals(unit)) {
+            return this.temperature;
+        }
+        return this.temperature.convert(unit);
+    }
+    
+    //@Deprecated
     //@Override
     public String getWindText() {
-        return this.windText;
+        return this.wind.getText();
+    }
+    
+    //@Deprecated
+    //@Override
+    public String getHumidityText() {
+        return this.humidity.getText();
+    }
+    
+  //@Override
+    public Wind getWind(WindSpeedUnit unit) {
+    	if (this.wind == null) {
+            return null;
+        }
+        if (this.wind.getSpeedUnit().equals(unit)) {
+            return this.wind;
+        }
+        return this.wind.convert(unit);
     }
     
     //@Override
-    public String getHumidityText() {
-        return this.humidityText;
+    public Humidity getHumidity() {
+        return this.humidity;
     }
 
 }

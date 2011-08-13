@@ -44,7 +44,18 @@ public interface Weather {
     /**
      *  Returns default unit system (SI or US).
      */
+    @Deprecated
     UnitSystem getUnitSystem();
+    
+    /**
+     *  Returns default temperature unit (C or F).
+     */
+    TemperatureUnit getTemperatureUnit();
+    
+    /**
+     *  Returns default wind speed unit (MPH, KMH or MPS).
+     */
+    WindSpeedUnit getWindSpeedUnit();
     
     /**
      *  Returns weather conditions starting from the current weather 

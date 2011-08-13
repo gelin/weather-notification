@@ -72,5 +72,15 @@
         <item>CF</item>
         <item>FC</item>
     </string-array>
+    <string-array name="wind_unit_entries">
+        <item>@string/wind_speed_unit_mph</item>
+        <item>@string/wind_speed_unit_mps</item>
+        <item>@string/wind_speed_unit_kmph</item>
+    </string-array>
+    <string-array name="wind_unit_values">
+        <item>MPH</item>
+        <item>MPS</item>
+        <item>KMPH</item>
+    </string-array>
 
 </resources>

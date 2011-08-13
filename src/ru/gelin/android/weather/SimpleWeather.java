@@ -37,6 +37,8 @@ public class SimpleWeather implements Weather {
     Date time;
     /** Unit system */
     UnitSystem unit;
+    TemperatureUnit tunit;
+    WindSpeedUnit wsunit;
     /** List of conditions */
     List<WeatherCondition> conditions;
     
@@ -57,8 +59,23 @@ public class SimpleWeather implements Weather {
     /**
      *  Sets the unit system.
      */
+    @Deprecated
     public void setUnitSystem(UnitSystem unit) {
         this.unit = unit;
+    }
+    
+    /**
+     *  Sets the temperature unit.
+     */
+    public void setTemperatureUnit(TemperatureUnit unit) {
+        this.tunit = unit;
+    }
+    
+    /**
+     *  Sets the wind speed unit.
+     */
+    public void setWindSpeedUnit(WindSpeedUnit unit) {
+        this.wsunit = unit;
     }
     
     /**
@@ -79,8 +96,19 @@ public class SimpleWeather implements Weather {
     }
 
     //@Override
+    @Deprecated
     public UnitSystem getUnitSystem() {
         return this.unit;
+    }
+    
+    //@Override
+    public TemperatureUnit getTemperatureUnit() {
+        return this.tunit;
+    }
+    
+    //@Override
+    public WindSpeedUnit getWindSpeedUnit() {
+        return this.wsunit;
     }
     
     //@Override

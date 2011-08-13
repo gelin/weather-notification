@@ -29,7 +29,7 @@ public interface WeatherStorageKeys {
     /** Preference name for time. */
     static final String TIME = "weather_time";
     /** Preference name for unit system. */
-    static final String UNIT_SYSTEM = "weather_unit_system";
+    static final String TEMPERATURE_UNIT = "weather_temperature_unit";
     /** Preference name pattern for condition text. */
     static final String CONDITION_TEXT = "weather_%d_condition_text";
     /** Preference name pattern for current temp. */
@@ -42,5 +42,9 @@ public interface WeatherStorageKeys {
     static final String HUMIDITY_TEXT = "weather_%d_humidity_text";
     /** Preference name pattern for wind text. */
     static final String WIND_TEXT = "weather_%d_wind_text";
+    static final String WSUNIT_SYSTEM = "weather_wsunit_system";
+    static final String HUMIDITY_VAL = "weather_%d_humidity_value";
+    static final String WIND_VAL = "weather_%d_wind_value";
+    static final String WIND_DIR = "weather_%d_wind_direction";
 
 }

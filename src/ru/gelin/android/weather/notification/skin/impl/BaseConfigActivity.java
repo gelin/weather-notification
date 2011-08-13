@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
 import ru.gelin.android.weather.notification.UpdateNotificationActivity;
 import android.os.Bundle;
@@ -52,12 +53,16 @@ public class BaseConfigActivity extends UpdateNotificationActivity
         textStylePreference.setOnPreferenceChangeListener(this);
         Preference unitPreference = findPreference(TEMP_UNIT);
         unitPreference.setOnPreferenceChangeListener(this);
+        Preference wsunitPreference = findPreference(WS_UNIT);
+        wsunitPreference.setOnPreferenceChangeListener(this);
     }
 
     //@Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
-        if (NOTIFICATION_TEXT_STYLE.equals(key) || TEMP_UNIT.equals(key)) {
+        if (NOTIFICATION_TEXT_STYLE.equals(key) ||
+        		TEMP_UNIT.equals(key)||
+        		WS_UNIT.equals(key)) {
             updateNotification();
             return true;
         }

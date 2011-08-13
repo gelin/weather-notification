@@ -25,24 +25,34 @@ package ru.gelin.android.weather.notification;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.CONDITION_TEXT;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.CURRENT_TEMP;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.HIGH_TEMP;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_VAL;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_TEXT;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.TEMPERATURE_UNIT;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_VAL;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_DIR;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_TEXT;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.WSUNIT_SYSTEM;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.SimpleHumidity;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.SimpleTemperature;
 import ru.gelin.android.weather.SimpleWeather;
 import ru.gelin.android.weather.SimpleWeatherCondition;
+import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.Humidity;
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.Wind;
+import ru.gelin.android.weather.WindDirection;
+import ru.gelin.android.weather.WindSpeedUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import android.content.Context;
@@ -80,22 +90,32 @@ public class WeatherStorage {
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
-        editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
+        WindSpeedUnit wsunit = weather.getWindSpeedUnit();
+        editor.putString(TEMPERATURE_UNIT, weather.getTemperatureUnit().toString());
+        editor.putString(WSUNIT_SYSTEM, wsunit.toString());
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
                     condition.getConditionText());
-            Temperature temp = condition.getTemperature();
+            Temperature temp = condition.getTemperature(weather.getTemperatureUnit());
             putOrRemove(editor, String.format(CURRENT_TEMP, i), 
                     temp.getCurrent());
             putOrRemove(editor, String.format(LOW_TEMP, i), 
                     temp.getLow());
             putOrRemove(editor, String.format(HIGH_TEMP, i), 
                     temp.getHigh());
+            Humidity hum = condition.getHumidity();
+            putOrRemove(editor, String.format(HUMIDITY_VAL, i), 
+                    hum.getValue());
             putOrRemove(editor, String.format(HUMIDITY_TEXT, i), 
-                    condition.getHumidityText());
+                    hum.getText());
+            Wind wind = condition.getWind(wsunit);
+            putOrRemove(editor, String.format(WIND_VAL, i), 
+                    wind.getSpeed());
+            putOrRemove(editor, String.format(WIND_DIR, i), 
+                    wind.getDirection().toString());
             putOrRemove(editor, String.format(WIND_TEXT, i), 
-                    condition.getWindText());
+                    wind.getText());
             i++;
         }
         editor.commit();
@@ -111,26 +131,38 @@ public class WeatherStorage {
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
-        weather.setUnitSystem(UnitSystem.valueOf(
-                preferences.getString(UNIT_SYSTEM, "SI")));
+        weather.setTemperatureUnit(TemperatureUnit.valueOf(
+        		preferences.getString(TEMPERATURE_UNIT, "C")));
+        weather.setWindSpeedUnit(WindSpeedUnit.valueOf(
+                preferences.getString(WSUNIT_SYSTEM, "MPH")));
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(preferences.getString(
                     String.format(CONDITION_TEXT, i), ""));
-            SimpleTemperature temp = new SimpleTemperature(weather.getUnitSystem());
+            SimpleTemperature temp = new SimpleTemperature(weather.getTemperatureUnit());
             temp.setCurrent(preferences.getInt(String.format(CURRENT_TEMP, i),
-                    Temperature.UNKNOWN), weather.getUnitSystem());
+                    Temperature.UNKNOWN), weather.getTemperatureUnit());
             temp.setLow(preferences.getInt(String.format(LOW_TEMP, i),
-                    Temperature.UNKNOWN), weather.getUnitSystem());
+                    Temperature.UNKNOWN), weather.getTemperatureUnit());
             temp.setHigh(preferences.getInt(String.format(HIGH_TEMP, i),
-                    Temperature.UNKNOWN), weather.getUnitSystem());
+                    Temperature.UNKNOWN), weather.getTemperatureUnit());
             condition.setTemperature(temp);
-            condition.setHumidityText(preferences.getString(
-                    String.format(HUMIDITY_TEXT, i), ""));
-            condition.setWindText(preferences.getString(
-                    String.format(WIND_TEXT, i), ""));
+            
+            SimpleHumidity hum = new SimpleHumidity();
+            hum.setValue(preferences.getInt(String.format(HUMIDITY_VAL, i), Humidity.UNKNOWN));
+            hum.setText(preferences.getString(String.format(HUMIDITY_TEXT, i), ""));
+            condition.setHumidity(hum);
+            
+            SimpleWind wind = new SimpleWind(weather.getWindSpeedUnit());
+            wind.setSpeed(preferences.getInt(
+                    String.format(WIND_VAL, i), Wind.UNKNOWN), weather.getWindSpeedUnit());
+            wind.setDirection(WindDirection.valueOf(preferences.getString(
+                    String.format(WIND_DIR, i), "N")));
+            wind.setText(preferences.getString(String.format(WIND_TEXT, i), ""));
+            condition.setWind(wind);
+
             conditions.add(condition);
             i++;
         }

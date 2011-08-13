@@ -11,7 +11,7 @@ public class TemperatureFormatter {
         return signedValue(temp) + "\u00B0";
     }
 	
-    public String format(int temp, TemperatureUnit unit) {
+    public String format(int temp, TemperatureType unit) {
         if (temp == Temperature.UNKNOWN) {
             return "";
         }
@@ -28,7 +28,7 @@ public class TemperatureFormatter {
         return "";
     }
     
-    public String format(int tempC, int tempF, TemperatureUnit unit) {
+    public String format(int tempC, int tempF, TemperatureType unit) {
         if (tempC == Temperature.UNKNOWN || tempF == Temperature.UNKNOWN) {
             return "";
         }

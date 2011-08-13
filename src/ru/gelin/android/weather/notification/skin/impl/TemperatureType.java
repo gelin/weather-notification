@@ -1,5 +1,5 @@
 /*
- *  Weather API.
+ *  Android Weather Notification.
  *  Copyright (C) 2010  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,40 +20,25 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather;
+package ru.gelin.android.weather.notification.skin.impl;
 
-/**
- *  Contains current, high and low temperature values.
- */
-public interface Temperature {
+import ru.gelin.android.weather.TemperatureUnit;
 
-    /** Unknown temperature value */
-    static int UNKNOWN = Integer.MIN_VALUE;
+public enum TemperatureType {
+
+    C(TemperatureUnit.C),
+    F(TemperatureUnit.F),
+    CF(TemperatureUnit.C),
+    FC(TemperatureUnit.F);
     
-    /**
-     *  Current temperature.
-     */
-    int getCurrent();
+    TemperatureUnit unit;
     
-    /**
-     *  High forecast temperature.
-     */
-    int getHigh();
+    TemperatureType(TemperatureUnit unit) {
+        this.unit = unit;
+    }
     
-    /**
-     *  Low forecast temperature.
-     */
-    int getLow();
-    
-    /**
-     *  Units of this weather.
-     */
-    @Deprecated
-    UnitSystem getUnitSystem();
-    
-    /**
-     *  Units of this weather.
-     */
-    TemperatureUnit getTemperatureUnit();
-    
+    public TemperatureUnit getTemperatureUnit() {
+        return this.unit;
+    }
+
 }

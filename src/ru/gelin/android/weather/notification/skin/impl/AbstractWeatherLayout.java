@@ -24,15 +24,20 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.Wind;
+import ru.gelin.android.weather.WindSpeedUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -49,6 +54,7 @@ public abstract class AbstractWeatherLayout {
     ResourceIdFactory ids;
     /** Temperature formatter */
     TemperatureFormatter tempFormat;
+    WindFormatter windFormat;
     
     /**
      *  Creates the utility for specified context.
@@ -57,6 +63,7 @@ public abstract class AbstractWeatherLayout {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
         this.tempFormat = createTemperatureFormatter();
+        this.windFormat = new WindFormatter();
     }
     
     /**
@@ -98,28 +105,28 @@ public abstract class AbstractWeatherLayout {
         
         SharedPreferences preferences = 
                 PreferenceManager.getDefaultSharedPreferences(this.context);
-        TemperatureUnit unit = TemperatureUnit.valueOf(preferences.getString(
+        TemperatureType tempType = TemperatureType.valueOf(preferences.getString(
                 TEMP_UNIT, TEMP_UNIT_DEFAULT));
         
-        Temperature tempC = currentCondition.getTemperature(UnitSystem.SI);
-        Temperature tempF = currentCondition.getTemperature(UnitSystem.US);
-        UnitSystem mainUnit = unit.getUnitSystem();
+        Temperature tempC = currentCondition.getTemperature(TemperatureUnit.C);
+        Temperature tempF = currentCondition.getTemperature(TemperatureUnit.F);
+        TemperatureUnit mainUnit = tempType.getTemperatureUnit();
         Temperature mainTemp = currentCondition.getTemperature(mainUnit);
         
         setVisibility(id("temp"), View.VISIBLE);
-        setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), unit));
-        switch(unit) {      //TODO: remove multiple appearance of this switch
+        setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), tempType));
+        switch(tempType) {      //TODO: remove multiple appearance of this switch
         case C: case F:
             setVisibility(id("current_temp_alt"), View.GONE);
             break;
         case CF:
             setText(id("current_temp_alt"), tempFormat.format(tempF.getCurrent(),
-                    TemperatureUnit.F));
+                    TemperatureType.F));
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         case FC:
             setText(id("current_temp_alt"), tempFormat.format(tempC.getCurrent(),
-                    TemperatureUnit.C));
+                    TemperatureType.C));
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         }
@@ -142,11 +149,21 @@ public abstract class AbstractWeatherLayout {
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
-        setText(id("humidity"), currentCondition.getHumidityText());
-        setText(id("wind"), currentCondition.getWindText());
+    	SharedPreferences preferences = 
+            PreferenceManager.getDefaultSharedPreferences(this.context);
+    	WindUnit unit = WindUnit.valueOf(preferences.getString(
+                WS_UNIT, WS_UNIT_DEFAULT));
+        
+        WindSpeedUnit mainUnit = unit.getWindSpeedUnit();
+        Wind wind = currentCondition.getWind(mainUnit);
+    	Humidity hum = currentCondition.getHumidity();
+        String text = windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), context);
+        setText(id("humidity"), text);
+        text = String.format(this.context.getString(string("humidity_caption")), hum.getValue());
+        setText(id("wind"), text);
     }
     
-    protected void bindForecasts(Weather weather, UnitSystem unit) {
+    protected void bindForecasts(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
         setVisibility(id("forecasts"), View.VISIBLE);
         bindForecast(weather, unit, 1,
                 id("forecast_1"), id("forecast_day_1"),
@@ -163,7 +180,7 @@ public abstract class AbstractWeatherLayout {
     }
     
     void bindForecast(Weather weather, 
-            UnitSystem unit, int i, 
+    		ru.gelin.android.weather.TemperatureUnit unit, int i, 
             int groupId, int dayId, int conditionId, 
             int highTempId, int lowTempId) {
         if (weather.getConditions().size() > i) {

@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather;
 
+@Deprecated
 public enum UnitSystem {
     
     SI, US;

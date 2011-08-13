@@ -22,17 +22,25 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
+
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.Wind;
+import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WindSpeedUnit;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -53,7 +61,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureUnit unit) {
+    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType unit) {
         super(context);
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
@@ -111,15 +119,26 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
-        StringBuilder text = new StringBuilder();
-        text.append(currentCondition.getWindText());
+    	SharedPreferences preferences = 
+            PreferenceManager.getDefaultSharedPreferences(this.context);
+    	WindUnit unit = WindUnit.valueOf(preferences.getString(
+                WS_UNIT, WS_UNIT_DEFAULT));
+        
+        WindSpeedUnit mainUnit = unit.getWindSpeedUnit();
+        Wind wind = currentCondition.getWind(mainUnit);
+    	Humidity hum = currentCondition.getHumidity();
+    	
+    	StringBuilder text = new StringBuilder();
+    	String windText = windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), context);
+    	String humText = String.format(this.context.getString(string("humidity_caption")), hum.getValue());
+        text.append(windText);
         text.append(SEPARATOR);
-        text.append(currentCondition.getHumidityText());
+        text.append(humText);
         setText(id("wind_humidity_text"), text.toString());
     }
     
     @Override
-    protected void bindForecasts(Weather weather, UnitSystem unit) {
+    protected void bindForecasts(Weather weather, TemperatureUnit unit) {
         setVisibility(id("forecasts_text"), View.VISIBLE);
         StringBuilder forecastsText = new StringBuilder();
         for (int i = 1; i < 4; i++) {
