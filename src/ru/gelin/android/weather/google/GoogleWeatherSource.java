@@ -1,6 +1,6 @@
 /*
  *  Weather API.
- *  Copyright (C) 2010  Denis Nelubin aka Gelin
+ *  Copyright (C) 2010  Denis Nelubin, Vladimir Kubyshev
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
