@@ -17,40 +17,33 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package ru.gelin.android.weather;
+package ru.gelin.android.weather.google;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import ru.gelin.android.weather.SimpleHumidity;
 
 /**
- *  Simple Humidity value.
- *  Just holds the specified values.
+ *  Humidity which parses the string provided by Google Weather API.
  */
-public class SimpleHumidity implements Humidity {
-
-    protected int value = UNKNOWN;
-    protected String text;
-
-    /**
-     *  Sets the current humidity.
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
+public class GoogleHumidity extends SimpleHumidity {
+    
+    private static final Pattern PARSE_PATTERN = Pattern.compile("(\\d++)");
 
     /**
-     *  Sets the current humidity.
+     *  Sets the current humidity from the unparsed text.
      */
-    public void setText(String text) {
+    public void parseText(String text) {
         this.text = text;
-    }
-
-    //@Override
-    public int getValue() {
-        return this.value;
-    }
-
-    //@Override
-    public String getText() {
-        return this.text;
+        if (text == null || text.length() == 0) {
+            this.value = UNKNOWN;
+            return;
+        }
+        Matcher matcher = PARSE_PATTERN.matcher(text);
+        if (matcher.find()) {
+            this.value  = Integer.parseInt(matcher.group(1));   //TODO: catch when non-integer
+        }
     }
 
 }

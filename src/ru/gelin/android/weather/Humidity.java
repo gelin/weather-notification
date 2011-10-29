@@ -20,7 +20,8 @@
 package ru.gelin.android.weather;
 
 public interface Humidity {
-	/** Unknown temperature value */
+	
+    /** Unknown humidity value */
     static int UNKNOWN = Integer.MIN_VALUE;
     
     /**
@@ -33,4 +34,5 @@ public interface Humidity {
      *  Can return null. 
      */
     String getText();
+    
 }

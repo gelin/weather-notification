@@ -23,24 +23,25 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.SimpleHumidity;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.SimpleWind;
+import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WindSpeedUnit;
 
-public class HandlerParserInt extends DefaultHandler {
-	HandlerState state;
+class HandlerParserInt extends DefaultHandler {     //TODO: rename to ..English
+    
+    HandlerState state;
     SimpleWeatherCondition condition;
-    SimpleHumidity humidity;
+    GoogleHumidity humidity;
     SimpleWind wind;
     int conditioncounter = 0;
-
-    GoogleWeather weather;
-    public HandlerParserInt(Weather weather) {
-    	this.weather = (GoogleWeather)weather;
-    }
     
+    GoogleWeather weather;
+    
+    public HandlerParserInt(Weather weather) {      //TODO: replace with GoogleWeather
+        this.weather = (GoogleWeather)weather;
+    }
+
     @Override
     public void startElement(String uri, String localName,
             String qName, Attributes attributes) throws SAXException {
@@ -61,18 +62,18 @@ public class HandlerParserInt extends DefaultHandler {
                 addCondition();
             }
         } else if ("humidity".equals(localName)) {
-        	humidity.setTextParse(data);
+            humidity.parseText(data);
         } else if ("wind_condition".equals(localName)) {
-       		wind.setTextParse(data);
+            wind.setTextParse(data);
         } 
     }
 
     void addCondition() {
-    	condition = (SimpleWeatherCondition)weather.conditions.get(conditioncounter++);
-    	humidity = (SimpleHumidity)condition.getHumidity();
-    	//by default parse in mph
-    	wind = (SimpleWind)condition.getWind(WindSpeedUnit.MPH);
-    	condition.setHumidity(humidity);
-    	condition.setWind(wind);
+        condition = (SimpleWeatherCondition)weather.conditions.get(conditioncounter++); //TODO: check if possible to avoid cast
+        humidity = (GoogleHumidity)condition.getHumidity();     //TODO: check if possible to avoid cast
+        //by default parse in mph
+        wind = (SimpleWind)condition.getWind(WindSpeedUnit.MPH);    //TODO: check if possible to avoid cast
+        condition.setHumidity(humidity);
+        condition.setWind(wind);
     }
 }

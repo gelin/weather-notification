@@ -29,9 +29,9 @@ package ru.gelin.android.weather;
 public class SimpleWeatherCondition implements WeatherCondition {
 
     String conditionText;
-    SimpleTemperature temperature;
-    SimpleWind wind;
-    SimpleHumidity humidity;
+    SimpleTemperature temperature;  //TODO: replace with Temperature
+    SimpleWind wind;    //TODO: replace with Wind
+    Humidity humidity;
     
     /**
      *  Sets the condition text.
@@ -57,7 +57,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
     /**
      *  Sets the humidity text.
      */
-    public void setHumidity(SimpleHumidity hum) {
+    public void setHumidity(Humidity hum) {
         this.humidity = hum;
     }
     
