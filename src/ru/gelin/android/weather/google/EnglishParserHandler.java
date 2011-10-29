@@ -21,25 +21,11 @@ package ru.gelin.android.weather.google;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WindSpeedUnit;
-
-class HandlerParserInt extends DefaultHandler {     //TODO: rename to ..English
+class EnglishParserHandler extends ParserHandler {
     
-    HandlerState state;
-    SimpleWeatherCondition condition;
-    GoogleHumidity humidity;
-    SimpleWind wind;
-    int conditioncounter = 0;
-    
-    GoogleWeather weather;
-    
-    public HandlerParserInt(Weather weather) {      //TODO: replace with GoogleWeather
-        this.weather = (GoogleWeather)weather;
+    public EnglishParserHandler(GoogleWeather weather) {
+        super(weather);
     }
 
     @Override
@@ -47,33 +33,25 @@ class HandlerParserInt extends DefaultHandler {     //TODO: rename to ..English
             String qName, Attributes attributes) throws SAXException {
         String data = attributes.getValue("data");
         if ("current_conditions".equals(localName)) {
-            state = HandlerState.CURRENT_CONDITIONS;
+            this.state = HandlerState.CURRENT_CONDITIONS;
             addCondition();
         } else if ("forecast_conditions".equals(localName)) {
             switch (state) {
             case CURRENT_CONDITIONS:
-                state = HandlerState.FIRST_FORECAST;
+                this.state = HandlerState.FIRST_FORECAST;
                 break;
             case FIRST_FORECAST:
-                state = HandlerState.NEXT_FORECAST;
+                this.state = HandlerState.NEXT_FORECAST;
                 addCondition();
                 break;
             default:
                 addCondition();
             }
         } else if ("humidity".equals(localName)) {
-            humidity.parseText(data);
+            this.humidity.parseText(data);
         } else if ("wind_condition".equals(localName)) {
-            wind.setTextParse(data);
+            this.wind.setTextParse(data);
         } 
     }
 
-    void addCondition() {
-        condition = (SimpleWeatherCondition)weather.conditions.get(conditioncounter++); //TODO: check if possible to avoid cast
-        humidity = (GoogleHumidity)condition.getHumidity();     //TODO: check if possible to avoid cast
-        //by default parse in mph
-        wind = (SimpleWind)condition.getWind(WindSpeedUnit.MPH);    //TODO: check if possible to avoid cast
-        condition.setHumidity(humidity);
-        condition.setWind(wind);
-    }
 }

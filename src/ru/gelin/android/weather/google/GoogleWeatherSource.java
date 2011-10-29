@@ -55,11 +55,11 @@ public class GoogleWeatherSource implements WeatherSource {
     static final String ENCODING = "UTF-8";
     /** Charset pattern */
     static final String CHARSET = "charset=";
-    
+
     private static final int HTTP_STATUS_OK = 200;
-    
+
     static final String USER_AGENT = "Google Weather/1.0 (Linux; Android)";
-    
+
     GoogleWeatherParser weatherParser;
     GoogleWeather weather;
     HttpClient client;
@@ -70,11 +70,11 @@ public class GoogleWeatherSource implements WeatherSource {
     }
 
     InputStreamReader getReaderForURL(String URL) throws WeatherException {
-    	try {
-        	request = new HttpGet(URL);
-        	request.setHeader("User-Agent", USER_AGENT);
+        try {
+            request = new HttpGet(URL);
+            request.setHeader("User-Agent", USER_AGENT);
         } catch (Exception e) {
-        	throw new WeatherException("Can't prepare http request", e);
+            throw new WeatherException("Can't prepare http request", e);
         }
 
         String charset = ENCODING;
@@ -98,10 +98,10 @@ public class GoogleWeatherSource implements WeatherSource {
             throw new WeatherException("Problem communicating with API", e);
         }
     }
-    
+
     void parseContent(Location location, String locale, DefaultHandler handler) 
-    	throws WeatherException, SAXException, ParserConfigurationException, IOException {
-    	String fullUrl;
+    throws WeatherException, SAXException, ParserConfigurationException, IOException {
+        String fullUrl;
         try {
             fullUrl = String.format(API_URL, 
                     URLEncoder.encode(location.getQuery(), ENCODING),
@@ -112,32 +112,32 @@ public class GoogleWeatherSource implements WeatherSource {
 
         InputStreamReader reader = getReaderForURL(fullUrl);
         GoogleWeatherParser weatherParser = new GoogleWeatherParser(weather);
-    	weatherParser.parse(reader, handler);
+        weatherParser.parse(reader, handler);
     }
     //@Override
     public Weather query(Location location, Locale locale)
-            throws WeatherException {
-    	
+    throws WeatherException {
+
         // Create client and set our specific user-agent string
         try {
-        	client = new DefaultHttpClient();
+            client = new DefaultHttpClient();
         } catch (Exception e) {
-        	throw new WeatherException("Can't prepare http client", e);
+            throw new WeatherException("Can't prepare http client", e);
         }
 
         try {
-        	weather = new GoogleWeather();
+            weather = new GoogleWeather();
             weatherParser = new GoogleWeatherParser(weather);
-        	parseContent(location, locale.getLanguage(), new HandlerParserUser(weather));
-        	parseContent(location, "us", new HandlerParserInt(weather));
+            parseContent(location, "us", new EnglishParserHandler(weather));
+            parseContent(location, locale.getLanguage(), new ParserHandler(weather));
 
-        	if (weather.getLocation().isEmpty()) {
-        		weather.setLocation(location);  //set original location
-        	}
+            if (weather.getLocation().isEmpty()) {
+                weather.setLocation(location);  //set original location
+            }
             return weather;
         } catch (Exception e) {
-			throw new WeatherException("create weather error", e);
-		}
+            throw new WeatherException("create weather error", e);
+        }
     }
 
     static String getCharset(HttpEntity entity) {

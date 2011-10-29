@@ -42,7 +42,7 @@ public class GoogleHumidity extends SimpleHumidity {
         }
         Matcher matcher = PARSE_PATTERN.matcher(text);
         if (matcher.find()) {
-            this.value  = Integer.parseInt(matcher.group(1));   //TODO: catch when non-integer
+            this.value  = Integer.parseInt(matcher.group(1));   //this group selects integers, so parsing is safe
         }
     }
 

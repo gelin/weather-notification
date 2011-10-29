@@ -32,25 +32,28 @@ import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WindSpeedUnit;
 
 @SuppressWarnings("deprecation")
-class HandlerParserUser extends DefaultHandler {    //TODO: remove User from the end of the class name
-    HandlerState state;
-    SimpleWeatherCondition condition;
-    SimpleTemperature temperature;
-    GoogleHumidity humidity;
-    SimpleWind wind;
+class ParserHandler extends DefaultHandler {
+    
+    protected GoogleWeather weather;
+    
+    protected SimpleWeatherCondition condition;
+    protected SimpleTemperature temperature;
+    protected GoogleHumidity humidity;
+    protected SimpleWind wind;
+    
+    protected HandlerState state;
+    protected int conditionCounter = 0;
 
     /** Format for dates in the XML */
     static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     /** Format for times in the XML */
     static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
-    GoogleWeather weather;
-    public HandlerParserUser(Weather weather) { //TODO: use GoogleWeather
-        this.weather = (GoogleWeather)weather;
+    public ParserHandler(GoogleWeather weather) {
+        this.weather = weather;
     }
 
     @Override
@@ -58,52 +61,52 @@ class HandlerParserUser extends DefaultHandler {    //TODO: remove User from the
             String qName, Attributes attributes) throws SAXException {
         String data = attributes.getValue("data");
         if ("city".equals(localName)) {
-            weather.location = new SimpleLocation(data);
+            this.weather.location = new SimpleLocation(data);
         } else if ("forecast_date".equals(localName)) {
             try {
-                weather.date = DATE_FORMAT.parse(data);
+                this.weather.date = DATE_FORMAT.parse(data);
             } catch (ParseException e) {
                 throw new SAXException("invalid 'forecast_date' format: " + data, e);
             }
         } else if ("current_date_time".equals(localName)) {
             try {
-                weather.time = TIME_FORMAT.parse(data);
+                this.weather.time = TIME_FORMAT.parse(data);
             } catch (ParseException e) {
                 throw new SAXException("invalid 'current_date_time' format: " + data, e);
             }
         } else if ("unit_system".equals(localName)) {
             if (data.equalsIgnoreCase("si")) {
-                weather.unit = UnitSystem.SI;
+                this.weather.unit = UnitSystem.SI;
             } else {
-                weather.unit = UnitSystem.US;
+                this.weather.unit = UnitSystem.US;
             }
         } else if ("current_conditions".equals(localName)) {
-            state = HandlerState.CURRENT_CONDITIONS;
+            this.state = HandlerState.CURRENT_CONDITIONS;
             addCondition();
         } else if ("forecast_conditions".equals(localName)) {
             switch (state) {
             case CURRENT_CONDITIONS:
-                state = HandlerState.FIRST_FORECAST;
+                this.state = HandlerState.FIRST_FORECAST;
                 break;
             case FIRST_FORECAST:
-                state = HandlerState.NEXT_FORECAST;
+                this.state = HandlerState.NEXT_FORECAST;
                 addCondition();
                 break;
             default:
                 addCondition();
             }
         } else if ("condition".equals(localName)) {
-            switch (state) {
+            switch (this.state) {
             case FIRST_FORECAST:
                 //skipping update of condition, because the current conditions are already set
                 break;
             default:
-                condition.setConditionText(data);
+                this.condition.setConditionText(data);
             }
         } else if ("temp_f".equalsIgnoreCase(localName)) {
             if (UnitSystem.US.equals(weather.unit)) {
                 try {
-                    temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.F);
+                    this.temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.F);
                 } catch (NumberFormatException e) {
                     throw new SAXException("invalid 'temp_f' format: " + data, e);
                 }
@@ -111,38 +114,50 @@ class HandlerParserUser extends DefaultHandler {    //TODO: remove User from the
         } else if ("temp_c".equals(localName)) {
             if (UnitSystem.SI.equals(weather.unit)) {
                 try {
-                    temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.C);
+                    this.temperature.setCurrent(Integer.parseInt(data), TemperatureUnit.C);
                 } catch (NumberFormatException e) {
                     throw new SAXException("invalid 'temp_c' format: " + data, e);
                 }
             }
         } else if ("low".equals(localName)) {
             try {
-                temperature.setLow(Integer.parseInt(data), weather.unit);
+                this.temperature.setLow(Integer.parseInt(data), this.weather.unit);
             } catch (NumberFormatException e) {
                 throw new SAXException("invalid 'low' format: " + data, e);
             }
         } else if ("high".equals(localName)) {
             try {
-                temperature.setHigh(Integer.parseInt(data), weather.unit);
+                this.temperature.setHigh(Integer.parseInt(data), this.weather.unit);
             } catch (NumberFormatException e) {
                 throw new SAXException("invalid 'high' format: " + data, e);
             }
         } else if ("humidity".equals(localName)) {
-            humidity.setText(data);     //just text for backward compatibility
+            this.humidity.setText(data);     //sets translated text, for backward compatibility
         } else if ("wind_condition".equals(localName)) {
-            wind.setText(data);     //just text for backward compatibility
+            this.wind.setText(data);    //sets translated text, for backward compatibility 
         } 
     }
 
-    void addCondition() {
-        condition = new SimpleWeatherCondition();
-        temperature = new SimpleTemperature(weather.unit);
-        humidity = new GoogleHumidity();
-        wind = new SimpleWind(WindSpeedUnit.MPH);
-        condition.setTemperature(temperature);
-        condition.setHumidity(humidity);
-        condition.setWind(wind);
-        weather.conditions.add(condition);
+    protected void addCondition() {
+        if (this.weather.conditions.size() <= this.conditionCounter) {
+            this.condition = new SimpleWeatherCondition();
+            this.temperature = new SimpleTemperature(weather.unit);
+            this.humidity = new GoogleHumidity();
+            this.wind = new SimpleWind(WindSpeedUnit.MPH);
+            this.condition.setTemperature(this.temperature);
+            this.condition.setHumidity(this.humidity);
+            this.condition.setWind(this.wind);
+            this.weather.conditions.add(this.condition);
+        } else {
+            this.condition = (SimpleWeatherCondition)
+                    this.weather.conditions.get(this.conditionCounter); //TODO: check if possible to avoid cast
+            this.temperature = (SimpleTemperature)this.condition.getTemperature();  //TODO: check if possible to avoid cast
+            this.humidity = (GoogleHumidity)this.condition.getHumidity();     //TODO: check if possible to avoid cast
+            //by default parse in mph
+            this.wind = (SimpleWind)this.condition.getWind(WindSpeedUnit.MPH);    //TODO: check if possible to avoid cast
+            //this.condition.setHumidity(this.humidity);
+            //this.condition.setWind(this.wind);
+        }
+        this.conditionCounter++;
     }
 }
