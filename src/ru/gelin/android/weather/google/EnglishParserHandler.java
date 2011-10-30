@@ -50,7 +50,7 @@ class EnglishParserHandler extends ParserHandler {
         } else if ("humidity".equals(localName)) {
             this.humidity.parseText(data);
         } else if ("wind_condition".equals(localName)) {
-            this.wind.setTextParse(data);
+            this.wind.parseText(data);
         } 
     }
 

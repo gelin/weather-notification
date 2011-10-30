@@ -24,7 +24,7 @@ package ru.gelin.android.weather;
 
 /**
  *  Holds temperature values.
- *  Allows to set the values in different unit systems.
+ *  Allows to set the values in different units.
  *  Automatically calculates high and low temps when current temp is set.
  *  Automatically calculates current temp when high and low are set.
  */

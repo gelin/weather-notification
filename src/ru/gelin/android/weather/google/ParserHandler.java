@@ -29,7 +29,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.SimpleTemperature;
 import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.WindSpeedUnit;
@@ -42,7 +41,7 @@ class ParserHandler extends DefaultHandler {
     protected SimpleWeatherCondition condition;
     protected SimpleTemperature temperature;
     protected GoogleHumidity humidity;
-    protected SimpleWind wind;
+    protected GoogleWind wind;
     
     protected HandlerState state;
     protected int conditionCounter = 0;
@@ -143,18 +142,18 @@ class ParserHandler extends DefaultHandler {
             this.condition = new SimpleWeatherCondition();
             this.temperature = new SimpleTemperature(weather.unit);
             this.humidity = new GoogleHumidity();
-            this.wind = new SimpleWind(WindSpeedUnit.MPH);
+            this.wind = new GoogleWind(WindSpeedUnit.MPH);
             this.condition.setTemperature(this.temperature);
             this.condition.setHumidity(this.humidity);
             this.condition.setWind(this.wind);
             this.weather.conditions.add(this.condition);
         } else {
             this.condition = (SimpleWeatherCondition)
-                    this.weather.conditions.get(this.conditionCounter); //TODO: check if possible to avoid cast
-            this.temperature = (SimpleTemperature)this.condition.getTemperature();  //TODO: check if possible to avoid cast
-            this.humidity = (GoogleHumidity)this.condition.getHumidity();     //TODO: check if possible to avoid cast
+                    this.weather.conditions.get(this.conditionCounter);
+            this.temperature = (SimpleTemperature)this.condition.getTemperature();
+            this.humidity = (GoogleHumidity)this.condition.getHumidity();
             //by default parse in mph
-            this.wind = (SimpleWind)this.condition.getWind(WindSpeedUnit.MPH);    //TODO: check if possible to avoid cast
+            this.wind = (GoogleWind)this.condition.getWind(WindSpeedUnit.MPH);
             //this.condition.setHumidity(this.humidity);
             //this.condition.setWind(this.wind);
         }

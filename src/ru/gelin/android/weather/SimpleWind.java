@@ -19,21 +19,16 @@
 
 package ru.gelin.android.weather;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * @author vladimir
- *
+ *  Holds wind speed and direction.
+ *  Allows to set the wind speed in different units.
  */
 public class SimpleWind implements Wind {
 
-    private static final Pattern PARSE_PATTERN = Pattern.compile(".*[^:]:\\s(.*[^\\s])\\sat\\s+(.*[^\\s])\\s.*");
-
-    WindSpeedUnit wsunit;
-    int speed = UNKNOWN;
-    WindDirection direction = WindDirection.N;
-    String text = "";
+    protected WindSpeedUnit wsunit;
+    protected int speed = UNKNOWN;
+    protected WindDirection direction = WindDirection.N;
+    protected String text = null;
 
     /**
      *  Constructs the wind.
@@ -54,35 +49,29 @@ public class SimpleWind implements Wind {
     }
 
     /**
-     *  Sets the current .
+     *  Sets the text representation of the wind speed and direction.
      */
     public void setText(String text) {
-        if (text.length() > 0) {
-            this.text = text;
-        }
+        this.text = text;
     }
-
+    
     /**
-     *  Sets the current .
+     *  Sets the wind direction.
      */
-    public void setTextParse(String text) {
-        if (text.length() > 0) {
-            parseText(text);
-        }
-    }
-
     public void setDirection(WindDirection direction) {
         this.direction = direction;
     }
 
+    /**
+     *  Sets the wind speed in specified units.
+     */
     public void setSpeed(int speed, WindSpeedUnit unit) {
         if (this.wsunit.equals(unit)) {
             this.speed = speed;
         } else {
-            this.speed = recalc(speed, unit);
+            this.speed = convert(speed, unit);
         }
     }
-
 
     //@Override
     public WindDirection getDirection() {
@@ -104,19 +93,7 @@ public class SimpleWind implements Wind {
         return this.text;
     }
 
-    /**
-     * Extract from string wind speed and direction value
-     */
-    void parseText(String text) {
-        //TODO: add tests
-        Matcher matcher = PARSE_PATTERN.matcher(text);
-        if (matcher.find()) {
-            this.speed  = Integer.parseInt(matcher.group(2));   //TODO: catch when non-integer
-            this.direction  = WindDirection.valueOf(matcher.group(1));  //TODO: catch when invalid value
-        }
-    }
-
-    int recalc(int speed, WindSpeedUnit unit) {
+    int convert(int speed, WindSpeedUnit unit) {    //TODO: test
         switch (wsunit) {
         case MPH:
             switch (unit) {
