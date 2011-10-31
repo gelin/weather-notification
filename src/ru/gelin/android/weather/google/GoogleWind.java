@@ -31,26 +31,25 @@ import ru.gelin.android.weather.WindSpeedUnit;
  */
 public class GoogleWind extends SimpleWind {
 
-    private static final Pattern PARSE_PATTERN = Pattern.compile(".*[^:]:\\s(.*[^\\s])\\sat\\s+(.*[^\\s])\\s.*");
+    private static final Pattern PARSE_PATTERN = Pattern.compile("(N|NNE|NE|ENE|E|ESE|SE|SSE|S|SSW|SW|WSW|W|WNW|NW|NNW)\\s+at\\s+(\\d+)");
 
     /**
      *  Constructs the wind.
-     *  The stored values will be returned in the specified unit system.
+     *  The MPH is implied as speed unit.
      */
-    public GoogleWind(WindSpeedUnit wsunit) {
-        super(wsunit);
+    public GoogleWind() {
+        super(WindSpeedUnit.MPH);
     }
 
     /**
      *  Extract wind speed and direction value from string.
      */
     public void parseText(String text) {
-        //TODO: add tests
         this.text = text;
         Matcher matcher = PARSE_PATTERN.matcher(text);
         if (matcher.find()) {
-            this.speed  = Integer.parseInt(matcher.group(2));   //TODO: catch when non-integer
-            this.direction  = WindDirection.valueOf(matcher.group(1));  //TODO: catch when invalid value
+            this.direction  = WindDirection.valueOf(matcher.group(1));  //regexp gurantees that the value is valid enum value
+            this.speed  = Integer.parseInt(matcher.group(2));   //regexp guarantees that the value is valid integer
         }
     }
 

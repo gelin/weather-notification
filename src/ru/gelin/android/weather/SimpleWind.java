@@ -93,7 +93,7 @@ public class SimpleWind implements Wind {
         return this.text;
     }
 
-    int convert(int speed, WindSpeedUnit unit) {    //TODO: test
+    int convert(int speed, WindSpeedUnit unit) {
         switch (wsunit) {
         case MPH:
             switch (unit) {
