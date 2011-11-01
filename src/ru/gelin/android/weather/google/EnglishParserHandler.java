@@ -22,6 +22,9 @@ package ru.gelin.android.weather.google;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import ru.gelin.android.weather.UnitSystem;
+
+@SuppressWarnings("deprecation")
 class EnglishParserHandler extends ParserHandler {
     
     public EnglishParserHandler(GoogleWeather weather) {
@@ -32,7 +35,13 @@ class EnglishParserHandler extends ParserHandler {
     public void startElement(String uri, String localName,
             String qName, Attributes attributes) throws SAXException {
         String data = attributes.getValue("data");
-        if ("current_conditions".equals(localName)) {
+        if ("unit_system".equals(localName)) {
+            if (data.equalsIgnoreCase("si")) {
+                this.weather.unit = UnitSystem.SI;
+            } else {
+                this.weather.unit = UnitSystem.US;
+            }
+        } else if ("current_conditions".equals(localName)) {
             this.state = HandlerState.CURRENT_CONDITIONS;
             addCondition();
         } else if ("forecast_conditions".equals(localName)) {

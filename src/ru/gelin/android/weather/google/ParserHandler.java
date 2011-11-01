@@ -150,7 +150,9 @@ class ParserHandler extends DefaultHandler {
         } else {
             this.condition = (SimpleWeatherCondition)
                     this.weather.conditions.get(this.conditionCounter);
-            this.temperature = (SimpleTemperature)this.condition.getTemperature();
+            //convert the temperature to the new unit
+            this.temperature = (SimpleTemperature)this.condition.getTemperature(weather.unit);
+            this.condition.setTemperature(this.temperature);
             this.humidity = (GoogleHumidity)this.condition.getHumidity();
             //by default parse in mph
             this.wind = (GoogleWind)this.condition.getWind(WindSpeedUnit.MPH);

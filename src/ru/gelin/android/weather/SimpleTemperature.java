@@ -34,76 +34,91 @@ public class SimpleTemperature implements Temperature {
     int current = UNKNOWN;
     int low = UNKNOWN;
     int high = UNKNOWN;
-    
+
     @Deprecated
     public SimpleTemperature(UnitSystem unit) {
         this.tunit = TemperatureUnit.valueOf(unit);
     }
-    
+
     public SimpleTemperature(TemperatureUnit unit) {
         this.tunit = unit;
     }
-    
+
     /**
      *  Sets the current temperature in specified unit system.
      */
     @Deprecated
     public void setCurrent(int temp, UnitSystem unit) {
-    	setCurrent(temp, TemperatureUnit.valueOf(unit));
+        setCurrent(temp, TemperatureUnit.valueOf(unit));
     }
-    
+
     /**
      *  Sets the low temperature in specified unit system.
      */
     @Deprecated
     public void setLow(int temp, UnitSystem unit) {
-    	setLow(temp, TemperatureUnit.valueOf(unit));
+        setLow(temp, TemperatureUnit.valueOf(unit));
     }
-    
+
     /**
      *  Sets the high temperature in specified unit system.
      */
     @Deprecated
     public void setHigh(int temp, UnitSystem unit) {
-    	setHigh(temp, TemperatureUnit.valueOf(unit));
+        setHigh(temp, TemperatureUnit.valueOf(unit));
     }
-    
+
     /**
      *  Sets the current temperature in specified unit system.
      */
     public void setCurrent(int temp, TemperatureUnit unit) {
+        if (temp == UNKNOWN) {
+            this.current = UNKNOWN;
+            return;
+        }
         if (this.tunit.equals(unit)) {
             this.current = temp;
         } else {
             this.current = convertValue(temp, unit);
         }
     }
-    
+
     /**
      *  Sets the low temperature in specified unit system.
      */
     public void setLow(int temp, TemperatureUnit unit) {
+        if (temp == UNKNOWN) {
+            this.low = UNKNOWN;
+            return;
+        }
         if (this.tunit.equals(unit)) {
             this.low = temp;
         } else {
             this.low = convertValue(temp, unit);
         }
     }
-    
+
     /**
      *  Sets the high temperature in specified unit system.
      */
     public void setHigh(int temp, TemperatureUnit unit) {
+        if (temp == UNKNOWN) {
+            this.high = UNKNOWN;
+            return;
+        }
         if (this.tunit.equals(unit)) {
             this.high = temp;
         } else {
             this.high = convertValue(temp, unit);
         }
     }
-    
+
     //@Override
     public int getCurrent() {
         if (this.current == UNKNOWN) {
+            if (getLow() == UNKNOWN || getHigh() == UNKNOWN) {
+                return UNKNOWN;
+            }
             return Math.round((getLow() + getHigh()) / 2f); 
         }
         return this.current;
@@ -144,12 +159,12 @@ public class SimpleTemperature implements Temperature {
         }
         return UnitSystem.SI;
     }
-    
+
     //@Override
     public TemperatureUnit getTemperatureUnit() {
-    	return this.tunit;
+        return this.tunit;
     }
-    
+
     /**
      *  Creates new temperature in another unit system.
      */
@@ -157,7 +172,7 @@ public class SimpleTemperature implements Temperature {
     public SimpleTemperature convert(UnitSystem unit) {
         return convert(TemperatureUnit.valueOf(unit));
     }
-    
+
     public SimpleTemperature convert(TemperatureUnit unit) {
         SimpleTemperature result = new SimpleTemperature(unit);
         result.setCurrent(this.getCurrent(), this.getTemperatureUnit());
@@ -165,7 +180,7 @@ public class SimpleTemperature implements Temperature {
         result.setHigh(this.getHigh(), this.getTemperatureUnit());
         return result;
     }
-    
+
     /**
      *  Converts the value from provided unit system into this temperature set unit system.
      */
@@ -179,4 +194,14 @@ public class SimpleTemperature implements Temperature {
             return Math.round((value - 32) * 5f / 9f);
         }
     }
+    
+    @Override
+    public String toString() {
+        return this.getClass().getName() + 
+            " unit: " + this.getTemperatureUnit() + 
+            " current: " + this.getCurrent() +
+            " high: " + this.getHigh() +
+            " low: " + this.getLow();
+    }
+    
 }

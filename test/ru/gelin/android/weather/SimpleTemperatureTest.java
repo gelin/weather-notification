@@ -128,5 +128,21 @@ public class SimpleTemperatureTest {
         assertEquals(95, temp2.getHigh());
         assertEquals(90, temp2.getCurrent());
     }
+    
+    @Test
+    public void testConvertUnknownValue() {
+        SimpleTemperature temp1 = new SimpleTemperature(TemperatureUnit.C);
+        assertEquals(Temperature.UNKNOWN, temp1.getCurrent());
+        assertEquals(Temperature.UNKNOWN, temp1.getHigh());
+        assertEquals(Temperature.UNKNOWN, temp1.getLow());
+        SimpleTemperature temp2 = temp1.convert(TemperatureUnit.F);
+        assertEquals(Temperature.UNKNOWN, temp2.getCurrent());
+        assertEquals(Temperature.UNKNOWN, temp2.getHigh());
+        assertEquals(Temperature.UNKNOWN, temp2.getLow());
+        SimpleTemperature temp3 = temp2.convert(TemperatureUnit.C);
+        assertEquals(Temperature.UNKNOWN, temp3.getCurrent());
+        assertEquals(Temperature.UNKNOWN, temp3.getHigh());
+        assertEquals(Temperature.UNKNOWN, temp3.getLow());
+    }
 
 }

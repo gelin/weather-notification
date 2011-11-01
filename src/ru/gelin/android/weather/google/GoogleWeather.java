@@ -22,9 +22,15 @@
 
 package ru.gelin.android.weather.google;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.SimpleLocation;
@@ -41,7 +47,7 @@ public class GoogleWeather implements Weather {
     Location location = new SimpleLocation("");
     Date date = new Date(0);
     Date time = new Date(0);
-    UnitSystem unit = UnitSystem.SI;
+    UnitSystem unit = UnitSystem.US;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     
     //@Override
@@ -82,4 +88,16 @@ public class GoogleWeather implements Weather {
         this.location = location;
     }
     
+    /**
+     *  Test method, creates the weather from two readers: english and localized XMLs.
+     */
+    public static GoogleWeather parse(Reader enXml, Reader xml) 
+            throws IOException, SAXException, ParserConfigurationException {
+        GoogleWeather weather = new GoogleWeather();
+        GoogleWeatherParser parser = new GoogleWeatherParser(weather);
+        parser.parse(enXml, new EnglishParserHandler(weather));
+        parser.parse(xml, new ParserHandler(weather));
+        return weather;
+    }
+
 }

@@ -100,7 +100,7 @@ public class GoogleWeatherSource implements WeatherSource {
     }
 
     void parseContent(Location location, String locale, DefaultHandler handler) 
-    throws WeatherException, SAXException, ParserConfigurationException, IOException {
+            throws WeatherException, SAXException, ParserConfigurationException, IOException {
         String fullUrl;
         try {
             fullUrl = String.format(API_URL, 
@@ -116,7 +116,7 @@ public class GoogleWeatherSource implements WeatherSource {
     }
     //@Override
     public Weather query(Location location, Locale locale)
-    throws WeatherException {
+            throws WeatherException {
 
         // Create client and set our specific user-agent string
         try {
@@ -143,6 +143,7 @@ public class GoogleWeatherSource implements WeatherSource {
     static String getCharset(HttpEntity entity) {
         return getCharset(entity.getContentType().toString());
     }
+
     static String getCharset(String contentType) {
         if (contentType == null) {
             return ENCODING;
