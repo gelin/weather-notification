@@ -20,7 +20,7 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.v_0_2.notification;
 
 public interface WeatherStorageKeys {
 
@@ -29,10 +29,7 @@ public interface WeatherStorageKeys {
     /** Preference name for time. */
     static final String TIME = "weather_time";
     /** Preference name for unit system. */
-    @Deprecated
     static final String UNIT_SYSTEM = "weather_unit_system";
-    /** Preference name for temperature unit. */
-    static final String TEMPERATURE_UNIT = "weather_temperature_unit";
     /** Preference name pattern for condition text. */
     static final String CONDITION_TEXT = "weather_%d_condition_text";
     /** Preference name pattern for current temp. */
@@ -45,13 +42,5 @@ public interface WeatherStorageKeys {
     static final String HUMIDITY_TEXT = "weather_%d_humidity_text";
     /** Preference name pattern for wind text. */
     static final String WIND_TEXT = "weather_%d_wind_text";
-    /** Preference name for wind speed unit. */
-    static final String WIND_SPEED_UNIT = "weather_wind_speed_unit";
-    /** Preference name pattern for humidity value. */
-    static final String HUMIDITY_VAL = "weather_%d_humidity_value";
-    /** Preference name pattern for wind speed. */
-    static final String WIND_SPEED = "weather_%d_wind_speed";
-    /** Preference name pattern for wind direction. */
-    static final String WIND_DIR = "weather_%d_wind_direction";
 
 }

@@ -20,43 +20,31 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.v_0_2.notification;
 
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.CONDITION_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.CURRENT_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HIGH_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_VAL;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.TEMPERATURE_UNIT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_DIR;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED_UNIT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.CONDITION_TEXT;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.CURRENT_TEMP;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.HIGH_TEMP;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.HUMIDITY_TEXT;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.LOCATION;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.LOW_TEMP;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.TIME;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.UNIT_SYSTEM;
+import static ru.gelin.android.weather.v_0_2.notification.WeatherStorageKeys.WIND_TEXT;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleHumidity;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.SimpleTemperature;
-import ru.gelin.android.weather.SimpleWeather;
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.v_0_2.Location;
+import ru.gelin.android.weather.v_0_2.SimpleLocation;
+import ru.gelin.android.weather.v_0_2.SimpleTemperature;
+import ru.gelin.android.weather.v_0_2.SimpleWeather;
+import ru.gelin.android.weather.v_0_2.SimpleWeatherCondition;
+import ru.gelin.android.weather.v_0_2.Temperature;
+import ru.gelin.android.weather.v_0_2.UnitSystem;
+import ru.gelin.android.weather.v_0_2.Weather;
+import ru.gelin.android.weather.v_0_2.WeatherCondition;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -67,18 +55,11 @@ import android.preference.PreferenceManager;
  *  The exact classes of the retrieved Weather can differ from the classes
  *  of the saved weather.
  */
-@SuppressWarnings("deprecation")
 public class WeatherStorage {
     
     /** Preference name for weather (this fake preference is updated 
      *  to call preference change listeners) */
     static final String WEATHER = "weather";
-    /** Unit system */
-    static final UnitSystem UNIT_SYSTEM_VALUE = UnitSystem.SI;    //backward compatibility
-    /** Temperature unit used for serialization */
-    static final TemperatureUnit TUNIT_VALUE = TemperatureUnit.C;
-    /** Wind speed unit used for serialization */
-    static final WindSpeedUnit WSUNIT_VALUE = WindSpeedUnit.MPS;
     
     /** SharedPreferences to store weather. */
     SharedPreferences preferences;
@@ -95,36 +76,26 @@ public class WeatherStorage {
      *  Saves the weather.
      */
     public void save(Weather weather) {
-        //TODO: keep and verify backward compatibility
         Editor editor = preferences.edit();
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
-        editor.putString(UNIT_SYSTEM, UNIT_SYSTEM_VALUE.toString());
-        editor.putString(TEMPERATURE_UNIT, TUNIT_VALUE.toString());
+        editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
                     condition.getConditionText());
-            Temperature temp = condition.getTemperature(TUNIT_VALUE);
+            Temperature temp = condition.getTemperature();
             putOrRemove(editor, String.format(CURRENT_TEMP, i), 
                     temp.getCurrent());
             putOrRemove(editor, String.format(LOW_TEMP, i), 
                     temp.getLow());
             putOrRemove(editor, String.format(HIGH_TEMP, i), 
                     temp.getHigh());
-            Humidity hum = condition.getHumidity();
-            putOrRemove(editor, String.format(HUMIDITY_VAL, i), 
-                    hum.getValue());
             putOrRemove(editor, String.format(HUMIDITY_TEXT, i), 
-                    hum.getText());
-            Wind wind = condition.getWind(WSUNIT_VALUE);
-            putOrRemove(editor, String.format(WIND_SPEED, i), 
-                    wind.getSpeed());
-            putOrRemove(editor, String.format(WIND_DIR, i), 
-                    wind.getDirection().toString());
+                    condition.getHumidityText());
             putOrRemove(editor, String.format(WIND_TEXT, i), 
-                    wind.getText());
+                    condition.getWindText());
             i++;
         }
         editor.commit();
@@ -135,44 +106,31 @@ public class WeatherStorage {
      *  The values of the saved weather are restored, not exact classes.
      */
     public Weather load() {
-        //TODO: keep and verify backward compatibility
         SimpleWeather weather = new ParcelableWeather();
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
-        TemperatureUnit tunit = TemperatureUnit.valueOf(
-                preferences.getString(TEMPERATURE_UNIT, TUNIT_VALUE.toString()));
-        WindSpeedUnit wsunit = WindSpeedUnit.valueOf(
-                preferences.getString(WIND_SPEED_UNIT, WSUNIT_VALUE.toString()));
+        weather.setUnitSystem(UnitSystem.valueOf(
+                preferences.getString(UNIT_SYSTEM, "SI")));
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(preferences.getString(
                     String.format(CONDITION_TEXT, i), ""));
-            SimpleTemperature temp = new SimpleTemperature(tunit);
+            SimpleTemperature temp = new SimpleTemperature(weather.getUnitSystem());
             temp.setCurrent(preferences.getInt(String.format(CURRENT_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
+                    Temperature.UNKNOWN), weather.getUnitSystem());
             temp.setLow(preferences.getInt(String.format(LOW_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
+                    Temperature.UNKNOWN), weather.getUnitSystem());
             temp.setHigh(preferences.getInt(String.format(HIGH_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
+                    Temperature.UNKNOWN), weather.getUnitSystem());
             condition.setTemperature(temp);
-            
-            SimpleHumidity hum = new SimpleHumidity();
-            hum.setValue(preferences.getInt(String.format(HUMIDITY_VAL, i), Humidity.UNKNOWN));
-            hum.setText(preferences.getString(String.format(HUMIDITY_TEXT, i), ""));
-            condition.setHumidity(hum);
-            
-            SimpleWind wind = new SimpleWind(wsunit);
-            wind.setSpeed(preferences.getInt(
-                    String.format(WIND_SPEED, i), Wind.UNKNOWN), wsunit);
-            wind.setDirection(WindDirection.valueOf(preferences.getString(
-                    String.format(WIND_DIR, i), "N")));
-            wind.setText(preferences.getString(String.format(WIND_TEXT, i), ""));
-            condition.setWind(wind);
-
+            condition.setHumidityText(preferences.getString(
+                    String.format(HUMIDITY_TEXT, i), ""));
+            condition.setWindText(preferences.getString(
+                    String.format(WIND_TEXT, i), ""));
             conditions.add(condition);
             i++;
         }
