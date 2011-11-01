@@ -53,15 +53,14 @@ public class WeatherStorageTest extends AndroidTestCase {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         assertEquals(calendar.getTime(), weather.getTime());
-        //assertEquals(UnitSystem.US, weather.getUnitSystem());
-        assertEquals(UnitSystem.SI, weather.getUnitSystem());   //incompatibility, the weather now is always in SI units
+        assertEquals(UnitSystem.US, weather.getUnitSystem());
         assertEquals(4, weather.getConditions().size());
         
         WeatherCondition condition0 = weather.getConditions().get(0);
         assertEquals("Clear", condition0.getConditionText());
         Temperature temp0 = condition0.getTemperature(UnitSystem.US);
         assertEquals(-11, temp0.getCurrent());
-        //assertEquals(-10, temp0.getLow());    //TODO: fix
+        assertEquals(-10, temp0.getLow());
         assertEquals(-4, temp0.getHigh());
         assertEquals("Humidity: 66%", condition0.getHumidityText());
         assertEquals("Wind: SW at 2 mph", condition0.getWindText());
@@ -70,14 +69,14 @@ public class WeatherStorageTest extends AndroidTestCase {
         assertEquals("Snow Showers", condition1.getConditionText());
         Temperature temp1 = condition1.getTemperature(UnitSystem.US);
         assertEquals(7, temp1.getCurrent());
-        //assertEquals(-7, temp1.getLow());     //TODO: fix
-        //assertEquals(20, temp1.getHigh());    //TODO: fix
+        assertEquals(-7, temp1.getLow());
+        assertEquals(20, temp1.getHigh());
         
         WeatherCondition condition2 = weather.getConditions().get(2);
         assertEquals("Partly Sunny", condition2.getConditionText());
         Temperature temp2 = condition2.getTemperature(UnitSystem.US);
-        //assertEquals(-10, temp2.getCurrent());    //TODO: fix
-        //assertEquals(-14, temp2.getLow());    //TODO: fix
+        assertEquals(-10, temp2.getCurrent());
+        assertEquals(-14, temp2.getLow());
         assertEquals(-6, temp2.getHigh());
         
         WeatherCondition condition3 = weather.getConditions().get(3);

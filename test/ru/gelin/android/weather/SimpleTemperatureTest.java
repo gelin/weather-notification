@@ -24,6 +24,7 @@ package ru.gelin.android.weather;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("deprecation")
@@ -143,6 +144,17 @@ public class SimpleTemperatureTest {
         assertEquals(Temperature.UNKNOWN, temp3.getCurrent());
         assertEquals(Temperature.UNKNOWN, temp3.getHigh());
         assertEquals(Temperature.UNKNOWN, temp3.getLow());
+    }
+    
+    @Test
+    @Ignore("demonstration to avoid multiple convertions")
+    public void testMultipleConvert() {
+        SimpleTemperature temp1 = new SimpleTemperature(TemperatureUnit.F);
+        temp1.setCurrent(-10, TemperatureUnit.F);
+        SimpleTemperature temp2 = temp1.convert(TemperatureUnit.C);
+        assertEquals(-23, temp2.getCurrent());
+        SimpleTemperature temp3 = temp2.convert(TemperatureUnit.F);
+        assertEquals(-10, temp3.getCurrent());
     }
 
 }

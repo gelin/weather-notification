@@ -73,10 +73,6 @@ public class WeatherStorage {
     /** Preference name for weather (this fake preference is updated 
      *  to call preference change listeners) */
     static final String WEATHER = "weather";
-    /** Unit system */
-    static final UnitSystem UNIT_SYSTEM_VALUE = UnitSystem.SI;    //backward compatibility
-    /** Temperature unit used for serialization */
-    static final TemperatureUnit TUNIT_VALUE = TemperatureUnit.C;
     /** Wind speed unit used for serialization */
     static final WindSpeedUnit WSUNIT_VALUE = WindSpeedUnit.MPS;
     
@@ -95,18 +91,18 @@ public class WeatherStorage {
      *  Saves the weather.
      */
     public void save(Weather weather) {
-        //TODO: keep and verify backward compatibility
         Editor editor = preferences.edit();
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
-        editor.putString(UNIT_SYSTEM, UNIT_SYSTEM_VALUE.toString());
-        editor.putString(TEMPERATURE_UNIT, TUNIT_VALUE.toString());
+        editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
+        TemperatureUnit tunit = TemperatureUnit.valueOf(weather.getUnitSystem());
+        editor.putString(TEMPERATURE_UNIT, tunit.toString());
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
                     condition.getConditionText());
-            Temperature temp = condition.getTemperature(TUNIT_VALUE);
+            Temperature temp = condition.getTemperature(tunit);
             putOrRemove(editor, String.format(CURRENT_TEMP, i), 
                     temp.getCurrent());
             putOrRemove(editor, String.format(LOW_TEMP, i), 
@@ -135,14 +131,13 @@ public class WeatherStorage {
      *  The values of the saved weather are restored, not exact classes.
      */
     public Weather load() {
-        //TODO: keep and verify backward compatibility
         SimpleWeather weather = new ParcelableWeather();
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
         TemperatureUnit tunit = TemperatureUnit.valueOf(
-                preferences.getString(TEMPERATURE_UNIT, TUNIT_VALUE.toString()));
+                preferences.getString(TEMPERATURE_UNIT, TemperatureUnit.C.toString()));
         WindSpeedUnit wsunit = WindSpeedUnit.valueOf(
                 preferences.getString(WIND_SPEED_UNIT, WSUNIT_VALUE.toString()));
         int i = 0;
