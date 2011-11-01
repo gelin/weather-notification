@@ -104,5 +104,13 @@ public class SimpleWindTest {
         assertEquals(WindSpeedUnit.KMPH, kmph.getSpeedUnit());
         assertEquals(16, kmph.getSpeed());
     }
+    
+    @Test
+    public void testConvertText() {
+        SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
+        wind.setText("text");
+        SimpleWind wind2 = wind.convert(WindSpeedUnit.MPS);
+        assertEquals("text", wind2.getText());
+    }
 
 }

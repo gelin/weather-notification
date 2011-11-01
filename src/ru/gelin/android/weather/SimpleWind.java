@@ -43,6 +43,7 @@ public class SimpleWind implements Wind {
      */
     public SimpleWind convert(WindSpeedUnit unit) {
         SimpleWind result = new SimpleWind(unit);
+        result.setText(this.text);
         result.setSpeed(this.speed, this.wsunit);
         result.setDirection(this.direction);
         return result;

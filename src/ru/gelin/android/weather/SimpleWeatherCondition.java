@@ -32,35 +32,35 @@ public class SimpleWeatherCondition implements WeatherCondition {
     SimpleTemperature temperature;  //TODO: replace with Temperature
     SimpleWind wind;    //TODO: replace with Wind
     Humidity humidity;
-    
+
     /**
      *  Sets the condition text.
      */
     public void setConditionText(String text) {
         this.conditionText = text;
     }
-    
+
     /**
      *  Sets the temperature.
      */
     public void setTemperature(SimpleTemperature temp) {
         this.temperature = temp;
     }
-    
+
     /**
      *  Sets the wind text.
      */
     public void setWind(SimpleWind wind) {
         this.wind = wind;
     }
-    
+
     /**
      *  Sets the humidity text.
      */
     public void setHumidity(Humidity hum) {
         this.humidity = hum;
     }
-    
+
     //@Override
     public String getConditionText() {
         return this.conditionText;
@@ -85,7 +85,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
     }
 
     public Temperature getTemperature(TemperatureUnit unit) {
-    	if (this.temperature == null) {
+        if (this.temperature == null) {
             return null;
         }
         if (this.temperature.getTemperatureUnit().equals(unit)) {
@@ -93,22 +93,22 @@ public class SimpleWeatherCondition implements WeatherCondition {
         }
         return this.temperature.convert(unit);
     }
-    
+
     //@Deprecated
     //@Override
     public String getWindText() {
         return this.wind.getText();
     }
-    
+
     //@Deprecated
     //@Override
     public String getHumidityText() {
         return this.humidity.getText();
     }
-    
-  //@Override
+
+    //@Override
     public Wind getWind(WindSpeedUnit unit) {
-    	if (this.wind == null) {
+        if (this.wind == null) {
             return null;
         }
         if (this.wind.getSpeedUnit().equals(unit)) {
@@ -116,7 +116,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
         }
         return this.wind.convert(unit);
     }
-    
+
     //@Override
     public Humidity getHumidity() {
         return this.humidity;

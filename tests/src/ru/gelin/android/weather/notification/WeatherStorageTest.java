@@ -64,7 +64,7 @@ public class WeatherStorageTest extends AndroidTestCase {
         //assertEquals(-10, temp0.getLow());    //TODO: fix
         assertEquals(-4, temp0.getHigh());
         assertEquals("Humidity: 66%", condition0.getHumidityText());
-        //assertEquals("Wind: SW at 2 mph", condition0.getWindText());  //TODO: fix
+        assertEquals("Wind: SW at 2 mph", condition0.getWindText());
         
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Snow Showers", condition1.getConditionText());
