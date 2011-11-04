@@ -23,28 +23,34 @@
 package ru.gelin.android.weather.notification;
 
 import ru.gelin.android.weather.Weather;
+import android.os.Parcel;
 import android.test.AndroidTestCase;
 
-public class WeatherStorageTest extends AndroidTestCase {
+public class ParcelableWeatherTest extends AndroidTestCase {
 
-    public void testSaveLoad() throws Exception {
+    public void testCopyConstructor() throws Exception {
         Weather weather1 = WeatherUtils.createWeather();
-        WeatherStorage storage = new WeatherStorage(getContext());
-        storage.save(weather1);
-        Weather weather2 = storage.load();
+        Weather weather2 = new ParcelableWeather(weather1);
         WeatherUtils.checkWeather(weather2);
+    }
+    
+    public void testWriteRead() throws Exception {
+        Weather weather1 = WeatherUtils.createWeather();
+        Parcel parcel = Parcel.obtain();
+        ParcelableWeather weather2 = new ParcelableWeather(weather1);
+        weather2.writeToParcel(parcel, 0);
+        Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
+        WeatherUtils.checkWeather(weather3);
     }
     
     public void testBackwardCompatibility() throws Exception {
         Weather weather1 = WeatherUtils.createWeather();
-        WeatherStorage newStorage = new WeatherStorage(getContext());
-        newStorage.save(weather1);
-        
-        ru.gelin.android.weather.v_0_2.notification.WeatherStorage storage = 
-            new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
-        ru.gelin.android.weather.v_0_2.Weather weather2 = storage.load();
-        
-        WeatherUtils.checkWeather(weather2);
+        Parcel parcel = Parcel.obtain();
+        ParcelableWeather weather2 = new ParcelableWeather(weather1);
+        weather2.writeToParcel(parcel, 0);
+        ru.gelin.android.weather.v_0_2.Weather weather3 = 
+            ru.gelin.android.weather.v_0_2.notification.ParcelableWeather.CREATOR.createFromParcel(parcel);
+        WeatherUtils.checkWeather(weather3);
     }
-
+    
 }
