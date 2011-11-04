@@ -36,6 +36,7 @@ import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.SimpleWind;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.Wind;
@@ -44,16 +45,12 @@ import ru.gelin.android.weather.WindSpeedUnit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@SuppressWarnings("deprecation")
 public class ParcelableWeather extends SimpleWeather implements Parcelable {
 
-    /** Temperature unit used for serialization */
-    static final TemperatureUnit TUNIT = TemperatureUnit.C;
-    /** Wind speed unit used for serialization */
-    static final WindSpeedUnit WSUNIT = WindSpeedUnit.MPS;
-    
     public ParcelableWeather() {
     }
-    
+
     /**
      *  Copy constructor.
      */
@@ -79,12 +76,13 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         for (WeatherCondition condition : conditions) {
             SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
             copyCondition.setConditionText(condition.getConditionText());
-            Temperature temp = condition.getTemperature(TUNIT);
-            SimpleTemperature copyTemp = new SimpleTemperature(TUNIT);
+            Temperature temp = condition.getTemperature();
+            TemperatureUnit tempUnit = temp.getTemperatureUnit();
+            SimpleTemperature copyTemp = new SimpleTemperature(tempUnit);
             if (temp != null) {
-                copyTemp.setCurrent(temp.getCurrent(), TUNIT);
-                copyTemp.setLow(temp.getLow(), TUNIT);
-                copyTemp.setHigh(temp.getHigh(), TUNIT);
+                copyTemp.setCurrent(temp.getCurrent(), tempUnit);
+                copyTemp.setLow(temp.getLow(), tempUnit);
+                copyTemp.setHigh(temp.getHigh(), tempUnit);
             }
             copyCondition.setTemperature(copyTemp);
             
@@ -96,10 +94,11 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
             }
             copyCondition.setHumidity(copyHum);
             
-            Wind wind = condition.getWind(WSUNIT);
-            SimpleWind copyWind = new SimpleWind(WSUNIT);
+            Wind wind = condition.getWind();
+            WindSpeedUnit windUnit = wind.getSpeedUnit();
+            SimpleWind copyWind = new SimpleWind(windUnit);
             if (wind != null) {
-                copyWind.setSpeed(wind.getSpeed(), WSUNIT);
+                copyWind.setSpeed(wind.getSpeed(), windUnit);
                 copyWind.setDirection(wind.getDirection());
                 copyWind.setText(wind.getText());
             }
@@ -116,7 +115,6 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
 
     //@Override
     public void writeToParcel(Parcel dest, int flags) {
-        //TODO: keep the set and the order of the original values for backward compatibility
         Location location = getLocation();
         if (location == null) {
             dest.writeString(null);
@@ -129,41 +127,47 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } else {
             dest.writeLong(time.getTime());
         }
-        dest.writeString(TUNIT.toString());
-        dest.writeString(WSUNIT.toString());
-        int i = 0;
         if (getConditions() == null) {
             return;
         }
-        for (WeatherCondition condition : getConditions()) {
-            dest.writeString(condition.getConditionText());
-            Temperature temp = condition.getTemperature(TUNIT);
-            if (temp == null) {
-                continue;
-            }
-            dest.writeInt(temp.getCurrent());
-            dest.writeInt(temp.getLow());
-            dest.writeInt(temp.getHigh());
-            dest.writeInt(condition.getHumidity().getValue());
-            dest.writeString(condition.getHumidity().getText());
-            dest.writeInt(condition.getWind(WSUNIT).getSpeed());
-            dest.writeString(condition.getWind(WSUNIT).getDirection().toString());
-            dest.writeString(condition.getWind(WSUNIT).getText());
-            i++;
+        try {
+            WeatherCondition condition0 = getConditions().get(0);
+            dest.writeString(condition0.getTemperature().getUnitSystem().toString());
+        } catch (Exception e) {
+            dest.writeString(UnitSystem.SI.toString());
         }
+        for (WeatherCondition condition : getConditions()) {
+            writeCondition(condition, dest);
+        }
+    }
+    
+    void writeCondition(WeatherCondition condition, Parcel dest) {
+        dest.writeString(condition.getConditionText());
+        Temperature temp = condition.getTemperature();
+        if (temp == null) {
+            return;
+        }
+        dest.writeInt(temp.getCurrent());
+        dest.writeInt(temp.getLow());
+        dest.writeInt(temp.getHigh());
+        //dest.writeInt(condition.getHumidity().getValue());
+        dest.writeString(condition.getHumidity().getText());
+        //dest.writeInt(condition.getWind().getSpeed());
+        //dest.writeString(condition.getWind().getDirection().toString());
+        dest.writeString(condition.getWind().getText());
     }
     
     private ParcelableWeather(Parcel in) {
         //TODO: keep the set and the order of the original values for backward compatibility
         setLocation(new SimpleLocation(in.readString()));
         setTime(new Date(in.readLong()));
-        TemperatureUnit tunit = TUNIT;
+        TemperatureUnit tunit = TemperatureUnit.F;
         try {
             tunit = TemperatureUnit.valueOf(in.readString());
         } catch (Exception e) {
             //using the default value
         }
-        WindSpeedUnit wsunit = WSUNIT;
+        WindSpeedUnit wsunit = WindSpeedUnit.MPH;
         try {
             wsunit = WindSpeedUnit.valueOf(in.readString());
         } catch (Exception e) {

@@ -25,6 +25,7 @@ package ru.gelin.android.weather.v_0_2;
 /**
  *  Common exception for weather getting errors.
  */
+@SuppressWarnings("serial")
 public class WeatherException extends Exception {
 
     public WeatherException() {

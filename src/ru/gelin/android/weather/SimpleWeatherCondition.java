@@ -29,8 +29,8 @@ package ru.gelin.android.weather;
 public class SimpleWeatherCondition implements WeatherCondition {
 
     String conditionText;
-    SimpleTemperature temperature;  //TODO: replace with Temperature
-    SimpleWind wind;    //TODO: replace with Wind
+    SimpleTemperature temperature;
+    SimpleWind wind;
     Humidity humidity;
 
     /**
@@ -67,7 +67,6 @@ public class SimpleWeatherCondition implements WeatherCondition {
     }
 
     //@Override
-    @Deprecated
     public Temperature getTemperature() {
         return this.temperature;
     }
@@ -106,6 +105,11 @@ public class SimpleWeatherCondition implements WeatherCondition {
         return this.humidity.getText();
     }
 
+    //@override
+    public Wind getWind() {
+        return this.wind;
+    }
+    
     //@Override
     public Wind getWind(WindSpeedUnit unit) {
         if (this.wind == null) {

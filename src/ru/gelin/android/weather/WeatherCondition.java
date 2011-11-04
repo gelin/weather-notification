@@ -41,8 +41,9 @@ public interface WeatherCondition {
     
     /**
      *  Returns the temperature in default units.
+     *  Default unit depends on the weather source.
+     *  Any unit conversions loses precision, so the default units are useful when cloning/copying the weather. 
      */
-    @Deprecated
     Temperature getTemperature();
     
     /**
@@ -74,10 +75,17 @@ public interface WeatherCondition {
      *  Returns humidity.
      */
     Humidity getHumidity();
-  
+
     /**
      *  Returns wind in default units.
+     *  Default unit depends on the weather source.
+     *  Any unit conversions loses precision, so the default units are useful when cloning/copying the weather.
      */
+    Wind getWind();
     
+    /**
+     *  Returns wind in specified units.
+     */
     Wind getWind(WindSpeedUnit unit);
+
 }
