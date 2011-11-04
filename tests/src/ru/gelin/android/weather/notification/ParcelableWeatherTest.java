@@ -39,6 +39,7 @@ public class ParcelableWeatherTest extends AndroidTestCase {
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
         Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
         WeatherUtils.checkWeather(weather3);
     }
@@ -48,9 +49,17 @@ public class ParcelableWeatherTest extends AndroidTestCase {
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
         ru.gelin.android.weather.v_0_2.Weather weather3 = 
             ru.gelin.android.weather.v_0_2.notification.ParcelableWeather.CREATOR.createFromParcel(parcel);
         WeatherUtils.checkWeather(weather3);
     }
     
+    public void testParcel() {
+        Parcel parcel = Parcel.obtain();
+        parcel.writeString("test");
+        parcel.setDataPosition(0);
+        assertEquals("test", parcel.readString());
+    }
+
 }

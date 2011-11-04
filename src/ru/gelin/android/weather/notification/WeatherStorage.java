@@ -96,7 +96,7 @@ public class WeatherStorage {
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
         TemperatureUnit tunit = TemperatureUnit.valueOf(weather.getUnitSystem());
-        editor.putString(TEMPERATURE_UNIT, tunit.toString());
+        editor.putString(TEMPERATURE_UNIT, tunit.toString());   //TODO: for each temperature condition
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
