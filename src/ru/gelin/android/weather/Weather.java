@@ -42,6 +42,12 @@ public interface Weather {
     Date getTime();
     
     /**
+     *  Returns the time when the weather was requested.
+     *  May differ from the weather timestamp.
+     */
+    Date getQueryTime();    //TODO
+    
+    /**
      *  Returns default unit system (SI or US).
      */
     @Deprecated

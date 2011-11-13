@@ -79,6 +79,11 @@ public class SimpleWeather implements Weather {
     public Date getTime() {
         return this.time;
     }
+    
+    public Date getQueryTime() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     //@Override
     @Deprecated

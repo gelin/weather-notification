@@ -64,6 +64,11 @@ public class GoogleWeather implements Weather {
         }
     }
     
+    public Date getQueryTime() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
     //@Override
     @Deprecated
     public UnitSystem getUnitSystem() {
