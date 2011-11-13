@@ -27,8 +27,10 @@ import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFI
 import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE;
 import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_WEATHER;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_WEATHER_1;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.ParcelableWeather;
+import ru.gelin.android.weather.notification.ParcelableWeather_v_0_2;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +40,7 @@ import android.preference.PreferenceManager;
 /**
  *  Managers the broadcast receivers to receive the weather notification.
  */
+@SuppressWarnings("deprecation")
 public class WeatherNotificationManager {
     
     Context context;
@@ -84,9 +87,8 @@ public class WeatherNotificationManager {
      */
     void cancelDisabled() {
         for (SkinInfo skin : this.sm.getDisabledSkins()) {
-            Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+            Intent intent = createIntent(false, null);
             intent.setClassName(skin.getPackageName(), skin.getBroadcastReceiverClass());
-            intent.putExtra(EXTRA_ENABLE_NOTIFICATION, false);
             context.sendBroadcast(intent);
         }
     }
@@ -97,15 +99,27 @@ public class WeatherNotificationManager {
     void sendWeather() {
         WeatherStorage storage = new WeatherStorage(this.context);
         Weather weather = storage.load();
-        ParcelableWeather parcel = new ParcelableWeather(weather);
         
         for (SkinInfo skin : this.sm.getEnabledSkins()) {
-            Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+            Intent intent = createIntent(true, weather);
             intent.setClassName(skin.getPackageName(), skin.getBroadcastReceiverClass());
-            intent.putExtra(EXTRA_ENABLE_NOTIFICATION, true);
-            intent.putExtra(EXTRA_WEATHER, parcel);
             context.sendBroadcast(intent);
         }
+    }
+    
+    /**
+     *  Creates the intent with the weather.
+     */
+    static Intent createIntent(boolean enableNotification, Weather weather) {
+        Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+        intent.putExtra(EXTRA_ENABLE_NOTIFICATION, enableNotification);
+        if (enableNotification) {
+            ParcelableWeather_v_0_2 oldParcel = new ParcelableWeather_v_0_2(weather);
+            intent.putExtra(EXTRA_WEATHER_1, oldParcel);
+            ParcelableWeather parcel = new ParcelableWeather(weather);
+            intent.putExtra(EXTRA_WEATHER, parcel);
+        }
+        return intent;
     }
 
 }
