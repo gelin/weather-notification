@@ -25,7 +25,11 @@ package ru.gelin.android.weather.notification;
 /**
  *  Constants for preference keys.
  */
-public interface PreferenceKeys {
+public class PreferenceKeys {
+    
+    private PreferenceKeys() {
+        //avoid instantiation
+    }
 
     /** Enable notification preference key */
     public static final String ENABLE_NOTIFICATION = "enable_notification";

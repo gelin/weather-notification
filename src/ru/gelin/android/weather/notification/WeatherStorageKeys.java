@@ -22,7 +22,11 @@
 
 package ru.gelin.android.weather.notification;
 
-public interface WeatherStorageKeys {
+class WeatherStorageKeys {
+    
+    private WeatherStorageKeys() {
+        //avoid instantiation
+    }
 
     /** Preference name for location. */
     static final String LOCATION = "weather_location";

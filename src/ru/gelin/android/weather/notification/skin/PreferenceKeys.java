@@ -25,7 +25,11 @@ package ru.gelin.android.weather.notification.skin;
 /**
  *  Constants for preference keys.
  */
-public interface PreferenceKeys {
+class PreferenceKeys {
+    
+    private PreferenceKeys() {
+        //avoid instantiation
+    }
 
     /** Pattern of the preference key for enabled skin flags */
     static final String SKIN_ENABLED_PATTERN = "skin_enabled_%s";

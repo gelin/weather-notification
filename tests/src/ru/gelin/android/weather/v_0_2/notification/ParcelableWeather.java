@@ -113,7 +113,6 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } else {
             dest.writeString(unit.toString());
         }
-        int i = 0;
         if (getConditions() == null) {
             return;
         }
@@ -128,7 +127,6 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
             dest.writeInt(temp.getHigh());
             dest.writeString(condition.getHumidityText());
             dest.writeString(condition.getWindText());
-            i++;
         }
     }
     

@@ -55,7 +55,6 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
     /**
      *  Copy constructor.
      */
-    @SuppressWarnings("deprecation")
     public ParcelableWeather_v_0_2(Weather weather) {
         Location location = weather.getLocation();
         if (location == null) {
@@ -116,7 +115,6 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
     }
 
     //@Override
-    @SuppressWarnings("deprecation")
     public void writeToParcel(Parcel dest, int flags) {
         Location location = getLocation();
         if (location == null) {
@@ -142,12 +140,6 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
         for (WeatherCondition condition : getConditions()) {
             writeCondition(condition, dest);
         }
-        //TODO: think how to leave the backward compatibility AND add new properties
-        /*
-        for (WeatherCondition condition : getConditions()) {
-            writeMoreCondition(condition, dest);
-        }
-        */
     }
     
     void writeCondition(WeatherCondition condition, Parcel dest) {
@@ -155,12 +147,6 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
         writeTemperature(condition.getTemperature(), dest);
         writeHumidity(condition.getHumidity(), dest);
         writeWind(condition.getWind(), dest);
-    }
-    
-    void writeMoreCondition(WeatherCondition condition, Parcel dest) {
-        writeMoreTemperature(condition.getTemperature(), dest);
-        writeMoreHumidity(condition.getHumidity(), dest);
-        writeMoreWind(condition.getWind(), dest);
     }
     
     void writeTemperature(Temperature temp, Parcel dest) {
@@ -175,27 +161,11 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
         }
     }
     
-    void writeMoreTemperature(Temperature temp, Parcel dest) {
-        if (temp != null) {
-            dest.writeString(temp.getTemperatureUnit().toString());
-        } else {
-            dest.writeString(null);
-        }
-    }
-    
     void writeHumidity(Humidity humidity, Parcel dest) {
         if (humidity != null) {
             dest.writeString(humidity.getText());
         } else {
             dest.writeString(null);
-        }
-    }
-    
-    void writeMoreHumidity(Humidity humidity, Parcel dest) {
-        if (humidity != null) {
-            dest.writeInt(humidity.getValue());
-        } else {
-            dest.writeInt(Humidity.UNKNOWN);
         }
     }
     
@@ -207,20 +177,7 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
         }
     }
     
-    void writeMoreWind(Wind wind, Parcel dest) {
-        if (wind != null) {
-            dest.writeString(wind.getSpeedUnit().toString());
-            dest.writeInt(wind.getSpeed());
-            dest.writeString(wind.getDirection().toString());
-        } else {
-            dest.writeString(null);
-            dest.writeInt(Wind.UNKNOWN);
-            dest.writeString(null);
-        }
-    }
-    
     private ParcelableWeather_v_0_2(Parcel in) {
-        //TODO: keep the set and the order of the original values for backward compatibility
         setLocation(new SimpleLocation(in.readString()));
         setTime(new Date(in.readLong()));
         TemperatureUnit tunit = TemperatureUnit.F;
