@@ -40,7 +40,6 @@ import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -180,38 +179,30 @@ public class ParcelableWeather_v_0_2 extends SimpleWeather implements Parcelable
     private ParcelableWeather_v_0_2(Parcel in) {
         setLocation(new SimpleLocation(in.readString()));
         setTime(new Date(in.readLong()));
-        TemperatureUnit tunit = TemperatureUnit.F;
+        String unit = in.readString();
         try {
-            tunit = TemperatureUnit.valueOf(in.readString());
+            setUnitSystem(UnitSystem.valueOf(unit));
         } catch (Exception e) {
-            //using the default value
-        }
-        WindSpeedUnit wsunit = WindSpeedUnit.MPH;
-        try {
-            wsunit = WindSpeedUnit.valueOf(in.readString());
-        } catch (Exception e) {
-            //using the default value
+            setUnitSystem(UnitSystem.SI);
         }
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (in.dataAvail() > 6) {    //each condition takes 6 positions
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(in.readString());
-            SimpleTemperature temp = new SimpleTemperature(tunit);
-            temp.setCurrent(in.readInt(), tunit);
-            temp.setLow(in.readInt(), tunit);
-            temp.setHigh(in.readInt(), tunit);
+            SimpleTemperature temp = new SimpleTemperature(getUnitSystem());
+            temp.setCurrent(in.readInt(), getUnitSystem());
+            temp.setLow(in.readInt(), getUnitSystem());
+            temp.setHigh(in.readInt(), getUnitSystem());
             condition.setTemperature(temp);
             
             SimpleHumidity hum = new SimpleHumidity();
-            hum.setValue(in.readInt());
             hum.setText(in.readString());
             condition.setHumidity(hum);
             
-            SimpleWind wind = new SimpleWind(wsunit);
-            wind.setSpeed(in.readInt(), wsunit);
-            wind.setDirection(WindDirection.valueOf(in.readString()));
+            SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
             wind.setText(in.readString());
             condition.setWind(wind);
+            
             conditions.add(condition);
         }
         setConditions(conditions);
