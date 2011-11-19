@@ -31,6 +31,7 @@ import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.TEMPERATURE_UNIT;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.QUERY_TIME;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.UNIT_SYSTEM;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_DIR;
 import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED;
@@ -94,6 +95,7 @@ public class WeatherStorage {
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
+        editor.putLong(QUERY_TIME, weather.getQueryTime().getTime());
         editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
         TemperatureUnit tunit = TemperatureUnit.valueOf(weather.getUnitSystem());
         editor.putString(TEMPERATURE_UNIT, tunit.toString());   //TODO: for each temperature condition
@@ -135,6 +137,7 @@ public class WeatherStorage {
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
+        weather.setQueryTime(new Date(preferences.getLong(QUERY_TIME, System.currentTimeMillis())));
         TemperatureUnit tunit = TemperatureUnit.valueOf(
                 preferences.getString(TEMPERATURE_UNIT, TemperatureUnit.C.toString()));
         WindSpeedUnit wsunit = WindSpeedUnit.valueOf(

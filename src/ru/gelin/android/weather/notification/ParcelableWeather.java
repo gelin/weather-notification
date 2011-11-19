@@ -30,6 +30,7 @@ import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.HUMIDI
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.HUMIDITY_VAL;
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.LOCATION;
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.LOW_TEMP;
+import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.QUERY_TIME;
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.TEMPERATURE_UNIT;
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.TIME;
 import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.WIND_DIR;
@@ -83,6 +84,12 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
             setTime(new Date(0));
         } else {
             setTime(time);
+        }
+        Date queryTime = weather.getQueryTime();
+        if (time == null) {
+            setQueryTime(new Date());
+        } else {
+            setQueryTime(queryTime);
         }
         
         List<WeatherCondition> conditions = weather.getConditions();
@@ -152,6 +159,10 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         Date time = getTime();
         if (time != null) {
             bundle.putLong(TIME, time.getTime());
+        }
+        Date queryTime = getQueryTime();
+        if (queryTime != null) {
+            bundle.putLong(QUERY_TIME, queryTime.getTime());
         }
         List<WeatherCondition> conditions = getConditions();
         if (conditions == null) {
@@ -223,6 +234,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         Bundle bundle = in.readBundle();
         setLocation(new SimpleLocation(bundle.getString(LOCATION)));
         setTime(new Date(bundle.getLong(TIME)));
+        setQueryTime(new Date(bundle.getLong(QUERY_TIME)));
         return bundle.getInt(CONDITIONS_NUMBER);
     }
     

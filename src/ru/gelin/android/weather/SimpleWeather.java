@@ -35,6 +35,8 @@ public class SimpleWeather implements Weather {
     Location location;
     /** Time */
     Date time;
+    /** Query Time */
+    Date queryTime;
     /** Unit system */
     @SuppressWarnings("deprecation")
     UnitSystem unit;
@@ -49,10 +51,17 @@ public class SimpleWeather implements Weather {
     }
     
     /**
-     *  Sets the time.
+     *  Sets the weather time.
      */
     public void setTime(Date time) {
         this.time = time;
+    }
+    
+    /**
+     *  Sets the query time.
+     */
+    public void setQueryTime(Date time) {
+        this.queryTime = time;
     }
     
     /**
@@ -81,8 +90,7 @@ public class SimpleWeather implements Weather {
     }
     
     public Date getQueryTime() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.queryTime;
     }
 
     //@Override

@@ -25,6 +25,7 @@ package ru.gelin.android.weather.google;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Locale;
 
 import org.apache.http.HttpEntity;
@@ -39,6 +40,7 @@ import android.test.AndroidTestCase;
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherException;
 import ru.gelin.android.weather.WeatherSource;
 
 @SuppressWarnings("deprecation")
@@ -90,6 +92,15 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         assertEquals("windows-1251", GoogleWeatherSource.getCharset("text/xml; charset=windows-1251; something more"));
         assertEquals("UTF-8", GoogleWeatherSource.getCharset(""));
         assertEquals("UTF-8", GoogleWeatherSource.getCharset((String)null));
+    }
+    
+    public void testQueryTime() throws WeatherException {
+        Date now = new Date();
+        WeatherSource source = new GoogleWeatherSource();
+        Location location = new SimpleLocation("Омск");
+        Weather weather = source.query(location, new Locale("ru"));
+        assertNotNull(weather.getQueryTime());
+        assertTrue(weather.getQueryTime().after(now));
     }
 
 }

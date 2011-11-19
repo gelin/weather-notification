@@ -47,6 +47,7 @@ public class GoogleWeather implements Weather {
     Location location = new SimpleLocation("");
     Date date = new Date(0);
     Date time = new Date(0);
+    Date queryTime = new Date();
     UnitSystem unit = UnitSystem.US;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     
@@ -65,8 +66,7 @@ public class GoogleWeather implements Weather {
     }
     
     public Date getQueryTime() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.queryTime;
     }
     
     //@Override

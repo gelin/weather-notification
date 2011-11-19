@@ -47,10 +47,15 @@ public class WeatherUtils {
     
     public static void checkWeather(Weather weather) {
         AndroidTestCase.assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
+        
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         AndroidTestCase.assertEquals(calendar.getTime(), weather.getTime());
+        calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.add(Calendar.MINUTE, -1);
+        AndroidTestCase.assertTrue(weather.getQueryTime().after(calendar.getTime()));
+        
         AndroidTestCase.assertEquals(4, weather.getConditions().size());
         
         WeatherCondition condition0 = weather.getConditions().get(0);

@@ -32,6 +32,8 @@ class ParcelableWeatherKeys {
     static final String LOCATION = "weather_location";
     /** Key for time. */
     static final String TIME = "weather_time";
+    /** Key for query time. */
+    static final String QUERY_TIME = "weather_query_time";
     /** Key for number of conditions */
     static final String CONDITIONS_NUMBER = "weather_conditions";
     

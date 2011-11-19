@@ -30,8 +30,10 @@ class WeatherStorageKeys {
 
     /** Preference name for location. */
     static final String LOCATION = "weather_location";
-    /** Preference name for time. */
+    /** Preference name for weather time. */
     static final String TIME = "weather_time";
+    /** Preference name for query time. */
+    static final String QUERY_TIME = "weather_query_time";
     /** Preference name for unit system. */
     @Deprecated
     static final String UNIT_SYSTEM = "weather_unit_system";
