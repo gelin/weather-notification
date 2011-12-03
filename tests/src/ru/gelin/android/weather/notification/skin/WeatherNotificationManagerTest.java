@@ -25,6 +25,7 @@ package ru.gelin.android.weather.notification.skin;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.WeatherUtils;
 import android.content.Intent;
+import android.os.Parcel;
 import android.test.AndroidTestCase;
 
 @SuppressWarnings("deprecation")
@@ -32,6 +33,10 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     
     public void testCreateIntentDisableNotification() {
         Intent intent = WeatherNotificationManager.createIntent(false, null);
+        Parcel parcel = Parcel.obtain();
+        intent.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        intent.readFromParcel(parcel);
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertFalse(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, true));
         assertFalse(intent.hasExtra(IntentParameters.EXTRA_WEATHER_1));
@@ -41,6 +46,10 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     public void testCreateIntentBothExtras() throws Exception {
         Weather weather = WeatherUtils.createWeather();
         Intent intent = WeatherNotificationManager.createIntent(true, weather);
+        Parcel parcel = Parcel.obtain();
+        intent.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        intent.readFromParcel(parcel);
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER_1));

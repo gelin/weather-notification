@@ -118,6 +118,7 @@ public class WeatherNotificationManager {
             intent.putExtra(EXTRA_WEATHER_1, oldParcel);
             ParcelableWeather parcel = new ParcelableWeather(weather);
             intent.putExtra(EXTRA_WEATHER, parcel);
+            System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER));
         }
         return intent;
     }

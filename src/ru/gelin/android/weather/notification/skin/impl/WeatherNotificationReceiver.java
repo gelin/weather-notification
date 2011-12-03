@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import static ru.gelin.android.weather.notification.Tag.TAG;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.MainActivity;
 import ru.gelin.android.weather.notification.skin.IntentParameters;
@@ -32,6 +33,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  *  Broadcast receiver which receives the weather updates.
@@ -62,14 +64,17 @@ public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Log.d(TAG, "received: " + intent);
+        Log.d(TAG, "received: " + intent);
         if (intent == null) {
             return;
         }
         if (!IntentParameters.ACTION_WEATHER_UPDATE.equals(intent.getAction())) {
             return;
         }
+        Log.d(TAG, "extras: " + intent.getExtras().size());
         boolean enabled = intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, true);
+        Log.d(TAG, "extra weather: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER));
+        Log.d(TAG, "extra weather1: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER_1));
         if (enabled) {
             Parcelable weather = intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER);
             if (!(weather instanceof Weather)) {

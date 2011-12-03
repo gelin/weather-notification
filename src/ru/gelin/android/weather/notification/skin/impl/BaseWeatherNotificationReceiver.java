@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import static ru.gelin.android.weather.notification.Tag.TAG;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
@@ -44,6 +45,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
@@ -83,11 +85,14 @@ abstract public class BaseWeatherNotificationReceiver extends
     
     @Override
     protected void cancel(Context context) {
+        Log.d(TAG, "cancelling weather");
         getNotificationManager(context).cancel(ID);
     }
 
     @Override
     protected void notify(Context context, Weather weather) {
+        Log.d(TAG, "displaying weather: " + weather);
+        
         WeatherStorage storage = new WeatherStorage(context);
         storage.save(weather);
         
