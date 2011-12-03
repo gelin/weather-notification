@@ -77,7 +77,7 @@ public class GoogleWeather implements Weather {
     
     //@Override
     public List<WeatherCondition> getConditions() {
-        return this.conditions;     //TODO: return copy
+        return new ArrayList<WeatherCondition>(this.conditions);
     }
     
     //@Override

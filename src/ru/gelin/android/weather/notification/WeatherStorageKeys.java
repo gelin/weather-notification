@@ -34,27 +34,32 @@ class WeatherStorageKeys {
     static final String TIME = "weather_time";
     /** Preference name for query time. */
     static final String QUERY_TIME = "weather_query_time";
+    
     /** Preference name for unit system. */
     @Deprecated
     static final String UNIT_SYSTEM = "weather_unit_system";
-    /** Preference name for temperature unit. */
-    static final String TEMPERATURE_UNIT = "weather_temperature_unit";
+    
     /** Preference name pattern for condition text. */
     static final String CONDITION_TEXT = "weather_%d_condition_text";
+    
+    /** Preference name pattern for temperature unit. */
+    static final String TEMPERATURE_UNIT = "weather_%d_temperature_unit";
     /** Preference name pattern for current temp. */
     static final String CURRENT_TEMP = "weather_%d_current_temp";
     /** Preference name pattern for low temp. */
     static final String LOW_TEMP = "weather_%d_low_temp";
     /** Preference name pattern for high temp. */
     static final String HIGH_TEMP = "weather_%d_high_temp";
+    
     /** Preference name pattern for humidity text. */
     static final String HUMIDITY_TEXT = "weather_%d_humidity_text";
-    /** Preference name pattern for wind text. */
-    static final String WIND_TEXT = "weather_%d_wind_text";
-    /** Preference name for wind speed unit. */
-    static final String WIND_SPEED_UNIT = "weather_wind_speed_unit";
     /** Preference name pattern for humidity value. */
     static final String HUMIDITY_VAL = "weather_%d_humidity_value";
+    
+    /** Preference name pattern for wind text. */
+    static final String WIND_TEXT = "weather_%d_wind_text";
+    /** Preference name pattern for wind speed unit. */
+    static final String WIND_SPEED_UNIT = "weather_%d_wind_speed_unit";
     /** Preference name pattern for wind speed. */
     static final String WIND_SPEED = "weather_%d_wind_speed";
     /** Preference name pattern for wind direction. */
