@@ -24,6 +24,9 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.TemperatureUnit;
 
+/**
+ *  Maps user's preferences into actual temperature unit.
+ */
 public enum TemperatureType {
 
     C(TemperatureUnit.C),

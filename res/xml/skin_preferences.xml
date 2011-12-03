@@ -41,8 +41,8 @@
     <ru.gelin.android.preference.SummaryListPreference 
         android:key="ws_unit"
         android:title="@string/wind_speed_unit"
-        android:entries="@array/wind_unit_entries"
-        android:entryValues="@array/wind_unit_values"
+        android:entries="@array/wind_speed_unit_entries"
+        android:entryValues="@array/wind_speed_unit_values"
         android:defaultValue="MPH"/>
 
 </PreferenceScreen>

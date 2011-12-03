@@ -37,7 +37,6 @@ import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindSpeedUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -93,7 +92,7 @@ public abstract class AbstractWeatherLayout {
     }
     
     void bindViews(Weather weather) {
-        bindUpdateTime(weather.getTime());
+        bindUpdateTime(weather.getQueryTime());
         setText(id("location"), weather.getLocation().getText());
         
         if (weather.getConditions().size() <= 0) {
@@ -149,18 +148,19 @@ public abstract class AbstractWeatherLayout {
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
-    	SharedPreferences preferences = 
+        SharedPreferences preferences = 
             PreferenceManager.getDefaultSharedPreferences(this.context);
-    	WindUnit unit = WindUnit.valueOf(preferences.getString(
-                WS_UNIT, WS_UNIT_DEFAULT));
         
-        WindSpeedUnit mainUnit = unit.getWindSpeedUnit();
-        Wind wind = currentCondition.getWind(mainUnit);
-    	Humidity hum = currentCondition.getHumidity();
-        String text = windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), context);
-        setText(id("humidity"), text);
-        text = String.format(this.context.getString(string("humidity_caption")), hum.getValue());
-        setText(id("wind"), text);
+        WindUnit windUnit = WindUnit.valueOf(preferences.getString(
+                WS_UNIT, WS_UNIT_DEFAULT));
+        Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
+        setText(id("humidity"), 
+                this.windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), 
+                        this.context));
+        
+        Humidity hum = currentCondition.getHumidity();
+        setText(id("wind"), String.format(this.context.getString(string("humidity_caption")), 
+                hum.getValue()));
     }
     
     protected void bindForecasts(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
@@ -180,7 +180,7 @@ public abstract class AbstractWeatherLayout {
     }
     
     void bindForecast(Weather weather, 
-    		ru.gelin.android.weather.TemperatureUnit unit, int i, 
+            ru.gelin.android.weather.TemperatureUnit unit, int i, 
             int groupId, int dayId, int conditionId, 
             int highTempId, int lowTempId) {
         if (weather.getConditions().size() > i) {

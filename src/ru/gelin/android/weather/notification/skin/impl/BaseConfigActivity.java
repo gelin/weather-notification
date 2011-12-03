@@ -61,8 +61,8 @@ public class BaseConfigActivity extends UpdateNotificationActivity
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         if (NOTIFICATION_TEXT_STYLE.equals(key) ||
-        		TEMP_UNIT.equals(key)||
-        		WS_UNIT.equals(key)) {
+                TEMP_UNIT.equals(key)||
+                WS_UNIT.equals(key)) {
             updateNotification();
             return true;
         }

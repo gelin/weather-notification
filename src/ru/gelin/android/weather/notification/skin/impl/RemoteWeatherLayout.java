@@ -36,7 +36,6 @@ import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindSpeedUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -124,21 +123,20 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
-    	SharedPreferences preferences = 
+        SharedPreferences preferences = 
             PreferenceManager.getDefaultSharedPreferences(this.context);
-    	WindUnit unit = WindUnit.valueOf(preferences.getString(
+
+        WindUnit windUnit = WindUnit.valueOf(preferences.getString(
                 WS_UNIT, WS_UNIT_DEFAULT));
+        Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
+        Humidity hum = currentCondition.getHumidity();
         
-        WindSpeedUnit mainUnit = unit.getWindSpeedUnit();
-        Wind wind = currentCondition.getWind(mainUnit);
-    	Humidity hum = currentCondition.getHumidity();
-    	
-    	StringBuilder text = new StringBuilder();
-    	String windText = windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), context);
-    	String humText = String.format(this.context.getString(string("humidity_caption")), hum.getValue());
-        text.append(windText);
+        StringBuilder text = new StringBuilder();
+        text.append(this.windFormat.format(
+                wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), this.context));
         text.append(SEPARATOR);
-        text.append(humText);
+        text.append(String.format(this.context.getString(string("humidity_caption")), 
+                hum.getValue()));
         setText(id("wind_humidity_text"), text.toString());
     }
     

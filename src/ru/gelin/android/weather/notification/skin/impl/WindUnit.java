@@ -21,9 +21,11 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.WindSpeedUnit;
 
-//TODO: Remove?
+/**
+ *  Maps user's settings to the actual wind speed unit.
+ */
 public enum WindUnit {
-	MPH(WindSpeedUnit.MPH),
+    MPH(WindSpeedUnit.MPH),
     MPS(WindSpeedUnit.MPS),
     KMPH(WindSpeedUnit.KMPH);
     
