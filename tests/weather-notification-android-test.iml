@@ -40,7 +40,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android 1.6 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="weather-notification-android" />
+    <orderEntry type="module" module-name="weather-notification-android" exported="" />
   </component>
 </module>
 

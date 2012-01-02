@@ -30,7 +30,7 @@ import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_
 import static ru.gelin.android.weather.notification.skin.IntentParameters.EXTRA_WEATHER_1;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.ParcelableWeather;
-import ru.gelin.android.weather.notification.ParcelableWeather_v_0_2;
+import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.content.Context;
 import android.content.Intent;
@@ -114,9 +114,11 @@ public class WeatherNotificationManager {
         Intent intent = new Intent(ACTION_WEATHER_UPDATE);
         intent.putExtra(EXTRA_ENABLE_NOTIFICATION, enableNotification);
         if (enableNotification) {
-            ParcelableWeather_v_0_2 oldParcel = new ParcelableWeather_v_0_2(weather);
+            //intent.setExtrasClassLoader(WeatherNotificationManager.class.getClassLoader());
+            ParcelableWeather oldParcel = new ParcelableWeather(weather);
             intent.putExtra(EXTRA_WEATHER_1, oldParcel);
-            ParcelableWeather parcel = new ParcelableWeather(weather);
+            System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER_1));
+            ParcelableWeather2 parcel = new ParcelableWeather2(weather);
             intent.putExtra(EXTRA_WEATHER, parcel);
             System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER));
         }

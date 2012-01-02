@@ -33,7 +33,7 @@ import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.notification.ParcelableWeather;
+import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -165,7 +165,7 @@ abstract public class BaseWeatherNotificationReceiver extends
             }
             Message message = handler.obtainMessage();
             Bundle bundle = message.getData();
-            bundle.putParcelable(WEATHER_KEY, new ParcelableWeather(weather));
+            bundle.putParcelable(WEATHER_KEY, new ParcelableWeather2(weather));
             message.sendToTarget();
         }
     }

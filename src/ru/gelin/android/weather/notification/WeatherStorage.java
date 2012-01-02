@@ -136,7 +136,7 @@ public class WeatherStorage {
      *  The values of the saved weather are restored, not exact classes.
      */
     public Weather load() {
-        SimpleWeather weather = new ParcelableWeather();
+        SimpleWeather weather = new ParcelableWeather2();
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);

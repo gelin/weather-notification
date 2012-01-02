@@ -26,12 +26,13 @@ import ru.gelin.android.weather.Weather;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 
+@SuppressWarnings("deprecation")
 public class ParcelableWeatherTest extends AndroidTestCase {
 
     public void testCopyConstructor() throws Exception {
         Weather weather1 = WeatherUtils.createWeather();
         Weather weather2 = new ParcelableWeather(weather1);
-        WeatherUtils.checkWeather(weather2);
+        WeatherUtils.checkWeather(weather2, WeatherUtils.Version.V_0_2);
     }
     
     public void testWriteRead() throws Exception {
@@ -41,10 +42,9 @@ public class ParcelableWeatherTest extends AndroidTestCase {
         weather2.writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
         Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
-        WeatherUtils.checkWeather(weather3);
+        WeatherUtils.checkWeather(weather3, WeatherUtils.Version.V_0_2);
     }
     
-    /*  Not compatible, ParcelableWeather_v_0_2 is compatible
     public void testBackwardCompatibility() throws Exception {
         Weather weather1 = WeatherUtils.createWeather();
         Parcel parcel = Parcel.obtain();
@@ -54,26 +54,6 @@ public class ParcelableWeatherTest extends AndroidTestCase {
         ru.gelin.android.weather.v_0_2.Weather weather3 = 
             ru.gelin.android.weather.v_0_2.notification.ParcelableWeather.CREATOR.createFromParcel(parcel);
         WeatherUtils.checkWeather(weather3);
-    }
-    */
-    
-    @SuppressWarnings("deprecation")
-    public void testOldVersionRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
-        Parcel parcel = Parcel.obtain();
-        ParcelableWeather_v_0_2 weather2 = new ParcelableWeather_v_0_2(weather1);
-        weather2.writeToParcel(parcel, 0);
-        parcel.setDataPosition(0);
-        Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
-        //WeatherUtils.checkWeather(weather3, WeatherUtils.Version.V_0_2);  //ideal :(
-        assertTrue(weather3.isEmpty());
-    }
-    
-    public void testParcel() {
-        Parcel parcel = Parcel.obtain();
-        parcel.writeString("test");
-        parcel.setDataPosition(0);
-        assertEquals("test", parcel.readString());
     }
 
 }

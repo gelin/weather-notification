@@ -49,6 +49,7 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
         Parcel parcel = Parcel.obtain();
         intent.writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
+        intent.setExtrasClassLoader(getContext().getClassLoader());
         intent.readFromParcel(parcel);
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
