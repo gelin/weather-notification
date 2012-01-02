@@ -46,11 +46,12 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     public void testCreateIntentBothExtras() throws Exception {
         Weather weather = WeatherUtils.createWeather();
         Intent intent = WeatherNotificationManager.createIntent(true, weather);
+        intent.setExtrasClassLoader(getContext().getClassLoader());
         Parcel parcel = Parcel.obtain();
         intent.writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
-        intent.setExtrasClassLoader(getContext().getClassLoader());
         intent.readFromParcel(parcel);
+        //intent = Intent.CREATOR.createFromParcel(parcel);
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER_1));

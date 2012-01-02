@@ -152,7 +152,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
     }
     
     void writeCommonParams(Parcel dest) {
-        Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle(this.getClass().getClassLoader());
         Location location = getLocation();
         if (location != null) {
             bundle.putString(LOCATION, location.getText());
@@ -175,7 +175,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
     }
     
     void writeCondition(WeatherCondition condition, Parcel dest) {
-        Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle(this.getClass().getClassLoader());
         bundle.putString(CONDITION_TEXT, condition.getConditionText());
         writeTemperature(condition.getTemperature(), bundle);
         writeHumidity(condition.getHumidity(), bundle);
@@ -234,6 +234,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
      */
     int readCommonParams(Parcel in) {
         Bundle bundle = in.readBundle();
+        bundle.setClassLoader(this.getClass().getClassLoader());
         setLocation(new SimpleLocation(bundle.getString(LOCATION)));
         setTime(new Date(bundle.getLong(TIME)));
         setQueryTime(new Date(bundle.getLong(QUERY_TIME)));
@@ -245,6 +246,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             return null;
         }
         Bundle bundle = in.readBundle();
+        bundle.setClassLoader(this.getClass().getClassLoader());
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(bundle.getString(CONDITION_TEXT));
         

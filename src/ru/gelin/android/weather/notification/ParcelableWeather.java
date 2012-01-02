@@ -44,6 +44,12 @@ import ru.gelin.android.weather.WindSpeedUnit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ *  This parcelable weather allows to save only weather params which were used in version 0.2 of the application.
+ *  Now it's deprecated.
+ *  But, unfortunately, the class name cannot be changed for backward compatibility.
+ *  Use {@link ParcelableWeather2} whether possible.
+ */
 @SuppressWarnings("deprecation")
 @Deprecated
 public class ParcelableWeather extends SimpleWeather implements Parcelable {
