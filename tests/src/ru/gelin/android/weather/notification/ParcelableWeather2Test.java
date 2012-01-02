@@ -38,9 +38,13 @@ public class ParcelableWeather2Test extends AndroidTestCase {
         Weather weather1 = WeatherUtils.createWeather();
         Parcel parcel = Parcel.obtain();
         ParcelableWeather2 weather2 = new ParcelableWeather2(weather1);
-        weather2.writeToParcel(parcel, 0);
+        //weather2.writeToParcel(parcel, 0);
+        parcel.writeParcelable(weather2, 0);
+        int position = parcel.dataPosition();
         parcel.setDataPosition(0);
-        Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
+        //Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
+        Weather weather3 = (Weather)parcel.readParcelable(getContext().getClassLoader());
+        assertEquals(position, parcel.dataPosition());  //read the same data as wrote
         WeatherUtils.checkWeather(weather3);
     }
     

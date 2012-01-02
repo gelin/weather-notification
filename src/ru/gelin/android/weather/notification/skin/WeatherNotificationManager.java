@@ -115,12 +115,12 @@ public class WeatherNotificationManager {
         intent.putExtra(EXTRA_ENABLE_NOTIFICATION, enableNotification);
         if (enableNotification) {
             //intent.setExtrasClassLoader(WeatherNotificationManager.class.getClassLoader());
-            ParcelableWeather oldParcel = new ParcelableWeather(weather);
-            intent.putExtra(EXTRA_WEATHER_1, oldParcel);
-            System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER_1));
             ParcelableWeather2 parcel = new ParcelableWeather2(weather);
             intent.putExtra(EXTRA_WEATHER, parcel);
             System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER));
+            //ParcelableWeather oldParcel = new ParcelableWeather(weather);
+            //intent.putExtra(EXTRA_WEATHER_1, oldParcel);
+            //System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER_1));
         }
         return intent;
     }
