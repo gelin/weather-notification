@@ -100,7 +100,7 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         Location location = new SimpleLocation("Омск");
         Weather weather = source.query(location, new Locale("ru"));
         assertNotNull(weather.getQueryTime());
-        assertTrue(weather.getQueryTime().after(now));
+        assertTrue(!weather.getQueryTime().before(now));
     }
 
 }
