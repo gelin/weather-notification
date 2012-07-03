@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
   <component name="EclipseModuleManager" forced_jdk="true">
-    <varelement var="file://$_android_weather_notification_android_7a86b7c6$/src" kind="linksrc:" value="weather-notification-android_src" />
-    <varelement var="file://$_android_weather_notification_android_7a86b7c6$/test" kind="linksrc:" value="weather-notification-android_test" />
+    <varelement var="file://$_android_weather_notification_android_7a86b7c6$/src" value="linksrc:weather-notification-android_src" />
+    <varelement var="file://$_android_weather_notification_android_7a86b7c6$/test" value="linksrc:weather-notification-android_test" />
     <conelement value="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK" />
     <src_description expected_position="4">
       <src_folder value="file://$MODULE_DIR$/src" expected_position="3" />
@@ -31,23 +31,22 @@
         <option name="RUN_PROCESS_RESOURCES_MAVEN_TASK" value="true" />
         <option name="GENERATE_UNSIGNED_APK" value="false" />
         <option name="CUSTOM_DEBUG_KEYSTORE_PATH" value="" />
+        <option name="PACK_TEST_CODE" value="false" />
+        <option name="RUN_PROGUARD" value="false" />
+        <option name="PROGUARD_CFG_PATH" value="/proguard-project.txt" />
+        <resOverlayFolders />
+        <includeSystemProguardFile>false</includeSystemProguardFile>
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin/classes" />
     <exclude-output />
-    <content url="file://$_android_weather_notification_android_7a86b7c6$/src">
-      <sourceFolder url="file://$_android_weather_notification_android_7a86b7c6$/src" isTestSource="false" />
-    </content>
-    <content url="file://$_android_weather_notification_android_7a86b7c6$/test">
-      <sourceFolder url="file://$_android_weather_notification_android_7a86b7c6$/test" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Android 2.2" jdkType="Android SDK" />
     <orderEntry type="module" module-name="weather-notification-android" />
     <orderEntry type="module-library">
       <library name="junit4">
