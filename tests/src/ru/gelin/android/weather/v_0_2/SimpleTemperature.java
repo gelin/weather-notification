@@ -22,6 +22,9 @@
 
 package ru.gelin.android.weather.v_0_2;
 
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.UnitSystem;
+
 /**
  *  Holds temperature values.
  *  Allows to set the values in different unit systems.
@@ -112,7 +115,12 @@ public class SimpleTemperature implements Temperature {
     public UnitSystem getUnitSystem() {
         return this.unit;
     }
-    
+
+    @Override
+    public TemperatureUnit getTemperatureUnit() {
+        return null;  //Stub
+    }
+
     /**
      *  Creates new temperature in another unit system.
      */

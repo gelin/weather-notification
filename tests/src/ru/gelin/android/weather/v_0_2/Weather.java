@@ -28,7 +28,7 @@ import java.util.List;
 /**
  *  Interface which contains the weather query results.
  */
-public interface Weather {
+public interface Weather extends ru.gelin.android.weather.Weather {
     
     /**
      *  Returns the weather location (original, passed to {@link WeatherSource#query},
@@ -44,13 +44,13 @@ public interface Weather {
     /**
      *  Returns default unit system (SI or US).
      */
-    UnitSystem getUnitSystem();
+    ru.gelin.android.weather.UnitSystem getUnitSystem();
     
     /**
      *  Returns weather conditions starting from the current weather 
      *  and following some forecasts.
      */
-    List<WeatherCondition> getConditions();
+    List<ru.gelin.android.weather.WeatherCondition> getConditions();
     
     /**
      *  Returns true if this weather doesn't contains any actual values.

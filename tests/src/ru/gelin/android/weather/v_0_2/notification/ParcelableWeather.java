@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.v_0_2.Location;
 import ru.gelin.android.weather.v_0_2.SimpleLocation;
 import ru.gelin.android.weather.v_0_2.SimpleTemperature;
 import ru.gelin.android.weather.v_0_2.SimpleWeather;
 import ru.gelin.android.weather.v_0_2.SimpleWeatherCondition;
 import ru.gelin.android.weather.v_0_2.Temperature;
-import ru.gelin.android.weather.v_0_2.UnitSystem;
 import ru.gelin.android.weather.v_0_2.Weather;
 import ru.gelin.android.weather.v_0_2.WeatherCondition;
 import android.os.Parcel;
@@ -65,15 +65,15 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } else {
             setUnitSystem(unit);
         }
-        List<WeatherCondition> conditions = weather.getConditions();
+        List<ru.gelin.android.weather.WeatherCondition> conditions = weather.getConditions();
         if (conditions == null) {
             return;
         }
-        List<WeatherCondition> copyConditions = new ArrayList<WeatherCondition>();
-        for (WeatherCondition condition : conditions) {
+        List<ru.gelin.android.weather.WeatherCondition> copyConditions = new ArrayList<ru.gelin.android.weather.WeatherCondition>();
+        for (ru.gelin.android.weather.WeatherCondition condition : conditions) {
             SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
             copyCondition.setConditionText(condition.getConditionText());
-            Temperature temp = condition.getTemperature();
+            ru.gelin.android.weather.Temperature temp = condition.getTemperature();
             SimpleTemperature copyTemp = new SimpleTemperature(unit);
             if (temp != null) {
                 copyTemp.setCurrent(temp.getCurrent(), unit);
@@ -116,9 +116,9 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         if (getConditions() == null) {
             return;
         }
-        for (WeatherCondition condition : getConditions()) {
+        for (ru.gelin.android.weather.WeatherCondition condition : getConditions()) {
             dest.writeString(condition.getConditionText());
-            Temperature temp = condition.getTemperature();
+            ru.gelin.android.weather.Temperature temp = condition.getTemperature();
             if (temp == null) {
                 continue;
             }
@@ -139,7 +139,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         } catch (Exception e) {
             setUnitSystem(UnitSystem.SI);
         }
-        List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
+        List<ru.gelin.android.weather.WeatherCondition> conditions = new ArrayList<ru.gelin.android.weather.WeatherCondition>();
         while (in.dataAvail() > 6) {    //each condition takes 6 positions
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(in.readString());

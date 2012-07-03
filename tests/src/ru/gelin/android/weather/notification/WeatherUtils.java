@@ -7,14 +7,7 @@ import java.util.TimeZone;
 
 import android.test.AndroidTestCase;
 
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
+import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.google.GoogleWeather;
 
 public class WeatherUtils {
@@ -26,7 +19,7 @@ public class WeatherUtils {
     private WeatherUtils() {
         //avoid instantiation
     }
-    
+
     public static Weather createWeather() throws Exception {
         InputStream xml1 = WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml");
         InputStream xml2 = WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml");
@@ -34,9 +27,14 @@ public class WeatherUtils {
                 new InputStreamReader(xml1, "UTF-8"), new InputStreamReader(xml2, "UTF-8"));
         return weather;
     }
+
+    public static ru.gelin.android.weather.v_0_2.Weather createWeather_v_0_2() throws Exception {
+        return new ru.gelin.android.weather.v_0_2.google.GoogleWeather(
+                new InputStreamReader(WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml")));
+    }
     
     public static void checkWeather(Weather weather, Version version) {
-        switch(version) {
+        switch (version) {
         case V_0_2:
             checkWeather_v_0_2(weather);
             break;
@@ -100,39 +98,39 @@ public class WeatherUtils {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         AndroidTestCase.assertEquals(calendar.getTime(), weather.getTime());
-        AndroidTestCase.assertEquals(ru.gelin.android.weather.v_0_2.UnitSystem.US, weather.getUnitSystem());
+        AndroidTestCase.assertEquals(UnitSystem.US, weather.getUnitSystem());
         AndroidTestCase.assertEquals(4, weather.getConditions().size());
         
-        ru.gelin.android.weather.v_0_2.WeatherCondition condition0 = weather.getConditions().get(0);
+        WeatherCondition condition0 = weather.getConditions().get(0);
         AndroidTestCase.assertEquals("Clear", condition0.getConditionText());
-        ru.gelin.android.weather.v_0_2.Temperature temp0 = 
-            condition0.getTemperature(ru.gelin.android.weather.v_0_2.UnitSystem.US);
+        Temperature temp0 =
+            condition0.getTemperature(UnitSystem.US);
         AndroidTestCase.assertEquals(-11, temp0.getCurrent());
         AndroidTestCase.assertEquals(-10, temp0.getLow());
         AndroidTestCase.assertEquals(-4, temp0.getHigh());
         AndroidTestCase.assertEquals("Humidity: 66%", condition0.getHumidityText());
         AndroidTestCase.assertEquals("Wind: SW at 2 mph", condition0.getWindText());
         
-        ru.gelin.android.weather.v_0_2.WeatherCondition condition1 = weather.getConditions().get(1);
+        WeatherCondition condition1 = weather.getConditions().get(1);
         AndroidTestCase.assertEquals("Snow Showers", condition1.getConditionText());
-        ru.gelin.android.weather.v_0_2.Temperature temp1 = 
-            condition1.getTemperature(ru.gelin.android.weather.v_0_2.UnitSystem.US);
+        Temperature temp1 =
+            condition1.getTemperature(UnitSystem.US);
         AndroidTestCase.assertEquals(7, temp1.getCurrent());
         AndroidTestCase.assertEquals(-7, temp1.getLow());
         AndroidTestCase.assertEquals(20, temp1.getHigh());
         
-        ru.gelin.android.weather.v_0_2.WeatherCondition condition2 = weather.getConditions().get(2);
+        WeatherCondition condition2 = weather.getConditions().get(2);
         AndroidTestCase.assertEquals("Partly Sunny", condition2.getConditionText());
-        ru.gelin.android.weather.v_0_2.Temperature temp2 = 
-            condition2.getTemperature(ru.gelin.android.weather.v_0_2.UnitSystem.US);
+        Temperature temp2 =
+            condition2.getTemperature(UnitSystem.US);
         AndroidTestCase.assertEquals(-10, temp2.getCurrent());
         AndroidTestCase.assertEquals(-14, temp2.getLow());
         AndroidTestCase.assertEquals(-6, temp2.getHigh());
         
-        ru.gelin.android.weather.v_0_2.WeatherCondition condition3 = weather.getConditions().get(3);
+        WeatherCondition condition3 = weather.getConditions().get(3);
         AndroidTestCase.assertEquals("Partly Sunny", condition3.getConditionText());
-        ru.gelin.android.weather.v_0_2.Temperature temp3 = 
-            condition3.getTemperature(ru.gelin.android.weather.v_0_2.UnitSystem.US);
+        Temperature temp3 =
+            condition3.getTemperature(UnitSystem.US);
         AndroidTestCase.assertEquals(-22, temp3.getCurrent());
         AndroidTestCase.assertEquals(-29, temp3.getLow());
         AndroidTestCase.assertEquals(-15, temp3.getHigh());

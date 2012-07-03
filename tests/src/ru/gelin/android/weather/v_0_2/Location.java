@@ -25,7 +25,7 @@ package ru.gelin.android.weather.v_0_2;
 /**
  *  Identifies location to search weather.
  */
-public interface Location {
+public interface Location extends ru.gelin.android.weather.Location {
     
     /**
      *  Returns the query String (for Google Weather API).

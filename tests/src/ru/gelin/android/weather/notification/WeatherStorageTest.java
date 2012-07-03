@@ -47,4 +47,26 @@ public class WeatherStorageTest extends AndroidTestCase {
         WeatherUtils.checkWeather(weather2);
     }
 
+    public void testBackwardCompatibility2() throws Exception {
+        ru.gelin.android.weather.v_0_2.Weather weather1 = WeatherUtils.createWeather_v_0_2();
+        WeatherStorage newStorage = new WeatherStorage(getContext());
+        newStorage.save(weather1);
+
+        Weather weather2 = newStorage.load();
+
+        WeatherUtils.checkWeather(weather2);
+    }
+
+    public void testBackwardCompatibility3() throws Exception {
+        Weather weather1 = WeatherUtils.createWeather();
+
+        ru.gelin.android.weather.v_0_2.notification.WeatherStorage oldStorage =
+                new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
+        oldStorage.save((ru.gelin.android.weather.v_0_2.Weather) weather1);
+
+        ru.gelin.android.weather.v_0_2.Weather weather2 = oldStorage.load();
+
+        WeatherUtils.checkWeather(weather2);
+    }
+
 }
