@@ -39,13 +39,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.v_0_2.Location;
-import ru.gelin.android.weather.v_0_2.SimpleLocation;
-import ru.gelin.android.weather.v_0_2.SimpleTemperature;
-import ru.gelin.android.weather.v_0_2.SimpleWeatherCondition;
-import ru.gelin.android.weather.v_0_2.Weather;
-import ru.gelin.android.weather.v_0_2.WeatherException;
+import ru.gelin.android.weather.v_0_2.*;
 
 /**
  *  Weather, provided by Google API.
@@ -60,8 +54,8 @@ public class GoogleWeather implements Weather {
     Location location = new SimpleLocation("");
     Date date = new Date(0);
     Date time = new Date(0);
-    ru.gelin.android.weather.UnitSystem unit = ru.gelin.android.weather.UnitSystem.SI;
-    List<ru.gelin.android.weather.WeatherCondition> conditions = new ArrayList<ru.gelin.android.weather.WeatherCondition>();
+    UnitSystem unit = UnitSystem.SI;
+    List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     
     /**
      *  Creates the weather from the input stream with XML
@@ -89,18 +83,13 @@ public class GoogleWeather implements Weather {
         }
     }
 
-    @Override
-    public Date getQueryTime() {
-        return null;  //stub
-    }
-
     //@Override
-    public ru.gelin.android.weather.UnitSystem getUnitSystem() {
+    public UnitSystem getUnitSystem() {
         return this.unit;
     }
     
     //@Override
-    public List<ru.gelin.android.weather.WeatherCondition> getConditions() {
+    public List<WeatherCondition> getConditions() {
         return this.conditions;
     }
     
@@ -157,7 +146,7 @@ public class GoogleWeather implements Weather {
                     throw new SAXException("invalid 'current_date_time' format: " + data, e);
                 }
             } else if ("unit_system".equals(localName)) {
-                GoogleWeather.this.unit = ru.gelin.android.weather.UnitSystem.valueOf(data);
+                GoogleWeather.this.unit = UnitSystem.valueOf(data);
             } else if ("current_conditions".equals(localName)) {
                 state = HandlerState.CURRENT_CONDITIONS;
                 addCondition();

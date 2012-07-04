@@ -22,8 +22,6 @@
 
 package ru.gelin.android.weather.v_0_2;
 
-import ru.gelin.android.weather.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +38,7 @@ public class SimpleWeather implements Weather {
     /** Unit system */
     UnitSystem unit;
     /** List of conditions */
-    List<ru.gelin.android.weather.WeatherCondition> conditions;
+    List<WeatherCondition> conditions;
     
     /**
      *  Sets the location.
@@ -66,7 +64,7 @@ public class SimpleWeather implements Weather {
     /**
      *  Sets the weather conditions list.
      */
-    public void setConditions(List<ru.gelin.android.weather.WeatherCondition> conditions) {
+    public void setConditions(List<WeatherCondition> conditions) {
         this.conditions = conditions;
     }
     
@@ -80,20 +78,15 @@ public class SimpleWeather implements Weather {
         return this.time;
     }
 
-    @Override
-    public Date getQueryTime() {
-        return null;  //stub
-    }
-
     //@Override
     public UnitSystem getUnitSystem() {
         return this.unit;
     }
     
     //@Override
-    public List<ru.gelin.android.weather.WeatherCondition> getConditions() {
+    public List<WeatherCondition> getConditions() {
         if (this.conditions == null) {
-            return new ArrayList<ru.gelin.android.weather.WeatherCondition>();
+            return new ArrayList<WeatherCondition>();
         }
         return this.conditions;
     }

@@ -25,7 +25,7 @@ package ru.gelin.android.weather.v_0_2;
 /**
  *  Contains current, high and low temperature values.
  */
-public interface Temperature extends ru.gelin.android.weather.Temperature {
+public interface Temperature {
 
     /** Unknown temperature value */
     static int UNKNOWN = Integer.MIN_VALUE;
@@ -48,6 +48,6 @@ public interface Temperature extends ru.gelin.android.weather.Temperature {
     /**
      *  Units of this weather.
      */
-    ru.gelin.android.weather.UnitSystem getUnitSystem();
+    UnitSystem getUnitSystem();
     
 }

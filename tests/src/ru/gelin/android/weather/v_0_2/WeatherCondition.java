@@ -24,12 +24,10 @@ package ru.gelin.android.weather.v_0_2;
 
 //import java.net.URL;
 
-import ru.gelin.android.weather.UnitSystem;
-
 /**
  *  Common weather conditions.
  */
-public interface WeatherCondition extends ru.gelin.android.weather.WeatherCondition {
+public interface WeatherCondition {
     
     /**
      *  Returns condition as a human readable text.

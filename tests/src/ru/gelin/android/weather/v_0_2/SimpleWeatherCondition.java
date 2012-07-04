@@ -22,8 +22,6 @@
 
 package ru.gelin.android.weather.v_0_2;
 
-import ru.gelin.android.weather.*;
-
 /**
  *  Simple weather condition implementation which just holds
  *  the values.
@@ -73,11 +71,6 @@ public class SimpleWeatherCondition implements WeatherCondition {
         return this.temperature;
     }
 
-    @Override
-    public ru.gelin.android.weather.Temperature getTemperature(TemperatureUnit unit) {
-        return null;  //stub
-    }
-
     //@Override
     public Temperature getTemperature(UnitSystem unit) {
         if (this.temperature == null) {
@@ -93,22 +86,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
     public String getWindText() {
         return this.windText;
     }
-
-    @Override
-    public Humidity getHumidity() {
-        return null;  //stub
-    }
-
-    @Override
-    public Wind getWind() {
-        return null;  //stub
-    }
-
-    @Override
-    public Wind getWind(WindSpeedUnit unit) {
-        return null;  //stub
-    }
-
+    
     //@Override
     public String getHumidityText() {
         return this.humidityText;

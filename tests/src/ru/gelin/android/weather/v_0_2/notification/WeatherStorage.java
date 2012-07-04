@@ -36,13 +36,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.v_0_2.Location;
 import ru.gelin.android.weather.v_0_2.SimpleLocation;
 import ru.gelin.android.weather.v_0_2.SimpleTemperature;
 import ru.gelin.android.weather.v_0_2.SimpleWeather;
 import ru.gelin.android.weather.v_0_2.SimpleWeatherCondition;
 import ru.gelin.android.weather.v_0_2.Temperature;
+import ru.gelin.android.weather.v_0_2.UnitSystem;
 import ru.gelin.android.weather.v_0_2.Weather;
 import ru.gelin.android.weather.v_0_2.WeatherCondition;
 import android.content.Context;
@@ -82,10 +82,10 @@ public class WeatherStorage {
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
         int i = 0;
-        for (ru.gelin.android.weather.WeatherCondition condition : weather.getConditions()) {
+        for (WeatherCondition condition : weather.getConditions()) {
             putOrRemove(editor, String.format(CONDITION_TEXT, i), 
                     condition.getConditionText());
-            ru.gelin.android.weather.Temperature temp = condition.getTemperature();
+            Temperature temp = condition.getTemperature();
             putOrRemove(editor, String.format(CURRENT_TEMP, i), 
                     temp.getCurrent());
             putOrRemove(editor, String.format(LOW_TEMP, i), 
@@ -114,7 +114,7 @@ public class WeatherStorage {
         weather.setUnitSystem(UnitSystem.valueOf(
                 preferences.getString(UNIT_SYSTEM, "SI")));
         int i = 0;
-        List<ru.gelin.android.weather.WeatherCondition> conditions = new ArrayList<ru.gelin.android.weather.WeatherCondition>();
+        List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(preferences.getString(
