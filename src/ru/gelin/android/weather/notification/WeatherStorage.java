@@ -94,7 +94,11 @@ public class WeatherStorage {
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putLong(QUERY_TIME, weather.getQueryTime().getTime());
-        editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());      //TODO: fix, no unit system in new weather
+        if (weather.getUnitSystem() == null) {
+            editor.remove(UNIT_SYSTEM);
+        } else {
+            editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
+        }
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
             

@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.notification;
 
-import ru.gelin.android.weather.Weather;
 import android.test.AndroidTestCase;
+import ru.gelin.android.weather.Weather;
 
 public class WeatherStorageTest extends AndroidTestCase {
 
@@ -33,6 +33,15 @@ public class WeatherStorageTest extends AndroidTestCase {
         storage.save(weather1);
         Weather weather2 = storage.load();
         WeatherUtils.checkWeather(weather2);
+    }
+
+    public void testSaveLoad2() throws Exception {
+        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather2 = new ParcelableWeather2(weather1);
+        WeatherStorage storage = new WeatherStorage(getContext());
+        storage.save(weather2);
+        Weather weather3 = storage.load();
+        WeatherUtils.checkWeather(weather3);
     }
     
     public void testBackwardCompatibility() throws Exception {
