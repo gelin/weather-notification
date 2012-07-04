@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification.skin;
 
 import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE;
+import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE_2;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 
 import java.util.ArrayList;
@@ -90,14 +91,24 @@ public class SkinManager {
         }
         return result;
     }
-	
+
+    /**
+     *  Queries PackageManager for broadcast receivers which handles
+     *  ACTION_WEATHER_UPDATE and ACTION_WEATHER_UPDATE_2.
+     *  Puts found data (skin package, receiver class and labed) into skins map.
+     */
+    void querySkinReceivers() {
+        querySkinReceivers(ACTION_WEATHER_UPDATE, SkinInfo.Version.V1);     //TODO: join intent action names and versions...
+        querySkinReceivers(ACTION_WEATHER_UPDATE_2, SkinInfo.Version.V2);
+    }
+
 	/**
-	 *  Queries PackageManager for broadcast receivers which handles ACTION_WEATHER_UPDATE.
+	 *  Queries PackageManager for broadcast receivers which handles specified Action.
 	 *  Puts found data (skin package, receiver class and labed) into skins map. 
 	 */
-	void querySkinReceivers() {
+	void querySkinReceivers(String action, SkinInfo.Version version) {
 	    PackageManager pm = context.getPackageManager();
-        Intent intent = new Intent(ACTION_WEATHER_UPDATE);
+        Intent intent = new Intent(action);
         List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);   //without flags
         
         for (ResolveInfo info : search) {
@@ -109,12 +120,15 @@ public class SkinManager {
             //Log.d(TAG, "class: " + receiverClass);
             SkinInfo skin = new SkinInfo();
             skin.packageName = packageName;
+            skin.version = version;
             skin.broadcastReceiverLabel = label;
             skin.broadcastReceiverClass = receiverClass;
             
             this.skins.put(packageName, skin);
         }
 	}
+
+
 	
 	/**
 	 *  Checks preferences to found which skin is enabled.

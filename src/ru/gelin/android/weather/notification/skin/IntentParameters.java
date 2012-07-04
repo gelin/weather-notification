@@ -27,26 +27,30 @@ import ru.gelin.android.weather.notification.Tag;
 
 public class IntentParameters {
 
-    /** Intent action which should be accepted by the receiver */ 
-    public static final String ACTION_WEATHER_UPDATE =
-        Tag.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE";
-    
-    /** Intent extra which contains {@link Weather}
-     *  <p>
-     *  IMPORTANT: The value of this constant was changed on release 0.3.
-     *  Before it was "ru.gelin.android.weather.notification.EXTRA_WEATHER", now it is
-     *  "ru.gelin.android.weather.notification.EXTRA_WEATHER_2".
-     *  The change of the name is caused by different format of weather parcel.
-     *  The previous extra is still set for backward compatibility.
-     **/ 
-    public static final String EXTRA_WEATHER =
-        Tag.class.getPackage().getName() + ".EXTRA_WEATHER_2";
-    /** 
-     *  Old Intent extra which contains {@link Weather}.
-     *  Has "ru.gelin.android.weather.notification.EXTRA_WEATHER" value.
+    /**
+     *  Intent action which should be accepted by the receiver.
+     *  Intent with this action is sent to the old skins and is deprecated.
+     *  Has "ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE" value.
      */
     @Deprecated
-    public static final String EXTRA_WEATHER_1 =
+    public static final String ACTION_WEATHER_UPDATE =
+        Tag.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE";
+
+    /**
+     *  Intent action which should be accepted by the receiver.
+     *  This is new intent action which should be used in the code of new skins.
+     *  This action was added in release 0.3.
+     *  Has "ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE_2" value.
+     */
+    public static final String ACTION_WEATHER_UPDATE_2 =
+            Tag.class.getPackage().getName() + ".ACTION_WEATHER_UPDATE_2";
+    
+    /**
+     *  Intent extra which contains {@link Weather}.
+     *  Has "ru.gelin.android.weather.notification.EXTRA_WEATHER" value.
+     *  Note that this extra may contain objects of different types, depend on the Action of the Intent.
+     */
+    public static final String EXTRA_WEATHER =
             Tag.class.getPackage().getName() + ".EXTRA_WEATHER";
     
     /** Intent extra which contains boolean flag */ 

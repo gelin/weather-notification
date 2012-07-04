@@ -35,7 +35,17 @@ import android.preference.Preference;
  */
 public class SkinInfo {
 
+    /**
+     *  Versions of the skin.
+     *  Skin V1 receives notifications with {@link IntentParameters#ACTION_WEATHER_UPDATE}.
+     *  Skin V2 receives notifications with {@link IntentParameters#ACTION_WEATHER_UPDATE_2}.
+     */
+    public enum Version {
+        V1, V2;
+    }
+
 	String packageName;
+    Version version;
 	boolean enabled;
 	String broadcastReceiverClass;
 	String broadcastReceiverLabel;
@@ -43,27 +53,31 @@ public class SkinInfo {
 	String configActivityLabel;
 	
 	public String getPackageName() {
-		return packageName;
+		return this.packageName;
 	}
+
+    public Version getVersion() {
+        return this.version;
+    }
 	
 	public boolean isEnabled() {
-		return enabled;
+		return this.enabled;
 	}
 
 	public String getBroadcastReceiverClass() {
-		return broadcastReceiverClass;
+		return this.broadcastReceiverClass;
 	}
 	
 	public String getBroadcastReceiverLabel() {
-		return broadcastReceiverLabel;
+		return this.broadcastReceiverLabel;
 	}
 
 	public String getConfigActivityClass() {
-		return configActivityClass;
+		return this.configActivityClass;
 	}
 	
 	public String getConfigActivityLabel() {
-		return configActivityLabel;
+		return this.configActivityLabel;
 	}
 	
 	/**
