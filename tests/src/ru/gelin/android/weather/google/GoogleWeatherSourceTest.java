@@ -37,11 +37,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.AndroidTestCase;
 
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherException;
-import ru.gelin.android.weather.WeatherSource;
+import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.notification.WeatherUtils;
 
 @SuppressWarnings("deprecation")
 public class GoogleWeatherSourceTest extends AndroidTestCase {
@@ -101,6 +98,16 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         Weather weather = source.query(location, new Locale("ru"));
         assertNotNull(weather.getQueryTime());
         assertTrue(!weather.getQueryTime().before(now));
+    }
+
+    public void testDefaultTemperatureUnit() throws Exception {
+        Weather weather = WeatherUtils.createWeather();
+        assertEquals(TemperatureUnit.F, weather.getConditions().get(0).getTemperature().getTemperatureUnit());
+    }
+
+    public void testDefaultWindSpeedUnit() throws Exception {
+        Weather weather = WeatherUtils.createWeather();
+        assertEquals(WindSpeedUnit.MPH, weather.getConditions().get(0).getWind().getSpeedUnit());
     }
 
 }
