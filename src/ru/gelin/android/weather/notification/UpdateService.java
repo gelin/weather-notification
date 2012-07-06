@@ -360,20 +360,29 @@ public class UpdateService extends Service implements Runnable {
                     0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
             return null;
         }
-        
+
+        Address address = decodeAddress(androidLocation);
+        if (address == null) {
+            //trying to do it twice
+            address = decodeAddress(androidLocation);
+        }
+        return new AndroidGoogleLocation(androidLocation, address);
+    }
+
+    Address decodeAddress(android.location.Location location) {
         Geocoder coder = new Geocoder(this);
         List<Address> addresses = null;
         try {
-            addresses = coder.getFromLocation(androidLocation.getLatitude(),
-                    androidLocation.getLongitude(), 1);
+            addresses = coder.getFromLocation(location.getLatitude(),
+                    location.getLongitude(), 1);
         } catch (IOException e) {
             Log.w(TAG, "cannot decode location", e);
+            return null;
         }
         if (addresses == null || addresses.size() == 0) {
-            return new AndroidGoogleLocation(androidLocation);
+            return null;
         }
-        
-        return new AndroidGoogleLocation(androidLocation, addresses.get(0));
+        return addresses.get(0);
     }
     
     /**
