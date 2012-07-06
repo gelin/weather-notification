@@ -248,7 +248,11 @@ public class UpdateService extends Service implements Runnable {
                 synchronized(UpdateService.this) {
                     Log.i(TAG, "received weather: " + 
                             weather.getLocation().getText() + " " + weather.getTime());
-                    storage.save(weather);
+                    if (weather.isEmpty()) {
+                        storage.updateTime();
+                    } else {
+                        storage.save(weather);  //saving only non-empty weather
+                    }
                     scheduleNextRun(weather.getTime().getTime());
                     if (verbose && weather.isEmpty()) {
                         Toast.makeText(UpdateService.this,
