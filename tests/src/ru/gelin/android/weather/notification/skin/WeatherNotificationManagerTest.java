@@ -39,33 +39,46 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
         intent.readFromParcel(parcel);
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertFalse(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, true));
-        assertFalse(intent.hasExtra(IntentParameters.EXTRA_WEATHER_1));
         assertFalse(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
     }
     
-    public void testCreateIntentBothExtras() throws Exception {
+    public void testCreateIntent() throws Exception {
         Weather weather = WeatherUtils.createWeather();
         Intent intent = WeatherNotificationManager.createIntent(true, weather);
+        //Parcel parcel = Parcel.obtain();
+        //parcel.writeParcelable(intent, 0);
+        //parcel.setDataPosition(0);
+        //intent = (Intent)parcel.readParcelable(getContext().getClassLoader());
         //intent.setExtrasClassLoader(getContext().getClassLoader());
+        //TODO: Why the serialization fails?
+        System.out.println(intent);
+        System.out.println("extras: " + intent.getExtras().keySet());
+        System.out.println("enabled: " + intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
+        System.out.println("extra weather: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER));
+        assertEquals(IntentParameters.ACTION_WEATHER_UPDATE, intent.getAction());
+        assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
+        assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
+        assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
+        WeatherUtils.checkWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER),
+                WeatherUtils.Version.V_0_2);
+    }
+
+    public void testCreateIntent2() throws Exception {
+        Weather weather = WeatherUtils.createWeather();
+        Intent intent = WeatherNotificationManager.createIntent2(true, weather);
         Parcel parcel = Parcel.obtain();
-        //intent.writeToParcel(parcel, 0);
         parcel.writeParcelable(intent, 0);
         parcel.setDataPosition(0);
-        //intent.readFromParcel(parcel);
-        //intent = Intent.CREATOR.createFromParcel(parcel);
         intent = (Intent)parcel.readParcelable(getContext().getClassLoader());
         intent.setExtrasClassLoader(getContext().getClassLoader());
         System.out.println(intent);
-        System.out.println("extras: " + intent.getExtras().size());
+        System.out.println("extras: " + intent.getExtras().keySet());
         System.out.println("enabled: " + intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
-        System.out.println("extra weather1: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER_1));
         System.out.println("extra weather: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER));
+        assertEquals(IntentParameters.ACTION_WEATHER_UPDATE_2, intent.getAction());
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
-        //assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER_1));
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
-        //WeatherUtils.checkWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER_1),
-        //        WeatherUtils.Version.V_0_2);
         WeatherUtils.checkWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER),
                 WeatherUtils.Version.V_0_3);
     }

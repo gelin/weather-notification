@@ -145,7 +145,6 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         for (WeatherCondition condition : getConditions()) {
             writeCondition(condition, dest);
         }
-        System.out.println("wrote to parcel, v.0.2");
     }
     
     void writeCondition(WeatherCondition condition, Parcel dest) {
@@ -213,7 +212,6 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
             conditions.add(condition);
         }
         setConditions(conditions);
-        System.out.println("read from parcel, v.0.2");
     }
     
     public static final Parcelable.Creator<ParcelableWeather> CREATOR =

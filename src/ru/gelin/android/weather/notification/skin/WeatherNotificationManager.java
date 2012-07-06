@@ -128,7 +128,6 @@ public class WeatherNotificationManager {
         if (enableNotification) {
             ParcelableWeather oldParcel = new ParcelableWeather(weather);
             intent.putExtra(EXTRA_WEATHER, oldParcel);
-            System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER));
         }
         return intent;
     }
@@ -139,7 +138,6 @@ public class WeatherNotificationManager {
         if (enableNotification) {
             ParcelableWeather2 parcel = new ParcelableWeather2(weather);
             intent.putExtra(EXTRA_WEATHER, parcel);
-            System.out.println("put to intent: " + intent.getParcelableExtra(EXTRA_WEATHER));
         }
         return intent;
     }
