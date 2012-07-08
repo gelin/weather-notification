@@ -57,8 +57,12 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
-        
-        
+        <receiver android:name=".ExternalAppsAvailableReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE"/>
+            </intent-filter>
+        </receiver>
+
         <!-- Built-in skin -->
         
         <receiver android:name=".skin.builtin.SkinWeatherNotificationReceiver"
@@ -94,7 +98,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4"/>
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8"/>
     <supports-screens/>
 
 </manifest>
