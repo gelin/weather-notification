@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 import android.content.Context;
@@ -37,8 +37,8 @@ public class SkinInfo {
 
     /**
      *  Versions of the skin.
-     *  Skin V1 receives notifications with {@link IntentParameters#ACTION_WEATHER_UPDATE}.
-     *  Skin V2 receives notifications with {@link IntentParameters#ACTION_WEATHER_UPDATE_2}.
+     *  Skin V1 receives notifications with {@link ru.gelin.android.weather.notification.IntentParameters#ACTION_WEATHER_UPDATE}.
+     *  Skin V2 receives notifications with {@link ru.gelin.android.weather.notification.IntentParameters#ACTION_WEATHER_UPDATE_2}.
      */
     public enum Version {
         V1, V2;

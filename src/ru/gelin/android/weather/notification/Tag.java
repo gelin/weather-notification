@@ -22,7 +22,11 @@
 
 package ru.gelin.android.weather.notification;
 
-public interface Tag {
+public class Tag {
+
+    private Tag() {
+        //avoiding instantiation
+    }
     
     /** This application tag for logging. */
     static final String TAG = Tag.class.getPackage().getName();

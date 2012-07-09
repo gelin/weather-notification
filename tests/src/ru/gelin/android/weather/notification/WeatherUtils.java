@@ -8,7 +8,6 @@ import java.util.TimeZone;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 
-import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;

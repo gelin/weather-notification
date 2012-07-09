@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE;
-import static ru.gelin.android.weather.notification.skin.IntentParameters.ACTION_WEATHER_UPDATE_2;
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE;
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE_2;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.preference.PreferenceManager;
+import ru.gelin.android.weather.notification.IntentParameters;
 
 /**
  * 	Contains methods to handle list of installed skins.

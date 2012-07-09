@@ -42,7 +42,6 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.google.AndroidGoogleLocation;
 import ru.gelin.android.weather.google.GoogleWeatherSource;
-import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -187,7 +186,7 @@ public class UpdateService extends Service implements Runnable {
     
     void skipUpdate(WeatherStorage storage, String logMessage) {
         stopSelf();
-        Log.d(TAG, logMessage);
+        Log.d(Tag.TAG, logMessage);
         storage.updateTime();
         WeatherNotificationManager.update(this);
     }
@@ -246,7 +245,7 @@ public class UpdateService extends Service implements Runnable {
             switch (msg.what) {
             case SUCCESS:
                 synchronized(UpdateService.this) {
-                    Log.i(TAG, "received weather: " + 
+                    Log.i(Tag.TAG, "received weather: " +
                             weather.getLocation().getText() + " " + weather.getTime());
                     if (weather.isEmpty()) {
                         storage.updateTime();
@@ -263,7 +262,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case FAILURE:
                 synchronized(UpdateService.this) {
-                    Log.w(TAG, "failed to update weather", updateError);
+                    Log.w(Tag.TAG, "failed to update weather", updateError);
                     storage.updateTime();
                     if (verbose) {
                         Toast.makeText(UpdateService.this, 
@@ -274,7 +273,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case UNKNOWN_LOCATION:
                 synchronized(UpdateService.this) {
-                    Log.w(TAG, "failed to get location");
+                    Log.w(Tag.TAG, "failed to get location");
                     storage.updateTime();
                     if (verbose) {
                         Toast.makeText(UpdateService.this, 
@@ -285,7 +284,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case QUERY_LOCATION:
                 synchronized(UpdateService.this) {
-                    Log.d(TAG, "quering new location");
+                    Log.d(Tag.TAG, "quering new location");
                     //storage.updateTime();     //don't signal about update
                 }
                 break;
@@ -335,10 +334,10 @@ public class UpdateService extends Service implements Runnable {
         AlarmManager alarmManager = (AlarmManager)getSystemService(
                 Context.ALARM_SERVICE);
         if (notificationEnabled) {
-            Log.d(TAG, "scheduling update to " + new Date(nextUpdate));
+            Log.d(Tag.TAG, "scheduling update to " + new Date(nextUpdate));
             alarmManager.set(AlarmManager.RTC, nextUpdate, pendingIntent);
         } else {
-            Log.d(TAG, "cancelling update schedule");
+            Log.d(Tag.TAG, "cancelling update schedule");
             alarmManager.cancel(pendingIntent);
         }
     }
@@ -380,7 +379,7 @@ public class UpdateService extends Service implements Runnable {
             addresses = coder.getFromLocation(location.getLatitude(),
                     location.getLongitude(), 1);
         } catch (IOException e) {
-            Log.w(TAG, "cannot decode location", e);
+            Log.w(Tag.TAG, "cannot decode location", e);
             return null;
         }
         if (addresses == null || addresses.size() == 0) {
@@ -396,7 +395,7 @@ public class UpdateService extends Service implements Runnable {
         if (this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             //android.location.Location location = (android.location.Location)this.startIntent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
             //Log.d(TAG, "location updated: " + new Date(location.getTime()));
-            Log.d(TAG, "location updated");
+            Log.d(Tag.TAG, "location updated");
             LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             manager.removeUpdates(getPendingIntent(this.startIntent));
         }

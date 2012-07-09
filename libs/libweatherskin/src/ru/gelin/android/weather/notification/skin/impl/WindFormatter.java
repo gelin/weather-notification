@@ -22,7 +22,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
-import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.skin.R;
 import android.content.Context;
 
 public class WindFormatter {

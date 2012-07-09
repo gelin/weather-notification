@@ -20,10 +20,10 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin;
+package ru.gelin.android.weather.notification;
 
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.Tag;
+import ru.gelin.android.weather.notification.skin.Tag;
 
 public class IntentParameters {
 

@@ -40,8 +40,8 @@ import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.Tag;
 
-import static ru.gelin.android.weather.notification.Tag.TAG;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
@@ -83,13 +83,13 @@ abstract public class BaseWeatherNotificationReceiver extends
     
     @Override
     protected void cancel(Context context) {
-        Log.d(TAG, "cancelling weather");
+        Log.d(Tag.TAG, "cancelling weather");
         getNotificationManager(context).cancel(ID);
     }
 
     @Override
     protected void notify(Context context, Weather weather) {
-        Log.d(TAG, "displaying weather: " + weather);
+        Log.d(Tag.TAG, "displaying weather: " + weather);
         
         WeatherStorage storage = new WeatherStorage(context);
         storage.save(weather);

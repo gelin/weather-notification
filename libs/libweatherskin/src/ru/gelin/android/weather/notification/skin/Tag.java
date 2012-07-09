@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2011  Denis Nelubin aka Gelin
+ *  Copyright (C) 2010  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,15 @@
  *  mailto:den@gelin.ru
  */
 
-/**
- *  Commons classes to create a skin.
- */
-package ru.gelin.android.weather.notification.skin.impl;
+package ru.gelin.android.weather.notification.skin;
+
+public class Tag {
+
+    private Tag() {
+        //avoiding instantiation
+    }
+
+    /** This application tag for logging. */
+    public static final String TAG = Tag.class.getPackage().getName();
+
+}

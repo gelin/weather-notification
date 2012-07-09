@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification;
 
-import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import android.os.Handler;
 import android.preference.PreferenceActivity;
 
