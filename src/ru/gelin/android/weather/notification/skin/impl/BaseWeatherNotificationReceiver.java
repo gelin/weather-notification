@@ -22,19 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.Tag.TAG;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.notification.ParcelableWeather2;
-import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -47,6 +34,17 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import ru.gelin.android.weather.Temperature;
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.notification.ParcelableWeather2;
+import ru.gelin.android.weather.notification.WeatherStorage;
+
+import static ru.gelin.android.weather.notification.Tag.TAG;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
  *  Weather notification receiver built into basic application.
@@ -109,6 +107,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         Notification notification = new Notification();
         
         notification.icon = getNotificationIconId();
+        //notification.largeIcon = BitmapFactory.decodeResource(context.getResources(), notification.icon); //TODO
         
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
