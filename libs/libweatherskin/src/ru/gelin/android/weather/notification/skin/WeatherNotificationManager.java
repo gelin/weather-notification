@@ -20,17 +20,20 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.skin;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.IntentParameters;
+import ru.gelin.android.weather.notification.ParcelableWeather;
+import ru.gelin.android.weather.notification.ParcelableWeather2;
+import ru.gelin.android.weather.notification.WeatherStorage;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
-import static ru.gelin.android.weather.notification.IntentParameters.*;
 
 /**
  *  Managers the broadcast receivers to receive the weather notification.
@@ -111,9 +114,9 @@ public class WeatherNotificationManager {
      */
     static Intent createIntent(SkinInfo skin, boolean enableNotification, Weather weather) {
         switch (skin.getVersion()) {
-        case Version.V1:
+        case V1:
             return createIntent(enableNotification, weather);
-        case Version.V2:
+        case V2:
             return createIntent2(enableNotification, weather);
         }
         throw new RuntimeException("unknown skin version");

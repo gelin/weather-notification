@@ -20,35 +20,31 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
-import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS;
-import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_CATEGORY;
-import static ru.gelin.android.weather.notification.PreferenceKeys.SKINS_INSTALL;
-import static ru.gelin.android.weather.notification.WeatherStorage.WEATHER;
-
-import java.util.List;
-
-import ru.gelin.android.weather.notification.skin.SkinInfo;
-import ru.gelin.android.weather.notification.skin.SkinManager;
-import ru.gelin.android.weather.notification.skin.SkinsActivity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.view.Window;
 import android.widget.Toast;
+import ru.gelin.android.weather.notification.AppUtils;
+import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.skin.SkinInfo;
+import ru.gelin.android.weather.notification.skin.SkinManager;
+import ru.gelin.android.weather.notification.skin.SkinsActivity;
+import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 
-public class MainActivity extends UpdateNotificationActivity 
+import java.util.List;
+
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
+
+public class MainActivity extends UpdateNotificationActivity
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
     static final Uri SKIN_SEARCH_URI=Uri.parse("market://search?q=Weather Notification Skin");
@@ -124,8 +120,7 @@ public class MainActivity extends UpdateNotificationActivity
             startUpdate(false);
             return true;
         }
-        if (AUTO_LOCATION.equals(key) || 
-                LOCATION.equals(key)) {
+        if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
             startUpdate(true);
             return true;
         }
@@ -134,17 +129,7 @@ public class MainActivity extends UpdateNotificationActivity
     
     void startUpdate(boolean force) {
         setProgressBarIndeterminateVisibility(true);
-        UpdateService.start(this, true, force);
+        AppUtils.startUpdateService(this, true, force);
     }
     
-    /**
-     *  Starts the main activity.
-     */
-    public static void start(Context context) {
-        Intent startIntent = new Intent();
-        startIntent.setClassName(Tag.class.getPackage().getName(), MainActivity.class.getName());
-        startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        context.startActivity(startIntent);
-    }
-
 }

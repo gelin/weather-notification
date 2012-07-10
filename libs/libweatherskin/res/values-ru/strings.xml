@@ -24,28 +24,10 @@
 
 <resources>
     <string name="app_name">Библиотека для внешнего вида уведомления о погоде</string>
-    <string name="weather">Погода</string>
-    <string name="notification">Уведомление</string>
-    <string name="enable_notification">Включить уведомление</string>
-    <string name="refresh_interval">Период обновления</string>
-    <string name="refresh_15m">Каждые пятнадцать минут</string>
-    <string name="refresh_30m">Каждые тридцать минут</string>
-    <string name="refresh_1h">Каждый час</string>
-    <string name="refresh_2h">Каждые два часа</string>
-    <string name="refresh_3h">Каждые три часа</string>
-    <string name="refresh_4h">Каждые четыре часа</string>
-    <string name="refresh_6h">Каждые шесть часов</string>
-    <string name="refresh_12h">Каждые двенадцать часов</string>
-    <string name="refresh_1d">Каждый день</string>
     <string name="notification_icon_style">Цвет текста значка</string>
     <string name="notification_text_style">Цвет текста уведомления</string>
     <string name="notification_style_black_text">Черный текст</string>
     <string name="notification_style_white_text">Белый текст</string>
-    <string name="location">Местоположение</string>
-    <string name="auto_location">Определять автоматически</string>
-    <string name="auto_location_summary_on">Автоматически определять текущее местоположение</string>
-    <string name="auto_location_summary_off">Задать местоположение вручную</string>
-    <string name="manual_location">Местоположение</string>
     <string name="temp_unit">Единица изменения температуры</string>
     <string name="celsius">Градусы Цельсия</string>
     <string name="fahrenheit">Градусы Фаренгейта</string>
@@ -54,24 +36,10 @@
     <string name="update_time_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
     <string name="update_date_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td</string>
     <string name="unknown_weather">Погода неизвестна</string>
-    <string name="weather_update_empty">Погода для \"%s\" неизвестна</string>
-    <string name="weather_update_failed">Не удалось обновить погоду: %s</string>
-    <string name="weather_update_no_network">Не удалось обновить погоду: нет подключения к Сети</string>
-    <string name="weather_update_unknown_location">Не удалось обновить погоду: местоположение неизвестно</string>
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
     <string name="forecast_text" formatted="false">%ta: %s/%s</string>
     <string name="update_time_short" formatted="false">{0,choice,0#&lt;15м|15#&lt;30м|30#&lt;1ч|60#&lt;2ч|120#&lt;3ч|180#&lt;4ч|240#&lt;5ч|300#&lt;6ч|360#&lt;12ч|720#&lt;1д|1440#&lt;2д|2880#>2д}</string>
-    <string name="skin">Вид</string>
-	<string name="skins">Внешний вид</string>
-	<string name="skins_preferences">Настройки внешнего вида</string>
-    <string name="skins_install">Скачать внешний вид</string>
-    <string name="skins_install_notice">Вам СЛЕДУЕТ УСТАНОВИТЬ \"ШКУРКУ\", чтобы получить больше возможностей. Пожалуйста, выберите \"Скачать внешний вид\" внизу этого экрана.</string>
-    <string name="skins_install_notice_no_market">Вам СЛЕДУЕТ УСТАНОВИТЬ \"ШКУРКУ\", чтобы получить больше возможностей. Найдите приложения с именем \"Weather Notification Skin\" в Android Market и установите их.</string>
-    <string name="builtin_skin">Встроенный вид</string>
-    <string name="builtin_skin_preferences">Настройки встроенного вида</string>
-    <string name="start_update_service_permission">запускать сервис обновления погоды</string>
-    <string name="start_update_service_permission_description">Разрешает приложению запускать сервис обновления погоды, чтобы получать новые значения погоды.</string>
     <string name="wind_dir_n">С</string>
     <string name="wind_dir_nne">ССВ</string>
     <string name="wind_dir_ne">СВ</string>

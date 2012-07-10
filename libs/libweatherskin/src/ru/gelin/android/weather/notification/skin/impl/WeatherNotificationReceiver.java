@@ -31,7 +31,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.MainActivity;
+import ru.gelin.android.weather.notification.AppUtils;
 import ru.gelin.android.weather.notification.IntentParameters;
 import ru.gelin.android.weather.notification.skin.Tag;
 
@@ -112,8 +112,7 @@ public abstract class WeatherNotificationReceiver extends BroadcastReceiver {
      *  @param  context current context
      */
     protected static PendingIntent getMainActivityPendingIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intent = AppUtils.getMainActivityIntent();
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 

@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2012  Denis Nelubin aka Gelin
+ *  Copyright (C) 2010  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,21 +20,39 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+import ru.gelin.android.weather.notification.AppUtils;
 
 /**
- *  Broadcast receiver which receives event about availability of new applicatons installed on SD card.
- *  Starts UpdateService to update weather information for skins installed on SD card.
+ *  Broadcast receiver which receives event about changes of network connectivity.
+ *  Starts UpdateService if the network goes up.
  */
-public class ExternalAppsAvailableReceiver extends BroadcastReceiver {
+public class NetworkConnectivityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive (Context context, Intent intent) {
-        UpdateService.start(context);
+        boolean noConnection = 
+            intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+        if (noConnection) {
+            return;
+        }
+        NetworkInfo info = 
+            (NetworkInfo)intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+        if (info == null) {
+            return;
+        }
+        if (!info.isAvailable()) {
+            return;
+        }
+        Log.d(Tag.TAG, "network is up");
+        AppUtils.startUpdateService(context);
     }
 
 }

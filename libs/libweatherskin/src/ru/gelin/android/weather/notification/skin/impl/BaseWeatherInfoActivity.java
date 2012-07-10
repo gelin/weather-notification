@@ -25,8 +25,6 @@ package ru.gelin.android.weather.notification.skin.impl;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 import static ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver.WEATHER_KEY;
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.MainActivity;
-import ru.gelin.android.weather.notification.UpdateService;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
 import android.content.Context;
@@ -37,6 +35,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import ru.gelin.android.weather.notification.AppUtils;
 
 /**
  *  Base class for weather info activity.
@@ -57,7 +56,7 @@ abstract public class BaseWeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 startProgress();
-                UpdateService.start(BaseWeatherInfoActivity.this, true, true);
+                AppUtils.startUpdateService(BaseWeatherInfoActivity.this, true, true);
             }
         });
         
@@ -66,7 +65,7 @@ abstract public class BaseWeatherInfoActivity extends Activity {
             //@Override
             public void onClick(View v) {
                 finish();
-                MainActivity.start(BaseWeatherInfoActivity.this);
+                AppUtils.startMainActivity(BaseWeatherInfoActivity.this);
             }
         });
         

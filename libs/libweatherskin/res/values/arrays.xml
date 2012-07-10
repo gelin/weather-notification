@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2010  Denis Nelubin aka Gelin
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+
+    <string-array name="notification_style_entries">
+        <item>@string/notification_style_black_text</item>
+        <item>@string/notification_style_white_text</item>
+    </string-array>
+    <string-array name="notification_style_values">
+        <item>BLACK_TEXT</item>
+        <item>WHITE_TEXT</item>
+    </string-array>
+    
+    <string-array name="temp_unit_entries">
+        <item>@string/celsius</item>
+        <item>@string/fahrenheit</item>
+        <item>@string/celsius_and_fahrenheit</item>
+        <item>@string/fahrenheit_and_celsius</item>
+    </string-array>
+    <string-array name="temp_unit_values">
+        <item>C</item>
+        <item>F</item>
+        <item>CF</item>
+        <item>FC</item>
+    </string-array>
+
+    <string-array name="wind_speed_unit_entries">
+        <item>@string/wind_speed_unit_mph</item>
+        <item>@string/wind_speed_unit_kmph</item>
+        <item>@string/wind_speed_unit_mps</item>
+    </string-array>
+    <string-array name="wind_speed_unit_values">
+        <item>MPH</item>
+        <item>KMPH</item>
+        <item>MPS</item>
+    </string-array>
+
+</resources>

@@ -20,28 +20,8 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.AUTO_LOCATION_DEFAULT;
-import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
-import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION;
-import static ru.gelin.android.weather.notification.PreferenceKeys.LOCATION_DEFAULT;
-import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL;
-import static ru.gelin.android.weather.notification.PreferenceKeys.REFRESH_INTERVAL_DEFAULT;
-import static ru.gelin.android.weather.notification.Tag.TAG;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherSource;
-import ru.gelin.android.weather.google.AndroidGoogleLocation;
-import ru.gelin.android.weather.google.GoogleWeatherSource;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -59,20 +39,34 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.SimpleLocation;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherSource;
+import ru.gelin.android.weather.google.AndroidGoogleLocation;
+import ru.gelin.android.weather.google.GoogleWeatherSource;
+import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+import static ru.gelin.android.weather.notification.AppUtils.EXTRA_FORCE;
+import static ru.gelin.android.weather.notification.AppUtils.EXTRA_VERBOSE;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
+import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.app.Tag.TAG;
 
 /**
  *  Service to update weather.
  *  Just start it. The new weather values will be wrote to SharedPreferences
- *  (use {@link WeatherStorage} to extract them).
+ *  (use {@link ru.gelin.android.weather.notification.WeatherStorage} to extract them).
  */
 public class UpdateService extends Service implements Runnable {
 
-    /** Activity action to start the service */
-    public static String ACTION_START_UPDATE_SERVICE = Tag.class.getPackage().getName() + ".ACTION_START_UPDATE_SERVICE";
-    /** Verbose extra name for the service start intent. */
-    public static String EXTRA_VERBOSE = "verbose";
-    /** Force extra name for the service start intent. */
-    public static String EXTRA_FORCE = "force";
     /** Success update message */
     static final int SUCCESS = 0;
     /** Failure update message */
@@ -104,35 +98,7 @@ public class UpdateService extends Service implements Runnable {
     Exception updateError;
     /** Intent which starts the service */
     Intent startIntent;
-    
-    /**
-     *  Starts the service.
-     */
-    public static void start(Context context) {
-        start(context, false, false);
-    }
-    
-    /**
-     *  Starts the service.
-     */
-    public static void start(Context context, boolean verbose) {
-        start(context, verbose, false);
-    }
-    
-    /**
-     *  Starts the service.
-     *  If the verbose is true, the update errors will be displayed as toasts.
-     *  If the force is true, the update will start even when the weather is
-     *  not expired. 
-     */
-    public static void start(Context context, boolean verbose, boolean force) {
-        Intent startIntent = new Intent(ACTION_START_UPDATE_SERVICE);
-        //startIntent.setClassName(UpdateService.class.getPackage().getName(), UpdateService.class.getName());
-        startIntent.putExtra(EXTRA_VERBOSE, verbose);
-        startIntent.putExtra(EXTRA_FORCE, force);
-        context.startService(startIntent);
-    }
-    
+
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
@@ -172,7 +138,7 @@ public class UpdateService extends Service implements Runnable {
                 skipUpdate(storage, "skipping update, no network");
                 if (verbose) {
                     Toast.makeText(UpdateService.this, 
-                            getString(R.string.weather_update_no_network), 
+                            getString(R.string.weather_update_no_network),
                             Toast.LENGTH_LONG).show();
                 }
                 return;
@@ -186,7 +152,7 @@ public class UpdateService extends Service implements Runnable {
     
     void skipUpdate(WeatherStorage storage, String logMessage) {
         stopSelf();
-        Log.d(Tag.TAG, logMessage);
+        Log.d(TAG, logMessage);
         storage.updateTime();
         WeatherNotificationManager.update(this);
     }
@@ -245,7 +211,7 @@ public class UpdateService extends Service implements Runnable {
             switch (msg.what) {
             case SUCCESS:
                 synchronized(UpdateService.this) {
-                    Log.i(Tag.TAG, "received weather: " +
+                    Log.i(TAG, "received weather: " +
                             weather.getLocation().getText() + " " + weather.getTime());
                     if (weather.isEmpty()) {
                         storage.updateTime();
@@ -262,7 +228,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case FAILURE:
                 synchronized(UpdateService.this) {
-                    Log.w(Tag.TAG, "failed to update weather", updateError);
+                    Log.w(TAG, "failed to update weather", updateError);
                     storage.updateTime();
                     if (verbose) {
                         Toast.makeText(UpdateService.this, 
@@ -273,7 +239,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case UNKNOWN_LOCATION:
                 synchronized(UpdateService.this) {
-                    Log.w(Tag.TAG, "failed to get location");
+                    Log.w(TAG, "failed to get location");
                     storage.updateTime();
                     if (verbose) {
                         Toast.makeText(UpdateService.this, 
@@ -284,7 +250,7 @@ public class UpdateService extends Service implements Runnable {
                 break;
             case QUERY_LOCATION:
                 synchronized(UpdateService.this) {
-                    Log.d(Tag.TAG, "quering new location");
+                    Log.d(TAG, "quering new location");
                     //storage.updateTime();     //don't signal about update
                 }
                 break;
@@ -334,10 +300,10 @@ public class UpdateService extends Service implements Runnable {
         AlarmManager alarmManager = (AlarmManager)getSystemService(
                 Context.ALARM_SERVICE);
         if (notificationEnabled) {
-            Log.d(Tag.TAG, "scheduling update to " + new Date(nextUpdate));
+            Log.d(TAG, "scheduling update to " + new Date(nextUpdate));
             alarmManager.set(AlarmManager.RTC, nextUpdate, pendingIntent);
         } else {
-            Log.d(Tag.TAG, "cancelling update schedule");
+            Log.d(TAG, "cancelling update schedule");
             alarmManager.cancel(pendingIntent);
         }
     }
@@ -379,7 +345,7 @@ public class UpdateService extends Service implements Runnable {
             addresses = coder.getFromLocation(location.getLatitude(),
                     location.getLongitude(), 1);
         } catch (IOException e) {
-            Log.w(Tag.TAG, "cannot decode location", e);
+            Log.w(TAG, "cannot decode location", e);
             return null;
         }
         if (addresses == null || addresses.size() == 0) {
@@ -395,7 +361,7 @@ public class UpdateService extends Service implements Runnable {
         if (this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             //android.location.Location location = (android.location.Location)this.startIntent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
             //Log.d(TAG, "location updated: " + new Date(location.getTime()));
-            Log.d(Tag.TAG, "location updated");
+            Log.d(TAG, "location updated");
             LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             manager.removeUpdates(getPendingIntent(this.startIntent));
         }

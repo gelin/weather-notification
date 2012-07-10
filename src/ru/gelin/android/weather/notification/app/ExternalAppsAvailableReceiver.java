@@ -1,6 +1,6 @@
 /*
  *  Android Weather Notification.
- *  Copyright (C) 2010  Denis Nelubin aka Gelin
+ *  Copyright (C) 2012  Denis Nelubin aka Gelin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,32 +20,22 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather;
+package ru.gelin.android.weather.notification.app;
 
-import org.junit.Before;
-import org.junit.Test;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import ru.gelin.android.weather.notification.AppUtils;
 
-import static org.junit.Assert.assertEquals;
+/**
+ *  Broadcast receiver which receives event about availability of new applicatons installed on SD card.
+ *  Starts UpdateService to update weather information for skins installed on SD card.
+ */
+public class ExternalAppsAvailableReceiver extends BroadcastReceiver {
 
-@SuppressWarnings("deprecation")
-public class SimpleWeatherConditionTest {
-    
-    SimpleWeatherCondition condition;
-    
-    @Before
-    public void setUp() {
-        condition = new SimpleWeatherCondition();
-    }
-    
-    @Test
-    public void testTempInUnits() {
-        SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
-        temp.setCurrent(25, UnitSystem.SI);
-        condition.setTemperature(temp);
-        Temperature temp1 = condition.getTemperature();
-        assertEquals(25, temp1.getCurrent());
-        Temperature temp2 = condition.getTemperature(UnitSystem.US);
-        assertEquals(77, temp2.getCurrent());
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        AppUtils.startUpdateService(context);
     }
 
 }

@@ -58,7 +58,7 @@
     
     <PreferenceCategory android:title="@string/weather">
     
-        <ru.gelin.android.weather.notification.WeatherPreference
+        <ru.gelin.android.weather.notification.app.WeatherPreference
             android:key="weather"/>
     
     </PreferenceCategory>

@@ -20,15 +20,22 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
-public class Tag {
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import ru.gelin.android.weather.notification.AppUtils;
 
-    private Tag() {
-        //avoiding instantiation
+/**
+ *  Broadcast receiver which receives event about boot complete.
+ *  Starts UpdateService.
+ */
+public class BootCompletedReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive (Context context, Intent intent) {
+        AppUtils.startUpdateService(context);
     }
-    
-    /** This application tag for logging. */
-    static final String TAG = Tag.class.getPackage().getName();
 
 }

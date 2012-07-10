@@ -25,6 +25,8 @@ package ru.gelin.android.weather;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 @SuppressWarnings("deprecation")
 public class SimpleTemperatureTest {
     

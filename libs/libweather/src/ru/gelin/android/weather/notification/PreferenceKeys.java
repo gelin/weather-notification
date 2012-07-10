@@ -35,27 +35,5 @@ public class PreferenceKeys {
     public static final String ENABLE_NOTIFICATION = "enable_notification";
     /** Enable notification default value */
     public static final boolean ENABLE_NOTIFICATION_DEFAULT = true;
-    
-    /** Refresh interval preference key */
-    public static final String REFRESH_INTERVAL = "refresh_interval";
-    /** Refresh interval default value */
-    public static final String REFRESH_INTERVAL_DEFAULT = RefreshInterval.REFRESH_1H.toString();
-    
-    /** Auto location preferences key */
-    static final String AUTO_LOCATION = "auto_location";
-    /** Auto location default value */
-    static final boolean AUTO_LOCATION_DEFAULT = true;
-    
-    /** Manual location preferences key */
-    static final String LOCATION = "location";
-    /** Manual location default value */
-    static final String LOCATION_DEFAULT = "";
-    
-    /** Skins preferences category */
-    static final String SKINS_CATEGORY = "skins_category";
-    /** Skins preferences key */
-    static final String SKINS = "skins";
-    /** Skins install preferences key */
-    static final String SKINS_INSTALL = "skins_install";
 
 }

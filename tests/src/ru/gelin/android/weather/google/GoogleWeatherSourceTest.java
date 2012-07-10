@@ -37,6 +37,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.AndroidTestCase;
 
+import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.notification.WeatherUtils;
 
 @SuppressWarnings("deprecation")

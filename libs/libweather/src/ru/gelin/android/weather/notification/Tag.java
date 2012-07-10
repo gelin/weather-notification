@@ -20,32 +20,15 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather;
+package ru.gelin.android.weather.notification;
 
-import org.junit.Before;
-import org.junit.Test;
+public class Tag {
 
-import static org.junit.Assert.assertEquals;
-
-@SuppressWarnings("deprecation")
-public class SimpleWeatherConditionTest {
-    
-    SimpleWeatherCondition condition;
-    
-    @Before
-    public void setUp() {
-        condition = new SimpleWeatherCondition();
+    private Tag() {
+        //avoiding instantiation
     }
-    
-    @Test
-    public void testTempInUnits() {
-        SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
-        temp.setCurrent(25, UnitSystem.SI);
-        condition.setTemperature(temp);
-        Temperature temp1 = condition.getTemperature();
-        assertEquals(25, temp1.getCurrent());
-        Temperature temp2 = condition.getTemperature(UnitSystem.US);
-        assertEquals(77, temp2.getCurrent());
-    }
+
+    /** This application tag for logging. */
+    public static final String TAG = Tag.class.getPackage().getName();
 
 }

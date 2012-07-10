@@ -23,8 +23,9 @@
 package ru.gelin.android.weather.google;
 
 import org.junit.Test;
-
 import ru.gelin.android.weather.Humidity;
+
+import static org.junit.Assert.assertEquals;
 
 public class GoogleHumidityTest {
     

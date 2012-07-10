@@ -20,31 +20,15 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
-import android.os.Handler;
-import android.preference.PreferenceActivity;
+public class Tag {
 
-/**
- *  Basic class which can update all weather notifications.
- */
-public class UpdateNotificationActivity extends PreferenceActivity {
-
-    /** Handler to take notification update actions */
-    Handler handler = new Handler();
-
-    /**
-     *  Performs the deferred update of the notification,
-     *  which allows to return from onPreferenceChange handler to update
-     *  preference value and update the notification later.
-     */
-    protected void updateNotification() {
-        handler.post(new Runnable() {
-            //@Override
-            public void run() {
-                WeatherNotificationManager.update(UpdateNotificationActivity.this);
-            }
-        });
+    private Tag() {
+        //avoiding instantiation
     }
+    
+    /** This application tag for logging. */
+    static final String TAG = Tag.class.getPackage().getName();
 
 }

@@ -26,7 +26,7 @@ import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOT
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
-import ru.gelin.android.weather.notification.UpdateNotificationActivity;
+import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;

@@ -20,9 +20,12 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification;
+package ru.gelin.android.weather.notification.app;
 
 import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.AppUtils;
+import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.WeatherStorage;
 import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -60,7 +63,7 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
     @Override
     protected void onClick() {
         super.onClick();
-        UpdateService.start(getContext(), true, true);
+        AppUtils.startUpdateService(getContext(), true, true);
     }
     
     @Override

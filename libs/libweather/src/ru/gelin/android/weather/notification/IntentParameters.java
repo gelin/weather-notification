@@ -23,7 +23,6 @@
 package ru.gelin.android.weather.notification;
 
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.skin.Tag;
 
 public class IntentParameters {
 
@@ -60,5 +59,9 @@ public class IntentParameters {
     /** Intent action for the skin configuration activity */
     public static final String ACTION_WEATHER_SKIN_PREFERENCES =
         Tag.class.getPackage().getName() + ".ACTION_WEATHER_SKIN_PREFERENCES";
+
+    private IntentParameters() {
+        //avoid instantiation
+    }
 
 }
