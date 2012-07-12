@@ -26,23 +26,23 @@
 
     <ru.gelin.android.preference.SummaryListPreference
             android:key="notification_text_style"
-            android:title="@string/notification_text_style"
-            android:entries="@array/notification_style_entries"
-            android:entryValues="@array/notification_style_values"
+            android:title="@ru.gelin.android.weather.notification.skin:string/notification_text_style"
+            android:entries="@ru.gelin.android.weather.notification.skin:array/notification_style_entries"
+            android:entryValues="@ru.gelin.android.weather.notification.skin:array/notification_style_values"
             android:defaultValue="BLACK_TEXT"/>
 
     <ru.gelin.android.preference.SummaryListPreference
             android:key="temp_unit"
-            android:title="@string/temp_unit"
-            android:entries="@array/temp_unit_entries"
-            android:entryValues="@array/temp_unit_values"
+            android:title="@ru.gelin.android.weather.notification.skin:string/temp_unit"
+            android:entries="@ru.gelin.android.weather.notification.skin:array/temp_unit_entries"
+            android:entryValues="@ru.gelin.android.weather.notification.skin:array/temp_unit_values"
             android:defaultValue="C"/>
 
     <ru.gelin.android.preference.SummaryListPreference
             android:key="ws_unit"
-            android:title="@string/wind_speed_unit"
-            android:entries="@array/wind_speed_unit_entries"
-            android:entryValues="@array/wind_speed_unit_values"
+            android:title="@ru.gelin.android.weather.notification.skin:string/wind_speed_unit"
+            android:entries="@ru.gelin.android.weather.notification.skin:array/wind_speed_unit_entries"
+            android:entryValues="@ru.gelin.android.weather.notification.skin:array/wind_speed_unit_values"
             android:defaultValue="MPH"/>
 
 </PreferenceScreen>
