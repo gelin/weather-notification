@@ -120,7 +120,7 @@ public class WeatherUtils {
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(2010, Calendar.DECEMBER, 28, 6, 0, 0);
         AndroidTestCase.assertEquals(calendar.getTime(), weather.getTime());
-        AndroidTestCase.assertEquals(UnitSystem.US, weather.getUnitSystem());
+        AndroidTestCase.assertEquals(ru.gelin.android.weather.v_0_2.UnitSystem.US, weather.getUnitSystem());
         AndroidTestCase.assertEquals(4, weather.getConditions().size());
         
         ru.gelin.android.weather.v_0_2.WeatherCondition condition0 = weather.getConditions().get(0);
