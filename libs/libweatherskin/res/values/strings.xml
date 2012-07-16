@@ -24,6 +24,7 @@
 
 <resources>
     <string name="app_name">Weather notification skin library</string>
+    <string name="weather">Weather</string>
     <string name="notification_icon_style">Icon text color</string>
     <string name="notification_text_style">Notification text color</string>
     <string name="notification_style_black_text">Black text</string>

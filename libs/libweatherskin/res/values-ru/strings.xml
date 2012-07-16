@@ -24,6 +24,7 @@
 
 <resources>
     <string name="app_name">Библиотека для внешнего вида уведомления о погоде</string>
+    <string name="weather">Погода</string>
     <string name="notification_icon_style">Цвет текста значка</string>
     <string name="notification_text_style">Цвет текста уведомления</string>
     <string name="notification_style_black_text">Черный текст</string>
