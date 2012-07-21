@@ -29,6 +29,6 @@ public class Tag {
     }
     
     /** This application tag for logging. */
-    static final String TAG = Tag.class.getPackage().getName();
+    public static final String TAG = Tag.class.getPackage().getName();
 
 }

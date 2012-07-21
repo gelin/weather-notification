@@ -90,8 +90,7 @@
         
         <activity android:name=".skin.builtin.WeatherInfoActivity"
                   android:label="@string/weather"
-                  android:theme="@android:style/Theme.Dialog"
-                  android:exported="true"/>
+                  android:theme="@android:style/Theme.Dialog"/>
         
     </application>
     
