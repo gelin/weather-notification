@@ -11,13 +11,13 @@ public class AppUtils {
     /** Main app package name */
     private static final String APP_PACKAGE_NAME = Tag.class.getPackage().getName();
 
-    /** Main app activity class name */
-    private static final String MAIN_ACTIVITIY_CLASS_NAME =
-            APP_PACKAGE_NAME + ".app.MainActivity";
-
     /** Intent action to start the service */
     private static String ACTION_START_UPDATE_SERVICE =
             APP_PACKAGE_NAME + ".ACTION_START_UPDATE_SERVICE";
+
+    /** Intent action to start the main activity */
+    private static String ACTION_START_MAIN_ACTIVITY =
+            APP_PACKAGE_NAME + ".ACTION_START_MAIN_ACTIVITY";
 
     /** Verbose extra name for the service start intent. */
     public static String EXTRA_VERBOSE = "verbose";
@@ -28,8 +28,7 @@ public class AppUtils {
      *  Returns intent to start the main activity.
      */
     public static Intent getMainActivityIntent() {
-        Intent startIntent = new Intent();
-        startIntent.setClassName(APP_PACKAGE_NAME, MAIN_ACTIVITIY_CLASS_NAME);
+        Intent startIntent = new Intent(ACTION_START_MAIN_ACTIVITY);
         startIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return startIntent;
     }
