@@ -27,7 +27,7 @@ import android.view.View;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
 
 /**
- *  Silently extends the basic weather info activity.
+ *  Extends the basic weather info activity.
  *  Overrides weather layout to render temp values with "+" sign.
  */
 public class WeatherInfoActivity extends BaseWeatherInfoActivity {

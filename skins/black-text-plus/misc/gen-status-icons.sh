@@ -24,6 +24,7 @@
 
 font=Droid-Sans-Bold
 
+xhdpi_params="50x50 24 drawable-xhdpi"
 hdpi_params="38x38 19 drawable-hdpi"
 mdpi_params="25x25 12 drawable"
 ldpi_params="19x19 9 drawable-ldpi"
@@ -48,6 +49,7 @@ gen_image() {
 t=60
 while [ $t -ge 10 ]
 do
+    gen_image $xhdpi_params "-$t°" minus_$t
     gen_image $hdpi_params "-$t°" minus_$t
     gen_image $mdpi_params "-$t°" minus_$t
     gen_image $ldpi_params "-$t°" minus_$t
@@ -59,6 +61,7 @@ done
 t=9
 while [ $t -ge 1 ]
 do
+    gen_image $xhdpi_params "-$t°" minus_$t
     gen_image $hdpi_params "-$t°" minus_$t
     gen_image $mdpi_params "-$t°" minus_$t
     gen_image $ldpi_params "-$t°" minus_$t
@@ -67,6 +70,7 @@ do
 done
 
 #0
+    gen_image $xhdpi_params "0°" 0
     gen_image $hdpi_params "0°" 0
     gen_image $mdpi_params "0°" 0
     gen_image $ldpi_params "0°" 0
@@ -75,6 +79,7 @@ done
 t=1
 while [ $t -le 9 ]
 do
+    gen_image $xhdpi_params "+$t°" plus_$t
     gen_image $hdpi_params "+$t°" plus_$t
     gen_image $mdpi_params "+$t°" plus_$t
     gen_image $ldpi_params "+$t°" plus_$t
@@ -86,6 +91,7 @@ done
 t=10
 while [ $t -le 99 ]
 do
+    gen_image $xhdpi_params "+$t°" plus_$t
     gen_image $hdpi_params "+$t°" plus_$t
     gen_image $mdpi_params "+$t°" plus_$t
     gen_image $ldpi_params "+$t°" plus_$t
@@ -97,6 +103,7 @@ done
 t=100
 while [ $t -le 130 ]
 do
+    gen_image $xhdpi_params "$t°" plus_$t
     gen_image $hdpi_params "$t°" plus_$t
     gen_image $mdpi_params "$t°" plus_$t
     gen_image $ldpi_params "$t°" plus_$t

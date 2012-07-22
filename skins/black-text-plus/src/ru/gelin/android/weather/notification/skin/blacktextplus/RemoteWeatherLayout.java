@@ -34,8 +34,8 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType unit) {
-        super(context, views, unit);
+    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType type) {
+        super(context, views, type);
     }
     
     @Override
