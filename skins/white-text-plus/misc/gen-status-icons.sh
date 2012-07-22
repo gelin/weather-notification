@@ -24,7 +24,7 @@
 
 font=Droid-Sans-Bold
 
-xhdpi_params="50x50 26 drawable-xhdpi"
+xhdpi_params="50x50 24 drawable-xhdpi"
 hdpi_params="38x38 19 drawable-hdpi"
 mdpi_params="25x25 12 drawable"
 ldpi_params="19x19 9 drawable-ldpi"

@@ -46,17 +46,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 2.2" jdkType="Android SDK" />
-    <orderEntry type="module" module-name="weather-notification-android" />
-    <orderEntry type="module-library">
-      <library name="junit4">
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="jdk" jdkName="Android 3.0" jdkType="Android SDK" />
+    <orderEntry type="module" module-name="libpreference" />
+    <orderEntry type="module" module-name="libweather" />
+    <orderEntry type="module" module-name="libweatherskin" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

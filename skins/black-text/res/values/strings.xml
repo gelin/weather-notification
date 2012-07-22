@@ -2,7 +2,7 @@
 
 <!--
 #   Android Weather Notification.
-#   Copyright (C) 2010  Denis Nelubin aka Gelin
+#   Copyright (C) 2012  Denis Nelubin aka Gelin
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,21 +24,6 @@
 
 <resources>
 	<string name="app_name">Weather notification skin: black text</string>
-	<string name="weather">Weather</string>
-    <string name="skin_name">Black text</string>
+	<string name="skin_name">Black text</string>
     <string name="skin_preferences">Black text preferences</string>
-    <string name="notification_text_style">Notification text color</string>
-    <string name="notification_style_black_text">Black text</string>
-    <string name="notification_style_white_text">White text</string>
-    <string name="temp_unit">Temperature units</string>
-    <string name="celsius">Celsius</string>
-    <string name="fahrenheit">Fahrenheit</string>
-    <string name="celsius_and_fahrenheit">Celsius(Fahrenheit)</string>
-    <string name="fahrenheit_and_celsius">Fahrenheit(Celsius)</string>
-    <string name="update_time_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td %&lt;tH:%&lt;tM</string>
-    <string name="update_date_format" formatted="false">%ta, %&lt;tY-%&lt;tm-%&lt;td</string>
-    <string name="unknown_weather">Weather is unknown</string>
-    <string name="forecast_day_format">%ta</string>
-    <string name="notification_ticker" formatted="false">%s %s</string>
-    <string name="forecast_text" formatted="false">%ta: %s/%s</string>
 </resources>

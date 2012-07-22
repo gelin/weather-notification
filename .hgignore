@@ -8,3 +8,5 @@ glob:upload.credentials.properties
 glob:.idea
 glob:*.bak
 glob:ant.properties
+syntax: glob
+proguard-project.txt

@@ -23,16 +23,6 @@
 -->
 
 <resources>
-	<string name="weather">Погода</string>
-    <string name="skin_name">Черный текст</string>
+	<string name="skin_name">Черный текст</string>
     <string name="skin_preferences">Настройки - черный текст</string>
-    <string name="notification_text_style">Цвет текста уведомления</string>
-    <string name="notification_style_black_text">Черный текст</string>
-    <string name="notification_style_white_text">Белый текст</string>
-    <string name="temp_unit">Единица изменения температуры</string>
-    <string name="celsius">Градусы Цельсия</string>
-    <string name="fahrenheit">Градусы Фаренгейта</string>
-    <string name="celsius_and_fahrenheit">Градусы Цельсия и Фаренгейта С&#x00B0;(F&#x00B0;)</string>
-    <string name="fahrenheit_and_celsius">Градусы Фаренгейта и Цельсия F&#x00B0;(C&#x00B0;)</string>
-    <string name="unknown_weather">Погода неизвестна</string>
 </resources>
