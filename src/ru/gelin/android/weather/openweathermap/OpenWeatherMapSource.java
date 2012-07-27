@@ -21,18 +21,9 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     /** API URL */
     static final String API_URL = "http://openweathermap.org/data/getrect?";
 
-    JSONObject json;
-
     @Override
     public Weather query(Location location) throws WeatherException {
-        String url = API_URL + location.getQuery();
-        JSONTokener parser = new JSONTokener(readJSON(url));
-        try {
-            this.json = (JSONObject)parser.nextValue();
-        } catch (JSONException e) {
-            throw new WeatherException("can't parse weather", e);
-        }
-        return null;
+        return new OpenWeatherMapWeather(queryJSON(location));
     }
 
     @Override
@@ -41,12 +32,21 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         //TODO: what to do with locale?
     }
 
+    JSONObject queryJSON(Location location) throws WeatherException {
+        String url = API_URL + location.getQuery();
+        JSONTokener parser = new JSONTokener(readJSON(url));
+        try {
+            return (JSONObject)parser.nextValue();
+        } catch (JSONException e) {
+            throw new WeatherException("can't parse weather", e);
+        }
+    }
+
     String readJSON(String url) throws WeatherException {
         StringBuilder result = new StringBuilder();
         InputStreamReader reader = getReaderForURL(url);
         try {
-            int c = 0;  //TODO: optimize
-            c = reader.read();
+            int c = reader.read();  //TODO: optimize
             while (c >= 0) {
                 result.append((char)c);
                 c = reader.read();
