@@ -19,6 +19,12 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertFalse(weather.isEmpty());
     }
 
+    public void testGetTemperature() throws IOException, JSONException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_station.json"));
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(26, condition.getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();
