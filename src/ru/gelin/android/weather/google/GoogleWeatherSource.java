@@ -22,84 +22,38 @@
 
 package ru.gelin.android.weather.google;
 
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherException;
+import ru.gelin.android.weather.WeatherSource;
+import ru.gelin.android.weather.source.HttpWeatherSource;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherException;
-import ru.gelin.android.weather.WeatherSource;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
 /**
  *  Weather source which takes weather from the Google API.
  */
-public class GoogleWeatherSource implements WeatherSource {
+public class GoogleWeatherSource extends HttpWeatherSource implements WeatherSource {
 
     /** API URL */
     static final String API_URL = "http://www.google.com/ig/api?weather=%s&hl=%s";
-    /** Main encoding */
-    static final String ENCODING = "UTF-8";
-    /** Charset pattern */
-    static final String CHARSET = "charset=";
-
-    private static final int HTTP_STATUS_OK = 200;
-
-    static final String USER_AGENT = "Google Weather/1.0 (Linux; Android)";
 
     GoogleWeatherParser weatherParser;
     GoogleWeather weather;
-    HttpClient client;
-    HttpGet request;
+
     //@Override
     public Weather query(Location location) throws WeatherException {
         return query(location, Locale.getDefault());
     }
 
-    InputStreamReader getReaderForURL(String URL) throws WeatherException {
-        try {
-            request = new HttpGet(URL);
-            request.setHeader("User-Agent", USER_AGENT);
-        } catch (Exception e) {
-            throw new WeatherException("Can't prepare http request", e);
-        }
-
-        String charset = ENCODING;
-        try {
-            HttpResponse response = client.execute(request);
-
-            StatusLine status = response.getStatusLine();
-            if (status.getStatusCode() != HTTP_STATUS_OK) {
-                throw new WeatherException("Invalid response from server: " +
-                        status.toString());
-            }
-
-            HttpEntity entity = response.getEntity();
-            charset = getCharset(entity);
-            InputStreamReader inputStream = new InputStreamReader(entity.getContent(), charset);
-
-            return inputStream;
-        } catch (UnsupportedEncodingException uee) {
-            throw new WeatherException("unsupported charset: " + charset, uee);
-        } catch (IOException e) {
-            throw new WeatherException("Problem communicating with API", e);
-        }
-    }
-
-    void parseContent(Location location, String locale, DefaultHandler handler) 
+    void parseContent(Location location, String locale, DefaultHandler handler)
             throws WeatherException, SAXException, ParserConfigurationException, IOException {
         String fullUrl;
         try {
@@ -114,17 +68,10 @@ public class GoogleWeatherSource implements WeatherSource {
         GoogleWeatherParser weatherParser = new GoogleWeatherParser(weather);
         weatherParser.parse(reader, handler);
     }
+
     //@Override
     public Weather query(Location location, Locale locale)
             throws WeatherException {
-
-        // Create client and set our specific user-agent string
-        try {
-            client = new DefaultHttpClient();
-        } catch (Exception e) {
-            throw new WeatherException("Can't prepare http client", e);
-        }
-
         try {
             weather = new GoogleWeather();
             weatherParser = new GoogleWeatherParser(weather);
@@ -138,26 +85,6 @@ public class GoogleWeatherSource implements WeatherSource {
         } catch (Exception e) {
             throw new WeatherException("create weather error", e);
         }
-    }
-
-    static String getCharset(HttpEntity entity) {
-        return getCharset(entity.getContentType().toString());
-    }
-
-    static String getCharset(String contentType) {
-        if (contentType == null) {
-            return ENCODING;
-        }
-        int charsetPos = contentType.indexOf(CHARSET);
-        if (charsetPos < 0) {
-            return ENCODING;
-        }
-        charsetPos += CHARSET.length();
-        int endPos = contentType.indexOf(';', charsetPos);
-        if (endPos < 0) {
-            endPos = contentType.length();
-        }
-        return contentType.substring(charsetPos, endPos);
     }
 
 }

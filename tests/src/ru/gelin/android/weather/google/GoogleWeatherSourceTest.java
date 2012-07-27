@@ -22,23 +22,22 @@
 
 package ru.gelin.android.weather.google;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URLEncoder;
-import java.util.Date;
-import java.util.Locale;
-
+import android.test.AndroidTestCase;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import android.test.AndroidTestCase;
-
 import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.notification.WeatherUtils;
+import ru.gelin.android.weather.source.HttpUtils;
+
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URLEncoder;
+import java.util.Date;
+import java.util.Locale;
 
 @SuppressWarnings("deprecation")
 public class GoogleWeatherSourceTest extends AndroidTestCase {
@@ -72,7 +71,7 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         }
 
         HttpEntity entity = response.getEntity();
-        String charset = GoogleWeatherSource.getCharset(entity);
+        String charset = HttpUtils.getCharset(entity);
         System.out.println(response.getAllHeaders());
         Reader in = new InputStreamReader(entity.getContent(), charset);
         int c;
@@ -80,15 +79,6 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
             System.out.print((char)c);
         }
         assertTrue(true);
-    }
-    
-    public void testGetCharset() {
-        assertEquals("UTF-8", GoogleWeatherSource.getCharset("text/xml; charset=UTF-8"));
-        assertEquals("windows-1251", GoogleWeatherSource.getCharset("text/xml; charset=windows-1251"));
-        assertEquals("UTF-8", GoogleWeatherSource.getCharset("text/xml"));
-        assertEquals("windows-1251", GoogleWeatherSource.getCharset("text/xml; charset=windows-1251; something more"));
-        assertEquals("UTF-8", GoogleWeatherSource.getCharset(""));
-        assertEquals("UTF-8", GoogleWeatherSource.getCharset((String)null));
     }
     
     public void testQueryTime() throws WeatherException {

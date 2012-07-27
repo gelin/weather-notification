@@ -22,23 +22,16 @@
 
 package ru.gelin.android.weather.google;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import org.junit.Test;
+import ru.gelin.android.weather.*;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import org.junit.Test;
-
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @SuppressWarnings("deprecation")
 public class GoogleWeatherTest {
