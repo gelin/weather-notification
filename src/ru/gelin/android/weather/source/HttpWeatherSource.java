@@ -35,10 +35,10 @@ public class HttpWeatherSource {
     /**
      *  Reads the content of the specified URL.
      */
-    protected InputStreamReader getReaderForURL(String URL) throws WeatherException {
+    protected InputStreamReader getReaderForURL(String url) throws WeatherException {
         HttpGet request;
         try {
-            request = new HttpGet(URL);
+            request = new HttpGet(url);
             request.setHeader("User-Agent", USER_AGENT);
         } catch (Exception e) {
             throw new WeatherException("Can't prepare http request", e);
