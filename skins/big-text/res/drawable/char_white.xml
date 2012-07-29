@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/empty"/>
+    <item android:maxLevel="42" android:drawable="@drawable/empty"/>
+    <item android:maxLevel="43" android:drawable="@drawable/u002B_white"/>
+    <item android:maxLevel="44" android:drawable="@drawable/empty"/>
+    <item android:maxLevel="45" android:drawable="@drawable/u002D_white"/>
+    <item android:maxLevel="47" android:drawable="@drawable/empty"/>
+    <item android:maxLevel="48" android:drawable="@drawable/u0030_white"/>
+    <item android:maxLevel="49" android:drawable="@drawable/u0031_white"/>
+    <item android:maxLevel="50" android:drawable="@drawable/u0032_white"/>
+    <item android:maxLevel="51" android:drawable="@drawable/u0033_white"/>
+    <item android:maxLevel="52" android:drawable="@drawable/u0034_white"/>
+    <item android:maxLevel="53" android:drawable="@drawable/u0035_white"/>
+    <item android:maxLevel="54" android:drawable="@drawable/u0036_white"/>
+    <item android:maxLevel="55" android:drawable="@drawable/u0037_white"/>
+    <item android:maxLevel="56" android:drawable="@drawable/u0038_white"/>
+    <item android:maxLevel="57" android:drawable="@drawable/u0039_white"/>
+    <item android:maxLevel="175" android:drawable="@drawable/empty"/>
+    <item android:maxLevel="176" android:drawable="@drawable/u00B0_white"/>
+</level-list>

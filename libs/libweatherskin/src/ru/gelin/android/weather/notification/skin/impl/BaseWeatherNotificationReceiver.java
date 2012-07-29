@@ -107,8 +107,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         Notification notification = new Notification();
         
         notification.icon = getNotificationIconId();
-        //notification.largeIcon = BitmapFactory.decodeResource(context.getResources(), notification.icon); //TODO
-        
+
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
         } else {
@@ -147,7 +146,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
     
-    String formatTicker(Context context, Weather weather, TemperatureType unit) {
+    protected String formatTicker(Context context, Weather weather, TemperatureType unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         WeatherCondition condition = weather.getConditions().get(0);
         Temperature tempC = condition.getTemperature(TemperatureUnit.C);
@@ -157,7 +156,7 @@ abstract public class BaseWeatherNotificationReceiver extends
                 tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
     }
     
-    void notifyHandler(Weather weather) {
+    protected void notifyHandler(Weather weather) {
         synchronized (BaseWeatherNotificationReceiver.class) {   //monitor of static methods
             if (handler == null) {
                 return;
