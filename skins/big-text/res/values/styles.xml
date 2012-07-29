@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="Weather">
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Weather.CurrentTemp" parent="Weather">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Weather.Forecast" parent="Weather">
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="Weather.Condition" parent="Weather.Forecast">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+</resources>

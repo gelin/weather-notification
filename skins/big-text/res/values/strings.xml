@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Weather notification skin: big text</string>
+    <string name="skin_name">Big text</string>
+    <string name="skin_preferences">Big text preferences</string>
+</resources>
