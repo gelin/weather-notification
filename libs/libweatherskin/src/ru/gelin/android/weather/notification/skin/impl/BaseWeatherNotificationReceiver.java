@@ -63,7 +63,7 @@ abstract public class BaseWeatherNotificationReceiver extends
     static Handler handler;
     
     /** Temperature formatter */
-    TemperatureFormatter tempFormat = createTemperatureFormatter();
+    protected TemperatureFormatter tempFormat = createTemperatureFormatter();
     
     /**
      *  Registers the handler to receive the new weather.
