@@ -2,9 +2,9 @@
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/empty"/>
     <item android:maxLevel="42" android:drawable="@drawable/empty"/>
-    <item android:maxLevel="43" android:drawable="@drawable/u002B_white"/>
+    <item android:maxLevel="43" android:drawable="@drawable/u002b_white"/>
     <item android:maxLevel="44" android:drawable="@drawable/empty"/>
-    <item android:maxLevel="45" android:drawable="@drawable/u002D_white"/>
+    <item android:maxLevel="45" android:drawable="@drawable/u002d_white"/>
     <item android:maxLevel="47" android:drawable="@drawable/empty"/>
     <item android:maxLevel="48" android:drawable="@drawable/u0030_white"/>
     <item android:maxLevel="49" android:drawable="@drawable/u0031_white"/>
@@ -17,5 +17,5 @@
     <item android:maxLevel="56" android:drawable="@drawable/u0038_white"/>
     <item android:maxLevel="57" android:drawable="@drawable/u0039_white"/>
     <item android:maxLevel="175" android:drawable="@drawable/empty"/>
-    <item android:maxLevel="176" android:drawable="@drawable/u00B0_white"/>
+    <item android:maxLevel="176" android:drawable="@drawable/u00b0_white"/>
 </level-list>

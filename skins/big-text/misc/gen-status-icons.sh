@@ -51,7 +51,7 @@ chars="0 1 2 3 4 5 6 7 8 9 ° + -"
 
 for char in $chars
 do
-    name=$(echo -n $char | uniname -cbegn 2>/dev/null | tail -1 | tr -d " ")
+    name=$(echo -n $char | uniname -cbegn 2>/dev/null | tail -1 | tr -d " " | tr ABCDEF abcdef)
     name=${name#00}
     #echo $name
     gen_image $xhdpi_params "$char" ${name}_white white
