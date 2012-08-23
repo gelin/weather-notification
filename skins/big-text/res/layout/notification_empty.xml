@@ -21,8 +21,8 @@
 #   http://gelin.ru
 #   mailto:den@gelin.ru
 -->
-<!-- Table layout is not supported in notification, so the notification looks empty -->
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-</TableLayout>
+    android:layout_height="wrap_content"
+    android:visibility="gone">
+</LinearLayout>

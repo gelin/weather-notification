@@ -30,7 +30,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
-import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
@@ -79,7 +78,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
         } else {
             String temperature = getTemperatureText(context, weather);
             mainNotify(context, weather, temperature.charAt(0));    //TODO refactor passing of multiple parameters
-            for (int i = 1; i < temperature.length(); i++) {
+            for (int i = temperature.length() - 1; i >= 0; i--) {
                 notify(context, weather, INITIAL_ID + i, temperature.charAt(i));
             }
         }
@@ -120,7 +119,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
     void notify(Context context, Weather weather, int id, char c) {
         Notification notification = createNotification(context, weather);
-        notification.contentView = new RemoteViews(context.getPackageName(), R.layout.notification_unsupported);
+        notification.contentView = new RemoteViews(context.getPackageName(), R.layout.notification_empty);
         notification.iconLevel = getNotificationIconLevel(c);
         getNotificationManager(context).notify(id, notification);
     }
