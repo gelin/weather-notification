@@ -50,7 +50,7 @@ public class OpenWeatherMapWeather implements Weather {
         condition.setTemperature(temperature);
         double tempValue = 0.0;
         try {
-            tempValue = this.json.getJSONArray("list").getJSONObject(0).getDouble("temp");
+            tempValue = this.json.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp");
         } catch (JSONException e) {
             return result;
         }

@@ -14,15 +14,15 @@ import java.io.Reader;
 public class OpenWeatherMapWeatherTest extends AndroidTestCase {
 
     public void testNotEmpty() throws WeatherException, IOException, JSONException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_station.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
     }
 
     public void testGetTemperature() throws IOException, JSONException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_station.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(26, condition.getTemperature(TemperatureUnit.C).getCurrent());
+        assertEquals(15, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
