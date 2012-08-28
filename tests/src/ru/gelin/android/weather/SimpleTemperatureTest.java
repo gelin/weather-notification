@@ -131,6 +131,28 @@ public class SimpleTemperatureTest extends AndroidTestCase {
         assertEquals(Temperature.UNKNOWN, temp3.getHigh());
         assertEquals(Temperature.UNKNOWN, temp3.getLow());
     }
+
+    public void testConvertKtoC() {
+        SimpleTemperature temp = new SimpleTemperature(TemperatureUnit.K);
+        temp.setLow(288, TemperatureUnit.K);
+        temp.setHigh(288 + 15, TemperatureUnit.K);
+        temp.setCurrent(288 + 5, TemperatureUnit.K);
+        SimpleTemperature temp2 = temp.convert(TemperatureUnit.C);
+        assertEquals(15, temp2.getLow());
+        assertEquals(30, temp2.getHigh());
+        assertEquals(20, temp2.getCurrent());
+    }
+
+    public void testConvertKtoF() {
+        SimpleTemperature temp = new SimpleTemperature(TemperatureUnit.K);
+        temp.setLow(273 + 25, TemperatureUnit.K);
+        temp.setHigh(273 + 35, TemperatureUnit.K);
+        temp.setCurrent(273 + 32, TemperatureUnit.K);
+        SimpleTemperature temp2 = temp.convert(TemperatureUnit.F);
+        assertEquals(77, temp2.getLow());
+        assertEquals(95, temp2.getHigh());
+        assertEquals(89, temp2.getCurrent());
+    }
     
     // demonstration to avoid multiple convertions
     /*

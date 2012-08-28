@@ -187,12 +187,31 @@ public class SimpleTemperature implements Temperature {
     int convertValue(int value, TemperatureUnit unit) {
         if (this.tunit.equals(unit)) {
             return value;
-        }   
-        if (TemperatureUnit.C.equals(unit)) {   //C -> F
-            return Math.round(value * 9f / 5f + 32);
-        } else {    //F -> C
-            return Math.round((value - 32) * 5f / 9f);
         }
+        switch (unit) {
+            case C:
+                switch (this.tunit) {
+                    case F:
+                        return Math.round(value * 9f / 5f + 32);    //C -> F
+                    case K:
+                        return Math.round(value + 273.15f);     //C -> K
+                }
+            case F:
+                switch (this.tunit) {
+                    case C:
+                        return Math.round((value - 32) * 5f / 9f);  //F -> C
+                    case K:
+                        return Math.round((value - 32) * 5f / 9f + 273.15f);  //F -> K
+                }
+            case K:
+                switch (this.tunit) {
+                    case C:
+                        return Math.round(value - 273.15f);     //K -> C
+                    case F:
+                        return Math.round((value - 273.15f) * 9f / 5f + 32);    //K -> F
+                }
+        }
+        return value;
     }
     
     @Override
