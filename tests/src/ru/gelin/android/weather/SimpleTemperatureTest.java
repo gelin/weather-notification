@@ -22,15 +22,11 @@
 
 package ru.gelin.android.weather;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import android.test.AndroidTestCase;
 
 @SuppressWarnings("deprecation")
-public class SimpleTemperatureTest {
+public class SimpleTemperatureTest extends AndroidTestCase {
     
-    @Test
     public void testConstructor() {
         SimpleTemperature temp1 = new SimpleTemperature(UnitSystem.SI);
         assertEquals(UnitSystem.SI, temp1.getUnitSystem());
@@ -38,7 +34,6 @@ public class SimpleTemperatureTest {
         assertEquals(UnitSystem.US, temp2.getUnitSystem());
     }
     
-    @Test
     public void testSetLowHigh() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setCurrent(25, UnitSystem.SI);
@@ -46,7 +41,6 @@ public class SimpleTemperatureTest {
         assertEquals(25, temp.getHigh());
     }
     
-    @Test
     public void testSetLowCurrent() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setHigh(25, UnitSystem.SI);
@@ -55,7 +49,6 @@ public class SimpleTemperatureTest {
         assertEquals(25, temp.getCurrent());
     }
     
-    @Test
     public void testSetHighCurrent() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(25, UnitSystem.SI);
@@ -64,7 +57,6 @@ public class SimpleTemperatureTest {
         assertEquals(25, temp.getCurrent());
     }
     
-    @Test
     public void testSetCurrent() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(25, UnitSystem.SI);
@@ -74,7 +66,6 @@ public class SimpleTemperatureTest {
         assertEquals(30, temp.getCurrent());
     }
     
-    @Test
     public void testSetCurrent2() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(25, UnitSystem.SI);
@@ -84,7 +75,6 @@ public class SimpleTemperatureTest {
         assertEquals(27, temp.getCurrent());
     }
     
-    @Test
     public void testSetAll() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(25, UnitSystem.SI);
@@ -95,7 +85,6 @@ public class SimpleTemperatureTest {
         assertEquals(32, temp.getCurrent());
     }
     
-    @Test
     public void testConvertSI2US() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.US);
         temp.setLow(25, UnitSystem.SI);
@@ -106,7 +95,6 @@ public class SimpleTemperatureTest {
         assertEquals(90, temp.getCurrent());
     }
     
-    @Test
     public void testConvertUS2SI() {
         SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
         temp.setLow(77, UnitSystem.US);
@@ -117,7 +105,6 @@ public class SimpleTemperatureTest {
         assertEquals(32, temp.getCurrent());
     }
     
-    @Test
     public void testConvert() {
         SimpleTemperature temp1 = new SimpleTemperature(UnitSystem.SI);
         temp1.setLow(25, UnitSystem.SI);
@@ -130,7 +117,6 @@ public class SimpleTemperatureTest {
         assertEquals(90, temp2.getCurrent());
     }
     
-    @Test
     public void testConvertUnknownValue() {
         SimpleTemperature temp1 = new SimpleTemperature(TemperatureUnit.C);
         assertEquals(Temperature.UNKNOWN, temp1.getCurrent());
@@ -146,8 +132,8 @@ public class SimpleTemperatureTest {
         assertEquals(Temperature.UNKNOWN, temp3.getLow());
     }
     
-    @Test
-    @Ignore("demonstration to avoid multiple convertions")
+    // demonstration to avoid multiple convertions
+    /*
     public void testMultipleConvert() {
         SimpleTemperature temp1 = new SimpleTemperature(TemperatureUnit.F);
         temp1.setCurrent(-10, TemperatureUnit.F);
@@ -156,5 +142,6 @@ public class SimpleTemperatureTest {
         SimpleTemperature temp3 = temp2.convert(TemperatureUnit.F);
         assertEquals(-10, temp3.getCurrent());
     }
+    */
 
 }

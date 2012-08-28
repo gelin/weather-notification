@@ -22,35 +22,25 @@
 
 package ru.gelin.android.weather;
 
-import static org.junit.Assert.*;
+import android.test.AndroidTestCase;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import org.junit.Test;
-
-public class SimpleWeatherTest {
+@SuppressWarnings("deprecation")
+public class SimpleWeatherConditionTest extends AndroidTestCase {
     
-    @Test
-    public void testIsEmpty() {
-        SimpleWeather weather = new SimpleWeather();
-        assertTrue(weather.isEmpty());
-        weather.time = new Date();
-        assertTrue(weather.isEmpty());
-        weather.conditions = new ArrayList<WeatherCondition>();
-        assertTrue(weather.isEmpty());
-        weather.conditions.add(new SimpleWeatherCondition());
-        assertFalse(weather.isEmpty()); //????
+    SimpleWeatherCondition condition;
+    
+    public void setUp() {
+        condition = new SimpleWeatherCondition();
     }
     
-    @Test
-    public void testNullConditions() {
-        SimpleWeather weather = new SimpleWeather();
-        assertNotNull(weather.getConditions());
-        weather.setConditions(null);
-        assertNotNull(weather.getConditions());
-        assertEquals(0, weather.getConditions().size());
-        assertTrue(weather.isEmpty());
+    public void testTempInUnits() {
+        SimpleTemperature temp = new SimpleTemperature(UnitSystem.SI);
+        temp.setCurrent(25, UnitSystem.SI);
+        condition.setTemperature(temp);
+        Temperature temp1 = condition.getTemperature();
+        assertEquals(25, temp1.getCurrent());
+        Temperature temp2 = condition.getTemperature(UnitSystem.US);
+        assertEquals(77, temp2.getCurrent());
     }
 
 }

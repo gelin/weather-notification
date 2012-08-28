@@ -22,13 +22,10 @@
 
 package ru.gelin.android.weather;
 
-import static org.junit.Assert.*;
+import android.test.AndroidTestCase;
 
-import org.junit.Test;
-
-public class SimpleWindTest {
+public class SimpleWindTest extends AndroidTestCase {
     
-    @Test
     public void testDefaultValues() {
         Wind wind = new SimpleWind(WindSpeedUnit.MPS);
         assertEquals(Wind.UNKNOWN, wind.getSpeed());
@@ -36,7 +33,6 @@ public class SimpleWindTest {
         assertNull(wind.getText());
     }
     
-    @Test
     public void testSetSpeedMPS() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
         wind.setSpeed(10, WindSpeedUnit.MPS);
@@ -47,7 +43,6 @@ public class SimpleWindTest {
         assertEquals(4, wind.getSpeed());
     }
     
-    @Test
     public void testSetSpeedKMPH() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.KMPH);
         wind.setSpeed(10, WindSpeedUnit.MPS);
@@ -58,7 +53,6 @@ public class SimpleWindTest {
         assertEquals(16, wind.getSpeed());
     }
     
-    @Test
     public void testSetSpeedMPH() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
         wind.setSpeed(10, WindSpeedUnit.MPS);
@@ -69,7 +63,6 @@ public class SimpleWindTest {
         assertEquals(10, wind.getSpeed());
     }
     
-    @Test
     public void testConvertMPS() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
         wind.setSpeed(10, WindSpeedUnit.MPS);
@@ -81,7 +74,6 @@ public class SimpleWindTest {
         assertEquals(22, mph.getSpeed());
     }
     
-    @Test
     public void testConvertKMPH() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.KMPH);
         wind.setSpeed(10, WindSpeedUnit.KMPH);
@@ -93,7 +85,6 @@ public class SimpleWindTest {
         assertEquals(6, mph.getSpeed());
     }
     
-    @Test
     public void testConvertMPH() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
         wind.setSpeed(10, WindSpeedUnit.MPH);
@@ -105,7 +96,6 @@ public class SimpleWindTest {
         assertEquals(16, kmph.getSpeed());
     }
     
-    @Test
     public void testConvertText() {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
         wind.setText("text");

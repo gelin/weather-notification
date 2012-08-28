@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.google;
 
-import org.junit.Test;
+import android.test.AndroidTestCase;
 import ru.gelin.android.weather.*;
 
 import java.io.InputStream;
@@ -30,13 +30,9 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 @SuppressWarnings("deprecation")
-public class GoogleWeatherTest {
+public class GoogleWeatherTest  extends AndroidTestCase {
     
-    @Test
     public void testXmlParseEn() throws Exception {
         InputStream xml1 = getClass().getResourceAsStream("google_weather_api_en.xml");
         InputStream xml2 = getClass().getResourceAsStream("google_weather_api_en.xml");
@@ -103,7 +99,6 @@ public class GoogleWeatherTest {
         assertEquals(-15, temp3new.getHigh());
     }
     
-    @Test
     public void testTempConvertUS2SI() throws Exception {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_en.xml");
 
@@ -122,8 +117,7 @@ public class GoogleWeatherTest {
         assertEquals(-23, temp0new.getLow());  //(-10 - 32) * 5 / 9
         assertEquals(-20, temp0new.getHigh());  //(-4 - 32) * 5 / 9
     }
-    
-    @Test
+
     public void testXmlParseRu() throws Exception {
         InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
@@ -179,7 +173,6 @@ public class GoogleWeatherTest {
         assertEquals(-26, temp3.getHigh());
     }
     
-    @Test
     public void testTempConvertSI2US() throws Exception {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
         GoogleWeather weather = new GoogleWeather();
@@ -192,7 +185,6 @@ public class GoogleWeatherTest {
         assertEquals(-4, temp0.getHigh());  //-20 * 9 / 5 + 32
     }
     
-    @Test
     public void testTempConvertC2F() throws Exception {
         InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
         GoogleWeather weather = new GoogleWeather();
@@ -205,7 +197,6 @@ public class GoogleWeatherTest {
         assertEquals(-4, temp0.getHigh());  //-20 * 9 / 5 + 32
     }
 
-    @Test
     public void testTempConvertMPH2MPSKMPS() throws Exception {
         InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
@@ -215,10 +206,9 @@ public class GoogleWeatherTest {
         Wind windKMPH = condition0.getWind(WindSpeedUnit.KMPH);
         assertEquals(3, windKMPH.getSpeed()); //2 mph * 1.6
         Wind windMPS = condition0.getWind(WindSpeedUnit.MPS);
-        assertEquals(1, windMPS.getSpeed()); //2 mph * 0.44    
+        assertEquals(1, windMPS.getSpeed()); //2 mph * 0.44
     }
     
-    @Test
     public void testUnknownWeather() throws Exception {
         InputStream xmlun = getClass().getResourceAsStream("google_weather_api_ru_2011-03.xml");
         InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
@@ -269,4 +259,5 @@ public class GoogleWeatherTest {
         assertEquals(-3, temp3.getLow());
         assertEquals(2, temp3.getHigh());
     }
+
 }

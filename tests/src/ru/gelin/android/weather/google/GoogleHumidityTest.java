@@ -22,14 +22,11 @@
 
 package ru.gelin.android.weather.google;
 
-import org.junit.Test;
+import android.test.AndroidTestCase;
 import ru.gelin.android.weather.Humidity;
 
-import static org.junit.Assert.assertEquals;
-
-public class GoogleHumidityTest {
+public class GoogleHumidityTest  extends AndroidTestCase {
     
-    @Test
     public void testParseText() {
         GoogleHumidity humidity = new GoogleHumidity();
         humidity.parseText("Humidity: 48%");
@@ -37,7 +34,6 @@ public class GoogleHumidityTest {
         assertEquals("Humidity: 48%", humidity.getText());
     }
     
-    @Test
     public void testParseTextWrong() {
         GoogleHumidity humidity = new GoogleHumidity();
         humidity.parseText("Humidity: non-number");
@@ -45,7 +41,6 @@ public class GoogleHumidityTest {
         assertEquals("Humidity: non-number", humidity.getText());
     }
     
-    @Test
     public void testParseTextFloat() {
         GoogleHumidity humidity = new GoogleHumidity();
         humidity.parseText("Humidity: 3.14%");

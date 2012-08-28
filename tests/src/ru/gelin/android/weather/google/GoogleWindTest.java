@@ -22,17 +22,13 @@
 
 package ru.gelin.android.weather.google;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
+import android.test.AndroidTestCase;
 import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
 
-public class GoogleWindTest {
+public class GoogleWindTest extends AndroidTestCase {
     
-    @Test
     public void testParseText() {
         GoogleWind wind = new GoogleWind();
         wind.parseText("Wind: SW at 2 mph");
@@ -42,7 +38,6 @@ public class GoogleWindTest {
         assertEquals("Wind: SW at 2 mph", wind.getText());
     }
     
-    @Test
     public void testParseText2() {
         GoogleWind wind = new GoogleWind();
         wind.parseText("Wind: SSW at 42 mph");
@@ -52,7 +47,6 @@ public class GoogleWindTest {
         assertEquals("Wind: SSW at 42 mph", wind.getText());
     }
     
-    @Test
     public void testParseTextWrong() {
         GoogleWind wind = new GoogleWind();
         wind.parseText("Wind: Is it a wind?");
@@ -61,7 +55,6 @@ public class GoogleWindTest {
         assertEquals("Wind: Is it a wind?", wind.getText());
     }
     
-    @Test
     public void testParseTextWrongDirection() {
         GoogleWind wind = new GoogleWind();
         wind.parseText("Wind: XYZ at 42 mph");
@@ -70,7 +63,6 @@ public class GoogleWindTest {
         assertEquals("Wind: XYZ at 42 mph", wind.getText());
     }
     
-    @Test
     public void testParseTextFloatSpeed() {
         GoogleWind wind = new GoogleWind();
         wind.parseText("Wind: SW at 3.14 mph");

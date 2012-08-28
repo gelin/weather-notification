@@ -22,13 +22,10 @@
 
 package ru.gelin.android.weather;
 
-import static org.junit.Assert.*;
+import android.test.AndroidTestCase;
 
-import org.junit.Test;
-
-public class SimpleHumidityTest {
+public class SimpleHumidityTest extends AndroidTestCase {
     
-    @Test
     public void testDefaultValues() {
         Humidity humidity = new SimpleHumidity();
         assertEquals(Humidity.UNKNOWN, humidity.getValue());
