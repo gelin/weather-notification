@@ -22,6 +22,8 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     static final String API_BASE_URL = "http://openweathermap.org/data/2.0";
     /** Find city API URL */
     static final String API_CITY_URL = API_BASE_URL + "/find/city?";
+    /** Find by name API URL */
+    static final String API_NAME_URL = API_BASE_URL + "/find/name?";
 
     @Override
     public Weather query(Location location) throws WeatherException {
@@ -35,7 +37,12 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     }
 
     JSONObject queryJSON(Location location) throws WeatherException {
-        String url = API_CITY_URL + location.getQuery();
+        String url;
+        if (location.isGeo()) {
+            url = API_CITY_URL + location.getQuery();
+        } else {
+            url = API_NAME_URL + location.getQuery();
+        }
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();

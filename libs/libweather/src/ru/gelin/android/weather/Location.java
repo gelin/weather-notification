@@ -43,4 +43,10 @@ public interface Location {
      */
     boolean isEmpty();
 
+    /**
+     *  Returns true if this location represents geographical coordinates,
+     *  i.e. not query by a city name, for example.
+     */
+    boolean isGeo();
+
 }

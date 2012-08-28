@@ -37,7 +37,7 @@ public class AndroidGoogleLocation implements Location {
     android.location.Location location;
     /** Android address */
     Address address;
-    
+
     /**
      *  Creates the location from Android location.
      */
@@ -104,7 +104,12 @@ public class AndroidGoogleLocation implements Location {
     public boolean isEmpty() {
         return this.location == null;
     }
-    
+
+    @Override
+    public boolean isGeo() {
+        return true;
+    }
+
     int convertGeo(double geo) {
         return (int)(geo * 1000000);
     }

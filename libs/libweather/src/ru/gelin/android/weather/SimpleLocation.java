@@ -28,13 +28,25 @@ package ru.gelin.android.weather;
 public class SimpleLocation implements Location {
 
     String text;
+    boolean geo;
     
     /**
-     *  Create the location.
+     *  Creates the location.
+     *  Geo is false here.
      *  @param locationText query and the text value.
      */
     public SimpleLocation(String text) {
+        this(text, false);
+    }
+
+    /**
+     *  Creates the location.
+     *  @param locationText query and the text value.
+     *  @param geo flag
+     */
+    public SimpleLocation(String text, boolean geo) {
         this.text = text;
+        this.geo = geo;
     }
     
     //@Override
@@ -52,4 +64,8 @@ public class SimpleLocation implements Location {
         return this.text == null || this.text.length() == 0;
     }
 
+    @Override
+    public boolean isGeo() {
+        return this.geo;
+    }
 }
