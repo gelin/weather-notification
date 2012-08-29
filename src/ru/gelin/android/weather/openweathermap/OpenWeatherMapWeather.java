@@ -20,6 +20,8 @@ public class OpenWeatherMapWeather implements Weather {
     SimpleLocation location;
     /** Weather time */
     Date time;
+    /** Query time */
+    Date queryTime = new Date();
     /** Weather conditions */
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     /** Emptyness flag */
@@ -41,7 +43,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     @Override
     public Date getQueryTime() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return new Date(this.time.getTime());
     }
 
     @Override
