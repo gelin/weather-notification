@@ -18,6 +18,8 @@ public class OpenWeatherMapWeather implements Weather {
 
     /** Weather location */
     SimpleLocation location;
+    /** Weather time */
+    Date time;
     /** Weather conditions */
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     /** Emptyness flag */
@@ -34,7 +36,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     @Override
     public Date getTime() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return new Date(this.time.getTime());
     }
 
     @Override
@@ -61,6 +63,7 @@ public class OpenWeatherMapWeather implements Weather {
         try {
             JSONObject weatherJSON = json.getJSONArray("list").getJSONObject(0);
             parseLocation(weatherJSON);
+            parseTime(weatherJSON);
             parseCondition(weatherJSON);
         } catch (JSONException e) {
             throw new WeatherException("cannot parse the weather", e);
@@ -70,6 +73,11 @@ public class OpenWeatherMapWeather implements Weather {
 
     void parseLocation(JSONObject weatherJSON) throws JSONException {
         this.location = new SimpleLocation(weatherJSON.getString("name"), false);
+    }
+
+    void parseTime(JSONObject weatherJSON) throws JSONException {
+        long timestamp = weatherJSON.getLong("dt");
+        this.time = new Date(timestamp * 1000);
     }
 
     void parseCondition(JSONObject weatherJSON) throws JSONException {

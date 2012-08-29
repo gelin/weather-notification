@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class OpenWeatherMapWeatherTest extends AndroidTestCase {
 
@@ -40,6 +43,16 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         Location location = weather.getLocation();
         assertNotNull(location);
         assertEquals("Omsk", location.getText());
+    }
+
+    public void testGetTime() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        Date time = weather.getTime();
+        assertNotNull(time);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.set(2012, Calendar.AUGUST, 28, 16, 00, 00);
+        calendar.set(Calendar.MILLISECOND, 0);
+        assertEquals(calendar.getTime(), time);
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
