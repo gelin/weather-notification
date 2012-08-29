@@ -70,6 +70,18 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         //assertTrue(text.contains("1"));
     }
 
+    public void testGetLowTemperature() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(14, condition.getTemperature(TemperatureUnit.C).getLow());
+    }
+
+    public void testGetHighTemperature() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(16, condition.getTemperature(TemperatureUnit.C).getHigh());
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();

@@ -85,10 +85,7 @@ public class OpenWeatherMapWeather implements Weather {
     void parseCondition(JSONObject weatherJSON) throws JSONException {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(parseConditionText(weatherJSON));
-        SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
-        condition.setTemperature(temperature);
-        double tempValue = weatherJSON.getJSONObject("main").getDouble("temp");
-        temperature.setCurrent((int)tempValue, TemperatureUnit.K);
+        condition.setTemperature(parseTemperature(weatherJSON));
         this.conditions.add(condition);
     }
 
@@ -107,6 +104,18 @@ public class OpenWeatherMapWeather implements Weather {
         }
         return String.format("Cloudiness: %.0f%%, Precipitations: %.1f mm/h",
                 cloudiness, precipitations); //TODO: more smart, more human-readable, localized
+    }
+
+    SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
+        SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
+        JSONObject main = weatherJSON.getJSONObject("main");
+        double currentTemp = main.getDouble("temp");
+        double minTemp = main.getDouble("temp_min");
+        double maxTemp = main.getDouble("temp_max");
+        temperature.setCurrent((int)currentTemp, TemperatureUnit.K);
+        temperature.setLow((int)minTemp, TemperatureUnit.K);
+        temperature.setHigh((int)maxTemp, TemperatureUnit.K);
+        return temperature;
     }
 
 }
