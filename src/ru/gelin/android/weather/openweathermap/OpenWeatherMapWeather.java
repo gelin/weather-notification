@@ -16,21 +16,20 @@ import java.util.List;
  */
 public class OpenWeatherMapWeather implements Weather {
 
-    /** JSON object over which the weather is wrapped */
-    //JSONObject json;
+    /** Weather location */
+    SimpleLocation location;
     /** Weather conditions */
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
 
     public OpenWeatherMapWeather(JSONObject jsonObject) throws WeatherException {
-        //this.json = jsonObject;
         parse(jsonObject);
     }
 
     @Override
     public Location getLocation() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.location;
     }
 
     @Override
@@ -59,18 +58,27 @@ public class OpenWeatherMapWeather implements Weather {
     }
 
     void parse(JSONObject json) throws WeatherException {
-        SimpleWeatherCondition condition = new SimpleWeatherCondition();
-        SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
-        condition.setTemperature(temperature);
-        double tempValue = 0.0;
         try {
-            tempValue = json.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp");
+            JSONObject weatherJSON = json.getJSONArray("list").getJSONObject(0);
+            parseLocation(weatherJSON);
+            parseCondition(weatherJSON);
         } catch (JSONException e) {
             throw new WeatherException("cannot parse the weather", e);
         }
+        this.empty = false;
+    }
+
+    void parseLocation(JSONObject weatherJSON) throws JSONException {
+        this.location = new SimpleLocation(weatherJSON.getString("name"), false);
+    }
+
+    void parseCondition(JSONObject weatherJSON) throws JSONException {
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
+        condition.setTemperature(temperature);
+        double tempValue = weatherJSON.getJSONObject("main").getDouble("temp");
         temperature.setCurrent((int)tempValue, TemperatureUnit.K);
         this.conditions.add(condition);
-        this.empty = false;
     }
 
 }

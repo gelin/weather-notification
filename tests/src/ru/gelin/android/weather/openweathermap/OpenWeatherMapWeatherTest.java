@@ -35,6 +35,13 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         }
     }
 
+    public void testGetLocation() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        Location location = weather.getLocation();
+        assertNotNull(location);
+        assertEquals("Omsk", location.getText());
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();
