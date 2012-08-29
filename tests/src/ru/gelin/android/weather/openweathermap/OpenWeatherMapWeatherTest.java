@@ -61,6 +61,15 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertTrue(now < weather.getQueryTime().getTime());
     }
 
+    public void testGetConditionText() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        WeatherCondition condition = weather.getConditions().get(0);
+        String text = condition.getConditionText();
+        assertEquals("Cloudiness: 49%, Precipitations: 1.0 mm/h", text);
+        //assertTrue(text.contains("49%"));
+        //assertTrue(text.contains("1"));
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();

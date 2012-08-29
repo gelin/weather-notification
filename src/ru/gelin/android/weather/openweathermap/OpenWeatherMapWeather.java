@@ -48,7 +48,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     @Override
     public UnitSystem getUnitSystem() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return UnitSystem.SI;
     }
 
     @Override
@@ -84,11 +84,29 @@ public class OpenWeatherMapWeather implements Weather {
 
     void parseCondition(JSONObject weatherJSON) throws JSONException {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        condition.setConditionText(parseConditionText(weatherJSON));
         SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
         condition.setTemperature(temperature);
         double tempValue = weatherJSON.getJSONObject("main").getDouble("temp");
         temperature.setCurrent((int)tempValue, TemperatureUnit.K);
         this.conditions.add(condition);
+    }
+
+    String parseConditionText(JSONObject weatherJSON) throws JSONException {
+        double cloudiness = 0.0;
+        try {
+            cloudiness = weatherJSON.getJSONObject("clouds").getDouble("all");
+        } catch (JSONException e) {
+            //no clouds
+        }
+        double precipitations = 0.0;
+        try {
+            precipitations = weatherJSON.getJSONObject("rain").getDouble("3h") / 3.0;
+        } catch (JSONException e) {
+            //no rain
+        }
+        return String.format("Cloudiness: %.0f%%, Precipitations: %.1f mm/h",
+                cloudiness, precipitations); //TODO: more smart, more human-readable, localized
     }
 
 }
