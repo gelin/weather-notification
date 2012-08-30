@@ -86,6 +86,7 @@ public class OpenWeatherMapWeather implements Weather {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(parseConditionText(weatherJSON));
         condition.setTemperature(parseTemperature(weatherJSON));
+        condition.setWind(parseWind(weatherJSON));
         this.conditions.add(condition);
     }
 
@@ -103,7 +104,8 @@ public class OpenWeatherMapWeather implements Weather {
             //no rain
         }
         return String.format("Cloudiness: %.0f%%, Precipitations: %.1f mm/h",
-                cloudiness, precipitations); //TODO: more smart, more human-readable, localized
+                cloudiness, precipitations);
+                //TODO: more smart, more human-readable, localized
     }
 
     SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
@@ -116,6 +118,18 @@ public class OpenWeatherMapWeather implements Weather {
         temperature.setLow((int)minTemp, TemperatureUnit.K);
         temperature.setHigh((int)maxTemp, TemperatureUnit.K);
         return temperature;
+    }
+
+    SimpleWind parseWind(JSONObject weatherJSON) throws JSONException {
+        SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
+        JSONObject windJSON = weatherJSON.getJSONObject("wind");
+        double speed = windJSON.getDouble("speed");
+        double deg = windJSON.getDouble("deg");
+        wind.setSpeed((int)speed, WindSpeedUnit.MPH);
+        wind.setDirection(WindDirection.valueOf((int)deg));
+        wind.setText(String.format("Wind: %s, %d mph", String.valueOf(wind.getDirection()), wind.getSpeed()));
+            //TODO: more smart, localized
+        return wind;
     }
 
 }
