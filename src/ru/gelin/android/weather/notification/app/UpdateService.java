@@ -48,6 +48,9 @@ import ru.gelin.android.weather.google.GoogleWeatherSource;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
+import ru.gelin.android.weather.openweathermap.AndroidOpenWeatherMapLocation;
+import ru.gelin.android.weather.openweathermap.NameOpenWeatherMapLocation;
+import ru.gelin.android.weather.openweathermap.OpenWeatherMapSource;
 
 import java.io.IOException;
 import java.util.Date;
@@ -171,7 +174,7 @@ public class UpdateService extends Service implements Runnable {
                 return;
             }
         } else {
-            location = new SimpleLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
+            location = new NameOpenWeatherMapLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         }
         synchronized(this) {
             this.location = location;
@@ -182,7 +185,7 @@ public class UpdateService extends Service implements Runnable {
             return;
         }
  
-        WeatherSource source = new GoogleWeatherSource();
+        WeatherSource source = new OpenWeatherMapSource();
         try {
             Weather weather = source.query(location);
             synchronized(this) {
@@ -322,45 +325,21 @@ public class UpdateService extends Service implements Runnable {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         android.location.Location androidLocation = 
                 manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        //Log.d(TAG, "location time: " + new Date(androidLocation.getTime()));
-        //if (!this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+
         if (androidLocation == null || isExpired(androidLocation.getTime())) {
             manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 
                     0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
             return null;
         }
 
-        Address address = decodeAddress(androidLocation);
-        if (address == null) {
-            //trying to do it twice
-            address = decodeAddress(androidLocation);
-        }
-        return new AndroidGoogleLocation(androidLocation, address);
+        return new AndroidOpenWeatherMapLocation(androidLocation);
     }
 
-    Address decodeAddress(android.location.Location location) {
-        Geocoder coder = new Geocoder(this);
-        List<Address> addresses = null;
-        try {
-            addresses = coder.getFromLocation(location.getLatitude(),
-                    location.getLongitude(), 1);
-        } catch (IOException e) {
-            Log.w(TAG, "cannot decode location", e);
-            return null;
-        }
-        if (addresses == null || addresses.size() == 0) {
-            return null;
-        }
-        return addresses.get(0);
-    }
-    
     /**
      *  Unsubscribes from location updates.
      */
     void removeLocationUpdates() {
         if (this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
-            //android.location.Location location = (android.location.Location)this.startIntent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-            //Log.d(TAG, "location updated: " + new Date(location.getTime()));
             Log.d(TAG, "location updated");
             LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             manager.removeUpdates(getPendingIntent(this.startIntent));
