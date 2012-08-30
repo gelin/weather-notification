@@ -104,7 +104,7 @@ public class OpenWeatherMapWeather implements Weather {
         } catch (JSONException e) {
             //no rain
         }
-        return String.format("Cloudiness: %.0f%%, Precipitations: %.1f mm/h",
+        return String.format("Clouds: %.0f%%, Prec.: %.1f mm/h",
                 cloudiness, precipitations);
                 //TODO: more smart, more human-readable, localized
     }
