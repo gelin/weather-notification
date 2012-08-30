@@ -141,8 +141,8 @@
     
     <target name="black-text-skin-release">
 
-	<copy file="bin/weather-notification-skin-black-text-release.apk"
-	    tofile="bin/weather-notification-skin-black-text.apk"/>
+	<copy file="skins/black-text/bin/weather-notification-skin-black-text-release.apk"
+	    tofile="skins/black-text/bin/weather-notification-skin-black-text.apk"/>
 
 	<gcupload 
 	    username="${gc.username}"
@@ -160,8 +160,8 @@
     
     <target name="white-text-skin-release">
 
-	<copy file="bin/weather-notification-skin-white-text-release.apk"
-	    tofile="bin/weather-notification-skin-white-text.apk"/>
+	<copy file="skins/white-text/bin/weather-notification-skin-white-text-release.apk"
+	    tofile="skins/white-text/bin/weather-notification-skin-white-text.apk"/>
 
 	<gcupload 
 	    username="${gc.username}"
@@ -179,8 +179,8 @@
     
     <target name="black-text-plus-skin-release">
 
-	<copy file="bin/weather-notification-skin-black-text-plus-release.apk"
-	    tofile="bin/weather-notification-skin-black-text-plus.apk"/>
+	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-release.apk"
+	    tofile="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk"/>
 
 	<gcupload 
 	    username="${gc.username}"
@@ -198,8 +198,8 @@
     
     <target name="white-text-plus-skin-release">
 
-	<copy file="bin/weather-notification-skin-white-text-plus-release.apk"
-	    tofile="bin/weather-notification-skin-white-text-plus.apk"/>
+	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-release.apk"
+	    tofile="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk"/>
 
 	<gcupload 
 	    username="${gc.username}"
