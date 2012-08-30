@@ -1,19 +1,25 @@
 package ru.gelin.android.weather.notification;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.google.GoogleWeather;
 import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.UnitSystem;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.openweathermap.OpenWeatherMapWeather;
 
 public class WeatherUtils {
     
@@ -30,6 +36,11 @@ public class WeatherUtils {
         InputStream xml2 = WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xml1, "UTF-8"), new InputStreamReader(xml2, "UTF-8"));
+        return weather;
+    }
+
+    public static Weather createOpenWeather() throws Exception {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         return weather;
     }
 
@@ -196,6 +207,18 @@ public class WeatherUtils {
         AndroidTestCase.assertEquals(-22, temp3.getCurrent());
         AndroidTestCase.assertEquals(-29, temp3.getLow());
         AndroidTestCase.assertEquals(-15, temp3.getHigh());
+    }
+
+    static JSONObject readJSON(String resourceName) throws IOException, JSONException {
+        Reader reader = new InputStreamReader(WeatherUtils.class.getResourceAsStream(resourceName));
+        StringBuilder buffer = new StringBuilder();
+        int c = reader.read();
+        while (c >= 0) {
+            buffer.append((char)c);
+            c = reader.read();
+        }
+        JSONTokener parser = new JSONTokener(buffer.toString());
+        return (JSONObject)parser.nextValue();
     }
 
 }

@@ -132,6 +132,21 @@ public class WeatherStorage {
             
             i++;
         }
+        for (; i < 4; i++) {
+            editor.remove(String.format(CONDITION_TEXT, i));
+
+            editor.remove(String.format(TEMPERATURE_UNIT, i));
+            editor.remove(String.format(CURRENT_TEMP, i));
+            editor.remove(String.format(LOW_TEMP, i));
+            editor.remove(String.format(HIGH_TEMP, i));
+            editor.remove(String.format(HUMIDITY_VAL, i));
+            editor.remove(String.format(HUMIDITY_TEXT, i));
+
+            editor.remove(String.format(WIND_SPEED_UNIT, i));
+            editor.remove(String.format(WIND_SPEED, i));
+            editor.remove(String.format(WIND_DIR, i));
+            editor.remove(String.format(WIND_TEXT, i));
+        }
         editor.commit();
     }
     

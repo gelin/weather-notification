@@ -80,4 +80,14 @@ public class WeatherStorageTest extends AndroidTestCase {
         WeatherUtils.checkWeather(weather2);
     }
 
+    public void testRemoveOldConditions() throws Exception {
+        WeatherStorage storage = new WeatherStorage(getContext());
+        Weather weather1 = WeatherUtils.createWeather();
+        storage.save(weather1);
+        assertEquals(4, storage.load().getConditions().size());
+        Weather weather2 = WeatherUtils.createOpenWeather();
+        storage.save(weather2);
+        assertEquals(1, storage.load().getConditions().size());
+    }
+
 }
