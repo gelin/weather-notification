@@ -87,6 +87,7 @@ public class OpenWeatherMapWeather implements Weather {
         condition.setConditionText(parseConditionText(weatherJSON));
         condition.setTemperature(parseTemperature(weatherJSON));
         condition.setWind(parseWind(weatherJSON));
+        condition.setHumidity(parseHumidity(weatherJSON));
         this.conditions.add(condition);
     }
 
@@ -126,10 +127,19 @@ public class OpenWeatherMapWeather implements Weather {
         double speed = windJSON.getDouble("speed");
         double deg = windJSON.getDouble("deg");
         wind.setSpeed((int)speed, WindSpeedUnit.MPH);
-        wind.setDirection(WindDirection.valueOf((int)deg));
+        wind.setDirection(WindDirection.valueOf((int) deg));
         wind.setText(String.format("Wind: %s, %d mph", String.valueOf(wind.getDirection()), wind.getSpeed()));
             //TODO: more smart, localized
         return wind;
+    }
+
+    SimpleHumidity parseHumidity(JSONObject weatherJSON) throws JSONException {
+        SimpleHumidity humidity = new SimpleHumidity();
+        double humidityValue = weatherJSON.getJSONObject("main").getDouble("humidity");
+        humidity.setValue((int)humidityValue);
+        humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
+            //TODO: more smart, localized
+        return humidity;
     }
 
 }

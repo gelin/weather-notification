@@ -86,8 +86,17 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         WeatherCondition condition = weather.getConditions().get(0);
         Wind wind = condition.getWind(WindSpeedUnit.MPH);
+        assertNotNull(wind);
         assertEquals(2, wind.getSpeed());
         assertEquals(WindDirection.N, wind.getDirection());
+    }
+
+    public void testGetHumidity() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        WeatherCondition condition = weather.getConditions().get(0);
+        Humidity humidity = condition.getHumidity();
+        assertNotNull(humidity);
+        assertEquals(85, humidity.getValue());
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
