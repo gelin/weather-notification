@@ -18,7 +18,7 @@ import java.io.UnsupportedEncodingException;
 public class HttpWeatherSource {
 
     /** Main encoding */
-    protected static final String ENCODING = "UTF-8";
+    public static final String ENCODING = "UTF-8";
 
     /** Charset pattern */
     static final String CHARSET = "charset=";

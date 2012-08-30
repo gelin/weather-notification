@@ -23,6 +23,10 @@
 package ru.gelin.android.weather.openweathermap;
 
 import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.source.HttpWeatherSource;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  *  Wrapper for Android location to query OpenWeatherMap.org API with geo coordinates.
@@ -47,7 +51,12 @@ public class NameOpenWeatherMapLocation implements Location {
      */
     //@Override
     public String getQuery() {
-        return String.format(QUERY, this.name);
+        try {
+            return String.format(QUERY,
+                    URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);  //never happens
+        }
     }
 
     //@Override
