@@ -122,11 +122,11 @@ public class OpenWeatherMapWeather implements Weather {
     }
 
     SimpleWind parseWind(JSONObject weatherJSON) throws JSONException {
-        SimpleWind wind = new SimpleWind(WindSpeedUnit.MPH);
+        SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
         JSONObject windJSON = weatherJSON.getJSONObject("wind");
         double speed = windJSON.getDouble("speed");
         double deg = windJSON.getDouble("deg");
-        wind.setSpeed((int)speed, WindSpeedUnit.MPH);
+        wind.setSpeed((int)speed, WindSpeedUnit.MPS);
         wind.setDirection(WindDirection.valueOf((int) deg));
         wind.setText(String.format("Wind: %s, %d mph", String.valueOf(wind.getDirection()), wind.getSpeed()));
             //TODO: more smart, localized

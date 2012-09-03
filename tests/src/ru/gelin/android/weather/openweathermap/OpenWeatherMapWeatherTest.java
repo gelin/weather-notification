@@ -85,7 +85,7 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     public void testGetWind() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         WeatherCondition condition = weather.getConditions().get(0);
-        Wind wind = condition.getWind(WindSpeedUnit.MPH);
+        Wind wind = condition.getWind(WindSpeedUnit.MPS);
         assertNotNull(wind);
         assertEquals(2, wind.getSpeed());
         assertEquals(WindDirection.N, wind.getDirection());
