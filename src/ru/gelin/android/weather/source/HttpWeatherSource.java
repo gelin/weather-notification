@@ -27,7 +27,7 @@ public class HttpWeatherSource {
     private static final int HTTP_STATUS_OK = 200;
 
     /** User Agent of the Weather Source */
-    static final String USER_AGENT = "Google Weather/1.0 (Linux; Android)";
+    static final String USER_AGENT = "Weather Notification (Linux; Android)";
 
     /** HTTP client */
     private HttpClient client;
