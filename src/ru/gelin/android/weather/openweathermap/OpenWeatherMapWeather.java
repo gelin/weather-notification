@@ -1,10 +1,9 @@
 package ru.gelin.android.weather.openweathermap;
 
-import android.util.Log;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import ru.gelin.android.weather.*;
-import ru.gelin.android.weather.notification.app.Tag;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +27,7 @@ public class OpenWeatherMapWeather implements Weather {
     boolean empty = true;
 
     public OpenWeatherMapWeather(JSONObject jsonObject) throws WeatherException {
-        parse(jsonObject);
+        parseCityWeather(jsonObject);
     }
 
     @Override
@@ -61,28 +60,33 @@ public class OpenWeatherMapWeather implements Weather {
         return this.empty;
     }
 
-    void parse(JSONObject json) throws WeatherException {
+    void parseCityWeather(JSONObject json) throws WeatherException {
         try {
-            JSONObject weatherJSON = json.getJSONArray("list").getJSONObject(0);
+            JSONArray list = json.getJSONArray("list");
+            if (list.length() == 0) {
+                this.empty = true;
+                return;
+            }
+            JSONObject weatherJSON = list.getJSONObject(0);
             parseLocation(weatherJSON);
             parseTime(weatherJSON);
             parseCondition(weatherJSON);
         } catch (JSONException e) {
-            throw new WeatherException("cannot parse the weather", e);
+            throw new WeatherException("cannot parseCityWeather the weather", e);
         }
         this.empty = false;
     }
 
-    void parseLocation(JSONObject weatherJSON) throws JSONException {
+    private void parseLocation(JSONObject weatherJSON) throws JSONException {
         this.location = new SimpleLocation(weatherJSON.getString("name"), false);
     }
 
-    void parseTime(JSONObject weatherJSON) throws JSONException {
+    private void parseTime(JSONObject weatherJSON) throws JSONException {
         long timestamp = weatherJSON.getLong("dt");
         this.time = new Date(timestamp * 1000);
     }
 
-    void parseCondition(JSONObject weatherJSON) throws JSONException {
+    private void parseCondition(JSONObject weatherJSON) throws JSONException {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(parseConditionText(weatherJSON));
         condition.setTemperature(parseTemperature(weatherJSON));
@@ -91,7 +95,7 @@ public class OpenWeatherMapWeather implements Weather {
         this.conditions.add(condition);
     }
 
-    String parseConditionText(JSONObject weatherJSON) throws JSONException {
+    private String parseConditionText(JSONObject weatherJSON) throws JSONException {
         double cloudiness = 0.0;
         try {
             cloudiness = weatherJSON.getJSONObject("clouds").getDouble("all");
@@ -109,7 +113,7 @@ public class OpenWeatherMapWeather implements Weather {
                 //TODO: more smart, more human-readable, localized
     }
 
-    SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
+    private SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
         SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
         JSONObject main = weatherJSON.getJSONObject("main");
         double currentTemp = main.getDouble("temp");
@@ -121,7 +125,7 @@ public class OpenWeatherMapWeather implements Weather {
         return temperature;
     }
 
-    SimpleWind parseWind(JSONObject weatherJSON) throws JSONException {
+    private SimpleWind parseWind(JSONObject weatherJSON) throws JSONException {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
         JSONObject windJSON = weatherJSON.getJSONObject("wind");
         double speed = windJSON.getDouble("speed");
@@ -133,7 +137,7 @@ public class OpenWeatherMapWeather implements Weather {
         return wind;
     }
 
-    SimpleHumidity parseHumidity(JSONObject weatherJSON) throws JSONException {
+    private SimpleHumidity parseHumidity(JSONObject weatherJSON) throws JSONException {
         SimpleHumidity humidity = new SimpleHumidity();
         double humidityValue = weatherJSON.getJSONObject("main").getDouble("humidity");
         humidity.setValue((int)humidityValue);

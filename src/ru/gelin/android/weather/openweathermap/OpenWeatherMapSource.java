@@ -47,7 +47,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         try {
             return (JSONObject)parser.nextValue();
         } catch (JSONException e) {
-            throw new WeatherException("can't parse weather", e);
+            throw new WeatherException("can't parseCityWeather weather", e);
         }
     }
 
