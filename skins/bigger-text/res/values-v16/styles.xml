@@ -1,0 +1,21 @@
+<resources>
+
+    <style name="Weather" parent="@android:style/TextAppearance.StatusBar.EventContent">
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Weather.CurrentTemp" parent="@android:style/TextAppearance.StatusBar.EventContent.Title">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Weather.Forecast" parent="Weather">
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="Weather.Condition" parent="@android:style/TextAppearance.StatusBar.EventContent.Title">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+</resources>
