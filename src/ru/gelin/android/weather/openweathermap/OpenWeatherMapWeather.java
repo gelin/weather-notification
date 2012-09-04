@@ -13,11 +13,11 @@ import java.util.*;
 public class OpenWeatherMapWeather implements Weather {
 
     /** City ID */
-    int cityId;
+    int cityId = 0;
     /** Weather location */
-    SimpleLocation location;
+    SimpleLocation location = new SimpleLocation("");
     /** Weather time */
-    Date time;
+    Date time = new Date();
     /** Query time */
     Date queryTime = new Date();
     /** Weather conditions */

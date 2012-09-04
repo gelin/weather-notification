@@ -23,6 +23,12 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertFalse(weather.isEmpty());
     }
 
+    public void testNotNullLocation() {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather();
+        assertNotNull(weather.getLocation());
+        assertTrue(weather.isEmpty());
+    }
+
     public void testGetTemperature() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         WeatherCondition condition = weather.getConditions().get(0);
