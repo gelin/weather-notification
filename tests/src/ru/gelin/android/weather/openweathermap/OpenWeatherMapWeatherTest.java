@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class OpenWeatherMapWeatherTest extends AndroidTestCase {
@@ -110,6 +111,47 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather((JSONObject)parser.nextValue());
         assertTrue(weather.isEmpty());
     }
+
+    public void testForecastGetLowTemperature() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<WeatherCondition> conditions = weather.getConditions();
+        assertEquals(4, conditions.size());
+        assertEquals(284, conditions.get(0).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(281, conditions.get(1).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(283, conditions.get(2).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(287, conditions.get(3).getTemperature(TemperatureUnit.K).getLow());
+    }
+
+    public void testForecastGetHighTemperature() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<WeatherCondition> conditions = weather.getConditions();
+        assertEquals(4, conditions.size());
+        assertEquals(290, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(295, conditions.get(1).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(298, conditions.get(2).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(299, conditions.get(3).getTemperature(TemperatureUnit.K).getHigh());
+    }
+
+    public void testForecastGetTemperature() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<WeatherCondition> conditions = weather.getConditions();
+        assertEquals(4, conditions.size());
+        //the current temp should come from the city JSON
+        assertEquals(288, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
+    }
+
+    //TODO: implement weather conditions for forecasts
+    /*
+    public void testForecastGetConditionText() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<WeatherCondition> conditions = weather.getConditions();
+        assertEquals(4, conditions.size());
+    }
+    */
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));

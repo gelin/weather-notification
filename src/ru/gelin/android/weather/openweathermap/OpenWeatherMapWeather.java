@@ -5,10 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.gelin.android.weather.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  *  Weather implementation which constructs from the JSON received from openweathermap.org
@@ -22,7 +19,7 @@ public class OpenWeatherMapWeather implements Weather {
     /** Query time */
     Date queryTime = new Date();
     /** Weather conditions */
-    List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
+    List<SimpleWeatherCondition> conditions = new ArrayList<SimpleWeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
 
@@ -52,7 +49,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     @Override
     public List<WeatherCondition> getConditions() {
-        return Collections.unmodifiableList(this.conditions);
+        return Collections.unmodifiableList(new ArrayList<WeatherCondition>(this.conditions));
     }
 
     @Override
@@ -72,7 +69,7 @@ public class OpenWeatherMapWeather implements Weather {
             parseTime(weatherJSON);
             parseCondition(weatherJSON);
         } catch (JSONException e) {
-            throw new WeatherException("cannot parseCityWeather the weather", e);
+            throw new WeatherException("cannot parse the weather", e);
         }
         this.empty = false;
     }
@@ -144,6 +141,73 @@ public class OpenWeatherMapWeather implements Weather {
         humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
             //TODO: more smart, localized
         return humidity;
+    }
+
+    void parseForecast(JSONObject json) throws WeatherException {
+        try {
+            JSONArray list = json.getJSONArray("list");
+            int j = 0;
+            for (int i = 0; i < 4; i++) {
+                SimpleWeatherCondition condition = getCondition(i);
+                Date conditionDate = getConditionDate(i);
+                for (; j < list.length(); j++) {
+                    boolean appended = appendForecast(condition, conditionDate, list.getJSONObject(j));
+                    if (!appended) {
+                        j--;
+                        break;
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            throw new WeatherException("cannot parse forecasts", e);
+        }
+    }
+
+    private SimpleWeatherCondition getCondition(int i) {
+        while (i >= this.conditions.size()) {
+            SimpleWeatherCondition condition = new SimpleWeatherCondition();
+            condition.setTemperature(new SimpleTemperature(TemperatureUnit.K));
+            this.conditions.add(condition);
+        }
+        return this.conditions.get(i);
+    }
+
+    private Date getConditionDate(int i) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(roundDate(this.getTime()));
+        calendar.add(Calendar.DAY_OF_MONTH, i);
+        return calendar.getTime();
+    }
+
+    private Date roundDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        return calendar.getTime();
+    }
+
+    private boolean appendForecast(SimpleWeatherCondition condition, Date conditionDate, JSONObject weatherJSON)
+            throws JSONException {
+        Date weatherDate = new Date(weatherJSON.getLong("dt") * 1000);
+        if (roundDate(weatherDate).after(conditionDate)) {
+            return false;
+        }
+        SimpleTemperature exitedTemp = (SimpleTemperature)condition.getTemperature();
+        SimpleTemperature newTemp = parseTemperature(weatherJSON);
+        if (exitedTemp.getLow() == Temperature.UNKNOWN) {
+            exitedTemp.setLow(newTemp.getLow(), TemperatureUnit.K);
+        } else {
+            exitedTemp.setLow(Math.min(exitedTemp.getLow(), newTemp.getLow()), TemperatureUnit.K);
+        }
+        if (exitedTemp.getHigh() == Temperature.UNKNOWN) {
+            exitedTemp.setHigh(newTemp.getHigh(), TemperatureUnit.K);
+        } else {
+            exitedTemp.setHigh(Math.max(exitedTemp.getHigh(), newTemp.getHigh()), TemperatureUnit.K);
+        }
+        return true;
     }
 
 }
