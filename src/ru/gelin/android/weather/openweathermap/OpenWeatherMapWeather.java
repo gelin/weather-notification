@@ -180,6 +180,7 @@ public class OpenWeatherMapWeather implements Weather {
     private SimpleWeatherCondition getCondition(int i) {
         while (i >= this.conditions.size()) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
+            condition.setConditionText(" ");    //TODO: implement weather conditions for forecasts
             condition.setTemperature(new SimpleTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
