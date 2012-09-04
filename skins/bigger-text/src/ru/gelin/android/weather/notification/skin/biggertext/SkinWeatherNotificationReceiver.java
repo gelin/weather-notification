@@ -44,7 +44,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
     @Override
     protected int getNotificationIconId() {
-        return R.drawable.temp_icon_white;
+        return R.drawable.temp_icon_light;
     }
 
     @Override

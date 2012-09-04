@@ -2,7 +2,7 @@
 
 #
 #   Android Weather Notification.
-#   Copyright (C) 2010 gelin, 2011 mihovilic
+#   Copyright (C) 2012 gelin, 2011 mihovilic
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,91 +22,106 @@
 #   mailto:den@gelin.ru
 #
 
-font=Droid-Sans-Bold
+font=Droid-Sans-Mono-Regular
 
-xhdpi_params="50x50 24 drawable-xhdpi"
-hdpi_params="38x38 19 drawable-hdpi"
-mdpi_params="25x25 12 drawable"
-ldpi_params="19x19 9 drawable-ldpi"
+xhdpi_params="50x50 45 drawable-xhdpi"
+hdpi_params="38x38 35 drawable-hdpi"
+mdpi_params="25x25 23 drawable"
+ldpi_params="19x19 17 drawable-ldpi"
+
+xhdpi_border_params="50x48 2 45 drawable-xhdpi"
+hdpi_border_params="38x36 2 35 drawable-hdpi"
+mdpi_border_params="25x24 1 23 drawable"
+ldpi_border_params="19x18 1 17 drawable-ldpi"
 
 gen_image() {
     img_size=$1
     point_size=$2
     res_folder=$3
     text=$4
-    file_suffix=$5
-    
-    echo "Generating res/$res_folder/white_temp_$file_suffix.png"
-    
+    color=$5
+    file_prefix=$6
+    file_suffix=$7
+
+    file="res/$res_folder/${file_prefix}_temp_${file_suffix}.png"
+    echo "Generating $file"
+
     convert -size $img_size xc:transparent \
         -font $font \
         -gravity center -pointsize $point_size \
-        -fill white -stroke none -annotate 0 "$text" \
-        res/$res_folder/white_temp_$file_suffix.png
+        -fill $color -stroke none -annotate 0 "$text" \
+        $file
+}
+
+gen_bordered_image() {
+    img_size=$1
+    border_width=$2
+    point_size=$3
+    res_folder=$4
+    text=$5
+    color=$6
+    file_prefix=$7
+    file_suffix=$8
+
+    file="res/$res_folder/${file_prefix}_temp_${file_suffix}.png"
+    echo "Generating $file"
+
+    convert -size $img_size xc:transparent \
+        -font $font \
+        -gravity center -pointsize $point_size \
+        -fill $color -stroke none -annotate 0 "$text" \
+        -background $color -gravity north -splice 0x${border_width} \
+        $file
 }
 
 #-60 - -10
-t=60
-while [ $t -ge 10 ]
+for t in $(seq 60 -1 10)
 do
-    gen_image $xhdpi_params "-$t°" minus_$t
-    gen_image $hdpi_params "-$t°" minus_$t
-    gen_image $mdpi_params "-$t°" minus_$t
-    gen_image $ldpi_params "-$t°" minus_$t
-    #echo $t
-    t=$(expr $t - 1)
+    gen_image $xhdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $hdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $mdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $ldpi_params "$t" "#3793b5" light minus_$t
 done
 
 #-9 - -1
-t=9
-while [ $t -ge 1 ]
+for t in $(seq 9 -1 1)
 do
-    gen_image $xhdpi_params "-$t°" minus_$t
-    gen_image $hdpi_params "-$t°" minus_$t
-    gen_image $mdpi_params "-$t°" minus_$t
-    gen_image $ldpi_params "-$t°" minus_$t
-    #echo $t
-    t=$(expr $t - 1)
+    gen_image $xhdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $hdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $mdpi_params "$t" "#3793b5" light minus_$t
+    gen_image $ldpi_params "$t" "#3793b5" light minus_$t
 done
 
 #0
-    gen_image $xhdpi_params "0°" 0
-    gen_image $hdpi_params "0°" 0
-    gen_image $mdpi_params "0°" 0
-    gen_image $ldpi_params "0°" 0
+    gen_image $xhdpi_params "0" white light 0
+    gen_image $hdpi_params "0" white light 0
+    gen_image $mdpi_params "0" white light 0
+    gen_image $ldpi_params "0" white light 0
 
 #1 - 9
-t=1
-while [ $t -le 9 ]
+for t in $(seq 1 9)
 do
-    gen_image $xhdpi_params "$t°" plus_$t
-    gen_image $hdpi_params "$t°" plus_$t
-    gen_image $mdpi_params "$t°" plus_$t
-    gen_image $ldpi_params "$t°" plus_$t
-    #echo $t
-    t=$(expr $t + 1)
+    gen_image $xhdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $hdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $mdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $ldpi_params "$t" "#c86c4a" light plus_$t
 done
 
 #10 - 99
-t=10
-while [ $t -le 99 ]
+for t in $(seq 10 99)
 do
-    gen_image $xhdpi_params "$t°" plus_$t
-    gen_image $hdpi_params "$t°" plus_$t
-    gen_image $mdpi_params "$t°" plus_$t
-    gen_image $ldpi_params "$t°" plus_$t
-    #echo $t
-    t=$(expr $t + 1)
+    gen_image $xhdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $hdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $mdpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $ldpi_params "$t" "#c86c4a" light plus_$t
 done
 
 #100 - 130
-t=100
-while [ $t -le 130 ]
+for t in $(seq 0 30)
 do
-    gen_image $xhdpi_params "$t°" plus_$t
-    gen_image $hdpi_params "$t°" plus_$t
-    gen_image $mdpi_params "$t°" plus_$t
-    gen_image $ldpi_params "$t°" plus_$t
-    #echo $t
-    t=$(expr $t + 1)
+    text=$(printf %02d $t)
+    gen_bordered_image $xhdpi_border_params "$text" "#c86c4a" light plus_1$text
+    gen_bordered_image $hdpi_border_params "$text" "#c86c4a" light plus_1$text
+    gen_bordered_image $mdpi_border_params "$text" "#c86c4a" light plus_1$text
+    gen_bordered_image $ldpi_border_params "$text" "#c86c4a" light plus_1$text
 done
