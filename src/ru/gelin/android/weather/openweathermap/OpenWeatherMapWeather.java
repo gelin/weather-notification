@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class OpenWeatherMapWeather implements Weather {
 
+    /** City ID */
+    int cityId;
     /** Weather location */
     SimpleLocation location;
     /** Weather time */
@@ -22,6 +24,9 @@ public class OpenWeatherMapWeather implements Weather {
     List<SimpleWeatherCondition> conditions = new ArrayList<SimpleWeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
+
+    public OpenWeatherMapWeather() {
+    }
 
     public OpenWeatherMapWeather(JSONObject jsonObject) throws WeatherException {
         parseCityWeather(jsonObject);
@@ -39,7 +44,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     @Override
     public Date getQueryTime() {
-        return new Date(this.time.getTime());
+        return new Date(this.queryTime.getTime());
     }
 
     @Override
@@ -57,6 +62,10 @@ public class OpenWeatherMapWeather implements Weather {
         return this.empty;
     }
 
+    public int getCityId() {
+        return this.cityId;
+    }
+
     void parseCityWeather(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
@@ -65,6 +74,7 @@ public class OpenWeatherMapWeather implements Weather {
                 return;
             }
             JSONObject weatherJSON = list.getJSONObject(0);
+            parseCityId(weatherJSON);
             parseLocation(weatherJSON);
             parseTime(weatherJSON);
             parseCondition(weatherJSON);
@@ -72,6 +82,10 @@ public class OpenWeatherMapWeather implements Weather {
             throw new WeatherException("cannot parse the weather", e);
         }
         this.empty = false;
+    }
+
+    private void parseCityId(JSONObject weatherJSON) throws JSONException {
+        this.cityId = weatherJSON.getInt("id");
     }
 
     private void parseLocation(JSONObject weatherJSON) throws JSONException {
@@ -167,6 +181,8 @@ public class OpenWeatherMapWeather implements Weather {
         while (i >= this.conditions.size()) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setTemperature(new SimpleTemperature(TemperatureUnit.K));
+            condition.setHumidity(new SimpleHumidity());
+            condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
             this.conditions.add(condition);
         }
         return this.conditions.get(i);

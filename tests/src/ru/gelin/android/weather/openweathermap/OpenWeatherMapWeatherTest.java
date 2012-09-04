@@ -112,6 +112,19 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertTrue(weather.isEmpty());
     }
 
+    public void testGetCityID() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        assertEquals(1496153, weather.getCityId());
+    }
+
+    public void testForecastsNulls() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        assertEquals(4, weather.getConditions().size());
+        assertNotNull(weather.getConditions().get(3).getHumidity());
+        assertNotNull(weather.getConditions().get(3).getWind());
+    }
+
     public void testForecastGetLowTemperature() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
         weather.parseForecast(readJSON("omsk_forecast.json"));

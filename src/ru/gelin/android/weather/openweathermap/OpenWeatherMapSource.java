@@ -24,10 +24,18 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     static final String API_CITY_URL = API_BASE_URL + "/find/city?";
     /** Find by name API URL */
     static final String API_NAME_URL = API_BASE_URL + "/find/name?";
+    /** Forecasts API URL */
+    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/city/";
 
     @Override
     public Weather query(Location location) throws WeatherException {
-        return new OpenWeatherMapWeather(queryJSON(location));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather();
+        weather.parseCityWeather(queryCityWeather(location));
+        if (weather.isEmpty()) {
+            return weather;
+        }
+        weather.parseForecast(queryForecast(weather.getCityId()));
+        return weather;
     }
 
     @Override
@@ -36,7 +44,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         //TODO: what to do with locale?
     }
 
-    JSONObject queryJSON(Location location) throws WeatherException {
+    JSONObject queryCityWeather(Location location) throws WeatherException {
         String url;
         if (location.isGeo()) {
             url = API_CITY_URL + location.getQuery();
@@ -47,18 +55,29 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         try {
             return (JSONObject)parser.nextValue();
         } catch (JSONException e) {
-            throw new WeatherException("can't parseCityWeather weather", e);
+            throw new WeatherException("can't parse weather", e);
+        }
+    }
+
+    JSONObject queryForecast(int cityId) throws WeatherException {
+        String url = API_FORECAST_URL + String.valueOf(cityId);
+        JSONTokener parser = new JSONTokener(readJSON(url));
+        try {
+            return (JSONObject)parser.nextValue();
+        } catch (JSONException e) {
+            throw new WeatherException("can't parse forecast", e);
         }
     }
 
     String readJSON(String url) throws WeatherException {
         StringBuilder result = new StringBuilder();
         InputStreamReader reader = getReaderForURL(url);
+        char[] buf = new char[1024];
         try {
-            int c = reader.read();  //TODO: optimize
-            while (c >= 0) {
-                result.append((char)c);
-                c = reader.read();
+            int read = reader.read(buf);
+            while (read >= 0) {
+                result.append(buf, 0 , read);
+                read = reader.read(buf);
             }
         } catch (IOException e) {
             throw new WeatherException("can't read weather", e);
