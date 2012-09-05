@@ -48,4 +48,24 @@ public class OpenWeatherMapSourceTest extends AndroidTestCase {
         assertEquals(4, weather.getConditions().size());
     }
 
+    public void testQueryTestLocationPlus() throws WeatherException {
+        WeatherSource source = new OpenWeatherMapSource();
+        Location location = new SimpleLocation("+25", false);
+        Weather weather = source.query(location);
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
+        assertEquals("Test location", weather.getLocation().getText());
+        assertEquals(25, weather.getConditions().get(0).getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
+    public void testQueryTestLocationMinus() throws WeatherException {
+        WeatherSource source = new OpenWeatherMapSource();
+        Location location = new SimpleLocation("-25", false);
+        Weather weather = source.query(location);
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
+        assertEquals("Test location", weather.getLocation().getText());
+        assertEquals(-25, weather.getConditions().get(0).getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
 }

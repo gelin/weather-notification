@@ -1,1 +1,28 @@
-{"message":"Model=GFS-OWM, ","cod":"200","calctime":0.0115,"cnt":1,"list":[{"id":1496153,"dt":1346169600,"name":"Omsk","coord":{"lat":55,"lon":73.4},"main":{"temp":288.15,"humidity":85,"pressure":1011,"temp_min":287,"temp_max":289},"wind":{"speed":2,"deg":-2},"clouds":{"all":49},"rain":{"3h":3}}]}
+{"message":"Model=GFS-OWM, ", "cod":"200", "calctime":0.0115, "cnt":1, "list":[
+    {
+        "id":1496153,
+        "dt":1346169600,
+        "name":"Omsk",
+        "coord":{
+            "lat":55,
+            "lon":73.4
+        },
+        "main":{
+            "temp":288.15,
+            "humidity":85,
+            "pressure":1011,
+            "temp_min":287,
+            "temp_max":289
+        },
+        "wind":{
+            "speed":2,
+            "deg":-2
+        },
+        "clouds":{
+            "all":49
+        },
+        "rain":{
+            "3h":3
+        }
+    }
+]}

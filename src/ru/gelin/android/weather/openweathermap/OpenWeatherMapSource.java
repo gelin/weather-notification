@@ -3,10 +3,7 @@ package ru.gelin.android.weather.openweathermap;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherException;
-import ru.gelin.android.weather.WeatherSource;
+import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.source.HttpWeatherSource;
 
 import java.io.IOException;
@@ -29,6 +26,15 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
 
     @Override
     public Weather query(Location location) throws WeatherException {
+        if (location == null) {
+            throw new WeatherException("null location");
+        }
+        if (location.getText().startsWith("-")) {
+            return new TestWeather(Integer.parseInt(location.getText()));
+        }
+        if (location.getText().startsWith("+")) {
+            return new TestWeather(Integer.parseInt(location.getText().substring(1)));
+        }
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather();
         weather.parseCityWeather(queryCityWeather(location));
         if (weather.isEmpty()) {
