@@ -52,6 +52,7 @@
 
         <ru.gelin.android.preference.SummaryTextPreference android:key="location"
             android:title="@string/manual_location"
+            android:singleLine="true"
             android:dependency="auto_location"/>
 
     </PreferenceCategory>

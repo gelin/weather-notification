@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.source;
 
+import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -7,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import ru.gelin.android.weather.WeatherException;
+import ru.gelin.android.weather.notification.app.Tag;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,6 +38,7 @@ public class HttpWeatherSource {
      *  Reads the content of the specified URL.
      */
     protected InputStreamReader getReaderForURL(String url) throws WeatherException {
+        Log.d(Tag.TAG, "requesting " + url);
         HttpGet request;
         try {
             request = new HttpGet(url);
