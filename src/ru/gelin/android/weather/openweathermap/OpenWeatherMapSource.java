@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.openweathermap;
 
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -23,6 +24,8 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     static final String API_NAME_URL = API_BASE_URL + "/find/name?";
     /** Forecasts API URL */
     static final String API_FORECAST_URL = API_BASE_URL + "/forecast/city/";
+    /** API key */
+    static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
 
     @Override
     public Weather query(Location location) throws WeatherException {
@@ -48,6 +51,11 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     public Weather query(Location location, Locale locale) throws WeatherException {
         return query(location);
         //TODO: what to do with locale?
+    }
+
+    @Override
+    protected void prepareRequest(HttpGet request) {
+        request.addHeader("X-API-Key", API_KEY);
     }
 
     JSONObject queryCityWeather(Location location) throws WeatherException {

@@ -43,6 +43,7 @@ public class HttpWeatherSource {
         try {
             request = new HttpGet(url);
             request.setHeader("User-Agent", USER_AGENT);
+            prepareRequest(request);
         } catch (Exception e) {
             throw new WeatherException("Can't prepare http request", e);
         }
@@ -67,6 +68,13 @@ public class HttpWeatherSource {
         } catch (IOException e) {
             throw new WeatherException("Problem communicating with API", e);
         }
+    }
+
+    /**
+     *  Add necessary headers to the GET request.
+     */
+    protected void prepareRequest(HttpGet request) {
+        //void implementation
     }
 
     /**
