@@ -174,7 +174,7 @@ public class UpdateService extends Service implements Runnable {
                 return;
             }
         } else {
-            location = new NameOpenWeatherMapLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
+            location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         }
         synchronized(this) {
             this.location = location;
@@ -333,6 +333,16 @@ public class UpdateService extends Service implements Runnable {
         }
 
         return new AndroidOpenWeatherMapLocation(androidLocation);
+    }
+
+    /**
+     *  Creates the location to search the location by the entered string.
+     */
+    Location createSearchLocation(String query) {
+        LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        android.location.Location androidLocation =
+                manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        return new NameOpenWeatherMapLocation(query, androidLocation);
     }
 
     /**

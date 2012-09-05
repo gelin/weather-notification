@@ -45,7 +45,7 @@ public class AndroidOpenWeatherMapLocation implements Location {
 
     /**
      *  Creates the query with geo coordinates. 
-     *  For example: ",,,30670000,104019996"
+     *  For example: "lat=54.96&lon=73.38&cnt=1"
      */
     //@Override
     public String getQuery() {
@@ -53,10 +53,8 @@ public class AndroidOpenWeatherMapLocation implements Location {
             return "";
         }
         return String.format(QUERY,
-                android.location.Location.convert(location.getLatitude(),
-                        android.location.Location.FORMAT_DEGREES),
-                android.location.Location.convert(location.getLongitude(),
-                        android.location.Location.FORMAT_DEGREES));
+                String.valueOf(location.getLatitude()),
+                String.valueOf(location.getLongitude()));
     }
 
     //@Override

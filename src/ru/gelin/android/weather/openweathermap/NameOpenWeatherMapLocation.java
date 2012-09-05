@@ -29,21 +29,27 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- *  Wrapper for Android location to query OpenWeatherMap.org API with geo coordinates.
+ *  Wrapper for a text query to ask OpenWeatherMap.org API by the city name.
+ *  The lat and lon parameters are passed to API for tracking purposes.
  */
 public class NameOpenWeatherMapLocation implements Location {
 
     /** Query template */
     static final String QUERY = "q=%s";  //q=omsk
+    /** Query template */
+    static final String QUERY_WITH_LOCATION = "q=%s&lat=%s&lon=%s";  //q=omsk&lat=54.96&lon=73.38
 
     /** Name */
     String name;
+    /** Android location */
+    android.location.Location location;
 
     /**
-     *  Creates the location for the name.
+     *  Creates the location for the name and android location
      */
-    public NameOpenWeatherMapLocation(String name) {
+    public NameOpenWeatherMapLocation(String name, android.location.Location location) {
         this.name = name;
+        this.location = location;
     }
 
     /**
@@ -52,8 +58,15 @@ public class NameOpenWeatherMapLocation implements Location {
     //@Override
     public String getQuery() {
         try {
-            return String.format(QUERY,
-                    URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
+            if (this.location == null) {
+                return String.format(QUERY,
+                        URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
+            } else {
+                return String.format(QUERY_WITH_LOCATION,
+                    URLEncoder.encode(this.name, HttpWeatherSource.ENCODING),
+                    String.valueOf(location.getLatitude()),
+                    String.valueOf(location.getLongitude()));
+            }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);  //never happens
         }
