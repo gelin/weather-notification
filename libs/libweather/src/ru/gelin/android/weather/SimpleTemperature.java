@@ -76,11 +76,7 @@ public class SimpleTemperature implements Temperature {
             this.current = UNKNOWN;
             return;
         }
-        if (this.tunit.equals(unit)) {
-            this.current = temp;
-        } else {
-            this.current = convertValue(temp, unit);
-        }
+        this.current = convertValue(temp, unit);
     }
 
     /**
@@ -91,11 +87,7 @@ public class SimpleTemperature implements Temperature {
             this.low = UNKNOWN;
             return;
         }
-        if (this.tunit.equals(unit)) {
-            this.low = temp;
-        } else {
-            this.low = convertValue(temp, unit);
-        }
+        this.low = convertValue(temp, unit);
     }
 
     /**
@@ -106,11 +98,7 @@ public class SimpleTemperature implements Temperature {
             this.high = UNKNOWN;
             return;
         }
-        if (this.tunit.equals(unit)) {
-            this.high = temp;
-        } else {
-            this.high = convertValue(temp, unit);
-        }
+        this.high = convertValue(temp, unit);
     }
 
     //@Override

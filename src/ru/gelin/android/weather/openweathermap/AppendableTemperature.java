@@ -17,18 +17,19 @@ public class AppendableTemperature extends SimpleTemperature {
     }
 
     public void append(Temperature temperature) {
-        TemperatureUnit mainUnit = getTemperatureUnit();
         if (getLow() == Temperature.UNKNOWN) {
             setLow(temperature.getLow(), temperature.getTemperatureUnit());
         } else {
             setLow(Math.min(
-                    getLow(), convertValue(temperature.getLow(), mainUnit)), mainUnit);
+                    getLow(), convertValue(temperature.getLow(), temperature.getTemperatureUnit())),
+                    getTemperatureUnit());
         }
         if (getHigh() == Temperature.UNKNOWN) {
             setHigh(temperature.getHigh(), temperature.getTemperatureUnit());
         } else {
             setHigh(Math.max(
-                    getHigh(), convertValue(temperature.getHigh(), mainUnit)), mainUnit);
+                    getHigh(), convertValue(temperature.getHigh(), temperature.getTemperatureUnit())),
+                    getTemperatureUnit());
         }
     }
 

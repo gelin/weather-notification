@@ -20,7 +20,8 @@
 package ru.gelin.android.weather;
 
 public interface Wind {
-	/** Unknown temperature value */
+
+    /** Unknown wind speed value */
     static int UNKNOWN = Integer.MIN_VALUE;
     
     /**
