@@ -88,4 +88,6 @@ public interface WeatherCondition {
      */
     Wind getWind(WindSpeedUnit unit);
 
+    //TODO add cloudiness
+
 }
