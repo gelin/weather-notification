@@ -125,7 +125,7 @@ public class OpenWeatherMapWeather implements Weather {
     }
 
     private SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
-        SimpleTemperature temperature = new SimpleTemperature(TemperatureUnit.K);
+        AppendableTemperature temperature = new AppendableTemperature(TemperatureUnit.K);
         JSONObject main = weatherJSON.getJSONObject("main");
         double currentTemp = main.getDouble("temp");
         double minTemp = main.getDouble("temp_min");
@@ -181,7 +181,7 @@ public class OpenWeatherMapWeather implements Weather {
         while (i >= this.conditions.size()) {
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(" ");    //TODO: implement weather conditions for forecasts
-            condition.setTemperature(new SimpleTemperature(TemperatureUnit.K));
+            condition.setTemperature(new AppendableTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
             this.conditions.add(condition);
@@ -212,18 +212,9 @@ public class OpenWeatherMapWeather implements Weather {
         if (roundDate(weatherDate).after(conditionDate)) {
             return false;
         }
-        SimpleTemperature exitedTemp = (SimpleTemperature)condition.getTemperature();
+        AppendableTemperature exitedTemp = (AppendableTemperature)condition.getTemperature();
         SimpleTemperature newTemp = parseTemperature(weatherJSON);
-        if (exitedTemp.getLow() == Temperature.UNKNOWN) {
-            exitedTemp.setLow(newTemp.getLow(), TemperatureUnit.K);
-        } else {
-            exitedTemp.setLow(Math.min(exitedTemp.getLow(), newTemp.getLow()), TemperatureUnit.K);
-        }
-        if (exitedTemp.getHigh() == Temperature.UNKNOWN) {
-            exitedTemp.setHigh(newTemp.getHigh(), TemperatureUnit.K);
-        } else {
-            exitedTemp.setHigh(Math.max(exitedTemp.getHigh(), newTemp.getHigh()), TemperatureUnit.K);
-        }
+        exitedTemp.append(newTemp);
         return true;
     }
 

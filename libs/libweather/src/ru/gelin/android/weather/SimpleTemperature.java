@@ -184,7 +184,7 @@ public class SimpleTemperature implements Temperature {
     /**
      *  Converts the value from provided unit system into this temperature set unit system.
      */
-    int convertValue(int value, TemperatureUnit unit) {
+    protected int convertValue(int value, TemperatureUnit unit) {
         if (this.tunit.equals(unit)) {
             return value;
         }
