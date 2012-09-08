@@ -33,4 +33,10 @@ public class SimplePrecipitationTest extends AndroidTestCase {
         assertEquals(1.0f, precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
     }
 
+    public void testUnknownValue() {
+        SimplePrecipitation precipitation = new SimplePrecipitation(PrecipitationUnit.MM);
+        assertEquals(Precipitation.UNKNOWN, precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
+        assertEquals(Precipitation.UNKNOWN, precipitation.getValue(PrecipitationPeriod.PERIOD_3H));
+    }
+
 }

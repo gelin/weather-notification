@@ -8,9 +8,9 @@ public class SimplePrecipitation implements Precipitation {
     /** Unit for precipitations */
     PrecipitationUnit unit = PrecipitationUnit.MM;
     /** Hours of precipitations */
-    int hours;
+    int hours = 0;
     /** Value of precipitations */
-    float value;
+    float value = UNKNOWN;
 
     public SimplePrecipitation(PrecipitationUnit unit) {
         this.unit = unit;
@@ -21,8 +21,24 @@ public class SimplePrecipitation implements Precipitation {
         this.hours = period.hours;
     }
 
+    public void setValue(float value, int hours) {
+        this.value = value;
+        this.hours = hours;
+    }
+
+    public float getValue() {
+        return this.value;
+    }
+
+    public int getHours() {
+        return this.hours;
+    }
+
     @Override
     public float getValue(PrecipitationPeriod period) {
+        if (this.value == UNKNOWN) {
+            return UNKNOWN;
+        }
         return this.value / this.hours * period.getHours();
     }
 

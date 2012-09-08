@@ -25,7 +25,7 @@ package ru.gelin.android.weather;
 public interface Precipitation {
 
     /** Unknown precipitation value */
-    static int UNKNOWN = Integer.MIN_VALUE;
+    static float UNKNOWN = Float.MIN_VALUE;
     
     /**
      *  Returns general precipitation value for the period.
