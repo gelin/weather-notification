@@ -1,6 +1,6 @@
 /*
  *  Weather API.
- *  Copyright (C) 2012 Denis Nelubin
+ *  Copyright (C) 2012  Denis Nelubin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,25 +20,25 @@
 package ru.gelin.android.weather;
 
 /**
- *  Holds cloudiness value.
+ *  Holds precipitation value.
  */
-public interface Cloudiness {
+public interface Precipitation {
 
-    /** Unknown cloudiness value */
+    /** Unknown precipitation value */
     static int UNKNOWN = Integer.MIN_VALUE;
     
     /**
-     *  Returns general cloudiness value.
+     *  Returns general precipitation value for the period.
      */
-    int getValue();
+    float getValue(PrecipitationPeriod period);
     
     /**
-     *  Cloudiness unit for this instance.
+     *  Precipitation unit for this instance.
      */
-    CloudinessUnit getCloudinessUnit();
+    PrecipitationUnit getPrecipitationUnit();
     
     /**
-     *  Returns cloudiness as a human readable text.
+     *  Returns precipitation value as a human readable text.
      *  Can return null.
      */
     String getText();
