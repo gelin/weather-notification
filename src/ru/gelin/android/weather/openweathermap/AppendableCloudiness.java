@@ -19,6 +19,9 @@ public class AppendableCloudiness extends SimpleCloudiness {
     }
 
     public void append(Cloudiness cloudiness) {
+        if (cloudiness == null || cloudiness.getValue() == Cloudiness.UNKNOWN) {
+            return;
+        }
         this.sum += convertValue(cloudiness.getValue(), cloudiness.getCloudinessUnit());
         this.count++;
         setValue(this.sum / this.count, getCloudinessUnit());

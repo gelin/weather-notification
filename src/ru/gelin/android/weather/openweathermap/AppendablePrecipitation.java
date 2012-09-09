@@ -13,6 +13,9 @@ public class AppendablePrecipitation extends SimplePrecipitation {
     }
 
     public void append(SimplePrecipitation precipitation) {
+        if (precipitation == null || precipitation.getValue() == UNKNOWN) {
+            return;
+        }
         if (getValue() == UNKNOWN) {
             setValue(precipitation.getValue(), precipitation.getHours());
             return;

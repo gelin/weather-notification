@@ -31,4 +31,19 @@ public class AppendableCloudinessTest extends AndroidTestCase {
         assertEquals(50, cloudiness.getValue());
     }
 
+    public void testAppendUnknown() {
+        AppendableCloudiness cloudiness = new AppendableCloudiness(CloudinessUnit.PERCENT);
+        assertEquals(Cloudiness.UNKNOWN, cloudiness.getValue());
+        SimpleCloudiness append1 = new SimpleCloudiness(CloudinessUnit.PERCENT);
+        cloudiness.append(append1);
+        assertEquals(Cloudiness.UNKNOWN, cloudiness.getValue());
+        SimpleCloudiness append2 = new SimpleCloudiness(CloudinessUnit.PERCENT);
+        append2.setValue(50, CloudinessUnit.PERCENT);
+        cloudiness.append(append2);
+        assertEquals(50, cloudiness.getValue());
+        SimpleCloudiness append3 = new SimpleCloudiness(CloudinessUnit.PERCENT);
+        cloudiness.append(append3);
+        assertEquals(50, cloudiness.getValue());
+    }
+
 }
