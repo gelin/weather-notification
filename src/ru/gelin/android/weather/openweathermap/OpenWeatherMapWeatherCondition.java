@@ -1,21 +1,29 @@
 package ru.gelin.android.weather.openweathermap;
 
-import ru.gelin.android.weather.Precipitation;
-import ru.gelin.android.weather.SimpleWeatherCondition;
+import ru.gelin.android.weather.*;
 
 /**
  *  Special condition to hold additional data available by OpenWeatherMap.
  */
 public class OpenWeatherMapWeatherCondition extends SimpleWeatherCondition {
 
-    Precipitation precipitation;
+    SimplePrecipitation precipitation;
+    SimpleCloudiness cloudiness;
 
-    public void setPrecipitation(Precipitation precipitation) {
+    public void setPrecipitation(SimplePrecipitation precipitation) {
         this.precipitation = precipitation;
     }
 
     public Precipitation getPrecipitation() {
         return this.precipitation;
+    }
+
+    public void setCloudiness(SimpleCloudiness cloudiness) {
+        this.cloudiness = cloudiness;
+    }
+
+    public Cloudiness getCloudiness() {
+        return this.cloudiness;
     }
 
 }

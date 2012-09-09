@@ -108,6 +108,7 @@ public class OpenWeatherMapWeather implements Weather {
         condition.setWind(parseWind(weatherJSON));
         condition.setHumidity(parseHumidity(weatherJSON));
         condition.setPrecipitation(parsePrecipitation(weatherJSON));
+        condition.setCloudiness(parseCloudiness(weatherJSON));
         this.conditions.add(condition);
     }
 
@@ -170,6 +171,16 @@ public class OpenWeatherMapWeather implements Weather {
         return precipitation;
     }
 
+    private AppendableCloudiness parseCloudiness(JSONObject weatherJSON) {
+        AppendableCloudiness cloudiness = new AppendableCloudiness(CloudinessUnit.PERCENT);
+        try {
+            cloudiness.setValue((int)weatherJSON.getJSONObject("clouds").getDouble("all"), CloudinessUnit.PERCENT);
+        } catch (JSONException e) {
+            //no clouds
+        }
+        return cloudiness;
+    }
+
     void parseForecast(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
@@ -179,7 +190,6 @@ public class OpenWeatherMapWeather implements Weather {
             for (; j < list.length(); j++) {
                 boolean appended = appendForecastTemperature(condition, conditionDate, list.getJSONObject(j));
                 if (!appended) {
-                    j--;
                     break;
                 }
             }
@@ -189,7 +199,6 @@ public class OpenWeatherMapWeather implements Weather {
                 for (; j < list.length(); j++) {
                     boolean appended = appendForecast(condition, conditionDate, list.getJSONObject(j));
                     if (!appended) {
-                        j--;
                         break;
                     }
                 }
@@ -207,6 +216,7 @@ public class OpenWeatherMapWeather implements Weather {
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
             condition.setPrecipitation(new AppendablePrecipitation(PrecipitationUnit.MM));
+            condition.setCloudiness(new AppendableCloudiness(CloudinessUnit.PERCENT));
             this.conditions.add(condition);
         }
         return this.conditions.get(i);
@@ -252,6 +262,9 @@ public class OpenWeatherMapWeather implements Weather {
         AppendablePrecipitation exitedPrec = (AppendablePrecipitation)condition.getPrecipitation();
         SimplePrecipitation newPrec = parsePrecipitation(weatherJSON);
         exitedPrec.append(newPrec);
+        AppendableCloudiness exitedCloud = (AppendableCloudiness)condition.getCloudiness();
+        SimpleCloudiness newCloud = parseCloudiness(weatherJSON);
+        exitedCloud.append(newCloud);
         return true;
     }
 
