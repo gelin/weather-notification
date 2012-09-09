@@ -162,6 +162,16 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals(288, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
     }
 
+    public void testForecastGetPrecipitations() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<OpenWeatherMapWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
+        assertEquals(4, conditions.size());
+        assertEquals(1f, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));  //current
+        assertEquals(0.5f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
+        assertEquals(Precipitation.UNKNOWN, conditions.get(2).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
+        assertEquals(Precipitation.UNKNOWN, conditions.get(3).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
+    }
 
     public void testForecastGetConditionText() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));

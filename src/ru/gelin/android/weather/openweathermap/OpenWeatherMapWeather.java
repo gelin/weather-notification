@@ -21,7 +21,7 @@ public class OpenWeatherMapWeather implements Weather {
     /** Query time */
     Date queryTime = new Date();
     /** Weather conditions */
-    List<SimpleWeatherCondition> conditions = new ArrayList<SimpleWeatherCondition>();
+    List<OpenWeatherMapWeatherCondition> conditions = new ArrayList<OpenWeatherMapWeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
 
@@ -55,6 +55,10 @@ public class OpenWeatherMapWeather implements Weather {
     @Override
     public List<WeatherCondition> getConditions() {
         return Collections.unmodifiableList(new ArrayList<WeatherCondition>(this.conditions));
+    }
+
+    List<OpenWeatherMapWeatherCondition> getOpenWeatherMapConditions() {
+        return this.conditions;
     }
 
     @Override
@@ -98,11 +102,12 @@ public class OpenWeatherMapWeather implements Weather {
     }
 
     private void parseCondition(JSONObject weatherJSON) throws JSONException {
-        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
         condition.setConditionText(parseConditionText(weatherJSON));
         condition.setTemperature(parseTemperature(weatherJSON));
         condition.setWind(parseWind(weatherJSON));
         condition.setHumidity(parseHumidity(weatherJSON));
+        condition.setPrecipitation(parsePrecipitation(weatherJSON));
         this.conditions.add(condition);
     }
 
@@ -143,8 +148,7 @@ public class OpenWeatherMapWeather implements Weather {
         double deg = windJSON.getDouble("deg");
         wind.setSpeed((int)speed, WindSpeedUnit.MPS);
         wind.setDirection(WindDirection.valueOf((int) deg));
-        wind.setText(String.format("Wind: %s, %d mph", String.valueOf(wind.getDirection()), wind.getSpeed()));
-            //TODO: more smart, localized
+        wind.setText(String.format("Wind: %s, %d m/s", String.valueOf(wind.getDirection()), wind.getSpeed()));
         return wind;
     }
 
@@ -153,17 +157,35 @@ public class OpenWeatherMapWeather implements Weather {
         double humidityValue = weatherJSON.getJSONObject("main").getDouble("humidity");
         humidity.setValue((int)humidityValue);
         humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
-            //TODO: more smart, localized
         return humidity;
+    }
+
+    private AppendablePrecipitation parsePrecipitation(JSONObject weatherJSON) {
+        AppendablePrecipitation precipitation = new AppendablePrecipitation(PrecipitationUnit.MM);
+        try {
+            precipitation.setValue((float)weatherJSON.getJSONObject("rain").getDouble("3h"), PrecipitationPeriod.PERIOD_3H);
+        } catch (JSONException e) {
+            //no rain
+        }
+        return precipitation;
     }
 
     void parseForecast(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
             int j = 0;
-            for (int i = 0; i < 4; i++) {
-                SimpleWeatherCondition condition = getCondition(i);
-                Date conditionDate = getConditionDate(i);
+            OpenWeatherMapWeatherCondition condition = getCondition(0);
+            Date conditionDate = getConditionDate(0);
+            for (; j < list.length(); j++) {
+                boolean appended = appendForecastTemperature(condition, conditionDate, list.getJSONObject(j));
+                if (!appended) {
+                    j--;
+                    break;
+                }
+            }
+            for (int i = 1; i < 4; i++) {
+                condition = getCondition(i);
+                conditionDate = getConditionDate(i);
                 for (; j < list.length(); j++) {
                     boolean appended = appendForecast(condition, conditionDate, list.getJSONObject(j));
                     if (!appended) {
@@ -177,13 +199,14 @@ public class OpenWeatherMapWeather implements Weather {
         }
     }
 
-    private SimpleWeatherCondition getCondition(int i) {
+    private OpenWeatherMapWeatherCondition getCondition(int i) {
         while (i >= this.conditions.size()) {
-            SimpleWeatherCondition condition = new SimpleWeatherCondition();
+            OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
             condition.setConditionText(" ");    //TODO: implement weather conditions for forecasts
             condition.setTemperature(new AppendableTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
+            condition.setPrecipitation(new AppendablePrecipitation(PrecipitationUnit.MM));
             this.conditions.add(condition);
         }
         return this.conditions.get(i);
@@ -206,7 +229,8 @@ public class OpenWeatherMapWeather implements Weather {
         return calendar.getTime();
     }
 
-    private boolean appendForecast(SimpleWeatherCondition condition, Date conditionDate, JSONObject weatherJSON)
+    private boolean appendForecastTemperature(OpenWeatherMapWeatherCondition condition,
+            Date conditionDate, JSONObject weatherJSON)
             throws JSONException {
         Date weatherDate = new Date(weatherJSON.getLong("dt") * 1000);
         if (roundDate(weatherDate).after(conditionDate)) {
@@ -215,6 +239,19 @@ public class OpenWeatherMapWeather implements Weather {
         AppendableTemperature exitedTemp = (AppendableTemperature)condition.getTemperature();
         SimpleTemperature newTemp = parseTemperature(weatherJSON);
         exitedTemp.append(newTemp);
+        return true;
+    }
+
+    private boolean appendForecast(OpenWeatherMapWeatherCondition condition,
+            Date conditionDate, JSONObject weatherJSON)
+            throws JSONException {
+        boolean result = appendForecastTemperature(condition, conditionDate, weatherJSON);
+        if (result == false) {
+            return false;
+        }
+        AppendablePrecipitation exitedPrec = (AppendablePrecipitation)condition.getPrecipitation();
+        SimplePrecipitation newPrec = parsePrecipitation(weatherJSON);
+        exitedPrec.append(newPrec);
         return true;
     }
 

@@ -12,9 +12,6 @@
             "speed":1,
             "deg":-3
         },
-        "rain":{
-            "3h":0
-        },
         "clouds":{
             "all":96
         },
@@ -32,9 +29,6 @@
         "wind":{
             "speed":1,
             "deg":-4
-        },
-        "rain":{
-            "3h":0
         },
         "clouds":{
             "all":88
@@ -108,6 +102,9 @@
             "speed":2,
             "deg":-3
         },
+        "rain":{
+            "3h":3
+        },
         "clouds":{
             "all":0
         },
@@ -125,6 +122,9 @@
         "wind":{
             "speed":2,
             "deg":-3
+        },
+        "rain":{
+            "3h":0
         },
         "clouds":{
             "all":0
