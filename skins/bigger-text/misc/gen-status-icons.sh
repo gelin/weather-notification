@@ -24,6 +24,10 @@
 
 font=Droid-Sans-Mono-Regular
 
+color_negative="#55e2ff"
+color_positive="#ffe755"
+color_zero="white"
+
 xhdpi_params="50x50 45 drawable-xhdpi"
 hdpi_params="38x38 35 drawable-hdpi"
 mdpi_params="25x25 23 drawable"
@@ -77,51 +81,51 @@ gen_bordered_image() {
 #-60 - -10
 for t in $(seq 60 -1 10)
 do
-    gen_image $xhdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $hdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $mdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $ldpi_params "$t" "#3793b5" light minus_$t
+    gen_image $xhdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $hdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $mdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $ldpi_params "$t" "$color_negative" light minus_$t
 done
 
 #-9 - -1
 for t in $(seq 9 -1 1)
 do
-    gen_image $xhdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $hdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $mdpi_params "$t" "#3793b5" light minus_$t
-    gen_image $ldpi_params "$t" "#3793b5" light minus_$t
+    gen_image $xhdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $hdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $mdpi_params "$t" "$color_negative" light minus_$t
+    gen_image $ldpi_params "$t" "$color_negative" light minus_$t
 done
 
 #0
-    gen_image $xhdpi_params "0" white light 0
-    gen_image $hdpi_params "0" white light 0
-    gen_image $mdpi_params "0" white light 0
-    gen_image $ldpi_params "0" white light 0
+    gen_image $xhdpi_params "0" "$color_zero" light 0
+    gen_image $hdpi_params "0" "$color_zero" light 0
+    gen_image $mdpi_params "0" "$color_zero" light 0
+    gen_image $ldpi_params "0" "$color_zero" light 0
 
 #1 - 9
 for t in $(seq 1 9)
 do
-    gen_image $xhdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $hdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $mdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $ldpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $xhdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $hdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $mdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $ldpi_params "$t" "$color_positive" light plus_$t
 done
 
 #10 - 99
 for t in $(seq 10 99)
 do
-    gen_image $xhdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $hdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $mdpi_params "$t" "#c86c4a" light plus_$t
-    gen_image $ldpi_params "$t" "#c86c4a" light plus_$t
+    gen_image $xhdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $hdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $mdpi_params "$t" "$color_positive" light plus_$t
+    gen_image $ldpi_params "$t" "$color_positive" light plus_$t
 done
 
 #100 - 130
 for t in $(seq 0 30)
 do
     text=$(printf %02d $t)
-    gen_bordered_image $xhdpi_border_params "$text" "#c86c4a" light plus_1$text
-    gen_bordered_image $hdpi_border_params "$text" "#c86c4a" light plus_1$text
-    gen_bordered_image $mdpi_border_params "$text" "#c86c4a" light plus_1$text
-    gen_bordered_image $ldpi_border_params "$text" "#c86c4a" light plus_1$text
+    gen_bordered_image $xhdpi_border_params "$text" "$color_positive" light plus_1$text
+    gen_bordered_image $hdpi_border_params "$text" "$color_positive" light plus_1$text
+    gen_bordered_image $mdpi_border_params "$text" "$color_positive" light plus_1$text
+    gen_bordered_image $ldpi_border_params "$text" "$color_positive" light plus_1$text
 done
