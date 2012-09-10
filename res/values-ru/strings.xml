@@ -56,4 +56,17 @@
     <string name="builtin_skin_preferences">Настройки встроенного вида</string>
     <string name="start_update_service_permission">запускать сервис обновления погоды</string>
     <string name="start_update_service_permission_description">Разрешает приложению запускать сервис обновления погоды, чтобы получать новые значения погоды.</string>
+    <string name="condition_skc">Ясно</string>
+    <string name="condition_few">Малооблачно</string>
+    <string name="condition_sct">Переменная облачность</string>
+    <string name="condition_bkn">Облачно</string>
+    <string name="condition_ovc">Пасмурно</string>
+    <string name="condition_skc_prec">Небольшие осадки, ясно</string>
+    <string name="condition_few_prec">Небольшие осадки, малооблачно</string>
+    <string name="condition_sct_prec">Небольшие осадки, переменная облачность</string>
+    <string name="condition_bkn_prec">Небольшие осадки, облачно</string>
+    <string name="condition_ovc_prec">Небольшие осадки, пасмурно</string>
+    <string name="condition_moderate_prec">Умеренные осадки</string>
+    <string name="condition_heavy_prec">Сильные осадки</string>
+    <string name="condition_extreme_prec">Экстремальные осадки</string>
 </resources>

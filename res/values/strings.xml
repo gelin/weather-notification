@@ -56,4 +56,17 @@
     <string name="builtin_skin_preferences">Built-in skin preferences</string>
     <string name="start_update_service_permission">start weather update service</string>
     <string name="start_update_service_permission_description">Allows the application to start weather update service to receive the new weather values.</string>
+    <string name="condition_skc">Sky clear</string>
+    <string name="condition_few">Few clouds</string>
+    <string name="condition_sct">Scattered clouds</string>
+    <string name="condition_bkn">Broken clouds</string>
+    <string name="condition_ovc">Overcast clouds</string>
+    <string name="condition_skc_prec">Light precipitations, sky clear</string>
+    <string name="condition_few_prec">Light precipitations, few clouds</string>
+    <string name="condition_sct_prec">Light precipitations, scattered clouds</string>
+    <string name="condition_bkn_prec">Light precipitations, broken clouds</string>
+    <string name="condition_ovc_prec">Light precipitations, overcast clouds</string>
+    <string name="condition_moderate_prec">Moderate precipitations</string>
+    <string name="condition_heavy_prec">Heavy precipitations</string>
+    <string name="condition_extreme_prec">Extreme precipitations</string>
 </resources>
