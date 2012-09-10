@@ -7,7 +7,6 @@ import org.json.JSONTokener;
 import ru.gelin.android.weather.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Calendar;
@@ -182,6 +181,17 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals(17, conditions.get(1).getCloudiness().getValue());
         assertEquals(42, conditions.get(2).getCloudiness().getValue());
         assertEquals(65, conditions.get(3).getCloudiness().getValue());
+    }
+
+    public void testForecastGetConditionType() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+        weather.parseForecast(readJSON("omsk_forecast.json"));
+        List<OpenWeatherMapWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
+        assertEquals(4, conditions.size());
+        assertEquals(WeatherConditionType.SCT_PREC, conditions.get(0).getConditionType());
+        assertEquals(WeatherConditionType.FEW_PREC, conditions.get(1).getConditionType());
+        assertEquals(WeatherConditionType.SCT, conditions.get(2).getConditionType());
+        assertEquals(WeatherConditionType.BKN, conditions.get(3).getConditionType());
     }
 
     public void testForecastGetConditionText() throws IOException, JSONException, WeatherException {

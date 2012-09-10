@@ -90,5 +90,5 @@ public interface WeatherCondition {
 
     //TODO add cloudiness
     //TODO add precipitation
-
+    //TODO add condition type
 }
