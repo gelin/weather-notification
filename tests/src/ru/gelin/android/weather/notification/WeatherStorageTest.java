@@ -85,7 +85,7 @@ public class WeatherStorageTest extends AndroidTestCase {
         Weather weather1 = WeatherUtils.createWeather();
         storage.save(weather1);
         assertEquals(4, storage.load().getConditions().size());
-        Weather weather2 = WeatherUtils.createOpenWeather();
+        Weather weather2 = WeatherUtils.createOpenWeather(getContext());
         storage.save(weather2);
         assertEquals(1, storage.load().getConditions().size());
     }

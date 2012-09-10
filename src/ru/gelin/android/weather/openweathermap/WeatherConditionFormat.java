@@ -14,6 +14,10 @@ public class WeatherConditionFormat {
         this.context = context;
     }
 
+    public String getText(OpenWeatherMapWeatherCondition condition) {
+        return context.getString(getStringId(condition));
+    }
+
     int getStringId(OpenWeatherMapWeatherCondition condition) {
         switch (condition.getConditionType()) {
             case SKC: return R.string.condition_skc;

@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.openweathermap;
 
+import android.content.Context;
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,12 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     /** API key */
     static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
 
+    Context context;
+
+    public OpenWeatherMapSource(Context context) {
+        this.context = context;
+    }
+
     @Override
     public Weather query(Location location) throws WeatherException {
         if (location == null) {
@@ -38,7 +45,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         if (location.getText().startsWith("+")) {
             return new TestWeather(Integer.parseInt(location.getText().substring(1)));
         }
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather();
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(this.context);
         weather.parseCityWeather(queryCityWeather(location));
         if (weather.isEmpty()) {
             return weather;

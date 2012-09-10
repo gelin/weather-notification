@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.openweathermap;
 
+import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,11 +25,15 @@ public class OpenWeatherMapWeather implements Weather {
     List<OpenWeatherMapWeatherCondition> conditions = new ArrayList<OpenWeatherMapWeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
+    /** Condition text format */
+    WeatherConditionFormat conditionFormat;
 
-    public OpenWeatherMapWeather() {
+    public OpenWeatherMapWeather(Context context) {
+        this.conditionFormat = new WeatherConditionFormat(context);
     }
 
-    public OpenWeatherMapWeather(JSONObject jsonObject) throws WeatherException {
+    public OpenWeatherMapWeather(Context context, JSONObject jsonObject) throws WeatherException {
+        this(context);
         parseCityWeather(jsonObject);
     }
 
@@ -103,31 +108,13 @@ public class OpenWeatherMapWeather implements Weather {
 
     private void parseCondition(JSONObject weatherJSON) throws JSONException {
         OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
-        condition.setConditionText(parseConditionText(weatherJSON));
         condition.setTemperature(parseTemperature(weatherJSON));
         condition.setWind(parseWind(weatherJSON));
         condition.setHumidity(parseHumidity(weatherJSON));
         condition.setPrecipitation(parsePrecipitation(weatherJSON));
         condition.setCloudiness(parseCloudiness(weatherJSON));
+        condition.setConditionText(this.conditionFormat.getText(condition));
         this.conditions.add(condition);
-    }
-
-    private String parseConditionText(JSONObject weatherJSON) throws JSONException {
-        double cloudiness = 0.0;
-        try {
-            cloudiness = weatherJSON.getJSONObject("clouds").getDouble("all");
-        } catch (JSONException e) {
-            //no clouds
-        }
-        double precipitations = 0.0;
-        try {
-            precipitations = weatherJSON.getJSONObject("rain").getDouble("3h") / 3.0;
-        } catch (JSONException e) {
-            //no rain
-        }
-        return String.format("Clouds: %.0f%%, Prec.: %.1f mm/h",
-                cloudiness, precipitations);
-                //TODO: more smart, more human-readable, localized
     }
 
     private SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
@@ -193,6 +180,7 @@ public class OpenWeatherMapWeather implements Weather {
                     break;
                 }
             }
+            condition.setConditionText(this.conditionFormat.getText(condition));
             for (int i = 1; i < 4; i++) {
                 condition = getCondition(i);
                 conditionDate = getConditionDate(i);
@@ -202,6 +190,7 @@ public class OpenWeatherMapWeather implements Weather {
                         break;
                     }
                 }
+                condition.setConditionText(this.conditionFormat.getText(condition));
             }
         } catch (JSONException e) {
             throw new WeatherException("cannot parse forecasts", e);

@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
 
@@ -39,8 +40,8 @@ public class WeatherUtils {
         return weather;
     }
 
-    public static Weather createOpenWeather() throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(readJSON("omsk_city.json"));
+    public static Weather createOpenWeather(Context context) throws Exception {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_city.json"));
         return weather;
     }
 

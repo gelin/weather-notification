@@ -185,7 +185,7 @@ public class UpdateService extends Service implements Runnable {
             return;
         }
  
-        WeatherSource source = new OpenWeatherMapSource();
+        WeatherSource source = new OpenWeatherMapSource(this);
         try {
             Weather weather = source.query(location);
             synchronized(this) {
