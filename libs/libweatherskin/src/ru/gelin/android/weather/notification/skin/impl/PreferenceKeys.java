@@ -22,6 +22,8 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import android.os.Build;
+
 /**
  *  Constants for preference keys.
  */
@@ -30,7 +32,9 @@ public interface PreferenceKeys {
     /** Notification text style preference key */
     public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
     /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT = NotificationStyle.BLACK_TEXT.toString();
+    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
+            Integer.valueOf(Build.VERSION.SDK) <= 8 ?
+                    NotificationStyle.BLACK_TEXT.toString() : NotificationStyle.WHITE_TEXT.toString();
     
     /** Temperature unit preference name */
     static final String TEMP_UNIT = "temp_unit";
