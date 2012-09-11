@@ -22,10 +22,14 @@
 
 package ru.gelin.android.weather.notification.skin.biggertext;
 
+import android.content.ComponentName;
+import android.content.Context;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import android.content.ComponentName;
+import ru.gelin.android.weather.notification.skin.impl.NotificationStyle;
+import ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 
 /**
  *  Extends the basic notification receiver.
@@ -51,6 +55,21 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
         return weather.getConditions().get(0).
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
+    }
+
+    @Override
+    protected int getNotificationLayoutId(Context context,
+                                          NotificationStyle textStyle, TemperatureType unit) {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        switch (unit) {
+            case C:
+            case F:
+                return R.layout.notification_white_update;
+            case CF:
+            case FC:
+                return R.layout.notification_white;
+        }
+        return 0;   //unknown resource
     }
 
 }

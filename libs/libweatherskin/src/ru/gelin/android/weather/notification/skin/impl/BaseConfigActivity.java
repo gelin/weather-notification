@@ -50,7 +50,9 @@ public class BaseConfigActivity extends UpdateNotificationActivity
         */
         
         Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
-        textStylePreference.setOnPreferenceChangeListener(this);
+        if (textStylePreference != null) {
+            textStylePreference.setOnPreferenceChangeListener(this);
+        }
         Preference unitPreference = findPreference(TEMP_UNIT);
         unitPreference.setOnPreferenceChangeListener(this);
         Preference wsunitPreference = findPreference(WS_UNIT);
