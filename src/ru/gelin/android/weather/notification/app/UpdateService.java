@@ -108,8 +108,10 @@ public class UpdateService extends Service implements Runnable {
         
         synchronized(this) {
             this.startIntent = intent;
-            this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
-            this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
+            if (intent != null) {
+                this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
+                this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
+            }
         }
         
         removeLocationUpdates();
@@ -323,13 +325,20 @@ public class UpdateService extends Service implements Runnable {
      */
     Location queryLocation() {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        if (manager == null) {
+            return null;
+        }
         android.location.Location androidLocation = 
                 manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         if (androidLocation == null || isExpired(androidLocation.getTime())) {
-            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 
+            try {
+                manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                     0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
-            return null;
+                return null;
+            } catch (IllegalArgumentException e) {
+                return null;    //no location provider
+            }
         }
 
         return new AndroidOpenWeatherMapLocation(androidLocation);
@@ -340,6 +349,9 @@ public class UpdateService extends Service implements Runnable {
      */
     Location createSearchLocation(String query) {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        if (manager == null) {
+            return new NameOpenWeatherMapLocation(query, null);
+        }
         android.location.Location androidLocation =
                 manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return new NameOpenWeatherMapLocation(query, androidLocation);
@@ -349,7 +361,7 @@ public class UpdateService extends Service implements Runnable {
      *  Unsubscribes from location updates.
      */
     void removeLocationUpdates() {
-        if (this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+        if (this.startIntent != null && this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             Log.d(TAG, "location updated");
             LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             manager.removeUpdates(getPendingIntent(this.startIntent));
