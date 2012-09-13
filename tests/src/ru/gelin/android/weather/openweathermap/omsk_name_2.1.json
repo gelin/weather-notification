@@ -1,0 +1,36 @@
+{"message":"", "cod":"200", "type":"base", "calctime":0.0161, "list":[
+    {
+        "id":1496153,
+        "coord":{
+            "lat":55,
+            "lon":73.400002
+        },
+        "name":"Omsk",
+        "main":{
+            "temp":290.15,
+            "pressure":1008,
+            "humidity":25
+        },
+        "dt":1347525000,
+        "date":"2012-09-13 09:30:00",
+        "wind":{
+            "speed":10,
+            "deg":220
+        },
+        "clouds":{
+            "all":75
+        },
+        "weather":[
+            {
+                "id":803,
+                "main":"Clouds",
+                "description":"broken clouds"
+            }
+        ],
+        "sys":{
+            "id":7289
+        },
+        "url":"http:\/\/openweathermap.org\/city\/1496153",
+        "img":""
+    }
+]}
