@@ -33,7 +33,7 @@
 
     <target name="all" depends="debug, release"/>
 
-    <target name="debug" depends="core-debug, black-text-skin-debug, white-text-skin-debug, black-text-plus-skin-debug, white-text-plus-skin-debug"
+    <target name="debug" depends="core-debug, black-text-skin-debug, white-text-skin-debug, black-text-plus-skin-debug, white-text-plus-skin-debug, bigger-text-skin-debug"
 	    description="Upload debug .apk files"/>
 
     <target name="core-debug">
@@ -44,7 +44,7 @@
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android-debug.apk" 
     	    targetfilename="weather-notification-android-${manifest(android:versionName)}-debug.apk"
-    	    summary="Weather Notification Core App (${manifest(android:versionName)}), signed by debug key)"
+    	    summary="Weather Notification Core App (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="bin/weather-notification-android-debug.apk"
@@ -60,7 +60,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text/bin/weather-notification-skin-black-text-debug.apk" 
     	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}-debug.apk"
-    	    summary="Black Text Skin (${manifest(android:versionName)}), signed by debug key)"
+    	    summary="Black Text Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/black-text/bin/weather-notification-skin-black-text-debug.apk"
@@ -76,7 +76,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text/bin/weather-notification-skin-white-text-debug.apk" 
     	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}-debug.apk"
-    	    summary="White Text Skin (${manifest(android:versionName)}), signed by debug key)"
+    	    summary="White Text Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/white-text/bin/weather-notification-skin-white-text-debug.apk"
@@ -92,7 +92,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-debug.apk" 
     	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}-debug.apk"
-    	    summary="Black Text Plus Skin (${manifest(android:versionName)}), signed by debug key)"
+    	    summary="Black Text Plus Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-debug.apk"
@@ -108,7 +108,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-debug.apk" 
     	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}-debug.apk"
-    	    summary="White Text Plus Skin (${manifest(android:versionName)}), signed by debug key)"
+    	    summary="White Text Plus Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-debug.apk"
@@ -116,8 +116,24 @@
     
     </target>
     
+    <target name="bigger-text-skin-debug">
 
-    <target name="release" depends="core-release, black-text-skin-release, white-text-skin-release, black-text-plus-skin-release, white-text-plus-skin-release"
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/bigger-text/bin/weather-notification-skin-bigger-text-debug.apk" 
+    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}-debug.apk"
+    	    summary="Bigger Text Skin (${manifest(android:versionName)}, signed by debug key)"
+    	    labels="Type-Package, OpSys-Android_4.0" />
+
+	<copy file="skins/bigger-text/bin/weather-notification-skin-bigger-text-debug.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+
+    <target name="release" depends="core-release, black-text-skin-release, white-text-skin-release, black-text-plus-skin-release, white-text-plus-skin-release, bigger-text-skin-release"
 	    description="Upload release .apk files"/>
 
     <target name="core-release">
@@ -131,7 +147,7 @@
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android.apk" 
     	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
-    	    summary="Weather Notification Core App (${manifest(android:versionName)}))"
+    	    summary="Weather Notification Core App (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="bin/weather-notification-android.apk"
@@ -150,7 +166,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text/bin/weather-notification-skin-black-text.apk" 
     	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}.apk"
-    	    summary="Black Text Skin (${manifest(android:versionName)}))"
+    	    summary="Black Text Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/black-text/bin/weather-notification-skin-black-text.apk"
@@ -169,7 +185,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text/bin/weather-notification-skin-white-text.apk" 
     	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}.apk"
-    	    summary="White Text Skin (${manifest(android:versionName)}))"
+    	    summary="White Text Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/white-text/bin/weather-notification-skin-white-text.apk"
@@ -188,7 +204,7 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk" 
     	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}.apk"
-    	    summary="Black Text Plus Skin (${manifest(android:versionName)}))"
+    	    summary="Black Text Plus Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk"
@@ -207,10 +223,29 @@
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk" 
     	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}.apk"
-    	    summary="White Text Plus Skin (${manifest(android:versionName)}))"
+    	    summary="White Text Plus Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
 	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk"
+	    todir="/home/gelin/Dropbox/android@gelin"/>
+    
+    </target>
+    
+    <target name="bigger-text-skin-release">
+
+	<copy file="skins/bigger-text/bin/weather-notification-skin-bigger-text-release.apk"
+	    tofile="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk"/>
+
+	<gcupload 
+	    username="${gc.username}"
+	    password="${gc.password}"
+    	    projectname="weather-notification-android" 
+    	    filename="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk" 
+    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}.apk"
+    	    summary="Bigger Text Skin (${manifest(android:versionName)})"
+    	    labels="Type-Package, OpSys-Android_4.0" />
+
+	<copy file="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
     
     </target>
