@@ -18,7 +18,7 @@ import java.util.Locale;
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
     /** Base API URL */
-    static final String API_BASE_URL = "http://openweathermap.org/data/2.0";
+    static final String API_BASE_URL = "http://openweathermap.org/data/2.1";
     /** Find city API URL */
     static final String API_CITY_URL = API_BASE_URL + "/find/city?";
     /** Find by name API URL */

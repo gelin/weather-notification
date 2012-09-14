@@ -121,11 +121,19 @@ public class OpenWeatherMapWeather implements Weather {
         AppendableTemperature temperature = new AppendableTemperature(TemperatureUnit.K);
         JSONObject main = weatherJSON.getJSONObject("main");
         double currentTemp = main.getDouble("temp");
-        double minTemp = main.getDouble("temp_min");
-        double maxTemp = main.getDouble("temp_max");
         temperature.setCurrent((int)currentTemp, TemperatureUnit.K);
-        temperature.setLow((int)minTemp, TemperatureUnit.K);
-        temperature.setHigh((int)maxTemp, TemperatureUnit.K);
+        try {
+            double minTemp = main.getDouble("temp_min");
+            temperature.setLow((int)minTemp, TemperatureUnit.K);
+        } catch (JSONException e) {
+            //min temp is optional
+        }
+        try {
+            double maxTemp = main.getDouble("temp_max");
+            temperature.setHigh((int)maxTemp, TemperatureUnit.K);
+        } catch (JSONException e) {
+            //max temp is optional
+        }
         return temperature;
     }
 
