@@ -1,4 +1,4 @@
-{"message":"Model=GFS-OWM, ", "cod":"200", "calctime":0.0128, "cnt":1, "list":[
+{"message":"Model=GFS-OWM, ", "cod":"200", "calctime":0.4682, "cnt":1, "list":[
     {
         "id":1496153,
         "name":"Omsk",
@@ -8,14 +8,14 @@
         },
         "distance":2.562,
         "main":{
-            "temp":290.15,
-            "pressure":1008,
-            "humidity":25
+            "temp":283.15,
+            "pressure":1001,
+            "humidity":81
         },
-        "dt":1347525000,
+        "dt":1347600600,
         "wind":{
-            "speed":10,
-            "deg":220
+            "speed":5,
+            "deg":150
         },
         "clouds":{
             "all":75
@@ -24,7 +24,8 @@
             {
                 "id":803,
                 "main":"Clouds",
-                "description":"broken clouds"
+                "description":"broken clouds",
+                "icon":""
             }
         ]
     }

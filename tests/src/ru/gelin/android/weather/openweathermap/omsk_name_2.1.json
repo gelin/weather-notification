@@ -1,4 +1,4 @@
-{"message":"", "cod":"200", "type":"base", "calctime":0.0161, "list":[
+{"message":"", "cod":"200", "type":"base", "calctime":0.2437, "list":[
     {
         "id":1496153,
         "coord":{
@@ -7,15 +7,15 @@
         },
         "name":"Omsk",
         "main":{
-            "temp":290.15,
-            "pressure":1008,
-            "humidity":25
+            "temp":283.15,
+            "pressure":1001,
+            "humidity":81
         },
-        "dt":1347525000,
-        "date":"2012-09-13 09:30:00",
+        "dt":1347600600,
+        "date":"2012-09-14 06:30:00",
         "wind":{
-            "speed":10,
-            "deg":220
+            "speed":5,
+            "deg":150
         },
         "clouds":{
             "all":75
@@ -24,7 +24,8 @@
             {
                 "id":803,
                 "main":"Clouds",
-                "description":"broken clouds"
+                "description":"broken clouds",
+                "icon":""
             }
         ],
         "sys":{
