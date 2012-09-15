@@ -40,6 +40,9 @@ public class OpenWeatherMapWeatherCondition extends SimpleWeatherCondition {
     }
 
     public void addConditionType(WeatherConditionType newType) {
+        if (newType == null) {
+            return;
+        }
         Iterator<WeatherConditionType> i = this.conditionTypes.iterator();
         boolean insert = true;
         while (i.hasNext()) {

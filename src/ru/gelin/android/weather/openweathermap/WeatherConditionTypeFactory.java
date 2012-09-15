@@ -66,7 +66,7 @@ public class WeatherConditionTypeFactory {
         ID_MAP.put(906, WeatherConditionType.HAIL);
     }
 
-    WeatherConditionType fromId(int id) {
+    static public WeatherConditionType fromId(int id) {
         return ID_MAP.get(id);
     }
 
