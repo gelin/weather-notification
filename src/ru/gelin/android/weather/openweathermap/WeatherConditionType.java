@@ -3,7 +3,7 @@ package ru.gelin.android.weather.openweathermap;
 import static ru.gelin.android.weather.openweathermap.WeatherConditionTypePriority.*;
 
 /**
- *  Enumeration of declared condition types.
+ *  Enumeration of declared condition conditionTypes.
  */
 public enum WeatherConditionType {
 

@@ -11,45 +11,30 @@ public class WeatherConditionFormatTest extends AndroidTestCase {
         format = new WeatherConditionFormat(getContext());
     }
 
-    public void testGetStringIdPrec() {
-        testConditionType(R.string.condition_extreme_prec, 50.1f);
-        testConditionType(R.string.condition_heavy_prec, 4.1f);
-        testConditionType(R.string.condition_moderate_prec, 1.1f);
+    public void testGetStringId() {
+        assertEquals(R.string.condition_rain_light, (int)WeatherConditionFormat.getStringId(WeatherConditionType.RAIN_LIGHT));
+        assertEquals(R.string.condition_tornado, (int)WeatherConditionFormat.getStringId(WeatherConditionType.TORNADO));
     }
 
-    private void testConditionType(int expected, float prec) {
+    public void testGetText() {
+        testConditionText("Rain", new WeatherConditionType[]{WeatherConditionType.RAIN, WeatherConditionType.CLOUDS_BROKEN});
+        testConditionText("Tornado", new WeatherConditionType[]{WeatherConditionType.RAIN, WeatherConditionType.TORNADO});
+        testConditionText("Tornado, Hurricane", new WeatherConditionType[]{WeatherConditionType.TORNADO, WeatherConditionType.HURRICANE});
+    }
+
+    private void testConditionText(String expected, WeatherConditionType[] types) {
         OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
-        SimplePrecipitation precipitation = new SimplePrecipitation(PrecipitationUnit.MM);
-        precipitation.setValue(prec, PrecipitationPeriod.PERIOD_1H);
-        condition.setPrecipitation(precipitation);
-        assertEquals(expected, format.getStringId(condition));
+        for (WeatherConditionType type : types) {
+            condition.addConditionType(type);
+        }
+        WeatherConditionFormat format = new WeatherConditionFormat(getContext());
+        assertEquals(expected, format.getText(condition));
     }
 
-    public void testGetConditionTypeLightPrec() {
-        testConditionType(R.string.condition_skc_prec, 0.2f, 0);
-        testConditionType(R.string.condition_few_prec, 0.2f, 1);
-        testConditionType(R.string.condition_sct_prec, 0.2f, 3);
-        testConditionType(R.string.condition_bkn_prec, 0.2f, 5);
-        testConditionType(R.string.condition_ovc_prec, 0.2f, 8);
-    }
-
-    public void testGetConditionTypeNoPrec() {
-        testConditionType(R.string.condition_skc, 0.0f, 0);
-        testConditionType(R.string.condition_few, 0.0f, 1);
-        testConditionType(R.string.condition_sct, 0.0f, 3);
-        testConditionType(R.string.condition_bkn, 0.0f, 5);
-        testConditionType(R.string.condition_ovc, 0.0f, 8);
-    }
-
-    private void testConditionType(int expected, float prec, int okta) {
+    public void testEmptyCondition() {
         OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
-        SimplePrecipitation precipitation = new SimplePrecipitation(PrecipitationUnit.MM);
-        precipitation.setValue(prec, PrecipitationPeriod.PERIOD_1H);
-        condition.setPrecipitation(precipitation);
-        SimpleCloudiness cloudiness = new SimpleCloudiness(CloudinessUnit.OKTA);
-        cloudiness.setValue(okta, CloudinessUnit.OKTA);
-        condition.setCloudiness(cloudiness);
-        assertEquals(expected, format.getStringId(condition));
+        WeatherConditionFormat format = new WeatherConditionFormat(getContext());
+        assertEquals("Sky is clear", format.getText(condition));
     }
 
 }
