@@ -208,7 +208,7 @@ public class OpenWeatherMapWeather implements Weather {
     private OpenWeatherMapWeatherCondition getCondition(int i) {
         while (i >= this.conditions.size()) {
             OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
-            condition.setConditionText(" ");    //TODO: implement weather conditions for forecasts
+            condition.setConditionText("");
             condition.setTemperature(new AppendableTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));

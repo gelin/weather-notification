@@ -3,6 +3,7 @@ package ru.gelin.android.weather.openweathermap;
 import ru.gelin.android.weather.*;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -38,7 +39,22 @@ public class OpenWeatherMapWeatherCondition extends SimpleWeatherCondition {
         return EnumSet.copyOf(this.conditionTypes);
     }
 
-    public void addConditionType(WeatherConditionType type) {
-        this.conditionTypes.add(type);
+    public void addConditionType(WeatherConditionType newType) {
+        Iterator<WeatherConditionType> i = this.conditionTypes.iterator();
+        boolean insert = true;
+        while (i.hasNext()) {
+            WeatherConditionType type = i.next();
+            if (newType.getPriority() == type.getPriority()) {
+                if (newType.getStrength() > type.getStrength()) {
+                    i.remove();
+                    insert = true;
+                } else if (newType.getStrength() < type.getStrength()) {
+                    insert = false;
+                }
+            }
+        }
+        if (insert) {
+            this.conditionTypes.add(newType);
+        }
     }
 }
