@@ -57,24 +57,24 @@
     <string name="start_update_service_permission">запускать сервис обновления погоды</string>
     <string name="start_update_service_permission_description">Разрешает приложению запускать сервис обновления погоды, чтобы получать новые значения погоды.</string>
 
-    <string name="condition_thunderstorm_rain_light">Гроза, слабый дождь</string>
-    <string name="condition_thunderstorm_rain">Гроза, дождь</string>
-    <string name="condition_thunderstorm_rain_heavy">Гроза, сильный дождь</string>
+    <string name="condition_thunderstorm_rain_light">Гроза со слабым дождем</string>
+    <string name="condition_thunderstorm_rain">Гроза с дождем</string>
+    <string name="condition_thunderstorm_rain_heavy">Гроза с сильным дождем</string>
     <string name="condition_thunderstorm_light">Слабая гроза</string>
     <string name="condition_thunderstorm">Гроза</string>
     <string name="condition_thunderstorm_heavy">Сильная гроза</string>
-    <string name="condition_thunderstorm_ragged">Очень сильная гроза</string>
-    <string name="condition_thunderstorm_drizzle_light">Гроза, слабая морось</string>
-    <string name="condition_thunderstorm_drizzle">Гроза, морось</string>
-    <string name="condition_thunderstorm_drizzle_heavy">Гроза, сильная морось</string>
+    <string name="condition_thunderstorm_ragged">Гроза</string> <!-- to be improved -->
+    <string name="condition_thunderstorm_drizzle_light">Гроза со слабой моросью</string> <!-- does it exist? -->
+    <string name="condition_thunderstorm_drizzle">Гроза c моросью</string> <!-- does it exist? -->
+    <string name="condition_thunderstorm_drizzle_heavy">Гроза с сильной моросью</string> <!-- does it exist? -->
 
-    <string name="condition_drizzle_light">Легкая морось</string>
+    <string name="condition_drizzle_light">Слабая морось</string>
     <string name="condition_drizzle">Морось</string>
     <string name="condition_drizzle_heavy">Сильная морось</string>
-    <string name="condition_drizzle_rain_light">Морось, слабый дождь</string>
-    <string name="condition_drizzle_rain">Морось, дождь</string>
-    <string name="condition_drizzle_rain_heavy">Морось, сильный дождь</string>
-    <string name="condition_drizzle_shower">Очень сильная морось</string>
+    <string name="condition_drizzle_rain_light">Слабый моросящий дождь</string>
+    <string name="condition_drizzle_rain">Моросящий дождь</string>
+    <string name="condition_drizzle_rain_heavy">Сильный моросящий дождь</string>
+    <string name="condition_drizzle_shower">Моросящий дождь</string> <!-- to be improved --> <!-- does it exist? -->
 
     <string name="condition_rain_light">Слабый дождь</string>
     <string name="condition_rain">Дождь</string>
@@ -86,16 +86,16 @@
     <string name="condition_rain_shower">Ливень</string>
     <string name="condition_rain_shower_heavy">Сильный ливень</string>
 
-    <string name="condition_snow_light">Слабый снегопад</string>
-    <string name="condition_snow">Снегопад</string>
-    <string name="condition_snow_heavy">Сильный снегопад</string>
+    <string name="condition_snow_light">Слабый снег</string>
+    <string name="condition_snow">Снег</string>
+    <string name="condition_snow_heavy">Сильный снег</string>
     <string name="condition_sleet">Дождь со снегом</string>
-    <string name="condition_snow_shower">Очень сильный снегопад</string>
+    <string name="condition_snow_shower">Ливневый снег</string>
 
-    <string name="condition_mist">Легкий туман</string>
+    <string name="condition_mist">Дымка</string>
     <string name="condition_smoke">Дым</string>
-    <string name="condition_haze">Дымка</string>
-    <string name="condition_sand_whirls">Пыль</string>
+    <string name="condition_haze">Мгла</string>
+    <string name="condition_sand_whirls">Песчаная/пылевая буря</string>
     <string name="condition_fog">Туман</string>
 
     <string name="condition_clouds_clear">Ясно</string>
@@ -105,7 +105,7 @@
     <string name="condition_clouds_overcast">Пасмурно</string>
 
     <string name="condition_tornado">Торнадо</string>
-    <string name="condition_tropical_storm">Тропический шторм</string>
+    <string name="condition_tropical_storm">Тропический циклон</string>
     <string name="condition_hurricane">Ураган</string>
     <string name="condition_cold">Мороз</string>
     <string name="condition_hot">Жара</string>
