@@ -33,7 +33,7 @@ public interface PreferenceKeys {
     public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
     /** Notification text style default value */
     public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
-            Integer.valueOf(Build.VERSION.SDK) <= 8 ?
+            Integer.valueOf(Build.VERSION.SDK) < 11 ?
                     NotificationStyle.BLACK_TEXT.toString() : NotificationStyle.WHITE_TEXT.toString();
     
     /** Temperature unit preference name */
