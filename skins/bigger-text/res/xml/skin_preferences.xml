@@ -25,6 +25,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ru.gelin.android.preference.SummaryListPreference
+            android:key="notification_text_style"
+            android:title="@string/notification_text_style"
+            android:entries="@array/notification_style_entries"
+            android:entryValues="@array/notification_style_values"
+            android:defaultValue="BLACK_TEXT"/>
+
+    <ru.gelin.android.preference.SummaryListPreference
             android:key="temp_unit"
             android:title="@string/temp_unit"
             android:entries="@array/temp_unit_entries"
