@@ -44,6 +44,7 @@ public class SkinInfo {
         V1, V2;
     }
 
+    String id;
 	String packageName;
     Version version;
 	boolean enabled;
@@ -51,7 +52,15 @@ public class SkinInfo {
 	String broadcastReceiverLabel;
 	String configActivityClass;
 	String configActivityLabel;
-	
+
+    SkinInfo(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
 	public String getPackageName() {
 		return this.packageName;
 	}
@@ -85,7 +94,7 @@ public class SkinInfo {
 	 */
 	CheckBoxPreference getCheckBoxPreference(Context context) {
 	    CheckBoxPreference checkBox = new CheckBoxPreference(context);
-	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getPackageName()));
+	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
         checkBox.setTitle(getBroadcastReceiverLabel());
         checkBox.setChecked(isEnabled());
         return checkBox;
@@ -100,7 +109,7 @@ public class SkinInfo {
 	        return null;
 	    }
 	    Preference pref = new Preference(context);
-        pref.setKey(String.format(SKIN_CONFIG_PATTERN, getPackageName()));
+        pref.setKey(String.format(SKIN_CONFIG_PATTERN, getId()));
         pref.setTitle(getConfigActivityLabel() == null ? getBroadcastReceiverLabel() : getConfigActivityLabel());
         Intent intent = new Intent(ACTION_WEATHER_SKIN_PREFERENCES);
         intent.setClassName(getPackageName(), getConfigActivityClass());
