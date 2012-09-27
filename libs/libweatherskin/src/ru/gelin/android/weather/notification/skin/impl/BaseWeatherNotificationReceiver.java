@@ -52,8 +52,6 @@ import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.
 abstract public class BaseWeatherNotificationReceiver extends
         WeatherNotificationReceiver {
 
-    /** Notification ID */
-    static final int ID = 1;
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
     /** Suffix for layouts with last update time */
@@ -84,7 +82,7 @@ abstract public class BaseWeatherNotificationReceiver extends
     @Override
     protected void cancel(Context context) {
         Log.d(Tag.TAG, "cancelling weather");
-        getNotificationManager(context).cancel(ID);
+        getNotificationManager(context).cancel(getNotificationId());
     }
 
     @Override
@@ -128,9 +126,17 @@ abstract public class BaseWeatherNotificationReceiver extends
         notification.contentIntent = getContentIntent(context);
         //notification.contentIntent = getMainActivityPendingIntent(context);
         
-        getNotificationManager(context).notify(ID, notification);
+        getNotificationManager(context).notify(getNotificationId(), notification);
         
         notifyHandler(weather);
+    }
+
+    /**
+     *  Returns the notification ID for the skin.
+     *  Different skins withing the same application must return different results here.
+     */
+    protected int getNotificationId() {
+        return this.getClass().getName().hashCode();
     }
 
     /**
