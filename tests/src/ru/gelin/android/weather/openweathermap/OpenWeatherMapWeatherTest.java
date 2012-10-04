@@ -210,6 +210,14 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals("Light rain", conditions.get(3).getConditionText());
     }
 
+    public void testGetParseNoHumidity() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_no_humidity.json"));
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(4, condition.getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();

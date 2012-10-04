@@ -149,11 +149,15 @@ public class OpenWeatherMapWeather implements Weather {
         return wind;
     }
 
-    private SimpleHumidity parseHumidity(JSONObject weatherJSON) throws JSONException {
+    private SimpleHumidity parseHumidity(JSONObject weatherJSON) {
         SimpleHumidity humidity = new SimpleHumidity();
-        double humidityValue = weatherJSON.getJSONObject("main").getDouble("humidity");
-        humidity.setValue((int)humidityValue);
-        humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
+        try {
+            double humidityValue = weatherJSON.getJSONObject("main").getDouble("humidity");
+            humidity.setValue((int)humidityValue);
+            humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
+        } catch (JSONException e) {
+            //humidity is optional
+        }
         return humidity;
     }
 

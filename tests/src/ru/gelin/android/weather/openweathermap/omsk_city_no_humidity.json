@@ -1,0 +1,33 @@
+{"message":"Model=GFS-OWM, ", "cod":"200", "calctime":0.0087, "cnt":1, "list":[
+    {
+        "id":1496153,
+        "name":"Omsk",
+        "coord":{
+            "lon":73.400002,
+            "lat":55
+        },
+        "distance":7.3,
+        "main":{
+            "temp":277.15,
+            "pressure":1007,
+            "temp_min":277.15,
+            "temp_max":278.9
+        },
+        "dt":1349352000,
+        "wind":{
+            "speed":6,
+            "deg":210
+        },
+        "clouds":{
+            "all":75
+        },
+        "weather":[
+            {
+                "id":803,
+                "main":"Clouds",
+                "description":"broken clouds",
+                "icon":"04d"
+            }
+        ]
+    }
+]}
