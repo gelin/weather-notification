@@ -210,12 +210,27 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals("Light rain", conditions.get(3).getConditionText());
     }
 
-    public void testGetParseNoHumidity() throws IOException, JSONException, WeatherException {
+    public void testParseNoHumidity() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_no_humidity.json"));
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
         WeatherCondition condition = weather.getConditions().get(0);
         assertEquals(4, condition.getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
+    public void testParseMinimalJSON() throws IOException, JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{\"list\":[\n" +
+                "    {\n" +
+                "        \"id\":1496153,\n" +
+                "    }\n" +
+                "]}");
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), (JSONObject)parser.nextValue());
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
+        assertEquals(1496153, weather.getCityId());
+        assertEquals("", weather.getLocation().getText());
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(Temperature.UNKNOWN, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {

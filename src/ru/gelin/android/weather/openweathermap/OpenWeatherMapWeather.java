@@ -97,16 +97,24 @@ public class OpenWeatherMapWeather implements Weather {
         this.cityId = weatherJSON.getInt("id");
     }
 
-    private void parseLocation(JSONObject weatherJSON) throws JSONException {
-        this.location = new SimpleLocation(weatherJSON.getString("name"), false);
+    private void parseLocation(JSONObject weatherJSON) {
+        try {
+            this.location = new SimpleLocation(weatherJSON.getString("name"), false);
+        } catch (JSONException e) {
+            this.location = new SimpleLocation("", false);
+        }
     }
 
-    private void parseTime(JSONObject weatherJSON) throws JSONException {
-        long timestamp = weatherJSON.getLong("dt");
-        this.time = new Date(timestamp * 1000);
+    private void parseTime(JSONObject weatherJSON) {
+        try {
+            long timestamp = weatherJSON.getLong("dt");
+            this.time = new Date(timestamp * 1000);
+        } catch (JSONException e) {
+            this.time = new Date();
+        }
     }
 
-    private void parseCondition(JSONObject weatherJSON) throws JSONException {
+    private void parseCondition(JSONObject weatherJSON) {
         OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
         condition.setTemperature(parseTemperature(weatherJSON));
         condition.setWind(parseWind(weatherJSON));
@@ -118,11 +126,21 @@ public class OpenWeatherMapWeather implements Weather {
         this.conditions.add(condition);
     }
 
-    private SimpleTemperature parseTemperature(JSONObject weatherJSON) throws JSONException {
+    private SimpleTemperature parseTemperature(JSONObject weatherJSON) {
         AppendableTemperature temperature = new AppendableTemperature(TemperatureUnit.K);
-        JSONObject main = weatherJSON.getJSONObject("main");
-        double currentTemp = main.getDouble("temp");
-        temperature.setCurrent((int)currentTemp, TemperatureUnit.K);
+        JSONObject main;
+        try {
+            main = weatherJSON.getJSONObject("main");
+        } catch (JSONException e) {
+            //temp is optional
+            return temperature;
+        }
+        try {
+            double currentTemp = main.getDouble("temp");
+            temperature.setCurrent((int)currentTemp, TemperatureUnit.K);
+        } catch (JSONException e) {
+            //temp is optional
+        }
         try {
             double minTemp = main.getDouble("temp_min");
             temperature.setLow((int)minTemp, TemperatureUnit.K);
@@ -138,13 +156,27 @@ public class OpenWeatherMapWeather implements Weather {
         return temperature;
     }
 
-    private SimpleWind parseWind(JSONObject weatherJSON) throws JSONException {
+    private SimpleWind parseWind(JSONObject weatherJSON) {
         SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
-        JSONObject windJSON = weatherJSON.getJSONObject("wind");
-        double speed = windJSON.getDouble("speed");
-        double deg = windJSON.getDouble("deg");
-        wind.setSpeed((int)speed, WindSpeedUnit.MPS);
-        wind.setDirection(WindDirection.valueOf((int) deg));
+        JSONObject windJSON;
+        try {
+            windJSON = weatherJSON.getJSONObject("wind");
+        } catch (JSONException e) {
+            //wind is optional
+            return wind;
+        }
+        try {
+            double speed = windJSON.getDouble("speed");
+            wind.setSpeed((int)speed, WindSpeedUnit.MPS);
+        } catch (JSONException e) {
+            //wind speed is optional
+        }
+        try {
+            double deg = windJSON.getDouble("deg");
+            wind.setDirection(WindDirection.valueOf((int) deg));
+        } catch (JSONException e) {
+            //wind direction is optional
+        }
         wind.setText(String.format("Wind: %s, %d m/s", String.valueOf(wind.getDirection()), wind.getSpeed()));
         return wind;
     }
