@@ -22,25 +22,18 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
-
-import java.util.Calendar;
-import java.util.Date;
-
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
+import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.TemperatureUnit;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
  *  Utility to layout weather values.
@@ -53,7 +46,10 @@ public abstract class AbstractWeatherLayout {
     ResourceIdFactory ids;
     /** Temperature formatter */
     TemperatureFormatter tempFormat;
+    /** Wind formatter */
     WindFormatter windFormat;
+    /** Humidity formatter */
+    HumidityFormatter humidityFormat;
     
     /**
      *  Creates the utility for specified context.
@@ -62,7 +58,8 @@ public abstract class AbstractWeatherLayout {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
         this.tempFormat = createTemperatureFormatter();
-        this.windFormat = new WindFormatter();
+        this.windFormat = new WindFormatter(context);
+        this.humidityFormat = new HumidityFormatter(context);
     }
     
     /**
@@ -154,13 +151,10 @@ public abstract class AbstractWeatherLayout {
         WindUnit windUnit = WindUnit.valueOf(preferences.getString(
                 WS_UNIT, WS_UNIT_DEFAULT));
         Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
-        setText(id("humidity"), 
-                this.windFormat.format(wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), 
-                        this.context));
+        setText(id("wind"), this.windFormat.format(wind));
         
-        Humidity hum = currentCondition.getHumidity();
-        setText(id("wind"), String.format(this.context.getString(string("humidity_caption")), 
-                hum.getValue()));
+        Humidity humidity = currentCondition.getHumidity();
+        setText(id("humidity"), this.humidityFormat.format(humidity));
     }
     
     protected void bindForecasts(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {

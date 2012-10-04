@@ -22,25 +22,21 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.RemoteViews;
+import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.TemperatureUnit;
 
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.RemoteViews;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
 
 /**
  *  Utility to layout weather values to remove view.
@@ -129,14 +125,12 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         WindUnit windUnit = WindUnit.valueOf(preferences.getString(
                 WS_UNIT, WS_UNIT_DEFAULT));
         Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
-        Humidity hum = currentCondition.getHumidity();
+        Humidity humidity = currentCondition.getHumidity();
         
         StringBuilder text = new StringBuilder();
-        text.append(this.windFormat.format(
-                wind.getSpeed(), wind.getDirection(), wind.getSpeedUnit(), this.context));
+        text.append(this.windFormat.format(wind));
         text.append(SEPARATOR);
-        text.append(String.format(this.context.getString(string("humidity_caption")), 
-                hum.getValue()));
+        text.append(this.humidityFormat.format(humidity));
         setText(id("wind_humidity_text"), text.toString());
     }
     
