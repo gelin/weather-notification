@@ -148,7 +148,7 @@
     	    filename="bin/weather-notification-android.apk" 
     	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
     	    summary="Weather Notification Core App (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_1.5" />
+    	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
 	<copy file="bin/weather-notification-android.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
@@ -167,7 +167,7 @@
     	    filename="skins/black-text/bin/weather-notification-skin-black-text.apk" 
     	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}.apk"
     	    summary="Black Text Skin (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_1.5" />
+    	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
 	<copy file="skins/black-text/bin/weather-notification-skin-black-text.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
@@ -186,7 +186,7 @@
     	    filename="skins/white-text/bin/weather-notification-skin-white-text.apk" 
     	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}.apk"
     	    summary="White Text Skin (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_1.5" />
+    	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
 	<copy file="skins/white-text/bin/weather-notification-skin-white-text.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
@@ -205,7 +205,7 @@
     	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk" 
     	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}.apk"
     	    summary="Black Text Plus Skin (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_1.5" />
+    	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
 	<copy file="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
@@ -224,7 +224,7 @@
     	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk" 
     	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}.apk"
     	    summary="White Text Plus Skin (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_1.5" />
+    	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
 	<copy file="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
@@ -243,7 +243,7 @@
     	    filename="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk" 
     	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}.apk"
     	    summary="Bigger Text Skin (${manifest(android:versionName)})"
-    	    labels="Type-Package, OpSys-Android_4.0" />
+    	    labels="Type-Package, OpSys-Android_3.0, Featured" />
 
 	<copy file="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk"
 	    todir="/home/gelin/Dropbox/android@gelin"/>
