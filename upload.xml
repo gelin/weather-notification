@@ -43,7 +43,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android-debug.apk" 
-    	    targetfilename="weather-notification-android-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-android-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="Weather Notification Core App (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
@@ -59,7 +59,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text/bin/weather-notification-skin-black-text-debug.apk" 
-    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="Black Text Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
@@ -75,7 +75,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text/bin/weather-notification-skin-white-text-debug.apk" 
-    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="White Text Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
@@ -91,7 +91,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus-debug.apk" 
-    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="Black Text Plus Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
@@ -107,7 +107,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus-debug.apk" 
-    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="White Text Plus Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_1.5" />
 
@@ -123,7 +123,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/bigger-text/bin/weather-notification-skin-bigger-text-debug.apk" 
-    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}-debug.apk"
+    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}-${manifest(android:versionCode)}-debug.apk"
     	    summary="Bigger Text Skin (${manifest(android:versionName)}, signed by debug key)"
     	    labels="Type-Package, OpSys-Android_4.0" />
 
@@ -146,7 +146,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="bin/weather-notification-android.apk" 
-    	    targetfilename="weather-notification-android-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-android-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="Weather Notification Core App (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
@@ -165,7 +165,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text/bin/weather-notification-skin-black-text.apk" 
-    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-skin-black-text-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="Black Text Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
@@ -184,7 +184,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text/bin/weather-notification-skin-white-text.apk" 
-    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-skin-white-text-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="White Text Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
@@ -203,7 +203,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/black-text-plus/bin/weather-notification-skin-black-text-plus.apk" 
-    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-skin-black-text-plus-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="Black Text Plus Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
@@ -222,7 +222,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/white-text-plus/bin/weather-notification-skin-white-text-plus.apk" 
-    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-skin-white-text-plus-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="White Text Plus Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_1.5, Featured" />
 
@@ -241,7 +241,7 @@
 	    password="${gc.password}"
     	    projectname="weather-notification-android" 
     	    filename="skins/bigger-text/bin/weather-notification-skin-bigger-text.apk" 
-    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}.apk"
+    	    targetfilename="weather-notification-skin-bigger-text-${manifest(android:versionName)}-${manifest(android:versionCode)}.apk"
     	    summary="Bigger Text Skin (${manifest(android:versionName)})"
     	    labels="Type-Package, OpSys-Android_3.0, Featured" />
 
