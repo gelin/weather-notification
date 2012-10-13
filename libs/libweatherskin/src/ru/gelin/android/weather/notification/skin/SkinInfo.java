@@ -22,13 +22,14 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 
 /**
  * 	Information about skin
@@ -52,6 +53,7 @@ public class SkinInfo {
 	String broadcastReceiverLabel;
 	String configActivityClass;
 	String configActivityLabel;
+    int order = 0;
 
     SkinInfo(String id) {
         this.id = id;
@@ -88,15 +90,16 @@ public class SkinInfo {
 	public String getConfigActivityLabel() {
 		return this.configActivityLabel;
 	}
-	
+
 	/**
 	 *  Creates checkbox preference to enable/disable the activity.
 	 */
-	CheckBoxPreference getCheckBoxPreference(Context context) {
+    public CheckBoxPreference getCheckBoxPreference(Context context) {
 	    CheckBoxPreference checkBox = new CheckBoxPreference(context);
 	    checkBox.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
         checkBox.setTitle(getBroadcastReceiverLabel());
         checkBox.setChecked(isEnabled());
+        checkBox.setOrder(this.order);
         return checkBox;
 	}
 	
@@ -104,7 +107,7 @@ public class SkinInfo {
 	 *  Creates preference to open skin settings.
 	 *  Can return null if the skin has no configuraion.
 	 */
-	Preference getConfigPreference(Context context) {
+    public Preference getConfigPreference(Context context) {
 	    if (getConfigActivityClass() == null) {
 	        return null;
 	    }
@@ -114,6 +117,7 @@ public class SkinInfo {
         Intent intent = new Intent(ACTION_WEATHER_SKIN_PREFERENCES);
         intent.setClassName(getPackageName(), getConfigActivityClass());
         pref.setIntent(intent);
+        pref.setOrder(this.order + 1);
         return pref;
 	}
 	

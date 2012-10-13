@@ -22,15 +22,6 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE;
-import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE_2;
-import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +29,15 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.preference.PreferenceManager;
 import ru.gelin.android.weather.notification.IntentParameters;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE;
+import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_UPDATE_2;
+import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_ENABLED_PATTERN;
 
 /**
  * 	Contains methods to handle list of installed skins.
@@ -115,7 +115,7 @@ public class SkinManager {
 	    PackageManager pm = context.getPackageManager();
         Intent intent = new Intent(action);
         List<ResolveInfo> search = pm.queryBroadcastReceivers(intent, 0);   //without flags
-        
+
         for (ResolveInfo info : search) {
             //Log.d(TAG, String.valueOf(info));
             String packageName = info.activityInfo.packageName;
@@ -128,13 +128,16 @@ public class SkinManager {
             skin.version = version;
             skin.broadcastReceiverLabel = label;
             skin.broadcastReceiverClass = receiverClass;
-            
             this.skins.put(skin.getId(), skin);
+        }
+
+        int order = 0;
+        for (SkinInfo skin : this.skins.values()) {
+            skin.order = order;
+            order += 2;
         }
 	}
 
-
-	
 	/**
 	 *  Checks preferences to found which skin is enabled.
 	 */
@@ -162,7 +165,6 @@ public class SkinManager {
         
         for (ResolveInfo info : search) {
             //Log.d(TAG, String.valueOf(info));
-            String packageName = info.activityInfo.packageName;
             String label = String.valueOf(info.loadLabel(pm));
             String activityClass = info.activityInfo.name;
             //Log.d(TAG, "package: " + packageName);

@@ -26,6 +26,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -36,7 +37,6 @@ import ru.gelin.android.weather.notification.AppUtils;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
 import ru.gelin.android.weather.notification.skin.SkinManager;
-import ru.gelin.android.weather.notification.skin.SkinsActivity;
 import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 
 import java.util.List;
@@ -48,7 +48,9 @@ public class MainActivity extends UpdateNotificationActivity
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
     static final Uri SKIN_SEARCH_URI=Uri.parse("market://search?q=Weather Notification Skin");
-    
+
+    static final String SKIN_PREFERENCE_PREFIX = "skin_enabled_";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
@@ -73,9 +75,6 @@ public class MainActivity extends UpdateNotificationActivity
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
         
-        Preference skinsPreference = findPreference(SKINS);
-        skinsPreference.setIntent(new Intent(MainActivity.this, SkinsActivity.class));
-        
         Preference skinsInstallPreference = findPreference(SKINS_INSTALL);
         Intent skinsInstallIntent = new Intent(Intent.ACTION_VIEW, SKIN_SEARCH_URI);
         skinsInstallPreference.setIntent(skinsInstallIntent);
@@ -87,6 +86,21 @@ public class MainActivity extends UpdateNotificationActivity
         
         SkinManager sm = new SkinManager(this);
         List<SkinInfo> skins = sm.getInstalledSkins();
+
+        //PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
+        //setPreferenceScreen(screen);
+        PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
+        for (SkinInfo skin : skins) {
+            CheckBoxPreference checkboxPref = skin.getCheckBoxPreference(this);
+            checkboxPref.setOnPreferenceChangeListener(this);
+            skinsCategory.addPreference(checkboxPref);
+            Preference configPref = skin.getConfigPreference(this);
+            if (configPref != null) {
+                skinsCategory.addPreference(configPref);
+                configPref.setDependency(checkboxPref.getKey());  //disabled if skin is disabled
+            }
+        }
+
         if (skins.size() <= 1) {
             Toast.makeText(this, 
                     marketActivity == null ?
@@ -122,6 +136,10 @@ public class MainActivity extends UpdateNotificationActivity
         }
         if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
             startUpdate(true);
+            return true;
+        }
+        if (key.startsWith(SKIN_PREFERENCE_PREFIX)) {
+            updateNotification();
             return true;
         }
         return true;
