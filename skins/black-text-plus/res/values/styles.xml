@@ -1,5 +1,8 @@
 <resources>
 
+    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+    </style>
+
     <style name="Weather">
         <item name="android:singleLine">true</item>
     </style>
@@ -15,6 +18,34 @@
     <style name="Weather.Condition" parent="Weather.Forecast">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="WeatherInfo">
+    </style>
+
+    <style name="WeatherInfo.Location" parent="WeatherInfo">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="WeatherInfo.UpdateTime" parent="WeatherInfo">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    </style>
+
+    <style name="WeatherInfo.Condition" parent="WeatherInfo">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
+    <style name="WeatherInfo.ConditionDetails" parent="WeatherInfo">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="WeatherInfo.CurrentTemp" parent="WeatherInfo">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="WeatherInfo.AltTemp" parent="WeatherInfo">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
 </resources>

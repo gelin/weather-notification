@@ -31,7 +31,7 @@
         android:entryValues="@array/notification_style_values"
         android:defaultValue="WHITE_TEXT"/>
 
-    <ru.gelin.android.preference.SummaryListPreference
+    <ru.gelin.android.preference.SummaryListPreference 
         android:key="temp_unit"
         android:title="@string/temp_unit"
         android:entries="@array/temp_unit_entries"
