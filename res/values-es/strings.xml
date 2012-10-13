@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2012  Denis Nelubin, Adrian Prado
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+    <string name="app_name">Notificación de clima</string>
+    <string name="weather">Clima</string>
+    <string name="notification">Notificación</string>
+    <string name="enable_notification">Habilitar notificación</string>
+    <string name="refresh_interval">Intervalo de actualización</string>
+    <string name="refresh_15m">Cada quince minutos</string>
+    <string name="refresh_30m">Cada treinta minutos</string>
+    <string name="refresh_1h">Cada hora</string>
+    <string name="refresh_2h">Cada dos horas</string>
+    <string name="refresh_3h">Cada tres horas</string>
+    <string name="refresh_4h">Cada cuatro horas</string>
+    <string name="refresh_6h">Cada seis horas</string>
+    <string name="refresh_12h">Cada doce horas</string>
+    <string name="refresh_1d">Por día</string>
+    <string name="location">Lugar</string>
+    <string name="auto_location">Detección automática</string>
+    <string name="auto_location_summary_on">Detectar lugar automáticamente</string>
+    <string name="auto_location_summary_off">Establecer lugar manualmente</string>
+    <string name="manual_location">Lugar</string>
+    <string name="weather_update_empty">El clima para \"%s\" es desconocido</string>
+    <string name="weather_update_failed">Actualización de clima fallo: %s</string>
+    <string name="weather_update_no_network">Actualización de clima fallo: no hay conexión a la red</string>
+    <string name="weather_update_unknown_location">Actualización de clima fallo: lugar desconocido</string>
+    <string name="skin">Skin</string>
+    <string name="skins">Skins</string>
+    <string name="skins_preferences">Preferencias de skin</string>
+    <string name="skins_install">Instalar skins</string>
+    <string name="skins_install_notice">Deberías de instalar skins para un uso mejor. Haz clic en \"Instalar skins\" al final de esta pantalla.</string>
+    <string name="skins_install_notice_no_market">Deberías de instalar skins para un uso mejor. Buscar \"Weather Notification Skin\" en el Android market para instalarlas.</string>
+    <string name="builtin_skin">Skin predefinida</string>
+    <string name="builtin_skin_preferences">Preferencias de skin predefinida</string>
+    <string name="start_update_service_permission">iniciar servicio de actualización de clima</string>
+    <string name="start_update_service_permission_description">permite a la aplicación iniciar el servicio de actualización para recibir nuevos datos del clima.</string>
+
+    <string name="condition_thunderstorm_rain_light">Tormenta eléctrica con lluvia ligera</string>
+    <string name="condition_thunderstorm_rain">Tormenta eléctrica con lluvia</string>
+    <string name="condition_thunderstorm_rain_heavy">Tormenta eléctrica con lluvia fuerte</string>
+    <string name="condition_thunderstorm_light">Tormenta eléctrica ligera</string>
+    <string name="condition_thunderstorm">Tormenta eléctrica</string>
+    <string name="condition_thunderstorm_heavy">Tormenta eléctrica fuerte</string>
+    <string name="condition_thunderstorm_ragged">Tormenta eléctrica irregular</string>
+    <string name="condition_thunderstorm_drizzle_light">Tormenta eléctrica con llovizna ligera</string>
+    <string name="condition_thunderstorm_drizzle">Tormenta eléctrica con llovizna</string>
+    <string name="condition_thunderstorm_drizzle_heavy">Tormenta eléctrica con llovizna fuerte</string>
+
+    <string name="condition_drizzle_light">Llovizna ligera</string>
+    <string name="condition_drizzle">Llovizna</string>
+    <string name="condition_drizzle_heavy">Llovizna fuerte</string>
+    <string name="condition_drizzle_rain_light">Lluvia con llovizna ligera</string>
+    <string name="condition_drizzle_rain">Lluvia con llovizna</string>
+    <string name="condition_drizzle_rain_heavy">Lluvia con fuerte llovizna</string>
+    <string name="condition_drizzle_shower">Llovizna consistente</string>
+
+    <string name="condition_rain_light">Lluvia ligera</string>
+    <string name="condition_rain">Lluvia</string>
+    <string name="condition_rain_heavy">Lluvia fuerte</string>
+    <string name="condition_rain_very_heavy">Lluvia muy fuerte</string>
+    <string name="condition_rain_extreme">Lluvia extrema</string>
+    <string name="condition_rain_freezing">Lluvia helada</string>
+    <string name="condition_rain_shower_light">Lluvia consistente ligera</string>
+    <string name="condition_rain_shower">Lluvia consistente</string>
+    <string name="condition_rain_shower_heavy">Lluvia consistente fuerte</string>
+
+    <string name="condition_snow_light">Nevando ligeramente</string>
+    <string name="condition_snow">Nevando</string>
+    <string name="condition_snow_heavy">Nevando fuerte</string>
+    <string name="condition_sleet">Aguanieve</string>
+    <string name="condition_snow_shower">Nevando consistentemente</string>
+
+    <string name="condition_mist">Niebla</string>
+    <string name="condition_smoke">Humo</string>
+    <string name="condition_haze">Neblina</string>
+    <string name="condition_sand_whirls">Tormenta de arena</string>
+    <string name="condition_fog">Niebla</string>
+
+    <string name="condition_clouds_clear">Cielo despejado</string>
+    <string name="condition_clouds_few">Con pocas nubes</string>
+    <string name="condition_clouds_scattered">Nubes dispersas</string>
+    <string name="condition_clouds_broken">Cielo nuboso</string>
+    <string name="condition_clouds_overcast">Cielo cubierto</string>
+
+    <string name="condition_tornado">Tornado</string>
+    <string name="condition_tropical_storm">Tormenta tropical</string>
+    <string name="condition_hurricane">Huracán</string>
+    <string name="condition_cold">Frio</string>
+    <string name="condition_hot">Caliente</string>
+    <string name="condition_windy">Ventoso</string>
+    <string name="condition_hail">Granizo</string>
+</resources>
