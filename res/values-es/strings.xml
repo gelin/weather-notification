@@ -23,7 +23,7 @@
 -->
 
 <resources>
-    <string name="app_name">Notificación de clima</string>
+    <string name="app_name">Notificación del clima</string>
     <string name="weather">Clima</string>
     <string name="notification">Notificación</string>
     <string name="enable_notification">Habilitar notificación</string>
@@ -51,7 +51,7 @@
     <string name="skins_preferences">Preferencias de skin</string>
     <string name="skins_install">Instalar skins</string>
     <string name="skins_install_notice">Deberías de instalar skins para un uso mejor. Haz clic en \"Instalar skins\" al final de esta pantalla.</string>
-    <string name="skins_install_notice_no_market">Deberías de instalar skins para un uso mejor. Buscar \"Weather Notification Skin\" en el Android market para instalarlas.</string>
+    <string name="skins_install_notice_no_market">Deberías de instalar skins para un uso mejor. Buscar \"Weather Notification Skin\" en Android market para instalarlas.</string>
     <string name="builtin_skin">Skin predefinida</string>
     <string name="builtin_skin_preferences">Preferencias de skin predefinida</string>
     <string name="start_update_service_permission">iniciar servicio de actualización de clima</string>
@@ -74,7 +74,7 @@
     <string name="condition_drizzle_rain_light">Lluvia con llovizna ligera</string>
     <string name="condition_drizzle_rain">Lluvia con llovizna</string>
     <string name="condition_drizzle_rain_heavy">Lluvia con fuerte llovizna</string>
-    <string name="condition_drizzle_shower">Llovizna consistente</string>
+    <string name="condition_drizzle_shower">Llovizna intermitente</string>
 
     <string name="condition_rain_light">Lluvia ligera</string>
     <string name="condition_rain">Lluvia</string>
@@ -82,27 +82,27 @@
     <string name="condition_rain_very_heavy">Lluvia muy fuerte</string>
     <string name="condition_rain_extreme">Lluvia extrema</string>
     <string name="condition_rain_freezing">Lluvia helada</string>
-    <string name="condition_rain_shower_light">Lluvia consistente ligera</string>
-    <string name="condition_rain_shower">Lluvia consistente</string>
-    <string name="condition_rain_shower_heavy">Lluvia consistente fuerte</string>
+    <string name="condition_rain_shower_light">Lluvia intermitente ligera</string>
+    <string name="condition_rain_shower">Lluvia intermitente</string>
+    <string name="condition_rain_shower_heavy">Lluvia intermitente fuerte</string>
 
     <string name="condition_snow_light">Nevando ligeramente</string>
     <string name="condition_snow">Nevando</string>
     <string name="condition_snow_heavy">Nevando fuerte</string>
     <string name="condition_sleet">Aguanieve</string>
-    <string name="condition_snow_shower">Nevando consistentemente</string>
+    <string name="condition_snow_shower">Nevando intermitentemente</string>
 
-    <string name="condition_mist">Niebla</string>
+    <string name="condition_mist">Neblina</string>
     <string name="condition_smoke">Humo</string>
-    <string name="condition_haze">Neblina</string>
+    <string name="condition_haze">Bruma</string>
     <string name="condition_sand_whirls">Tormenta de arena</string>
     <string name="condition_fog">Niebla</string>
 
     <string name="condition_clouds_clear">Cielo despejado</string>
     <string name="condition_clouds_few">Con pocas nubes</string>
     <string name="condition_clouds_scattered">Nubes dispersas</string>
-    <string name="condition_clouds_broken">Cielo nuboso</string>
-    <string name="condition_clouds_overcast">Cielo cubierto</string>
+    <string name="condition_clouds_broken">Parcialmente nublado</string>
+    <string name="condition_clouds_overcast">Nublado</string>
 
     <string name="condition_tornado">Tornado</string>
     <string name="condition_tropical_storm">Tormenta tropical</string>
