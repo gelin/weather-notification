@@ -55,7 +55,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="jdk" jdkName="Android 3.0" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.0" jdkType="Android SDK" />
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
     <orderEntry type="module" module-name="libweatherskin" />
