@@ -22,76 +22,31 @@
 
 package ru.gelin.android.weather.notification.app;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
-import android.view.Window;
-import android.widget.Toast;
-import ru.gelin.android.weather.notification.AppUtils;
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
-import ru.gelin.android.weather.notification.skin.SkinManager;
-import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 
 import java.util.List;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
-import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.app.PreferenceKeys.SKINS_CATEGORY;
 
 /**
  *  Main activity for old Androids.
  */
-public class MainActivity2 extends UpdateNotificationActivity
-        implements OnPreferenceClickListener, OnPreferenceChangeListener {
-
-    static final Uri SKIN_SEARCH_URI=Uri.parse("market://search?q=Weather Notification Skin");
-
-    static final String SKIN_PREFERENCE_PREFIX = "skin_enabled_";
+public class MainActivity2 extends BaseMainActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.main_preferences);
-        
-        /*  TODO: why this doesn't work?
-        PreferenceScreen screen = getPreferenceScreen();
-        screen.setOnPreferenceClickListener(this);
-        screen.setOnPreferenceChangeListener(this); 
-        */
-        
-        Preference weatherPreference = findPreference(WEATHER);
-        weatherPreference.setOnPreferenceClickListener(this);
-        weatherPreference.setOnPreferenceChangeListener(this);
+
         Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
         notificationPreference.setOnPreferenceChangeListener(this);
-        Preference refreshInterval = findPreference(REFRESH_INTERVAL);
-        refreshInterval.setOnPreferenceChangeListener(this);
-        Preference autoLocationPreference = findPreference(AUTO_LOCATION);
-        autoLocationPreference.setOnPreferenceChangeListener(this);
-        Preference locationPreference = findPreference(LOCATION);
-        locationPreference.setOnPreferenceChangeListener(this);
-        
-        Preference skinsInstallPreference = findPreference(SKINS_INSTALL);
-        Intent skinsInstallIntent = new Intent(Intent.ACTION_VIEW, SKIN_SEARCH_URI);
-        skinsInstallPreference.setIntent(skinsInstallIntent);
-        ComponentName marketActivity = skinsInstallIntent.resolveActivity(getPackageManager());
-        if (marketActivity == null) {
-            PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
-            skinsCategory.removePreference(skinsInstallPreference);
-        }
-        
-        SkinManager sm = new SkinManager(this);
-        List<SkinInfo> skins = sm.getInstalledSkins();
+    }
 
-        //PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
-        //setPreferenceScreen(screen);
+    protected void fillSkinsPreferences(List<SkinInfo> skins) {
         PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
         for (SkinInfo skin : skins) {
             CheckBoxPreference checkboxPref = skin.getCheckBoxPreference(this);
@@ -103,54 +58,17 @@ public class MainActivity2 extends UpdateNotificationActivity
                 configPref.setDependency(checkboxPref.getKey());  //disabled if skin is disabled
             }
         }
-
-        if (skins.size() <= 1) {
-            Toast.makeText(this, 
-                    marketActivity == null ?
-                            R.string.skins_install_notice_no_market :
-                            R.string.skins_install_notice, 
-                    Toast.LENGTH_LONG).show();
-        }
-        
-        startUpdate(false);
     }
     
     //@Override
-    public boolean onPreferenceClick(Preference preference) {
-        String key = preference.getKey();
-        if (WEATHER.equals(key)) {
-            setProgressBarIndeterminateVisibility(true);
-            return true;
-        }
-        return false;
-    }
-
-    //@Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
-        if (WEATHER.equals(key)) {
-            setProgressBarIndeterminateVisibility(false);
-            return true;
-        }
-        if (ENABLE_NOTIFICATION.equals(key) || REFRESH_INTERVAL.equals(key)) {
+        if (ENABLE_NOTIFICATION.equals(key)) {
             //force reschedule service start
             startUpdate(false);
             return true;
         }
-        if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
-            startUpdate(true);
-            return true;
-        }
-        if (key.startsWith(SKIN_PREFERENCE_PREFIX)) {
-            updateNotification();
-            return true;
-        }
-        return true;
-    }
-    
-    void startUpdate(boolean force) {
-        setProgressBarIndeterminateVisibility(true);
-        AppUtils.startUpdateService(this, true, force);
+        return super.onPreferenceChange(preference, newValue);
     }
     
 }

@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.SwitchPreference;
 
 import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
@@ -92,7 +93,7 @@ public class SkinInfo {
 	}
 
 	/**
-	 *  Creates checkbox preference to enable/disable the activity.
+	 *  Creates checkbox preference to enable/disable the skin.
 	 */
     public CheckBoxPreference getCheckBoxPreference(Context context) {
 	    CheckBoxPreference checkBox = new CheckBoxPreference(context);
@@ -120,5 +121,28 @@ public class SkinInfo {
         pref.setOrder(this.order + 1);
         return pref;
 	}
+
+    /**
+     *  Creates SwitchPreference to enable/disable the skin and open skin settings.
+     */
+    public SwitchPreference getSwitchPreference(Context context) {
+        SwitchPreference pref = new SwitchPreference(context);
+        pref.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
+        pref.setTitle(getBroadcastReceiverLabel());
+        pref.setChecked(isEnabled());
+        pref.setOrder(this.order);
+        Intent intent = new Intent(ACTION_WEATHER_SKIN_PREFERENCES);
+        intent.setClassName(getPackageName(), getConfigActivityClass());
+        pref.setIntent(intent);
+        pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                SwitchPreference switchPreference = (SwitchPreference)preference;
+                switchPreference.setChecked(!switchPreference.isChecked());     //to avoid changing of the state by clicking not to the switch
+                return false;
+            }
+        });
+        return pref;
+    }
 	
 }
