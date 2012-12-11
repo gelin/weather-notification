@@ -56,6 +56,8 @@
     <string name="builtin_skin_preferences">Built-in skin preferences</string>
     <string name="start_update_service_permission">start weather update service</string>
     <string name="start_update_service_permission_description">Allows the application to start weather update service to receive the new weather values.</string>
+    <string name="switch_on">\u2713</string>
+    <string name="switch_off">\u25CB</string>
     
     <string name="condition_thunderstorm_rain_light">Thunderstorm with light rain</string>
     <string name="condition_thunderstorm_rain">Thunderstorm with rain</string>

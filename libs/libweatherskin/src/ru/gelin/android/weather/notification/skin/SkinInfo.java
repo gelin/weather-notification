@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
+import android.preference.TwoStatePreference;
 
 import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
@@ -125,8 +126,8 @@ public class SkinInfo {
     /**
      *  Creates SwitchPreference to enable/disable the skin and open skin settings.
      */
-    public SwitchPreference getSwitchPreference(Context context) {
-        SwitchPreference pref = new SwitchPreference(context);
+    public TwoStatePreference getSwitchPreference(Context context) {
+        TwoStatePreference pref = new SwitchPreference(context);
         pref.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
         pref.setTitle(getBroadcastReceiverLabel());
         pref.setChecked(isEnabled());
@@ -137,7 +138,7 @@ public class SkinInfo {
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SwitchPreference switchPreference = (SwitchPreference)preference;
+                TwoStatePreference switchPreference = (TwoStatePreference)preference;
                 switchPreference.setChecked(!switchPreference.isChecked());     //to avoid changing of the state by clicking not to the switch
                 return false;
             }
