@@ -40,6 +40,7 @@ import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 
 import java.util.List;
 
+import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
 
 /**
@@ -67,8 +68,8 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         Preference weatherPreference = findPreference(WEATHER);
         weatherPreference.setOnPreferenceClickListener(this);
         weatherPreference.setOnPreferenceChangeListener(this);
-        //Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
-        //notificationPreference.setOnPreferenceChangeListener(this);
+        Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
+        notificationPreference.setOnPreferenceChangeListener(this);
         Preference refreshInterval = findPreference(REFRESH_INTERVAL);
         refreshInterval.setOnPreferenceChangeListener(this);
         Preference autoLocationPreference = findPreference(AUTO_LOCATION);
@@ -120,8 +121,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             setProgressBarIndeterminateVisibility(false);
             return true;
         }
-//        if (ENABLE_NOTIFICATION.equals(key) || REFRESH_INTERVAL.equals(key)) {
-        if (REFRESH_INTERVAL.equals(key)) {
+        if (ENABLE_NOTIFICATION.equals(key) || REFRESH_INTERVAL.equals(key)) {
             //force reschedule service start
             startUpdate(false);
             return true;

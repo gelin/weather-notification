@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2010  Denis Nelubin aka Gelin
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/notification">
+    
+        <SwitchPreference android:key="enable_notification"
+            android:defaultValue="true"
+            android:title="@string/enable_notification"
+            android:disableDependentsState="false"/>
+    
+        <ru.gelin.android.preference.SummaryListPreference 
+            android:key="refresh_interval"
+            android:title="@string/refresh_interval"
+            android:entries="@array/refresh_interval_entries"
+            android:entryValues="@array/refresh_interval_values"
+            android:defaultValue="REFRESH_1H"
+            android:dependency="enable_notification"/>
+            
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/location">
+    
+        <CheckBoxPreference android:key="auto_location"
+            android:defaultValue="true"
+            android:title="@string/auto_location"
+            android:summaryOn="@string/auto_location_summary_on"
+            android:summaryOff="@string/auto_location_summary_off"
+            android:disableDependentsState="true"/>
+
+        <ru.gelin.android.preference.SummaryTextPreference android:key="location"
+            android:title="@string/manual_location"
+            android:singleLine="true"
+            android:dependency="auto_location"/>
+
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/weather">
+    
+        <ru.gelin.android.weather.notification.app.WeatherPreference
+            android:key="weather"/>
+    
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:key="skins_category" 
+        android:title="@string/skin">
+    
+        <Preference
+            android:key="skins_install" 
+            android:title="@string/skins_install"
+            android:persistent="false"
+            android:order="1000000"/>
+    
+    </PreferenceCategory>
+
+</PreferenceScreen>

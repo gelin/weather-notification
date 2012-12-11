@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.notification.app;
 
-import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -30,21 +29,12 @@ import ru.gelin.android.weather.notification.skin.SkinInfo;
 
 import java.util.List;
 
-import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.SKINS_CATEGORY;
 
 /**
  *  Main activity for old Androids.
  */
 public class MainActivity2 extends BaseMainActivity {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Preference notificationPreference = findPreference(ENABLE_NOTIFICATION);
-        notificationPreference.setOnPreferenceChangeListener(this);
-    }
 
     protected void fillSkinsPreferences(List<SkinInfo> skins) {
         PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
@@ -59,16 +49,5 @@ public class MainActivity2 extends BaseMainActivity {
             }
         }
     }
-    
-    //@Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        String key = preference.getKey();
-        if (ENABLE_NOTIFICATION.equals(key)) {
-            //force reschedule service start
-            startUpdate(false);
-            return true;
-        }
-        return super.onPreferenceChange(preference, newValue);
-    }
-    
+
 }
