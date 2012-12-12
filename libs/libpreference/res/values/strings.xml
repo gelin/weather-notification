@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">libpreference</string>
+
+    <!--<string name="switch_on">\u2713</string>-->
+    <!--<string name="switch_on">\u2758</string>-->
+    <!--<string name="switch_off">\u25CB</string>-->
+    <!--<string name="switch_on">\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0</string>-->
+    <!--<string name="switch_off">\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0</string>-->
+    <string name="switch_on">\u00A0\u2713\u00A0</string>
+    <string name="switch_off">\u00A0\u25CB\u00A0</string>
 </resources>

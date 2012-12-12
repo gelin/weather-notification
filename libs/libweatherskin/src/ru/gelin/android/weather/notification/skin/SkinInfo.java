@@ -26,8 +26,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.SwitchPreference;
 import android.preference.TwoStatePreference;
+import ru.gelin.android.preference.SwitchPreference;
 
 import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;

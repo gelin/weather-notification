@@ -26,11 +26,9 @@
 
     <PreferenceCategory android:title="@string/notification">
     
-        <SwitchPreference android:key="enable_notification"
+        <ru.gelin.android.preference.SwitchPreference android:key="enable_notification"
             android:defaultValue="true"
             android:title="@string/enable_notification"
-            android:switchTextOn="@string/switch_on"
-            android:switchTextOff="@string/switch_off"
             android:disableDependentsState="false"/>
     
         <ru.gelin.android.preference.SummaryListPreference 
