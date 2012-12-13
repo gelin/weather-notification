@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.gelin.android.weather.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -13,8 +15,12 @@ import java.util.*;
  */
 public class OpenWeatherMapWeather implements Weather {
 
+    String FORECAST_URL_TEMPLATE="http://m.openweathermap.org/city/%d#forecast";
+
     /** City ID */
     int cityId = 0;
+    /** Forecast URL */
+    URL forecastURL;
     /** Weather location */
     SimpleLocation location = new SimpleLocation("");
     /** Weather time */
@@ -75,6 +81,10 @@ public class OpenWeatherMapWeather implements Weather {
         return this.cityId;
     }
 
+    public URL getForecastURL() {
+        return this.forecastURL;
+    }
+
     void parseCityWeather(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
@@ -95,6 +105,11 @@ public class OpenWeatherMapWeather implements Weather {
 
     private void parseCityId(JSONObject weatherJSON) throws JSONException {
         this.cityId = weatherJSON.getInt("id");
+        try {
+            this.forecastURL = new URL(String.format(FORECAST_URL_TEMPLATE, this.cityId));
+        } catch (MalformedURLException e) {
+            this.forecastURL = null;
+        }
     }
 
     private void parseLocation(JSONObject weatherJSON) {

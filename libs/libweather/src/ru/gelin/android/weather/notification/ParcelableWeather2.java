@@ -22,44 +22,18 @@
 
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.CONDITIONS_NUMBER;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.CONDITION_TEXT;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.CURRENT_TEMP;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.HIGH_TEMP;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.HUMIDITY_TEXT;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.HUMIDITY_VAL;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.LOCATION;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.LOW_TEMP;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.QUERY_TIME;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.TEMPERATURE_UNIT;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.TIME;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.WIND_DIR;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.WIND_SPEED;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.WIND_SPEED_UNIT;
-import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.WIND_TEXT;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import ru.gelin.android.weather.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleHumidity;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.SimpleTemperature;
-import ru.gelin.android.weather.SimpleWeather;
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
+import static ru.gelin.android.weather.notification.ParcelableWeatherKeys.*;
 
 public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
 
@@ -91,7 +65,9 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         } else {
             setQueryTime(queryTime);
         }
-        
+        URL forecastURL = weather.getForecastURL();
+        setForecastURL(forecastURL);
+
         List<WeatherCondition> conditions = weather.getConditions();
         if (conditions == null) {
             return;
@@ -164,6 +140,10 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         if (queryTime != null) {
             bundle.putLong(QUERY_TIME, queryTime.getTime());
         }
+        URL forecastURL = getForecastURL();
+        if (forecastURL != null) {
+            bundle.putString(FORECAST_URL, String.valueOf(forecastURL));
+        }
         List<WeatherCondition> conditions = getConditions();
         if (conditions == null) {
             bundle.putInt(CONDITIONS_NUMBER, 0);
@@ -235,6 +215,11 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         setLocation(new SimpleLocation(bundle.getString(LOCATION)));
         setTime(new Date(bundle.getLong(TIME)));
         setQueryTime(new Date(bundle.getLong(QUERY_TIME)));
+        try {
+            setForecastURL(new URL(bundle.getString(FORECAST_URL)));
+        } catch (MalformedURLException e) {
+            setForecastURL(null);
+        }
         return bundle.getInt(CONDITIONS_NUMBER);
     }
     

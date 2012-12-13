@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -88,6 +89,10 @@ public class TestWeather implements Weather {
     //@Override
     public boolean isEmpty() {
         return false;
+    }
+
+    public URL getForecastURL() {
+        return null;
     }
 
 }

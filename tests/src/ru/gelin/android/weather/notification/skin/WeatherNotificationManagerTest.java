@@ -22,12 +22,12 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.IntentParameters;
-import ru.gelin.android.weather.notification.WeatherUtils;
 import android.content.Intent;
 import android.os.Parcel;
 import android.test.AndroidTestCase;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.IntentParameters;
+import ru.gelin.android.weather.notification.WeatherUtils;
 
 @SuppressWarnings("deprecation")
 public class WeatherNotificationManagerTest extends AndroidTestCase {
@@ -82,6 +82,26 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
         WeatherUtils.checkWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER),
                 WeatherUtils.Version.V_0_3);
+    }
+
+    public void testCreateIntent3() throws Exception {
+        Weather weather = WeatherUtils.createOpenWeather(getContext());
+        Intent intent = WeatherNotificationManager.createIntent2(true, weather);
+        Parcel parcel = Parcel.obtain();
+        parcel.writeParcelable(intent, 0);
+        parcel.setDataPosition(0);
+        intent = (Intent)parcel.readParcelable(getContext().getClassLoader());
+        intent.setExtrasClassLoader(getContext().getClassLoader());
+        System.out.println(intent);
+        System.out.println("extras: " + intent.getExtras().keySet());
+        System.out.println("enabled: " + intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
+        System.out.println("extra weather: " + intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER));
+        assertEquals(IntentParameters.ACTION_WEATHER_UPDATE_2, intent.getAction());
+        assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
+        assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
+        assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
+        //TODO WeatherUtils.checkOpenWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER),
+//                WeatherUtils.Version.V_0_3);
     }
 
 }

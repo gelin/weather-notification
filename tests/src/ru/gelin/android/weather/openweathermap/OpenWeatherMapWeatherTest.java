@@ -9,6 +9,7 @@ import ru.gelin.android.weather.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -118,6 +119,11 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     public void testGetCityID() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
         assertEquals(1496153, weather.getCityId());
+    }
+
+    public void testGetForecastURL() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
     }
 
     public void testForecastsNulls() throws IOException, JSONException, WeatherException {

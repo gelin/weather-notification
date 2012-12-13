@@ -65,4 +65,7 @@ class WeatherStorageKeys {
     /** Preference name pattern for wind direction. */
     static final String WIND_DIR = "weather_%d_wind_direction";
 
+    /** Preference name for forecast URL. */
+    static final String FORECAST_URL = "weather_forecast_url";
+
 }

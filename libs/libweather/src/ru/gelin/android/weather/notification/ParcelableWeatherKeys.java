@@ -60,4 +60,7 @@ class ParcelableWeatherKeys {
     /** Key for wind direction. */
     static final String WIND_DIR = "weather_wind_direction";
 
+    /** Key for forecast URL. */
+    static final String FORECAST_URL = "weather_forecast_url";
+
 }

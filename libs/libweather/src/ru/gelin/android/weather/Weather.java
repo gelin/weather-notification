@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -63,5 +64,11 @@ public interface Weather {
      *  Returns true if this weather doesn't contains any actual values.
      */
     boolean isEmpty();
+
+    /**
+     *  Returns the URL to be opened in browser to display more detailed forecast.
+     *  @return the URL or null
+     */
+    URL getForecastURL();
 
 }

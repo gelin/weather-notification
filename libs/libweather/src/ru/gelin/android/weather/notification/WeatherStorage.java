@@ -22,45 +22,19 @@
 
 package ru.gelin.android.weather.notification;
 
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.CONDITION_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.CURRENT_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HIGH_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_TEXT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.HUMIDITY_VAL;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOCATION;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.LOW_TEMP;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.TEMPERATURE_UNIT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.TIME;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.QUERY_TIME;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.UNIT_SYSTEM;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_DIR;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_SPEED_UNIT;
-import static ru.gelin.android.weather.notification.WeatherStorageKeys.WIND_TEXT;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleHumidity;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.SimpleTemperature;
-import ru.gelin.android.weather.SimpleWeather;
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import ru.gelin.android.weather.*;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static ru.gelin.android.weather.notification.WeatherStorageKeys.*;
 
 /**
  *  Stores and retrieves the weather objects to SharedPreferences.
@@ -94,6 +68,11 @@ public class WeatherStorage {
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putLong(QUERY_TIME, weather.getQueryTime().getTime());
+        if (weather.getForecastURL() == null) {
+            editor.remove(FORECAST_URL);
+        } else {
+            editor.putString(FORECAST_URL, String.valueOf(weather.getForecastURL()));
+        }
         if (weather.getUnitSystem() == null) {
             editor.remove(UNIT_SYSTEM);
         } else {
@@ -161,7 +140,12 @@ public class WeatherStorage {
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
         weather.setQueryTime(new Date(preferences.getLong(QUERY_TIME, System.currentTimeMillis())));
-        
+        try {
+            weather.setForecastURL(new URL(preferences.getString(FORECAST_URL, "")));
+        } catch (MalformedURLException e) {
+            weather.setForecastURL(null);
+        }
+
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {

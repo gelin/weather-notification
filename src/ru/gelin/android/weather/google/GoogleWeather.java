@@ -22,21 +22,16 @@
 
 package ru.gelin.android.weather.google;
 
+import org.xml.sax.SAXException;
+import ru.gelin.android.weather.*;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
 
 /**
  *  Weather, provided by Google API.
@@ -83,6 +78,10 @@ public class GoogleWeather implements Weather {
     //@Override
     public boolean isEmpty() {
         return this.conditions.isEmpty();
+    }
+
+    public URL getForecastURL() {
+        return null;
     }
 
     /**

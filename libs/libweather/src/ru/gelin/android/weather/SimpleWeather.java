@@ -22,6 +22,7 @@
 
 package ru.gelin.android.weather;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,8 @@ public class SimpleWeather implements Weather {
     UnitSystem unit;
     /** List of conditions */
     List<WeatherCondition> conditions;
+    /** Forecast URL */
+    URL forecastURL;
     
     /**
      *  Sets the location.
@@ -116,6 +119,20 @@ public class SimpleWeather implements Weather {
             return true;
         }
         return false;
+    }
+
+    /**
+     *  Sets the forecast URL.
+     */
+    public void setForecastURL(URL url) {
+        this.forecastURL = url;
+    }
+
+    /**
+     *  Returns forecast URL.
+     */
+    public URL getForecastURL() {
+        return this.forecastURL;
     }
 
 }
