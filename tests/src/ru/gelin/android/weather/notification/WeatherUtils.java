@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.google.GoogleWeather;
-import ru.gelin.android.weather.openweathermap.OpenWeatherMapWeather;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -39,8 +39,11 @@ public class WeatherUtils {
     }
 
     public static Weather createOpenWeather(Context context) throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_city.json"));
-        return weather;
+        return ru.gelin.android.weather.openweathermap.WeatherUtils.createOpenWeather(context);
+    }
+
+    public static Weather createIncompleteOpenWeather(Context context) throws Exception {
+        return ru.gelin.android.weather.openweathermap.WeatherUtils.createIncompleteOpenWeather(context);
     }
 
     public static ru.gelin.android.weather.v_0_2.Weather createWeather_v_0_2() throws Exception {
@@ -124,8 +127,56 @@ public class WeatherUtils {
         assertEquals(-15, temp3.getHigh());
     }
 
-    //TODO checkOpenWeather
-    //assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
+    public static void checkOpenWeather(Weather weather) throws MalformedURLException {
+        assertEquals("Omsk", weather.getLocation().getText());
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(2012, Calendar.SEPTEMBER, 14, 5, 30, 0);
+        assertEquals(calendar.getTime(), weather.getTime());
+        calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.add(Calendar.MINUTE, -1);
+        assertTrue(weather.getQueryTime().after(calendar.getTime()));
+
+        assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
+
+        assertEquals(4, weather.getConditions().size());
+
+        WeatherCondition condition0 = weather.getConditions().get(0);
+        assertEquals("Broken clouds", condition0.getConditionText());
+        Temperature temp0 = condition0.getTemperature(TemperatureUnit.K);
+        assertEquals(283, temp0.getCurrent());
+        assertEquals(278, temp0.getLow());
+        assertEquals(288, temp0.getHigh());
+        Humidity humidity = condition0.getHumidity();
+        assertEquals("Humidity: 81%", humidity.getText());
+        assertEquals(81, humidity.getValue());
+        Wind wind = condition0.getWind(WindSpeedUnit.MPS);
+        assertEquals("Wind: SSE, 5 m/s", wind.getText());
+        assertEquals(WindDirection.SSE, wind.getDirection());
+        assertEquals(5, wind.getSpeed());
+
+        WeatherCondition condition1 = weather.getConditions().get(1);
+        assertEquals("Light rain", condition1.getConditionText());
+        Temperature temp1 = condition1.getTemperature(TemperatureUnit.K);
+        assertEquals(280, temp1.getCurrent());
+        assertEquals(278, temp1.getLow());
+        assertEquals(281, temp1.getHigh());
+
+        WeatherCondition condition2 = weather.getConditions().get(2);
+        assertEquals("Rain", condition2.getConditionText());
+        Temperature temp2 = condition2.getTemperature(TemperatureUnit.K);
+        assertEquals(282, temp2.getCurrent());
+        assertEquals(278, temp2.getLow());
+        assertEquals(285, temp2.getHigh());
+
+        WeatherCondition condition3 = weather.getConditions().get(3);
+        assertEquals("Light rain", condition3.getConditionText());
+        Temperature temp3 = condition3.getTemperature(TemperatureUnit.K);
+        assertEquals(282, temp3.getCurrent());
+        assertEquals(276, temp3.getLow());
+        assertEquals(287, temp3.getHigh());
+    }
     
     public static void checkWeather(ru.gelin.android.weather.v_0_2.Weather weather) {
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
@@ -211,7 +262,7 @@ public class WeatherUtils {
         assertEquals(-15, temp3.getHigh());
     }
 
-    static JSONObject readJSON(String resourceName) throws IOException, JSONException {
+    public static JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(WeatherUtils.class.getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();
         int c = reader.read();

@@ -49,7 +49,7 @@ public class WeatherStorageTest extends AndroidTestCase {
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather1);
         Weather weather2 = storage.load();
-        //TODO WeatherUtils.checkOpenWeather(weather2);
+        WeatherUtils.checkOpenWeather(weather2);
     }
 
     public void testSaveLoad4() throws Exception {
@@ -58,7 +58,7 @@ public class WeatherStorageTest extends AndroidTestCase {
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather2);
         Weather weather3 = storage.load();
-        //TODO WeatherUtils.checkOpenWeather(weather3);
+        WeatherUtils.checkOpenWeather(weather3);
     }
     
     public void testBackwardCompatibility() throws Exception {
@@ -102,7 +102,7 @@ public class WeatherStorageTest extends AndroidTestCase {
         Weather weather1 = WeatherUtils.createWeather();
         storage.save(weather1);
         assertEquals(4, storage.load().getConditions().size());
-        Weather weather2 = WeatherUtils.createOpenWeather(getContext());
+        Weather weather2 = WeatherUtils.createIncompleteOpenWeather(getContext());
         storage.save(weather2);
         assertEquals(1, storage.load().getConditions().size());
     }

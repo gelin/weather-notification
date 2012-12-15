@@ -37,7 +37,7 @@ public class ParcelableWeather2Test extends AndroidTestCase {
     public void testCopyConstructor2() throws Exception {
         Weather weather1 = WeatherUtils.createOpenWeather(getContext());
         Weather weather2 = new ParcelableWeather2(weather1);
-        //TODO WeatherUtils.checkOpenWeather(weather2);
+        WeatherUtils.checkOpenWeather(weather2);
     }
     
     public void testWriteRead() throws Exception {
@@ -65,7 +65,7 @@ public class ParcelableWeather2Test extends AndroidTestCase {
         //Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
         Weather weather3 = (Weather)parcel.readParcelable(getContext().getClassLoader());
         assertEquals(position, parcel.dataPosition());  //read the same data as wrote
-        //TODO WeatherUtils.checkOpenWeather(weather3);
+        WeatherUtils.checkOpenWeather(weather3);
     }
     
     /*  Not compatible, ParcelableWeather is compatible

@@ -100,8 +100,7 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION));
         assertTrue(intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
         assertTrue(intent.hasExtra(IntentParameters.EXTRA_WEATHER));
-        //TODO WeatherUtils.checkOpenWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER),
-//                WeatherUtils.Version.V_0_3);
+        WeatherUtils.checkOpenWeather((Weather)intent.getParcelableExtra(IntentParameters.EXTRA_WEATHER));
     }
 
 }
