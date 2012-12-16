@@ -25,6 +25,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.method.MovementMethod;
 import android.view.View;
 import android.widget.RemoteViews;
 import ru.gelin.android.weather.*;
@@ -85,7 +86,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     @Override
-    protected void setText(int viewId, String text) {
+    protected void setText(int viewId, CharSequence text) {
         if (skipView(viewId)) { //TODO: how to determine if the view is absent?
             return;
         }
@@ -102,6 +103,11 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
             return;
         }
         views.setViewVisibility(viewId, visibility);
+    }
+
+    @Override
+    protected void setMovementMethod(int viewId, MovementMethod method) {
+        return;
     }
     
     boolean skipView(int viewId) {

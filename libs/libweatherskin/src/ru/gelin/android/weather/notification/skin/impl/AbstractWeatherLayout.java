@@ -25,10 +25,14 @@ package ru.gelin.android.weather.notification.skin.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
 import android.view.View;
 import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.TemperatureUnit;
 
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,7 +43,9 @@ import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.
  *  Utility to layout weather values.
  */
 public abstract class AbstractWeatherLayout {
-    
+
+    static final String URL_TEMPLATE = "<a href=\"%s\">%s</a>";
+
     /** Current context */
     protected Context context;
     /** ID factory */
@@ -130,6 +136,8 @@ public abstract class AbstractWeatherLayout {
         setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
         
         bindForecasts(weather, mainUnit);
+
+        bindForecastUrl(weather);
     }
     
     protected void bindUpdateTime(Date update) {
@@ -190,6 +198,18 @@ public abstract class AbstractWeatherLayout {
             setVisibility(groupId, View.GONE);
         }
     }
+
+    void bindForecastUrl(Weather weather) {
+        if (weather.getForecastURL() == null) {
+            setVisibility(id("forecast_url"), View.INVISIBLE);
+            return;
+        }
+        setVisibility(id("forecast_url"), View.VISIBLE);
+        URL url = weather.getForecastURL();
+        String link = String.format(URL_TEMPLATE, url.toString(), url.getHost());
+        setMovementMethod(id("forecast_url"), LinkMovementMethod.getInstance());
+        setText(id("forecast_url"), Html.fromHtml(link));
+    }
     
     void emptyViews() {
         setText(id("update_time"), "");
@@ -203,11 +223,15 @@ public abstract class AbstractWeatherLayout {
         
         setVisibility(id("forecasts"), View.GONE);
         setVisibility(id("forecasts_text"), View.GONE);
+
+        setVisibility(id("forecast_url"), View.INVISIBLE);
     }
     
-    protected abstract void setText(int viewId, String text);
+    protected abstract void setText(int viewId, CharSequence text);
     
     protected abstract void setVisibility(int viewId, int visibility);
+
+    protected abstract void setMovementMethod(int viewId, MovementMethod method);
     
     Date addDays(Date date, int days) {
         Calendar calendar = Calendar.getInstance();

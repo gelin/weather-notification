@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
+import android.text.method.MovementMethod;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
     
     @Override
-    protected void setText(int viewId, String text) {
+    protected void setText(int viewId, CharSequence text) {
         TextView textView = (TextView)this.view.findViewById(viewId);
         if (textView == null) {
             return;
@@ -62,6 +63,15 @@ public class WeatherLayout extends AbstractWeatherLayout {
             return;
         }
         view.setVisibility(visibility);
+    }
+
+    @Override
+    protected void setMovementMethod(int viewId, MovementMethod method) {
+        View view = this.view.findViewById(viewId);
+        if (!(view instanceof TextView)) {
+            return;
+        }
+        ((TextView)view).setMovementMethod(method);
     }
 
 }
