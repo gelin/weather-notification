@@ -49,7 +49,7 @@ import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
 public abstract class BaseMainActivity extends UpdateNotificationActivity
         implements OnPreferenceClickListener, OnPreferenceChangeListener {
 
-    static final Uri SKIN_SEARCH_URI=Uri.parse("market://search?q=Weather Notification Skin");
+    static final Uri SKIN_SEARCH_URI=Uri.parse("market://search?q=WNS");
 
     static final String SKIN_PREFERENCE_PREFIX = "skin_enabled_";
 
