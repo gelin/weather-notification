@@ -24,10 +24,9 @@ package ru.gelin.android.weather.notification.skin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.TwoStatePreference;
-import ru.gelin.android.preference.SwitchPreference;
 
 import static ru.gelin.android.weather.notification.IntentParameters.ACTION_WEATHER_SKIN_PREFERENCES;
 import static ru.gelin.android.weather.notification.skin.PreferenceKeys.SKIN_CONFIG_PATTERN;
@@ -57,7 +56,20 @@ public class SkinInfo {
 	String configActivityLabel;
     int order = 0;
 
-    SkinInfo(String id) {
+    static SkinInfo getInstance(String id) {
+        SkinInfo info = new SkinInfo(id);
+        try {
+            if (Integer.parseInt(Build.VERSION.SDK) >= 14) {
+                //info = SkinInfo4.class.getConstructor(String.class).newInstance(id);
+                info = new SkinInfo4(id);
+            }
+        } catch (Exception e) {
+            //pass to old SkinInfo
+        }
+        return info;
+    }
+
+    protected SkinInfo(String id) {
         this.id = id;
     }
 
@@ -126,8 +138,8 @@ public class SkinInfo {
     /**
      *  Creates SwitchPreference to enable/disable the skin and open skin settings.
      */
-    public TwoStatePreference getSwitchPreference(Context context) {
-        TwoStatePreference pref = new SwitchPreference(context);
+    public Preference getSwitchPreference(Context context) {
+        CheckBoxPreference pref = new CheckBoxPreference(context);
         pref.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
         pref.setTitle(getBroadcastReceiverLabel());
         pref.setChecked(isEnabled());
@@ -138,7 +150,7 @@ public class SkinInfo {
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                TwoStatePreference switchPreference = (TwoStatePreference)preference;
+                CheckBoxPreference switchPreference = (CheckBoxPreference)preference;
                 switchPreference.setChecked(!switchPreference.isChecked());     //to avoid changing of the state by clicking not to the switch
                 return false;
             }

@@ -22,8 +22,8 @@
 
 package ru.gelin.android.weather.notification.app;
 
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.TwoStatePreference;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class MainActivity4 extends BaseMainActivity {
     protected void fillSkinsPreferences(List<SkinInfo> skins) {
         PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
         for (SkinInfo skin : skins) {
-            TwoStatePreference switchPref = skin.getSwitchPreference(this);
+            Preference switchPref = skin.getSwitchPreference(this);
             switchPref.setOnPreferenceChangeListener(this);
             skinsCategory.addPreference(switchPref);
         }

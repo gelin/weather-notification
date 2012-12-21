@@ -123,7 +123,7 @@ public class SkinManager {
             String receiverClass = info.activityInfo.name;
             //Log.d(TAG, "package: " + packageName);
             //Log.d(TAG, "class: " + receiverClass);
-            SkinInfo skin = new SkinInfo(getSkinId(info));
+            SkinInfo skin = SkinInfo.getInstance(getSkinId(info));
             skin.packageName = packageName;
             skin.version = version;
             skin.broadcastReceiverLabel = label;
