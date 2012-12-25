@@ -86,11 +86,11 @@
     <string name="condition_rain_shower">Lluvia intermitente</string>
     <string name="condition_rain_shower_heavy">Lluvia intermitente fuerte</string>
 
-    <string name="condition_snow_light">Nevando ligeramente</string>
-    <string name="condition_snow">Nevando</string>
-    <string name="condition_snow_heavy">Nevando fuerte</string>
+    <string name="condition_snow_light">Nevado ligeramente</string>
+    <string name="condition_snow">Nevado</string>
+    <string name="condition_snow_heavy">Nevado fuerte</string>
     <string name="condition_sleet">Aguanieve</string>
-    <string name="condition_snow_shower">Nevando intermitentemente</string>
+    <string name="condition_snow_shower">Nevado intermitentemente</string>
 
     <string name="condition_mist">Neblina</string>
     <string name="condition_smoke">Humo</string>
