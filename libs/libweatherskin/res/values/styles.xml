@@ -20,27 +20,27 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="WeatherInfo">
+    <style name="WeatherInfo" parent="@android:style/TextAppearance">
     </style>
 
-    <style name="WeatherInfo.Location" parent="WeatherInfo">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    <style name="WeatherInfo.Location" parent="@android:style/TextAppearance.Medium">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
     </style>
 
-    <style name="WeatherInfo.UpdateTime" parent="WeatherInfo">
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    <style name="WeatherInfo.UpdateTime" parent="@android:style/TextAppearance.Small">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>-->
     </style>
 
-    <style name="WeatherInfo.Condition" parent="WeatherInfo">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    <style name="WeatherInfo.Condition" parent="@android:style/TextAppearance.Large">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
     </style>
 
-    <style name="WeatherInfo.ConditionDetails" parent="WeatherInfo">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    <style name="WeatherInfo.ConditionDetails" parent="@android:style/TextAppearance.Medium">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
     </style>
 
-    <style name="WeatherInfo.CurrentTemp" parent="WeatherInfo">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    <style name="WeatherInfo.CurrentTemp" parent="@android:style/TextAppearance.Large">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
         <item name="android:textSize">25sp</item>
     </style>
 

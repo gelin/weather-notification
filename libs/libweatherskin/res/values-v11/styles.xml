@@ -3,4 +3,32 @@
     <style name="Theme.Dialog" parent="@android:style/Theme.Holo.Dialog">
     </style>
 
+    <style name="WeatherInfo" parent="@android:style/TextAppearance.Holo">
+    </style>
+
+    <style name="WeatherInfo.Location" parent="@android:style/TextAppearance.Holo.Medium">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
+    </style>
+
+    <style name="WeatherInfo.UpdateTime" parent="@android:style/TextAppearance.Holo.Small">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>-->
+    </style>
+
+    <style name="WeatherInfo.Condition" parent="@android:style/TextAppearance.Holo.Large">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+    </style>
+
+    <style name="WeatherInfo.ConditionDetails" parent="@android:style/TextAppearance.Holo.Medium">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
+    </style>
+
+    <style name="WeatherInfo.CurrentTemp" parent="@android:style/TextAppearance.Holo.Large">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="WeatherInfo.AltTemp" parent="WeatherInfo">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
 </resources>
