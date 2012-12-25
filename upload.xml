@@ -29,7 +29,7 @@
     <xmlproperty file="AndroidManifest.xml"/>
 
     <taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload"
-	classpath="${sdk.dir}/ant-googlecode-0.0.2.jar"/>
+	classpath="${sdk.dir}/ant-googlecode-0.0.3.jar"/>
 
     <target name="all" depends="debug, release"/>
 
