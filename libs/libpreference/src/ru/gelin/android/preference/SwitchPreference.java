@@ -23,9 +23,12 @@
 package ru.gelin.android.preference;
 
 import android.content.Context;
+import android.preference.TwoStatePreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 
 /**
@@ -33,7 +36,23 @@ import android.widget.Switch;
  *  http://code.google.com/p/android/issues/detail?id=26194
  *  Also has not-words, but some characters for on/off states of the switch.
  */
-public class SwitchPreference extends android.preference.SwitchPreference {
+public class SwitchPreference extends TwoStatePreference {
+
+    private final Listener mListener = new Listener();
+
+    private class Listener implements CompoundButton.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (!callChangeListener(isChecked)) {
+                // Listener didn't like it, change it back.
+                // CompoundButton will make sure we don't recurse.
+                buttonView.setChecked(!isChecked);
+                return;
+            }
+
+            SwitchPreference.this.setChecked(isChecked);
+        }
+    }
 
     /**
      * Construct a new SwitchPreference with the given style options.
@@ -44,7 +63,7 @@ public class SwitchPreference extends android.preference.SwitchPreference {
      */
     public SwitchPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initSwitchText();
+        setWidgetLayoutResource(R.layout.preference_widget_switch);
     }
 
     /**
@@ -54,8 +73,8 @@ public class SwitchPreference extends android.preference.SwitchPreference {
      * @param attrs Style attributes that differ from the default
      */
     public SwitchPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initSwitchText();
+        this(context, attrs, android.R.attr.switchPreferenceStyle);
+        setWidgetLayoutResource(R.layout.preference_widget_switch);
     }
 
     /**
@@ -64,25 +83,28 @@ public class SwitchPreference extends android.preference.SwitchPreference {
      * @param context The Context that will style this preference
      */
     public SwitchPreference(Context context) {
-        super(context, null);
-        initSwitchText();
-    }
-
-    private void initSwitchText() {
-        //if (getSwitchTextOn() == null) {  TODO: allow to define from attributes
-            setSwitchTextOn(R.string.switch_on);
-        //}
-        //if (getSwitchTextOff() == null) {
-            setSwitchTextOff(R.string.switch_off);
-        //}
+        this(context, null);
+        setWidgetLayoutResource(R.layout.preference_widget_switch);
     }
 
     @Override
     protected void onBindView(View view) {
-        // Clean listener before invoke SwitchPreference.onBindView
         ViewGroup viewGroup= (ViewGroup)view;
         clearListenerInViewGroup(viewGroup);
+
         super.onBindView(view);
+
+        View checkableView = view.findViewById(R.id.switchWidget);
+        if (checkableView != null && checkableView instanceof Checkable) {
+            ((Checkable) checkableView).setChecked(isChecked());
+
+            if (checkableView instanceof Switch) {
+                final Switch switchView = (Switch) checkableView;
+//                switchView.setAccessibilityDelegate();
+                switchView.setOnCheckedChangeListener(mListener);
+            }
+        }
+
     }
 
     /**
