@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2012  Denis Nelubin, Giandomenico Amato
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+    <string name="app_name">Notifiche meteo</string>
+    <string name="weather">Meteo</string>
+    <string name="notification">Notifiche</string>
+    <string name="enable_notification">Abilita notifiche</string>
+    <string name="refresh_interval">Intervallo aggiornamento</string>
+    <string name="refresh_15m">Ogni quindici minuti</string>
+    <string name="refresh_30m">Ogni trenta minuti</string>
+    <string name="refresh_1h">Ogni ora</string>
+    <string name="refresh_2h">Ogni due ore</string>
+    <string name="refresh_3h">Ogni tre ore</string>
+    <string name="refresh_4h">Ogni quattro ore</string>
+    <string name="refresh_6h">Ogni sei ore</string>
+    <string name="refresh_12h">Ogni dodici ore</string>
+    <string name="refresh_1d">Ogni giorno</string>
+    <string name="location">Localit�</string>
+    <string name="auto_location">Autorilevamento</string>
+    <string name="auto_location_summary_on">Rileva automaticamente la localit�</string>
+    <string name="auto_location_summary_off">Inserisci la localit� manualmente</string>
+    <string name="manual_location">Localit� meteo</string>
+    <string name="weather_update_empty">Il meteo per \"%s\" � sconosciuto</string>
+    <string name="weather_update_failed">Aggiornamento meteo non riuscito: %s</string>
+    <string name="weather_update_no_network">Aggiornamento meteo non riuscito: nessuna connessione</string>
+    <string name="weather_update_unknown_location">Aggiornamento meteo non riuscito: localit� sconosciuta</string>
+    <string name="skin">Skin</string>
+    <string name="skins">Skins</string>
+    <string name="skins_preferences">Opzioni skins</string>
+    <string name="skins_install">Installa skins</string>
+    <string name="skins_install_notice">DOVRESTI INSTALLARE LE SKINS per una migliore esperienza. Clicca su \"Installa skins\" alla fine della schermata.</string>
+    <string name="skins_install_notice_no_market">DOVRESTI INSTALLARE LE SKINS per una migliore esperienza. Cerca \"Weather Notification Skin\" in Google Play e installale.</string>
+    <string name="builtin_skin">Skin predefinita</string>
+    <string name="builtin_skin_preferences">Opzioni skin predefinita</string>
+    <string name="start_update_service_permission">Avvia il servizio di aggiornamento</string>
+    <string name="start_update_service_permission_description">Permetti all\'applicazione di avviare il servizio di aggiornamento per ricevere nuovi valori meteo.</string>
+
+    <string name="condition_thunderstorm_rain_light">Temporale</string>
+    <string name="condition_thunderstorm_rain">Temporale</string>
+    <string name="condition_thunderstorm_rain_heavy">Temporale</string>
+    <string name="condition_thunderstorm_light">Temporale</string>
+    <string name="condition_thunderstorm">Temporale</string>
+    <string name="condition_thunderstorm_heavy">Temporale intenso</string>
+    <string name="condition_thunderstorm_ragged">Temporale</string>
+    <string name="condition_thunderstorm_drizzle_light">Temporale</string>
+    <string name="condition_thunderstorm_drizzle">Temporale</string>
+    <string name="condition_thunderstorm_drizzle_heavy">Temporale</string>
+
+    <string name="condition_drizzle_light">Piovoso</string>
+    <string name="condition_drizzle">Piovoso</string>
+    <string name="condition_drizzle_heavy">Piovoso</string>
+    <string name="condition_drizzle_rain_light">Piovoso</string>
+    <string name="condition_drizzle_rain">Piovoso</string>
+    <string name="condition_drizzle_rain_heavy"> Molto piovoso</string>
+    <string name="condition_drizzle_shower">Piovoso</string>
+
+    <string name="condition_rain_light">Pioggia</string>
+    <string name="condition_rain">Pioggia</string>
+    <string name="condition_rain_heavy">Pioggia</string>
+    <string name="condition_rain_very_heavy">Pioggia</string>
+    <string name="condition_rain_extreme">Pioggia intensa</string>
+    <string name="condition_rain_freezing">Pioggia gelata</string>
+    <string name="condition_rain_shower_light">Acquazzone</string>
+    <string name="condition_rain_shower">Acquazzone</string>
+    <string name="condition_rain_shower_heavy">Acquazzone intenso</string>
+
+    <string name="condition_snow_light">Neve</string>
+    <string name="condition_snow">Neve</string>
+    <string name="condition_snow_heavy">Nevicata intensa</string>
+    <string name="condition_sleet">Nevischio</string>
+    <string name="condition_snow_shower">Neve</string>
+
+    <string name="condition_mist">Nebbia</string>
+    <string name="condition_smoke">Foschia</string>
+    <string name="condition_haze">Foschia</string>
+    <string name="condition_sand_whirls">Vortici di sabbia</string>
+    <string name="condition_fog">Nebbia</string>
+
+    <string name="condition_clouds_clear">Sereno</string>
+    <string name="condition_clouds_few">Poco nuvoloso</string>
+    <string name="condition_clouds_scattered">Nubi sparse</string>
+    <string name="condition_clouds_broken">Nubi sparse</string>
+    <string name="condition_clouds_overcast">Nuvoloso</string>
+
+    <string name="condition_tornado">Tornado</string>
+    <string name="condition_tropical_storm">Tempesta tropicale</string>
+    <string name="condition_hurricane">Uragano</string>
+    <string name="condition_cold">Gelo</string>
+    <string name="condition_hot">Torrido</string>
+    <string name="condition_windy">Ventoso</string>
+    <string name="condition_hail">Grandine</string>
+</resources>
