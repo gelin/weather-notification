@@ -29,7 +29,7 @@
     <string name="notification_text_style">Colore testo della notifica</string>
     <string name="notification_style_black_text">Testo nero</string>
     <string name="notification_style_white_text">Testo bianco</string>
-    <string name="temp_unit">Unit� di temperatura</string>
+    <string name="temp_unit">Unità di temperatura</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="celsius_and_fahrenheit">Celsius(Fahrenheit)</string>
@@ -57,10 +57,10 @@
     <string name="wind_dir_wnw">ONO</string>
     <string name="wind_dir_nw">NO</string>
     <string name="wind_dir_nnw">NNO</string>
-    <string name="wind_speed_unit">Unit� di velocit� del vento</string>
+    <string name="wind_speed_unit">Unità di velocità del vento</string>
     <string name="wind_speed_unit_mph">mph</string>
     <string name="wind_speed_unit_mps">m/s</string>
     <string name="wind_speed_unit_kmph">km/h</string>
-    <string name="humidity_caption" formatted="false">Umidit�: %d%%</string>
+    <string name="humidity_caption" formatted="false">Umidità: %d%%</string>
     <string name="wind_caption" formatted="false">Vento: %s, %d %s</string>
 </resources>

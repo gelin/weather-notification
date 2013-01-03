@@ -23,7 +23,7 @@
 -->
 
 <resources>
-        <string name="app_name">Skin delle notifiche meteo: testo grande</string>
+    <string name="app_name">Skin delle notifiche meteo: testo grande</string>
     <string name="skin_name">Testo grande</string>
     <string name="skin_preferences">Opzioni testo grande</string>
 </resources>

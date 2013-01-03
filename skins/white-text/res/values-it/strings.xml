@@ -23,7 +23,7 @@
 -->
 
 <resources>
-        <string name="app_name">Skin delle notifiche meteo: testo bianco</string>
+    <string name="app_name">Skin delle notifiche meteo: testo bianco</string>
     <string name="skin_name">Testo bianco</string>
     <string name="skin_preferences">Opzioni testo bianco</string>
 </resources>
