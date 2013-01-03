@@ -19,37 +19,30 @@
 
 package ru.gelin.android.weather.google;
 
+import ru.gelin.android.weather.SimpleHumidity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.WindDirection;
-import ru.gelin.android.weather.WindSpeedUnit;
-
 /**
- *  Wind speed and direction which can parse the text string returned by Goolge Weather API.
+ *  Humidity which parses the string provided by Google Weather API.
  */
-public class GoogleWind extends SimpleWind {
-
-    private static final Pattern PARSE_PATTERN = Pattern.compile("(N|NNE|NE|ENE|E|ESE|SE|SSE|S|SSW|SW|WSW|W|WNW|NW|NNW)\\s+at\\s+(\\d+)");
-
-    /**
-     *  Constructs the wind.
-     *  The MPH is implied as speed unit.
-     */
-    public GoogleWind() {
-        super(WindSpeedUnit.MPH);
-    }
+public class GoogleHumidity extends SimpleHumidity {
+    
+    private static final Pattern PARSE_PATTERN = Pattern.compile("(\\d++)");
 
     /**
-     *  Extract wind speed and direction value from string.
+     *  Sets the current humidity from the unparsed text.
      */
     public void parseText(String text) {
         this.text = text;
+        if (text == null || text.length() == 0) {
+            this.value = UNKNOWN;
+            return;
+        }
         Matcher matcher = PARSE_PATTERN.matcher(text);
         if (matcher.find()) {
-            this.direction  = WindDirection.valueOf(matcher.group(1));  //regexp gurantees that the value is valid enum value
-            this.speed  = Integer.parseInt(matcher.group(2));   //regexp guarantees that the value is valid integer
+            this.value  = Integer.parseInt(matcher.group(1));   //this group selects integers, so parsing is safe
         }
     }
 

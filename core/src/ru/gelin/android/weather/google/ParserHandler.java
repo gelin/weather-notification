@@ -19,19 +19,13 @@
 
 package ru.gelin.android.weather.google;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+import ru.gelin.android.weather.*;
 
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.SimpleTemperature;
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.WindSpeedUnit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @SuppressWarnings("deprecation")
 class ParserHandler extends DefaultHandler {

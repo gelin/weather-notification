@@ -21,7 +21,6 @@ package ru.gelin.android.weather.google;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import ru.gelin.android.weather.UnitSystem;
 
 @SuppressWarnings("deprecation")

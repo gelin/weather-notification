@@ -22,7 +22,6 @@
 
 package ru.gelin.android.weather.openweathermap;
 
-import android.location.Address;
 import ru.gelin.android.weather.Location;
 
 /**

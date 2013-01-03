@@ -47,10 +47,10 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Android 3.0" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
     <orderEntry type="module" module-name="libweatherskin" />
-    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
 

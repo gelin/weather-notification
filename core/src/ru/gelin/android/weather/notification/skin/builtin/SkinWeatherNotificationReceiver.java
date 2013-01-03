@@ -22,12 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin.builtin;
 
-import static ru.gelin.android.weather.notification.Tag.TAG;
+import android.content.ComponentName;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import android.content.ComponentName;
+
+import static ru.gelin.android.weather.notification.Tag.TAG;
 
 
 /**

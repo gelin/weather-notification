@@ -22,11 +22,6 @@
 
 package ru.gelin.android.weather.notification.app;
 
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.AppUtils;
-import ru.gelin.android.weather.notification.R;
-import ru.gelin.android.weather.notification.WeatherStorage;
-import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -34,6 +29,11 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.notification.AppUtils;
+import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 
 public class WeatherPreference extends Preference implements OnSharedPreferenceChangeListener {
 
