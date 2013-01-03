@@ -2,17 +2,17 @@
 
 TARGETS=$*
 
-ant $TARGETS
-
-build_skin() {
+buildin() {
     BASE_DIR=$(pwd)
-    cd skins/$1
+    cd $1
     ant $TARGETS
     cd $BASE_DIR
 }
 
-build_skin black-text
-build_skin white-text
-build_skin black-text-plus
-build_skin white-text-plus
-build_skin bigger-text
+buildin core
+
+buildin skins/black-text
+buildin skins/white-text
+buildin skins/black-text-plus
+buildin skins/white-text-plus
+buildin skins/bigger-text
