@@ -21,7 +21,8 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="WeatherInfo" parent="@android:style/TextAppearance">
+    <style name="WeatherInfo">
+        <!--parent="@android:style/TextAppearance">-->
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
