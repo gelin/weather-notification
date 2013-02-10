@@ -12,11 +12,11 @@ public class AppUtils {
     private static final String APP_PACKAGE_NAME = Tag.class.getPackage().getName();
 
     /** Intent action to start the service */
-    private static String ACTION_START_UPDATE_SERVICE =
+    public static String ACTION_START_UPDATE_SERVICE =
             APP_PACKAGE_NAME + ".ACTION_START_UPDATE_SERVICE";
 
     /** Intent action to start the main activity */
-    private static String ACTION_START_MAIN_ACTIVITY =
+    public static String ACTION_START_MAIN_ACTIVITY =
             APP_PACKAGE_NAME + ".ACTION_START_MAIN_ACTIVITY";
 
     /** Verbose extra name for the service start intent. */
@@ -49,6 +49,7 @@ public class AppUtils {
 
     /**
      *  Starts the update service.
+     *  If the verbose is true, the update errors will be displayed as toasts.
      */
     public static void startUpdateService(Context context, boolean verbose) {
         startUpdateService(context, verbose, false);
