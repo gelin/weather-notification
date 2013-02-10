@@ -155,6 +155,8 @@ public class WeatherUtils {
         assertEquals("Wind: SSE, 5 m/s", wind.getText());
         assertEquals(WindDirection.SSE, wind.getDirection());
         assertEquals(5, wind.getSpeed());
+        Cloudiness cloudiness = condition0.getCloudiness(CloudinessUnit.PERCENT);
+        assertEquals(75, cloudiness.getValue());
 
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Light rain", condition1.getConditionText());

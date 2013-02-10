@@ -39,6 +39,7 @@ class ParcelableWeatherKeys {
     
     /** Key for condition text. */
     static final String CONDITION_TEXT = "weather_condition_text";
+
     /** Key for temperature unit. */
     static final String TEMPERATURE_UNIT = "weather_temperature_unit";
     /** Key for current temp. */
@@ -47,10 +48,12 @@ class ParcelableWeatherKeys {
     static final String LOW_TEMP = "weather_low_temp";
     /** Key for high temp. */
     static final String HIGH_TEMP = "weather_high_temp";
+
     /** Key for humidity text. */
     static final String HUMIDITY_TEXT = "weather_humidity_text";
     /** Key for humidity value. */
-    static final String HUMIDITY_VAL = "weather_humidity_value";
+    static final String HUMIDITY_VALUE = "weather_humidity_value";
+
     /** Key for wind text. */
     static final String WIND_TEXT = "weather_wind_text";
     /** Key for wind speed unit. */
@@ -59,6 +62,12 @@ class ParcelableWeatherKeys {
     static final String WIND_SPEED = "weather_wind_speed";
     /** Key for wind direction. */
     static final String WIND_DIR = "weather_wind_direction";
+
+    /** Key for cloudiness unit. */
+    static final String CLOUDINESS_UNIT = "weather_cloudiness_unit";
+    /** Key for cloudiness value. */
+    static final String CLOUDINESS_VALUE = "weather_cloudiness_value";
+
 
     /** Key for forecast URL. */
     static final String FORECAST_URL = "weather_forecast_url";

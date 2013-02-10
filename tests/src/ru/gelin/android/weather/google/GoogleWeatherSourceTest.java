@@ -42,7 +42,8 @@ import java.util.Locale;
 @SuppressWarnings("deprecation")
 public class GoogleWeatherSourceTest extends AndroidTestCase {
 
-    public void testQueryRu() throws Exception {
+    //ignoring test because Google API is not available now
+    public void ignoretestQueryRu() throws Exception {
         WeatherSource source = new GoogleWeatherSource();
         Location location = new SimpleLocation("Омск");
         Weather weather = source.query(location, new Locale("ru"));
@@ -53,8 +54,9 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         System.out.println(weather.getConditions().get(0).getWindText());
         assertTrue(weather.getConditions().get(0).getWindText().startsWith("Ветер"));
     }
-    
-    public void testRawQueryRu() throws Exception {
+
+    //ignoring test because Google API is not available now
+    public void ignoretestRawQueryRu() throws Exception {
         String apiUrl = "http://www.google.com/ig/api?weather=%s&hl=%s";
         String fullUrl = String.format(apiUrl, 
                 URLEncoder.encode("Омск", "UTF-8"),
@@ -80,8 +82,9 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
         }
         assertTrue(true);
     }
-    
-    public void testQueryTime() throws WeatherException {
+
+    //ignoring test because Google API is not available now
+    public void ignoretestQueryTime() throws WeatherException {
         Date now = new Date();
         WeatherSource source = new GoogleWeatherSource();
         Location location = new SimpleLocation("Омск");

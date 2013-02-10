@@ -88,7 +88,18 @@ public interface WeatherCondition {
      */
     Wind getWind(WindSpeedUnit unit);
 
-    //TODO add cloudiness
+    /**
+     *  Returns cloudiness in default units.
+     *  Default unit depends on the weather source.
+     *  Any unit conversions loses precision, so the default units are useful when cloning/copying the weather.
+     */
+    Cloudiness getCloudiness();
+
+    /**
+     *  Returns cloudiness in specified units.
+     */
+    Cloudiness getCloudiness(CloudinessUnit unit);
+
     //TODO add precipitation
     //TODO add condition type
 }

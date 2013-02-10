@@ -76,10 +76,12 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         for (WeatherCondition condition : conditions) {
             SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
             copyCondition.setConditionText(condition.getConditionText());
+
             Temperature temp = condition.getTemperature();
-            TemperatureUnit tempUnit = temp.getTemperatureUnit();
-            SimpleTemperature copyTemp = new SimpleTemperature(tempUnit);
+            SimpleTemperature copyTemp = new SimpleTemperature(TemperatureUnit.C);
             if (temp != null) {
+                TemperatureUnit tempUnit = temp.getTemperatureUnit();
+                copyTemp = new SimpleTemperature(tempUnit);
                 copyTemp.setCurrent(temp.getCurrent(), tempUnit);
                 copyTemp.setLow(temp.getLow(), tempUnit);
                 copyTemp.setHigh(temp.getHigh(), tempUnit);
@@ -95,14 +97,25 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             copyCondition.setHumidity(copyHum);
             
             Wind wind = condition.getWind();
-            WindSpeedUnit windUnit = wind.getSpeedUnit();
-            SimpleWind copyWind = new SimpleWind(windUnit);
+            SimpleWind copyWind = new SimpleWind(WindSpeedUnit.MPS);
             if (wind != null) {
+                WindSpeedUnit windUnit = wind.getSpeedUnit();
+                copyWind = new SimpleWind(windUnit);
                 copyWind.setSpeed(wind.getSpeed(), windUnit);
                 copyWind.setDirection(wind.getDirection());
                 copyWind.setText(wind.getText());
             }
             copyCondition.setWind(copyWind);
+
+            Cloudiness cloudiness = condition.getCloudiness();
+            SimpleCloudiness copyCloudiness = new SimpleCloudiness(CloudinessUnit.OKTA);
+            if (cloudiness != null) {
+                CloudinessUnit cloudinessUnit = cloudiness.getCloudinessUnit();
+                copyCloudiness = new SimpleCloudiness(cloudinessUnit);
+                copyCloudiness.setValue(cloudiness.getValue(), cloudinessUnit);
+            }
+            copyCondition.setCloudiness(copyCloudiness);
+
             copyConditions.add(copyCondition);
         }
         setConditions(copyConditions);
@@ -159,6 +172,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         writeTemperature(condition.getTemperature(), bundle);
         writeHumidity(condition.getHumidity(), bundle);
         writeWind(condition.getWind(), bundle);
+        writeCloudiness(condition.getCloudiness(), bundle);
         dest.writeBundle(bundle);
     }
     
@@ -177,7 +191,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             return;
         }
         bundle.putString(HUMIDITY_TEXT, humidity.getText());
-        bundle.putInt(HUMIDITY_VAL, humidity.getValue());
+        bundle.putInt(HUMIDITY_VALUE, humidity.getValue());
     }
     
     void writeWind(Wind wind, Bundle bundle) {
@@ -188,6 +202,14 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         bundle.putString(WIND_SPEED_UNIT, wind.getSpeedUnit().toString());
         bundle.putInt(WIND_SPEED, wind.getSpeed());
         bundle.putString(WIND_DIR, wind.getDirection().toString());
+    }
+
+    void writeCloudiness(Cloudiness cloudiness, Bundle bundle) {
+        if (cloudiness == null) {
+            return;
+        }
+        bundle.putString(CLOUDINESS_UNIT, cloudiness.getCloudinessUnit().toString());
+        bundle.putInt(CLOUDINESS_VALUE, cloudiness.getValue());
     }
     
     private ParcelableWeather2(Parcel in) {
@@ -234,6 +256,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         condition.setTemperature(readTemperature(bundle));
         condition.setHumidity(readHumidity(bundle));
         condition.setWind(readWind(bundle));
+        condition.setCloudiness(readCloudiness(bundle));
         
         return condition;
     }
@@ -253,11 +276,11 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
     }
     
     SimpleHumidity readHumidity(Bundle bundle) {
-        if (!bundle.containsKey(HUMIDITY_VAL)) {
+        if (!bundle.containsKey(HUMIDITY_VALUE)) {
             return null;
         }
         SimpleHumidity hum = new SimpleHumidity();
-        hum.setValue(bundle.getInt(HUMIDITY_VAL));
+        hum.setValue(bundle.getInt(HUMIDITY_VALUE));
         hum.setText(bundle.getString(HUMIDITY_TEXT));
         return hum;
     }
@@ -280,6 +303,21 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         wind.setDirection(dir);
         wind.setText(bundle.getString(WIND_TEXT));
         return wind;
+    }
+
+    SimpleCloudiness readCloudiness(Bundle bundle) {
+        if (!bundle.containsKey(CLOUDINESS_VALUE)) {
+            return null;
+        }
+        CloudinessUnit unit;
+        try {
+            unit = CloudinessUnit.valueOf(bundle.getString(CLOUDINESS_UNIT));
+        } catch (Exception e) {
+            return null;
+        }
+        SimpleCloudiness cloudiness = new SimpleCloudiness(unit);
+        cloudiness.setValue(bundle.getInt(CLOUDINESS_VALUE), unit);
+        return cloudiness;
     }
     
     public static final Parcelable.Creator<ParcelableWeather2> CREATOR =
