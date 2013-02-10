@@ -54,7 +54,7 @@ class WeatherStorageKeys {
     /** Preference name pattern for humidity text. */
     static final String HUMIDITY_TEXT = "weather_%d_humidity_text";
     /** Preference name pattern for humidity value. */
-    static final String HUMIDITY_VAL = "weather_%d_humidity_value";
+    static final String HUMIDITY_VALUE = "weather_%d_humidity_value";
     
     /** Preference name pattern for wind text. */
     static final String WIND_TEXT = "weather_%d_wind_text";
@@ -64,6 +64,11 @@ class WeatherStorageKeys {
     static final String WIND_SPEED = "weather_%d_wind_speed";
     /** Preference name pattern for wind direction. */
     static final String WIND_DIR = "weather_%d_wind_direction";
+
+    /** Preference name pattern for cloudiness unit. */
+    static final String CLOUDINESS_UNIT = "weather_%d_cloudiness_unit";
+    /** Preference name pattern for cloudiness value. */
+    static final String CLOUDINESS_VALUE = "weather_%d_cloudiness_value";
 
     /** Preference name for forecast URL. */
     static final String FORECAST_URL = "weather_forecast_url";

@@ -136,6 +136,9 @@ public class SimpleWeatherCondition implements WeatherCondition {
     }
 
     public Cloudiness getCloudiness(CloudinessUnit unit) {
+        if (this.cloudiness == null) {
+            return null;
+        }
         return this.cloudiness.convert(unit);
     }
 

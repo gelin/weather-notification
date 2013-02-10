@@ -94,7 +94,7 @@ public class WeatherStorage {
             putOrRemove(editor, String.format(HIGH_TEMP, i), 
                     temp.getHigh());
             Humidity hum = condition.getHumidity();
-            putOrRemove(editor, String.format(HUMIDITY_VAL, i), 
+            putOrRemove(editor, String.format(HUMIDITY_VALUE, i),
                     hum.getValue());
             putOrRemove(editor, String.format(HUMIDITY_TEXT, i), 
                     hum.getText());
@@ -108,7 +108,18 @@ public class WeatherStorage {
                     wind.getDirection().toString());
             putOrRemove(editor, String.format(WIND_TEXT, i), 
                     wind.getText());
-            
+
+            Cloudiness cloudiness = condition.getCloudiness();
+            if (cloudiness == null) {
+                editor.remove(String.format(CLOUDINESS_UNIT, i));
+                editor.remove(String.format(CLOUDINESS_VALUE, i));
+            } else {
+                putOrRemove(editor, String.format(CLOUDINESS_UNIT, i),
+                        String.valueOf(cloudiness.getCloudinessUnit()));
+                putOrRemove(editor, String.format(CLOUDINESS_VALUE, i),
+                        cloudiness.getValue());
+            }
+
             i++;
         }
         for (; i < 4; i++) {
@@ -118,13 +129,16 @@ public class WeatherStorage {
             editor.remove(String.format(CURRENT_TEMP, i));
             editor.remove(String.format(LOW_TEMP, i));
             editor.remove(String.format(HIGH_TEMP, i));
-            editor.remove(String.format(HUMIDITY_VAL, i));
+            editor.remove(String.format(HUMIDITY_VALUE, i));
             editor.remove(String.format(HUMIDITY_TEXT, i));
 
             editor.remove(String.format(WIND_SPEED_UNIT, i));
             editor.remove(String.format(WIND_SPEED, i));
             editor.remove(String.format(WIND_DIR, i));
             editor.remove(String.format(WIND_TEXT, i));
+
+            editor.remove(String.format(CLOUDINESS_UNIT, i));
+            editor.remove(String.format(CLOUDINESS_VALUE, i));
         }
         editor.commit();
     }
@@ -167,20 +181,28 @@ public class WeatherStorage {
             condition.setTemperature(temp);
             
             SimpleHumidity hum = new SimpleHumidity();
-            hum.setValue(preferences.getInt(String.format(HUMIDITY_VAL, i), Humidity.UNKNOWN));
+            hum.setValue(preferences.getInt(String.format(HUMIDITY_VALUE, i), Humidity.UNKNOWN));
             hum.setText(preferences.getString(String.format(HUMIDITY_TEXT, i), ""));
             condition.setHumidity(hum);
             
-            WindSpeedUnit wsunit = WindSpeedUnit.valueOf(
+            WindSpeedUnit windSpeedUnit = WindSpeedUnit.valueOf(
                     preferences.getString(String.format(WIND_SPEED_UNIT, i), 
                             WindSpeedUnit.MPH.toString()));
-            SimpleWind wind = new SimpleWind(wsunit);
+            SimpleWind wind = new SimpleWind(windSpeedUnit);
             wind.setSpeed(preferences.getInt(
-                    String.format(WIND_SPEED, i), Wind.UNKNOWN), wsunit);
+                    String.format(WIND_SPEED, i), Wind.UNKNOWN), windSpeedUnit);
             wind.setDirection(WindDirection.valueOf(preferences.getString(
                     String.format(WIND_DIR, i), WindDirection.N.toString())));
             wind.setText(preferences.getString(String.format(WIND_TEXT, i), ""));
             condition.setWind(wind);
+
+            CloudinessUnit cloudinessUnit = CloudinessUnit.valueOf(
+                    preferences.getString(String.format(CLOUDINESS_UNIT, i),
+                            CloudinessUnit.OKTA.toString()));
+            SimpleCloudiness cloudiness = new SimpleCloudiness(cloudinessUnit);
+            cloudiness.setValue(preferences.getInt(
+                    String.format(CLOUDINESS_VALUE, i), Cloudiness.UNKNOWN), cloudinessUnit);
+            condition.setCloudiness(cloudiness);
 
             conditions.add(condition);
             i++;
