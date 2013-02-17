@@ -157,6 +157,7 @@ public class WeatherUtils {
         assertEquals(5, wind.getSpeed());
         Cloudiness cloudiness = condition0.getCloudiness(CloudinessUnit.PERCENT);
         assertEquals(75, cloudiness.getValue());
+        assertEquals(Precipitation.UNKNOWN, condition0.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
 
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Light rain", condition1.getConditionText());
@@ -164,6 +165,8 @@ public class WeatherUtils {
         assertEquals(280, temp1.getCurrent());
         assertEquals(278, temp1.getLow());
         assertEquals(281, temp1.getHigh());
+        assertEquals(85, condition1.getCloudiness().getValue());
+        assertEquals(0.15f, condition1.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
 
         WeatherCondition condition2 = weather.getConditions().get(2);
         assertEquals("Rain", condition2.getConditionText());
@@ -171,6 +174,8 @@ public class WeatherUtils {
         assertEquals(282, temp2.getCurrent());
         assertEquals(278, temp2.getLow());
         assertEquals(285, temp2.getHigh());
+        assertEquals(82, condition2.getCloudiness().getValue());
+        assertEquals(0.47f, condition2.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
 
         WeatherCondition condition3 = weather.getConditions().get(3);
         assertEquals("Light rain", condition3.getConditionText());
@@ -178,6 +183,8 @@ public class WeatherUtils {
         assertEquals(282, temp3.getCurrent());
         assertEquals(276, temp3.getLow());
         assertEquals(287, temp3.getHigh());
+        assertEquals(53, condition3.getCloudiness().getValue());
+        assertEquals(0.36f, condition3.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
     }
     
     public static void checkWeather(ru.gelin.android.weather.v_0_2.Weather weather) {

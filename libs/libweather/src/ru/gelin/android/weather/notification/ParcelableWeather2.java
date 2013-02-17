@@ -116,6 +116,16 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             }
             copyCondition.setCloudiness(copyCloudiness);
 
+            Precipitation precipitation = condition.getPrecipitation();
+            SimplePrecipitation copyPrecipitation = new SimplePrecipitation(PrecipitationUnit.MM);
+            if (precipitation != null) {
+                PrecipitationUnit precipitationUnit = precipitation.getPrecipitationUnit();
+                copyPrecipitation = new SimplePrecipitation(precipitationUnit);
+                copyPrecipitation.setValue(precipitation.getValue(PrecipitationPeriod.PERIOD_1H),
+                        PrecipitationPeriod.PERIOD_1H);
+            }
+            copyCondition.setPrecipitation(copyPrecipitation);
+
             copyConditions.add(copyCondition);
         }
         setConditions(copyConditions);
