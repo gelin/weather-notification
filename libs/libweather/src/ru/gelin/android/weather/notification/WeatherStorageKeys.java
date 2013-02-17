@@ -70,6 +70,13 @@ class WeatherStorageKeys {
     /** Preference name pattern for cloudiness value. */
     static final String CLOUDINESS_VALUE = "weather_%d_cloudiness_value";
 
+    /** Preference name pattern for precipitation unit. */
+    static final String PRECIPITATION_UNIT = "weather_%d_precipitation_unit";
+    /** Preference name pattern for precipitation period. */
+    static final String PRECIPITATION_PERIOD = "weather_%d_precipitation_period";
+    /** Preference name pattern for precipitation value. */
+    static final String PRECIPITATION_VALUE = "weather_%d_precipitation_value";
+
     /** Preference name for forecast URL. */
     static final String FORECAST_URL = "weather_forecast_url";
 

@@ -120,6 +120,19 @@ public class WeatherStorage {
                         cloudiness.getValue());
             }
 
+            Precipitation precipitation = condition.getPrecipitation();
+            if (precipitation == null) {
+                editor.remove(String.format(PRECIPITATION_UNIT, i));
+                editor.remove(String.format(PRECIPITATION_PERIOD, i));
+                editor.remove(String.format(PRECIPITATION_VALUE, i));
+            } else {
+                putOrRemove(editor, String.format(PRECIPITATION_UNIT, i),
+                        String.valueOf(precipitation.getPrecipitationUnit()));
+                editor.putInt(String.format(PRECIPITATION_PERIOD, i), PrecipitationPeriod.PERIOD_1H.getHours());
+                putOrRemove(editor, String.format(PRECIPITATION_VALUE, i),
+                        precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
+            }
+
             i++;
         }
         for (; i < 4; i++) {
@@ -139,6 +152,10 @@ public class WeatherStorage {
 
             editor.remove(String.format(CLOUDINESS_UNIT, i));
             editor.remove(String.format(CLOUDINESS_VALUE, i));
+
+            editor.remove(String.format(PRECIPITATION_UNIT, i));
+            editor.remove(String.format(PRECIPITATION_PERIOD, i));
+            editor.remove(String.format(PRECIPITATION_VALUE, i));
         }
         editor.commit();
     }
@@ -204,6 +221,17 @@ public class WeatherStorage {
                     String.format(CLOUDINESS_VALUE, i), Cloudiness.UNKNOWN), cloudinessUnit);
             condition.setCloudiness(cloudiness);
 
+            PrecipitationUnit precipitationUnit = PrecipitationUnit.valueOf(
+                    preferences.getString(String.format(PRECIPITATION_UNIT, i),
+                            PrecipitationUnit.MM.toString()));
+            SimplePrecipitation precipitation = new SimplePrecipitation(precipitationUnit);
+            PrecipitationPeriod precipitationPeriod = PrecipitationPeriod.valueOf(
+                    preferences.getInt(String.format(PRECIPITATION_PERIOD, i),
+                            PrecipitationPeriod.PERIOD_1H.getHours()));
+            precipitation.setValue(preferences.getFloat(
+                    String.format(PRECIPITATION_VALUE, i), Precipitation.UNKNOWN), precipitationPeriod);
+            condition.setPrecipitation(precipitation);
+
             conditions.add(condition);
             i++;
         }
@@ -234,6 +262,14 @@ public class WeatherStorage {
             editor.remove(key);
         } else {
             editor.putInt(key, temp);
+        }
+    }
+
+    void putOrRemove(Editor editor, String key, float precipitation) {
+        if (precipitation == Precipitation.UNKNOWN) {
+            editor.remove(key);
+        } else {
+            editor.putFloat(key, precipitation);
         }
     }
 
