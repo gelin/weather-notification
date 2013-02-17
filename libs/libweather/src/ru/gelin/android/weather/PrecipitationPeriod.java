@@ -17,4 +17,12 @@ public enum PrecipitationPeriod {
         return this.hours;
     }
 
+    public static PrecipitationPeriod valueOf(int hours) {
+        switch (hours) {
+            case 1: return PERIOD_1H;
+            case 3: return PERIOD_3H;
+            default: throw new IllegalArgumentException(hours + " is not valid value for PrecipitationPeriod");
+        }
+    }
+
 }

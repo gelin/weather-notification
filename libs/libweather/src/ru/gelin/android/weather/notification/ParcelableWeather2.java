@@ -183,6 +183,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         writeHumidity(condition.getHumidity(), bundle);
         writeWind(condition.getWind(), bundle);
         writeCloudiness(condition.getCloudiness(), bundle);
+        writePrecipitation(condition.getPrecipitation(), bundle);
         dest.writeBundle(bundle);
     }
     
@@ -220,6 +221,15 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         bundle.putString(CLOUDINESS_UNIT, cloudiness.getCloudinessUnit().toString());
         bundle.putInt(CLOUDINESS_VALUE, cloudiness.getValue());
+    }
+
+    void writePrecipitation(Precipitation precipitation, Bundle bundle) {
+        if (precipitation == null) {
+            return;
+        }
+        bundle.putString(PRECIPITATION_UNIT, precipitation.getPrecipitationUnit().toString());
+        bundle.putInt(PRECIPITATION_PERIOD, PrecipitationPeriod.PERIOD_1H.getHours());
+        bundle.putFloat(PRECIPITATION_VALUE, precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
     }
     
     private ParcelableWeather2(Parcel in) {
@@ -267,6 +277,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         condition.setHumidity(readHumidity(bundle));
         condition.setWind(readWind(bundle));
         condition.setCloudiness(readCloudiness(bundle));
+        condition.setPrecipitation(readPrecipitation(bundle));
         
         return condition;
     }
@@ -328,6 +339,27 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         SimpleCloudiness cloudiness = new SimpleCloudiness(unit);
         cloudiness.setValue(bundle.getInt(CLOUDINESS_VALUE), unit);
         return cloudiness;
+    }
+
+    SimplePrecipitation readPrecipitation(Bundle bundle) {
+        if (!bundle.containsKey(PRECIPITATION_VALUE)) {
+            return null;
+        }
+        PrecipitationUnit unit;
+        try {
+            unit = PrecipitationUnit.valueOf(bundle.getString(PRECIPITATION_UNIT));
+        } catch (Exception e) {
+            return null;
+        }
+        SimplePrecipitation precipitation = new SimplePrecipitation(unit);
+        PrecipitationPeriod period;
+        try {
+            period = PrecipitationPeriod.valueOf(bundle.getInt(PRECIPITATION_PERIOD));
+        } catch (Exception e) {
+            return null;
+        }
+        precipitation.setValue(bundle.getFloat(PRECIPITATION_VALUE), period);
+        return precipitation;
     }
     
     public static final Parcelable.Creator<ParcelableWeather2> CREATOR =

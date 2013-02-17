@@ -68,6 +68,12 @@ class ParcelableWeatherKeys {
     /** Key for cloudiness value. */
     static final String CLOUDINESS_VALUE = "weather_cloudiness_value";
 
+    /** Key for precipitation unit. */
+    static final String PRECIPITATION_UNIT = "weather_precipitation_unit";
+    /** Key for precipitation period. */
+    static final String PRECIPITATION_PERIOD = "weather_precipitation_period";
+    /** Key for precipitation value. */
+    static final String PRECIPITATION_VALUE = "weather_precipitation_value";
 
     /** Key for forecast URL. */
     static final String FORECAST_URL = "weather_forecast_url";
