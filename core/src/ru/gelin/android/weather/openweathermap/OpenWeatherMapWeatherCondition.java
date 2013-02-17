@@ -1,7 +1,5 @@
 package ru.gelin.android.weather.openweathermap;
 
-import ru.gelin.android.weather.Precipitation;
-import ru.gelin.android.weather.SimplePrecipitation;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 
 import java.util.EnumSet;
@@ -13,16 +11,7 @@ import java.util.Set;
  */
 public class OpenWeatherMapWeatherCondition extends SimpleWeatherCondition {
 
-    SimplePrecipitation precipitation;
     Set<WeatherConditionType> conditionTypes = EnumSet.noneOf(WeatherConditionType.class);
-
-    public void setPrecipitation(SimplePrecipitation precipitation) {
-        this.precipitation = precipitation;
-    }
-
-    public Precipitation getPrecipitation() {
-        return this.precipitation;
-    }
 
     public Set<WeatherConditionType> getConditionTypes() {
         return EnumSet.copyOf(this.conditionTypes);

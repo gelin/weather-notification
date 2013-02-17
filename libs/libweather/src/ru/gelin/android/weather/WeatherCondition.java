@@ -100,6 +100,10 @@ public interface WeatherCondition {
      */
     Cloudiness getCloudiness(CloudinessUnit unit);
 
-    //TODO add precipitation
+    /**
+     *  Returns precipitation value available for this weather condition.
+     */
+    Precipitation getPrecipitation();
+
     //TODO add condition type
 }

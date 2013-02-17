@@ -33,6 +33,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
     SimpleWind wind;
     Humidity humidity;
     SimpleCloudiness cloudiness;
+    SimplePrecipitation precipitation;
 
     /**
      *  Sets the condition text.
@@ -142,4 +143,11 @@ public class SimpleWeatherCondition implements WeatherCondition {
         return this.cloudiness.convert(unit);
     }
 
+    public void setPrecipitation(SimplePrecipitation precipitation) {
+        this.precipitation = precipitation;
+    }
+
+    public Precipitation getPrecipitation() {
+        return this.precipitation;
+    }
 }
