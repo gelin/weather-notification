@@ -64,99 +64,96 @@ public class WeatherStorage {
      */
     public void save(Weather weather) {
         Editor editor = preferences.edit();
+
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.putString(LOCATION, weather.getLocation().getText());
         editor.putLong(TIME, weather.getTime().getTime());
         editor.putLong(QUERY_TIME, weather.getQueryTime().getTime());
+
         if (weather.getForecastURL() == null) {
             editor.remove(FORECAST_URL);
         } else {
             editor.putString(FORECAST_URL, String.valueOf(weather.getForecastURL()));
         }
+
         if (weather.getUnitSystem() == null) {
             editor.remove(UNIT_SYSTEM);
         } else {
             editor.putString(UNIT_SYSTEM, weather.getUnitSystem().toString());
         }
+
         int i = 0;
         for (WeatherCondition condition : weather.getConditions()) {
+            ConditionPreferencesEditor conditionEditor =
+                    new ConditionPreferencesEditor(editor, i);
             
-            putOrRemove(editor, String.format(CONDITION_TEXT, i), 
-                    condition.getConditionText());
+            conditionEditor.putOrRemove(CONDITION_TEXT, condition.getConditionText());
             
             Temperature temp = condition.getTemperature();
-            putOrRemove(editor, String.format(TEMPERATURE_UNIT, i), 
-                    String.valueOf(temp.getTemperatureUnit()));
-            putOrRemove(editor, String.format(CURRENT_TEMP, i), 
-                    temp.getCurrent());
-            putOrRemove(editor, String.format(LOW_TEMP, i), 
-                    temp.getLow());
-            putOrRemove(editor, String.format(HIGH_TEMP, i), 
-                    temp.getHigh());
+            conditionEditor.putOrRemove(TEMPERATURE_UNIT, temp.getTemperatureUnit());
+            conditionEditor.putOrRemove(CURRENT_TEMP, temp.getCurrent());
+            conditionEditor.putOrRemove(LOW_TEMP, temp.getLow());
+            conditionEditor.putOrRemove(HIGH_TEMP, temp.getHigh());
+
             Humidity hum = condition.getHumidity();
-            putOrRemove(editor, String.format(HUMIDITY_VALUE, i),
-                    hum.getValue());
-            putOrRemove(editor, String.format(HUMIDITY_TEXT, i), 
-                    hum.getText());
+            conditionEditor.putOrRemove(HUMIDITY_VALUE, hum.getValue());
+            conditionEditor.putOrRemove(HUMIDITY_TEXT, hum.getText());
             
             Wind wind = condition.getWind();
-            putOrRemove(editor, String.format(WIND_SPEED_UNIT, i), 
-                    String.valueOf(wind.getSpeedUnit()));
-            putOrRemove(editor, String.format(WIND_SPEED, i), 
-                    wind.getSpeed());
-            putOrRemove(editor, String.format(WIND_DIR, i), 
-                    wind.getDirection().toString());
-            putOrRemove(editor, String.format(WIND_TEXT, i), 
-                    wind.getText());
+            conditionEditor.putOrRemove(WIND_SPEED_UNIT, wind.getSpeedUnit());
+            conditionEditor.putOrRemove(WIND_SPEED, wind.getSpeed());
+            conditionEditor.putOrRemove(WIND_DIR, wind.getDirection());
+            conditionEditor.putOrRemove(WIND_TEXT, wind.getText());
 
             Cloudiness cloudiness = condition.getCloudiness();
             if (cloudiness == null) {
-                editor.remove(String.format(CLOUDINESS_UNIT, i));
-                editor.remove(String.format(CLOUDINESS_VALUE, i));
+                conditionEditor.remove(CLOUDINESS_UNIT);
+                conditionEditor.remove(CLOUDINESS_VALUE);
             } else {
-                putOrRemove(editor, String.format(CLOUDINESS_UNIT, i),
-                        String.valueOf(cloudiness.getCloudinessUnit()));
-                putOrRemove(editor, String.format(CLOUDINESS_VALUE, i),
-                        cloudiness.getValue());
+                conditionEditor.putOrRemove(CLOUDINESS_UNIT, cloudiness.getCloudinessUnit());
+                conditionEditor.putOrRemove(CLOUDINESS_VALUE, cloudiness.getValue());
             }
 
             Precipitation precipitation = condition.getPrecipitation();
             if (precipitation == null) {
-                editor.remove(String.format(PRECIPITATION_UNIT, i));
-                editor.remove(String.format(PRECIPITATION_PERIOD, i));
-                editor.remove(String.format(PRECIPITATION_VALUE, i));
+                conditionEditor.remove(PRECIPITATION_UNIT);
+                conditionEditor.remove(PRECIPITATION_PERIOD);
+                conditionEditor.remove(PRECIPITATION_VALUE);
             } else {
-                putOrRemove(editor, String.format(PRECIPITATION_UNIT, i),
-                        String.valueOf(precipitation.getPrecipitationUnit()));
-                editor.putInt(String.format(PRECIPITATION_PERIOD, i), PrecipitationPeriod.PERIOD_1H.getHours());
-                putOrRemove(editor, String.format(PRECIPITATION_VALUE, i),
-                        precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
+                conditionEditor.putOrRemove(PRECIPITATION_UNIT, precipitation.getPrecipitationUnit());
+                conditionEditor.putOrRemove(PRECIPITATION_PERIOD, PrecipitationPeriod.PERIOD_1H.getHours());
+                conditionEditor.putOrRemove(PRECIPITATION_VALUE, precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
             }
 
             i++;
         }
+
         for (; i < 4; i++) {
-            editor.remove(String.format(CONDITION_TEXT, i));
+            ConditionPreferencesEditor conditionEditor =
+                    new ConditionPreferencesEditor(editor, i);
 
-            editor.remove(String.format(TEMPERATURE_UNIT, i));
-            editor.remove(String.format(CURRENT_TEMP, i));
-            editor.remove(String.format(LOW_TEMP, i));
-            editor.remove(String.format(HIGH_TEMP, i));
-            editor.remove(String.format(HUMIDITY_VALUE, i));
-            editor.remove(String.format(HUMIDITY_TEXT, i));
+            conditionEditor.remove(CONDITION_TEXT);
 
-            editor.remove(String.format(WIND_SPEED_UNIT, i));
-            editor.remove(String.format(WIND_SPEED, i));
-            editor.remove(String.format(WIND_DIR, i));
-            editor.remove(String.format(WIND_TEXT, i));
+            conditionEditor.remove(TEMPERATURE_UNIT);
+            conditionEditor.remove(CURRENT_TEMP);
+            conditionEditor.remove(LOW_TEMP);
+            conditionEditor.remove(HIGH_TEMP);
+            conditionEditor.remove(HUMIDITY_VALUE);
+            conditionEditor.remove(HUMIDITY_TEXT);
 
-            editor.remove(String.format(CLOUDINESS_UNIT, i));
-            editor.remove(String.format(CLOUDINESS_VALUE, i));
+            conditionEditor.remove(WIND_SPEED_UNIT);
+            conditionEditor.remove(WIND_SPEED);
+            conditionEditor.remove(WIND_DIR);
+            conditionEditor.remove(WIND_TEXT);
 
-            editor.remove(String.format(PRECIPITATION_UNIT, i));
-            editor.remove(String.format(PRECIPITATION_PERIOD, i));
-            editor.remove(String.format(PRECIPITATION_VALUE, i));
+            conditionEditor.remove(CLOUDINESS_UNIT);
+            conditionEditor.remove(CLOUDINESS_VALUE);
+
+            conditionEditor.remove(PRECIPITATION_UNIT);
+            conditionEditor.remove(PRECIPITATION_PERIOD);
+            conditionEditor.remove(PRECIPITATION_VALUE);
         }
+
         editor.commit();
     }
     
@@ -248,29 +245,57 @@ public class WeatherStorage {
         editor.putLong(WEATHER, System.currentTimeMillis());   //just current time
         editor.commit();
     }
-    
-    void putOrRemove(Editor editor, String key, String value) {
-        if (value == null || "".equals(value)) {
-            editor.remove(key);
-        } else {
-            editor.putString(key, value);
-        }
-    }
-    
-    void putOrRemove(Editor editor, String key, int temp) {
-        if (temp == Temperature.UNKNOWN) {
-            editor.remove(key);
-        } else {
-            editor.putInt(key, temp);
-        }
-    }
 
-    void putOrRemove(Editor editor, String key, float precipitation) {
-        if (precipitation == Precipitation.UNKNOWN) {
-            editor.remove(key);
-        } else {
-            editor.putFloat(key, precipitation);
+    private static class ConditionPreferencesEditor {
+
+        SharedPreferences.Editor editor;
+        int index;
+
+        public ConditionPreferencesEditor(SharedPreferences.Editor editor, int index) {
+            this.editor = editor;
+            this.index = index;
         }
+
+        private String formatKey(String keyTemplate) {
+            return String.format(keyTemplate, this.index);
+        }
+
+        public void remove(String key) {
+            this.editor.remove(formatKey(key));
+        }
+
+        public void putOrRemove(String key, String value) {
+            if (value == null || "".equals(value)) {
+                this.editor.remove(formatKey(key));
+            } else {
+                editor.putString(formatKey(key), value);
+            }
+        }
+
+        public void putOrRemove(String key, Enum value) {
+            if (value == null) {
+                this.editor.remove(formatKey(key));
+            } else {
+                editor.putString(formatKey(key), String.valueOf(value));
+            }
+        }
+
+        public void putOrRemove(String key, int value) {
+            if (value == Integer.MIN_VALUE) {
+                editor.remove(formatKey(key));
+            } else {
+                editor.putInt(formatKey(key), value);
+            }
+        }
+
+        public void putOrRemove(String key, float value) {
+            if (value == Float.MIN_VALUE) {
+                editor.remove(formatKey(key));
+            } else {
+                editor.putFloat(formatKey(key), value);
+            }
+        }
+
     }
 
 }
