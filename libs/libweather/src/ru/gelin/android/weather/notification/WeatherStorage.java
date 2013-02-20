@@ -163,11 +163,13 @@ public class WeatherStorage {
      */
     public Weather load() {
         SimpleWeather weather = new ParcelableWeather2();
+
         Location location = new SimpleLocation(
                 preferences.getString(LOCATION, ""));
         weather.setLocation(location);
         weather.setTime(new Date(preferences.getLong(TIME, 0)));
         weather.setQueryTime(new Date(preferences.getLong(QUERY_TIME, System.currentTimeMillis())));
+
         try {
             weather.setForecastURL(new URL(preferences.getString(FORECAST_URL, "")));
         } catch (MalformedURLException e) {
@@ -177,56 +179,40 @@ public class WeatherStorage {
         int i = 0;
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
         while (preferences.contains(String.format(CONDITION_TEXT, i))) {
+            ConditionPreferencesReader conditionReader = new ConditionPreferencesReader(preferences, i);
             
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
-            condition.setConditionText(preferences.getString(
-                    String.format(CONDITION_TEXT, i), ""));
+            condition.setConditionText(conditionReader.get(CONDITION_TEXT, ""));
             
-            TemperatureUnit tunit = TemperatureUnit.valueOf(
-                    preferences.getString(String.format(TEMPERATURE_UNIT, i), 
-                            TemperatureUnit.F.toString()));
+            TemperatureUnit tunit = conditionReader.get(TEMPERATURE_UNIT, TemperatureUnit.F);
             SimpleTemperature temp = new SimpleTemperature(tunit);
-            temp.setCurrent(preferences.getInt(String.format(CURRENT_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
-            temp.setLow(preferences.getInt(String.format(LOW_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
-            temp.setHigh(preferences.getInt(String.format(HIGH_TEMP, i),
-                    Temperature.UNKNOWN), tunit);
+            temp.setCurrent(conditionReader.get(CURRENT_TEMP, Temperature.UNKNOWN), tunit);
+            temp.setLow(conditionReader.get(LOW_TEMP, Temperature.UNKNOWN), tunit);
+            temp.setHigh(conditionReader.get(HIGH_TEMP, Temperature.UNKNOWN), tunit);
             condition.setTemperature(temp);
             
             SimpleHumidity hum = new SimpleHumidity();
-            hum.setValue(preferences.getInt(String.format(HUMIDITY_VALUE, i), Humidity.UNKNOWN));
-            hum.setText(preferences.getString(String.format(HUMIDITY_TEXT, i), ""));
+            hum.setValue(conditionReader.get(HUMIDITY_VALUE, Humidity.UNKNOWN));
+            hum.setText(conditionReader.get(HUMIDITY_TEXT, ""));
             condition.setHumidity(hum);
             
-            WindSpeedUnit windSpeedUnit = WindSpeedUnit.valueOf(
-                    preferences.getString(String.format(WIND_SPEED_UNIT, i), 
-                            WindSpeedUnit.MPH.toString()));
+            WindSpeedUnit windSpeedUnit = conditionReader.get(WIND_SPEED_UNIT, WindSpeedUnit.MPH);
             SimpleWind wind = new SimpleWind(windSpeedUnit);
-            wind.setSpeed(preferences.getInt(
-                    String.format(WIND_SPEED, i), Wind.UNKNOWN), windSpeedUnit);
-            wind.setDirection(WindDirection.valueOf(preferences.getString(
-                    String.format(WIND_DIR, i), WindDirection.N.toString())));
-            wind.setText(preferences.getString(String.format(WIND_TEXT, i), ""));
+            wind.setSpeed(conditionReader.get(WIND_SPEED, Wind.UNKNOWN), windSpeedUnit);
+            wind.setDirection(conditionReader.get(WIND_DIR, WindDirection.N));
+            wind.setText(conditionReader.get(WIND_TEXT, ""));
             condition.setWind(wind);
 
-            CloudinessUnit cloudinessUnit = CloudinessUnit.valueOf(
-                    preferences.getString(String.format(CLOUDINESS_UNIT, i),
-                            CloudinessUnit.OKTA.toString()));
+            CloudinessUnit cloudinessUnit = conditionReader.get(CLOUDINESS_UNIT, CloudinessUnit.OKTA);
             SimpleCloudiness cloudiness = new SimpleCloudiness(cloudinessUnit);
-            cloudiness.setValue(preferences.getInt(
-                    String.format(CLOUDINESS_VALUE, i), Cloudiness.UNKNOWN), cloudinessUnit);
+            cloudiness.setValue(conditionReader.get(CLOUDINESS_VALUE, Cloudiness.UNKNOWN), cloudinessUnit);
             condition.setCloudiness(cloudiness);
 
-            PrecipitationUnit precipitationUnit = PrecipitationUnit.valueOf(
-                    preferences.getString(String.format(PRECIPITATION_UNIT, i),
-                            PrecipitationUnit.MM.toString()));
+            PrecipitationUnit precipitationUnit = conditionReader.get(PRECIPITATION_UNIT, PrecipitationUnit.MM);
             SimplePrecipitation precipitation = new SimplePrecipitation(precipitationUnit);
             PrecipitationPeriod precipitationPeriod = PrecipitationPeriod.valueOf(
-                    preferences.getInt(String.format(PRECIPITATION_PERIOD, i),
-                            PrecipitationPeriod.PERIOD_1H.getHours()));
-            precipitation.setValue(preferences.getFloat(
-                    String.format(PRECIPITATION_VALUE, i), Precipitation.UNKNOWN), precipitationPeriod);
+                    conditionReader.get(PRECIPITATION_PERIOD, PrecipitationPeriod.PERIOD_1H.getHours()));
+            precipitation.setValue(conditionReader.get(PRECIPITATION_VALUE, Precipitation.UNKNOWN), precipitationPeriod);
             condition.setPrecipitation(precipitation);
 
             conditions.add(condition);
@@ -294,6 +280,39 @@ public class WeatherStorage {
             } else {
                 editor.putFloat(formatKey(key), value);
             }
+        }
+
+    }
+
+    private static class ConditionPreferencesReader {
+
+        SharedPreferences preferences;
+        int index;
+
+        public ConditionPreferencesReader(SharedPreferences preferences, int index) {
+            this.preferences = preferences;
+            this.index = index;
+        }
+
+        private String formatKey(String keyTemplate) {
+            return String.format(keyTemplate, this.index);
+        }
+
+        public String get(String key, String defaultValue) {
+            return this.preferences.getString(formatKey(key), defaultValue);
+        }
+
+        public <E extends Enum<E>> E get(String key, E defaultValue) {
+            Class<? extends Enum> enumClass = defaultValue.getClass();
+            return (E)Enum.valueOf(enumClass, this.preferences.getString(formatKey(key), String.valueOf(defaultValue)));
+        }
+
+        public int get(String key, int defaultValue) {
+            return this.preferences.getInt(formatKey(key), defaultValue);
+        }
+
+        public float get(String key, float defaultValue) {
+            return this.preferences.getFloat(formatKey(key), defaultValue);
         }
 
     }
