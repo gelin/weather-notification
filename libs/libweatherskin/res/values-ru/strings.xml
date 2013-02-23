@@ -62,4 +62,60 @@
     <string name="wind_speed_unit_kmph">км/ч</string>
     <string name="humidity_caption" formatted="false">Влажность: %d%%</string>
     <string name="wind_caption" formatted="false">Ветер: %s, %d %s</string>
+
+    <string name="condition_thunderstorm_rain_light">Гроза со слабым дождем</string>
+    <string name="condition_thunderstorm_rain">Гроза с дождем</string>
+    <string name="condition_thunderstorm_rain_heavy">Гроза с сильным дождем</string>
+    <string name="condition_thunderstorm_light">Слабая гроза</string>
+    <string name="condition_thunderstorm">Гроза</string>
+    <string name="condition_thunderstorm_heavy">Сильная гроза</string>
+    <string name="condition_thunderstorm_ragged">Гроза</string> <!-- to be improved -->
+    <string name="condition_thunderstorm_drizzle_light">Гроза со слабой моросью</string> <!-- does it exist? -->
+    <string name="condition_thunderstorm_drizzle">Гроза c моросью</string> <!-- does it exist? -->
+    <string name="condition_thunderstorm_drizzle_heavy">Гроза с сильной моросью</string> <!-- does it exist? -->
+
+    <string name="condition_drizzle_light">Слабая морось</string>
+    <string name="condition_drizzle">Морось</string>
+    <string name="condition_drizzle_heavy">Сильная морось</string>
+    <string name="condition_drizzle_rain_light">Слабый моросящий дождь</string>
+    <string name="condition_drizzle_rain">Моросящий дождь</string>
+    <string name="condition_drizzle_rain_heavy">Сильный моросящий дождь</string>
+    <string name="condition_drizzle_shower">Моросящий дождь</string> <!-- to be improved --> <!-- does it exist? -->
+
+    <string name="condition_rain_light">Слабый дождь</string>
+    <string name="condition_rain">Дождь</string>
+    <string name="condition_rain_heavy">Сильный дождь</string>
+    <string name="condition_rain_very_heavy">Очень сильный дождь</string>
+    <string name="condition_rain_extreme">Экстремальный дождь</string>
+    <string name="condition_rain_freezing">Ледяной дождь</string>
+    <string name="condition_rain_shower_light">Слабый ливень</string>
+    <string name="condition_rain_shower">Ливень</string>
+    <string name="condition_rain_shower_heavy">Сильный ливень</string>
+
+    <string name="condition_snow_light">Слабый снег</string>
+    <string name="condition_snow">Снег</string>
+    <string name="condition_snow_heavy">Сильный снег</string>
+    <string name="condition_sleet">Дождь со снегом</string>
+    <string name="condition_snow_shower">Ливневый снег</string>
+
+    <string name="condition_mist">Дымка</string>
+    <string name="condition_smoke">Дым</string>
+    <string name="condition_haze">Мгла</string>
+    <string name="condition_sand_whirls">Песчаная/пылевая буря</string>
+    <string name="condition_fog">Туман</string>
+
+    <string name="condition_clouds_clear">Ясно</string>
+    <string name="condition_clouds_few">Малооблачно</string>
+    <string name="condition_clouds_scattered">Переменная облачность</string>
+    <string name="condition_clouds_broken">Облачно</string>
+    <string name="condition_clouds_overcast">Пасмурно</string>
+
+    <string name="condition_tornado">Торнадо</string>
+    <string name="condition_tropical_storm">Тропический циклон</string>
+    <string name="condition_hurricane">Ураган</string>
+    <string name="condition_cold">Мороз</string>
+    <string name="condition_hot">Жара</string>
+    <string name="condition_windy">Ветренно</string>
+    <string name="condition_hail">Град</string>
+
 </resources>

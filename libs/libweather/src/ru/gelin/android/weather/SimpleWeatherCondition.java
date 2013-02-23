@@ -22,6 +22,10 @@
 
 package ru.gelin.android.weather;
 
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.Set;
+
 /**
  *  Simple weather condition implementation which just holds
  *  the values.
@@ -34,6 +38,7 @@ public class SimpleWeatherCondition implements WeatherCondition {
     Humidity humidity;
     SimpleCloudiness cloudiness;
     SimplePrecipitation precipitation;
+    Set<WeatherConditionType> conditionTypes = EnumSet.noneOf(WeatherConditionType.class);
 
     /**
      *  Sets the condition text.
@@ -149,5 +154,31 @@ public class SimpleWeatherCondition implements WeatherCondition {
 
     public Precipitation getPrecipitation() {
         return this.precipitation;
+    }
+
+    public Set<WeatherConditionType> getConditionTypes() {
+        return EnumSet.copyOf(this.conditionTypes);
+    }
+
+    public void addConditionType(WeatherConditionType newType) {
+        if (newType == null) {
+            return;
+        }
+        Iterator<WeatherConditionType> i = this.conditionTypes.iterator();
+        boolean insert = true;
+        while (i.hasNext()) {
+            WeatherConditionType type = i.next();
+            if (newType.getPriority() == type.getPriority()) {
+                if (newType.getStrength() > type.getStrength()) {
+                    i.remove();
+                    insert = true;
+                } else if (newType.getStrength() < type.getStrength()) {
+                    insert = false;
+                }
+            }
+        }
+        if (insert) {
+            this.conditionTypes.add(newType);
+        }
     }
 }

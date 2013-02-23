@@ -24,6 +24,8 @@ package ru.gelin.android.weather;
 
 //import java.net.URL;
 
+import java.util.Set;
+
 /**
  *  Common weather conditions.
  */
@@ -105,5 +107,10 @@ public interface WeatherCondition {
      */
     Precipitation getPrecipitation();
 
-    //TODO add condition type
+    /**
+     *  Returns the set of weather condition types.
+     *  The returned set is unmodifiable.
+     */
+    Set<WeatherConditionType> getConditionTypes();
+
 }

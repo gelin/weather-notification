@@ -24,7 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import ru.gelin.android.weather.Temperature;
 
-public class TemperatureFormatter {
+public class TemperatureFormat {
 	
     public String format(int temp) {
         if (temp == Temperature.UNKNOWN) {

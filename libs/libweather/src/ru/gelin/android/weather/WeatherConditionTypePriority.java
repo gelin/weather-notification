@@ -1,4 +1,4 @@
-package ru.gelin.android.weather.openweathermap;
+package ru.gelin.android.weather;
 
 /**
  *  Weather condition type priorities.

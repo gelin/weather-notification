@@ -1,5 +1,7 @@
 package ru.gelin.android.weather.openweathermap;
 
+import ru.gelin.android.weather.WeatherConditionType;
+
 import java.util.HashMap;
 import java.util.Map;
 

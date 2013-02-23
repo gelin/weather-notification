@@ -63,4 +63,60 @@
     <string name="wind_speed_unit_kmph">km/h</string>
     <string name="humidity_caption" formatted="false">Humidity: %d%%</string>
     <string name="wind_caption" formatted="false">Wind: %s, %d %s</string>
+
+    <string name="condition_thunderstorm_rain_light">Thunderstorm with light rain</string>
+    <string name="condition_thunderstorm_rain">Thunderstorm with rain</string>
+    <string name="condition_thunderstorm_rain_heavy">Thunderstorm with heavy rain</string>
+    <string name="condition_thunderstorm_light">Light thunderstorm</string>
+    <string name="condition_thunderstorm">Thunderstorm</string>
+    <string name="condition_thunderstorm_heavy">Heavy thunderstorm</string>
+    <string name="condition_thunderstorm_ragged">Ragged thunderstorm</string>
+    <string name="condition_thunderstorm_drizzle_light">Thunderstorm with light drizzle</string>
+    <string name="condition_thunderstorm_drizzle">Thunderstorm with drizzle</string>
+    <string name="condition_thunderstorm_drizzle_heavy">Thunderstorm with heavy drizzle</string>
+
+    <string name="condition_drizzle_light">Light drizzle</string>
+    <string name="condition_drizzle">Drizzle</string>
+    <string name="condition_drizzle_heavy">Heavy drizzle</string>
+    <string name="condition_drizzle_rain_light">Light drizzle rain</string>
+    <string name="condition_drizzle_rain">Drizzle rain</string>
+    <string name="condition_drizzle_rain_heavy">Heavy drizzle rain</string>
+    <string name="condition_drizzle_shower">Shower drizzle</string>
+
+    <string name="condition_rain_light">Light rain</string>
+    <string name="condition_rain">Rain</string>
+    <string name="condition_rain_heavy">Heavy rain</string>
+    <string name="condition_rain_very_heavy">Very heavy rain</string>
+    <string name="condition_rain_extreme">Extreme rain</string>
+    <string name="condition_rain_freezing">Freezing rain</string>
+    <string name="condition_rain_shower_light">Light shower rain</string>
+    <string name="condition_rain_shower">Shower rain</string>
+    <string name="condition_rain_shower_heavy">Heavy shower rain</string>
+
+    <string name="condition_snow_light">Light snow</string>
+    <string name="condition_snow">Snow</string>
+    <string name="condition_snow_heavy">Heavy snow</string>
+    <string name="condition_sleet">Sleet</string>
+    <string name="condition_snow_shower">Shower snow</string>
+
+    <string name="condition_mist">Mist</string>
+    <string name="condition_smoke">Smoke</string>
+    <string name="condition_haze">Haze</string>
+    <string name="condition_sand_whirls">Sand/Dust whirls</string>
+    <string name="condition_fog">Fog</string>
+
+    <string name="condition_clouds_clear">Sky is clear</string>
+    <string name="condition_clouds_few">Few clouds</string>
+    <string name="condition_clouds_scattered">Scattered clouds</string>
+    <string name="condition_clouds_broken">Broken clouds</string>
+    <string name="condition_clouds_overcast">Overcast clouds</string>
+
+    <string name="condition_tornado">Tornado</string>
+    <string name="condition_tropical_storm">Tropical storm</string>
+    <string name="condition_hurricane">Hurricane</string>
+    <string name="condition_cold">Cold</string>
+    <string name="condition_hot">Hot</string>
+    <string name="condition_windy">Windy</string>
+    <string name="condition_hail">Hail</string>
+
 </resources>

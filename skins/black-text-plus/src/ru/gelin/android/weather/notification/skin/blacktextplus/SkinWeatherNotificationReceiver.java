@@ -22,13 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.widget.RemoteViews;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
-import android.content.ComponentName;
-import android.content.Context;
-import android.widget.RemoteViews;
 
 /**
  *  Extends the basic notification receiver.
@@ -57,8 +57,8 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
     
     @Override
-    protected TemperatureFormatter createTemperatureFormatter() {
-        return new TemperatureFormatter();
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
     }
     
     @Override

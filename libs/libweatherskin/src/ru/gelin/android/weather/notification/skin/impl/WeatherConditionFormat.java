@@ -1,14 +1,16 @@
-package ru.gelin.android.weather.openweathermap;
+package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
-import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
+import ru.gelin.android.weather.notification.skin.R;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.gelin.android.weather.openweathermap.WeatherConditionType.*;
+import static ru.gelin.android.weather.WeatherConditionType.*;
 
 /**
  *  Formats weather condition text.
@@ -81,7 +83,7 @@ public class WeatherConditionFormat {
         this.context = context;
     }
 
-    public String getText(OpenWeatherMapWeatherCondition condition) {
+    public String getText(WeatherCondition condition) {
         int maxPriority = 0;
         List<WeatherConditionType> resultTypes = new ArrayList<WeatherConditionType>();
         for (WeatherConditionType type : condition.getConditionTypes()) {

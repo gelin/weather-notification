@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.notification.skin.impl.WeatherConditionFormat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,7 +29,7 @@ public class OpenWeatherMapWeather implements Weather {
     /** Query time */
     Date queryTime = new Date();
     /** Weather conditions */
-    List<OpenWeatherMapWeatherCondition> conditions = new ArrayList<OpenWeatherMapWeatherCondition>();
+    List<SimpleWeatherCondition> conditions = new ArrayList<SimpleWeatherCondition>();
     /** Emptyness flag */
     boolean empty = true;
     /** Condition text format */
@@ -68,7 +69,7 @@ public class OpenWeatherMapWeather implements Weather {
         return Collections.unmodifiableList(new ArrayList<WeatherCondition>(this.conditions));
     }
 
-    List<OpenWeatherMapWeatherCondition> getOpenWeatherMapConditions() {
+    List<SimpleWeatherCondition> getOpenWeatherMapConditions() {
         return this.conditions;
     }
 
@@ -130,7 +131,7 @@ public class OpenWeatherMapWeather implements Weather {
     }
 
     private void parseCondition(JSONObject weatherJSON) {
-        OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setTemperature(parseTemperature(weatherJSON));
         condition.setWind(parseWind(weatherJSON));
         condition.setHumidity(parseHumidity(weatherJSON));
@@ -228,7 +229,7 @@ public class OpenWeatherMapWeather implements Weather {
         return cloudiness;
     }
 
-    private void parseWeatherType(JSONObject weatherJSON, OpenWeatherMapWeatherCondition condition) {
+    private void parseWeatherType(JSONObject weatherJSON, SimpleWeatherCondition condition) {
         try {
             JSONArray weathers = weatherJSON.getJSONArray("weather");
             for (int i = 0; i < weathers.length(); i++) {
@@ -245,7 +246,7 @@ public class OpenWeatherMapWeather implements Weather {
         try {
             JSONArray list = json.getJSONArray("list");
             int j = 0;
-            OpenWeatherMapWeatherCondition condition = getCondition(0);
+            SimpleWeatherCondition condition = getCondition(0);
             Date conditionDate = getConditionDate(0);
             for (; j < list.length(); j++) {
                 boolean appended = appendForecastTemperature(condition, conditionDate, list.getJSONObject(j));
@@ -270,9 +271,9 @@ public class OpenWeatherMapWeather implements Weather {
         }
     }
 
-    private OpenWeatherMapWeatherCondition getCondition(int i) {
+    private SimpleWeatherCondition getCondition(int i) {
         while (i >= this.conditions.size()) {
-            OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
+            SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText("");
             condition.setTemperature(new AppendableTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
@@ -301,7 +302,7 @@ public class OpenWeatherMapWeather implements Weather {
         return calendar.getTime();
     }
 
-    private boolean appendForecastTemperature(OpenWeatherMapWeatherCondition condition,
+    private boolean appendForecastTemperature(SimpleWeatherCondition condition,
             Date conditionDate, JSONObject weatherJSON)
             throws JSONException {
         Date weatherDate = new Date(weatherJSON.getLong("dt") * 1000);
@@ -314,7 +315,7 @@ public class OpenWeatherMapWeather implements Weather {
         return true;
     }
 
-    private boolean appendForecast(OpenWeatherMapWeatherCondition condition,
+    private boolean appendForecast(SimpleWeatherCondition condition,
             Date conditionDate, JSONObject weatherJSON)
             throws JSONException {
         boolean result = appendForecastTemperature(condition, conditionDate, weatherJSON);

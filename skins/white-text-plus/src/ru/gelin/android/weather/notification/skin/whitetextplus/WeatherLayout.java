@@ -35,8 +35,8 @@ public class WeatherLayout extends ru.gelin.android.weather.notification.skin.im
     }
 
     @Override
-    protected TemperatureFormatter createTemperatureFormatter() {
-        return new TemperatureFormatter();
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
     }
 
 }

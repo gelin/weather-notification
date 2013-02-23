@@ -1,7 +1,9 @@
-package ru.gelin.android.weather.openweathermap;
+package ru.gelin.android.weather.notification.skin.impl;
 
 import android.test.AndroidTestCase;
-import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.SimpleWeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
+import ru.gelin.android.weather.notification.skin.R;
 
 public class WeatherConditionFormatTest extends AndroidTestCase {
 
@@ -23,7 +25,7 @@ public class WeatherConditionFormatTest extends AndroidTestCase {
     }
 
     private void testConditionText(String expected, WeatherConditionType[] types) {
-        OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
         for (WeatherConditionType type : types) {
             condition.addConditionType(type);
         }
@@ -32,7 +34,7 @@ public class WeatherConditionFormatTest extends AndroidTestCase {
     }
 
     public void testEmptyCondition() {
-        OpenWeatherMapWeatherCondition condition = new OpenWeatherMapWeatherCondition();
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
         WeatherConditionFormat format = new WeatherConditionFormat(getContext());
         assertEquals("Sky is clear", format.getText(condition));
     }

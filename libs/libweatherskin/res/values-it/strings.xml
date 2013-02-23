@@ -63,4 +63,60 @@
     <string name="wind_speed_unit_kmph">km/h</string>
     <string name="humidity_caption" formatted="false">Umidità: %d%%</string>
     <string name="wind_caption" formatted="false">Vento: %s, %d %s</string>
+
+    <string name="condition_thunderstorm_rain_light">Temporale</string>
+    <string name="condition_thunderstorm_rain">Temporale</string>
+    <string name="condition_thunderstorm_rain_heavy">Temporale</string>
+    <string name="condition_thunderstorm_light">Temporale</string>
+    <string name="condition_thunderstorm">Temporale</string>
+    <string name="condition_thunderstorm_heavy">Temporale intenso</string>
+    <string name="condition_thunderstorm_ragged">Temporale</string>
+    <string name="condition_thunderstorm_drizzle_light">Temporale</string>
+    <string name="condition_thunderstorm_drizzle">Temporale</string>
+    <string name="condition_thunderstorm_drizzle_heavy">Temporale</string>
+
+    <string name="condition_drizzle_light">Piovoso</string>
+    <string name="condition_drizzle">Piovoso</string>
+    <string name="condition_drizzle_heavy">Piovoso</string>
+    <string name="condition_drizzle_rain_light">Piovoso</string>
+    <string name="condition_drizzle_rain">Piovoso</string>
+    <string name="condition_drizzle_rain_heavy"> Molto piovoso</string>
+    <string name="condition_drizzle_shower">Piovoso</string>
+
+    <string name="condition_rain_light">Pioggia</string>
+    <string name="condition_rain">Pioggia</string>
+    <string name="condition_rain_heavy">Pioggia</string>
+    <string name="condition_rain_very_heavy">Pioggia</string>
+    <string name="condition_rain_extreme">Pioggia intensa</string>
+    <string name="condition_rain_freezing">Pioggia gelata</string>
+    <string name="condition_rain_shower_light">Acquazzone</string>
+    <string name="condition_rain_shower">Acquazzone</string>
+    <string name="condition_rain_shower_heavy">Acquazzone intenso</string>
+
+    <string name="condition_snow_light">Neve</string>
+    <string name="condition_snow">Neve</string>
+    <string name="condition_snow_heavy">Nevicata intensa</string>
+    <string name="condition_sleet">Nevischio</string>
+    <string name="condition_snow_shower">Neve</string>
+
+    <string name="condition_mist">Nebbia</string>
+    <string name="condition_smoke">Foschia</string>
+    <string name="condition_haze">Foschia</string>
+    <string name="condition_sand_whirls">Vortici di sabbia</string>
+    <string name="condition_fog">Nebbia</string>
+
+    <string name="condition_clouds_clear">Sereno</string>
+    <string name="condition_clouds_few">Poco nuvoloso</string>
+    <string name="condition_clouds_scattered">Nubi sparse</string>
+    <string name="condition_clouds_broken">Nubi sparse</string>
+    <string name="condition_clouds_overcast">Nuvoloso</string>
+
+    <string name="condition_tornado">Tornado</string>
+    <string name="condition_tropical_storm">Tempesta tropicale</string>
+    <string name="condition_hurricane">Uragano</string>
+    <string name="condition_cold">Gelo</string>
+    <string name="condition_hot">Torrido</string>
+    <string name="condition_windy">Ventoso</string>
+    <string name="condition_hail">Grandine</string>
+
 </resources>

@@ -1,6 +1,6 @@
-package ru.gelin.android.weather.openweathermap;
+package ru.gelin.android.weather;
 
-import static ru.gelin.android.weather.openweathermap.WeatherConditionTypePriority.*;
+import static ru.gelin.android.weather.WeatherConditionTypePriority.*;
 
 /**
  *  Enumeration of declared condition conditionTypes.

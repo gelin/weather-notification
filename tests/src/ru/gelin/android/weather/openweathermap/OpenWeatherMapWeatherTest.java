@@ -168,7 +168,7 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     public void testForecastGetPrecipitations() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
         weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
-        List<OpenWeatherMapWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
+        List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(Precipitation.UNKNOWN, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));  //current
         assertEquals(0.15f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
@@ -179,7 +179,7 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     public void testForecastGetCloudiness() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
         weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
-        List<OpenWeatherMapWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
+        List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(75, conditions.get(0).getCloudiness().getValue());  //current
         assertEquals(85, conditions.get(1).getCloudiness().getValue());
@@ -190,7 +190,7 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     public void testForecastGetConditionTypes() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
         weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
-        List<OpenWeatherMapWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
+        List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(1, conditions.get(0).getConditionTypes().size());
         assertTrue(conditions.get(0).getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));

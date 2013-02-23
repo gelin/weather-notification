@@ -1,9 +1,9 @@
-package ru.gelin.android.weather.notification.skin.whitetextplus;
+package ru.gelin.android.weather.notification.skin.bigtext;
 
 /**
  *  This formatter displays "+" sign for positive temperature.
  */
-public class TemperatureFormatter extends ru.gelin.android.weather.notification.skin.impl.TemperatureFormatter {
+public class TemperatureFormat extends ru.gelin.android.weather.notification.skin.impl.TemperatureFormat {
 
     protected String signedValue(int value) {
         if (value > 0) {

@@ -61,7 +61,7 @@ abstract public class BaseWeatherNotificationReceiver extends
     static Handler handler;
     
     /** Temperature formatter */
-    protected TemperatureFormatter tempFormat = createTemperatureFormatter();
+    protected TemperatureFormat tempFormat = createTemperatureFormat();
     
     /**
      *  Registers the handler to receive the new weather.
@@ -192,8 +192,8 @@ abstract public class BaseWeatherNotificationReceiver extends
     /**
      *  Creates the temperature formatter.
      */
-    protected TemperatureFormatter createTemperatureFormatter() {
-        return new TemperatureFormatter();
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
     }
     
     /**

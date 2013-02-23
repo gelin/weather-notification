@@ -43,4 +43,38 @@ public class SimpleWeatherConditionTest extends AndroidTestCase {
         assertEquals(77, temp2.getCurrent());
     }
 
+    public void testConditionTypePriority() {
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        condition.addConditionType(WeatherConditionType.CLOUDS_BROKEN);
+        condition.addConditionType(WeatherConditionType.RAIN);
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.RAIN));
+    }
+
+    public void testConditionTypeStrength() {
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        condition.addConditionType(WeatherConditionType.RAIN);
+        condition.addConditionType(WeatherConditionType.RAIN_EXTREME);
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.RAIN_EXTREME));
+        assertFalse(condition.getConditionTypes().contains(WeatherConditionType.RAIN));
+    }
+
+    public void testConditionTypeStrengthAndPriority() {
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        condition.addConditionType(WeatherConditionType.CLOUDS_BROKEN);
+        condition.addConditionType(WeatherConditionType.RAIN_EXTREME);
+        condition.addConditionType(WeatherConditionType.RAIN);
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.RAIN_EXTREME));
+        assertFalse(condition.getConditionTypes().contains(WeatherConditionType.RAIN));
+    }
+
+    public void testConditionTypeSameStrength() {
+        SimpleWeatherCondition condition = new SimpleWeatherCondition();
+        condition.addConditionType(WeatherConditionType.TORNADO);
+        condition.addConditionType(WeatherConditionType.HURRICANE);
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.TORNADO));
+        assertTrue(condition.getConditionTypes().contains(WeatherConditionType.HURRICANE));
+    }
+
 }

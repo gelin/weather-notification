@@ -51,11 +51,11 @@ public abstract class AbstractWeatherLayout {
     /** ID factory */
     ResourceIdFactory ids;
     /** Temperature formatter */
-    TemperatureFormatter tempFormat;
+    TemperatureFormat tempFormat;
     /** Wind formatter */
-    WindFormatter windFormat;
+    WindFormat windFormat;
     /** Humidity formatter */
-    HumidityFormatter humidityFormat;
+    HumidityFormat humidityFormat;
     
     /**
      *  Creates the utility for specified context.
@@ -63,9 +63,9 @@ public abstract class AbstractWeatherLayout {
     protected AbstractWeatherLayout(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
-        this.tempFormat = createTemperatureFormatter();
-        this.windFormat = new WindFormatter(context);
-        this.humidityFormat = new HumidityFormatter(context);
+        this.tempFormat = createTemperatureFormat();
+        this.windFormat = new WindFormat(context);
+        this.humidityFormat = new HumidityFormat(context);
     }
     
     /**
@@ -255,8 +255,8 @@ public abstract class AbstractWeatherLayout {
     /**
      *  Creates the temperature formatter.
      */
-    protected TemperatureFormatter createTemperatureFormatter() {
-        return new TemperatureFormatter();
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
     }
     
 }

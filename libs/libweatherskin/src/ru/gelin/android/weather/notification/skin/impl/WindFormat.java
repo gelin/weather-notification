@@ -24,12 +24,12 @@ import ru.gelin.android.weather.Wind;
 import ru.gelin.android.weather.WindDirection;
 import ru.gelin.android.weather.WindSpeedUnit;
 
-public class WindFormatter {
+public class WindFormat {
 
     Context context;
     ResourceIdFactory ids;
 
-    public WindFormatter(Context context) {
+    public WindFormat(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
     }

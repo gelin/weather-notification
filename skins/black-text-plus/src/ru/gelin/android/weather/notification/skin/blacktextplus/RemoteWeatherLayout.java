@@ -22,9 +22,9 @@
 
 package ru.gelin.android.weather.notification.skin.blacktextplus;
 
-import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 import android.content.Context;
 import android.widget.RemoteViews;
+import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 
 /**
  *  Utility to layout weather values to remove view.
@@ -39,8 +39,8 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
     }
     
     @Override
-    protected TemperatureFormatter createTemperatureFormatter() {
-        return new TemperatureFormatter();
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
     }
 
 }

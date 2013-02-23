@@ -24,12 +24,12 @@ import ru.gelin.android.weather.Humidity;
 
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
-public class HumidityFormatter {
+public class HumidityFormat {
 
     Context context;
     ResourceIdFactory ids;
 
-    public HumidityFormatter(Context context) {
+    public HumidityFormat(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
     }
