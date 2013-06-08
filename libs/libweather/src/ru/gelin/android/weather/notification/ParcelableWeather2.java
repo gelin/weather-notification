@@ -76,6 +76,9 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         for (WeatherCondition condition : conditions) {
             SimpleWeatherCondition copyCondition = new SimpleWeatherCondition();
             copyCondition.setConditionText(condition.getConditionText());
+            for (WeatherConditionType type : condition.getConditionTypes()) {
+                copyCondition.addConditionType(type);
+            }
 
             Temperature temp = condition.getTemperature();
             SimpleTemperature copyTemp = new SimpleTemperature(TemperatureUnit.C);

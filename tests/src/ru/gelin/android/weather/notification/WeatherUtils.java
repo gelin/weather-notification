@@ -158,6 +158,8 @@ public class WeatherUtils {
         Cloudiness cloudiness = condition0.getCloudiness(CloudinessUnit.PERCENT);
         assertEquals(75, cloudiness.getValue());
         assertEquals(Precipitation.UNKNOWN, condition0.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
+        assertEquals(1, condition0.getConditionTypes().size());
+        assertTrue(condition0.getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
 
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Light rain", condition1.getConditionText());
@@ -167,6 +169,9 @@ public class WeatherUtils {
         assertEquals(281, temp1.getHigh());
         assertEquals(85, condition1.getCloudiness().getValue());
         assertEquals(0.15f, condition1.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(2, condition1.getConditionTypes().size());
+        assertTrue(condition1.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(condition1.getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
 
         WeatherCondition condition2 = weather.getConditions().get(2);
         assertEquals("Rain", condition2.getConditionText());
@@ -176,6 +181,9 @@ public class WeatherUtils {
         assertEquals(285, temp2.getHigh());
         assertEquals(82, condition2.getCloudiness().getValue());
         assertEquals(0.47f, condition2.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(2, condition2.getConditionTypes().size());
+        assertTrue(condition2.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(condition2.getConditionTypes().contains(WeatherConditionType.RAIN));
 
         WeatherCondition condition3 = weather.getConditions().get(3);
         assertEquals("Light rain", condition3.getConditionText());
@@ -185,6 +193,9 @@ public class WeatherUtils {
         assertEquals(287, temp3.getHigh());
         assertEquals(53, condition3.getCloudiness().getValue());
         assertEquals(0.36f, condition3.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(2, condition3.getConditionTypes().size());
+        assertTrue(condition3.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(condition3.getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
     }
     
     public static void checkWeather(ru.gelin.android.weather.v_0_2.Weather weather) {
