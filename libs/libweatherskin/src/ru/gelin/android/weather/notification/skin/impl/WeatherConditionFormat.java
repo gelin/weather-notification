@@ -77,16 +77,16 @@ public class WeatherConditionFormat {
 
     static Map<WeatherConditionType, Integer> IMG_MAP = new EnumMap<WeatherConditionType, Integer>(WeatherConditionType.class);
     static {
-        IMG_MAP.put(THUNDERSTORM_RAIN_LIGHT, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_RAIN, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_RAIN_HEAVY, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_LIGHT, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_HEAVY, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_RAGGED, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_DRIZZLE_LIGHT, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_DRIZZLE, R.drawable.condition_thunderstorm);
-        IMG_MAP.put(THUNDERSTORM_DRIZZLE_HEAVY, R.drawable.condition_thunderstorm);
+        IMG_MAP.put(THUNDERSTORM_RAIN_LIGHT, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_RAIN, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_RAIN_HEAVY, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_LIGHT, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_HEAVY, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_RAGGED, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_DRIZZLE_LIGHT, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_DRIZZLE, R.drawable.condition_storm);
+        IMG_MAP.put(THUNDERSTORM_DRIZZLE_HEAVY, R.drawable.condition_storm);
 
         IMG_MAP.put(DRIZZLE_LIGHT, R.drawable.condition_rain);
         IMG_MAP.put(DRIZZLE, R.drawable.condition_rain);
