@@ -41,6 +41,8 @@ class WeatherStorageKeys {
     
     /** Preference name pattern for condition text. */
     static final String CONDITION_TEXT = "weather_%d_condition_text";
+    /** Preference name pattern for condition type. */
+    static final String CONDITION_TYPES = "weather_%d_condition_type_%d";
     
     /** Preference name pattern for temperature unit. */
     static final String TEMPERATURE_UNIT = "weather_%d_temperature_unit";

@@ -31,6 +31,7 @@ import ru.gelin.android.weather.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -88,6 +89,7 @@ public class WeatherStorage {
                     new ConditionPreferencesEditor(editor, i);
             
             conditionEditor.putOrRemove(CONDITION_TEXT, condition.getConditionText());
+            conditionEditor.putOrRemove(CONDITION_TYPES, condition.getConditionTypes());
             
             Temperature temp = condition.getTemperature();
             conditionEditor.putOrRemove(TEMPERATURE_UNIT, temp.getTemperatureUnit());
@@ -133,6 +135,7 @@ public class WeatherStorage {
                     new ConditionPreferencesEditor(editor, i);
 
             conditionEditor.remove(CONDITION_TEXT);
+            conditionEditor.remove(CONDITION_TYPES, 0);
 
             conditionEditor.remove(TEMPERATURE_UNIT);
             conditionEditor.remove(CURRENT_TEMP);
@@ -183,6 +186,11 @@ public class WeatherStorage {
             
             SimpleWeatherCondition condition = new SimpleWeatherCondition();
             condition.setConditionText(conditionReader.get(CONDITION_TEXT, ""));
+
+            Collection<WeatherConditionType> types = conditionReader.getEnums(CONDITION_TYPES, WeatherConditionType.class);
+            for (WeatherConditionType type : types) {
+                condition.addConditionType(type);
+            }
             
             TemperatureUnit tunit = conditionReader.get(TEMPERATURE_UNIT, TemperatureUnit.F);
             SimpleTemperature temp = new SimpleTemperature(tunit);
@@ -232,29 +240,46 @@ public class WeatherStorage {
         editor.commit();
     }
 
-    private static class ConditionPreferencesEditor {
+    private abstract static class ConditionPreferences {
 
-        SharedPreferences.Editor editor;
         int index;
 
-        public ConditionPreferencesEditor(SharedPreferences.Editor editor, int index) {
-            this.editor = editor;
+        protected ConditionPreferences(int index) {
             this.index = index;
         }
 
-        private String formatKey(String keyTemplate) {
+        protected String formatKey(String keyTemplate) {
             return String.format(keyTemplate, this.index);
+        }
+
+        protected String formatKey(String keyTemplate, int subindex) {
+            return String.format(keyTemplate, this.index, subindex);
+        }
+
+    }
+
+    private static class ConditionPreferencesEditor extends ConditionPreferences {
+
+        SharedPreferences.Editor editor;
+
+        public ConditionPreferencesEditor(SharedPreferences.Editor editor, int index) {
+            super(index);
+            this.editor = editor;
         }
 
         public void remove(String key) {
             this.editor.remove(formatKey(key));
         }
 
+        public void remove(String key, int subindex) {
+            this.editor.remove(formatKey(key, subindex));
+        }
+
         public void putOrRemove(String key, String value) {
             if (value == null || "".equals(value)) {
                 this.editor.remove(formatKey(key));
             } else {
-                editor.putString(formatKey(key), value);
+                this.editor.putString(formatKey(key), value);
             }
         }
 
@@ -262,40 +287,46 @@ public class WeatherStorage {
             if (value == null) {
                 this.editor.remove(formatKey(key));
             } else {
-                editor.putString(formatKey(key), String.valueOf(value));
+                this.editor.putString(formatKey(key), String.valueOf(value));
             }
+        }
+
+        public void putOrRemove(String key, Collection values) {
+            int i = 0;
+            if (values != null) {
+                for (Object value : values) {
+                    this.editor.putString(formatKey(key, i), String.valueOf(value));
+                    i++;
+                }
+            }
+            this.editor.remove(formatKey(key, i));
         }
 
         public void putOrRemove(String key, int value) {
             if (value == Integer.MIN_VALUE) {
-                editor.remove(formatKey(key));
+                this.editor.remove(formatKey(key));
             } else {
-                editor.putInt(formatKey(key), value);
+                this.editor.putInt(formatKey(key), value);
             }
         }
 
         public void putOrRemove(String key, float value) {
             if (value == Float.MIN_VALUE) {
-                editor.remove(formatKey(key));
+                this.editor.remove(formatKey(key));
             } else {
-                editor.putFloat(formatKey(key), value);
+                this.editor.putFloat(formatKey(key), value);
             }
         }
 
     }
 
-    private static class ConditionPreferencesReader {
+    private static class ConditionPreferencesReader extends ConditionPreferences {
 
         SharedPreferences preferences;
-        int index;
 
         public ConditionPreferencesReader(SharedPreferences preferences, int index) {
+            super(index);
             this.preferences = preferences;
-            this.index = index;
-        }
-
-        private String formatKey(String keyTemplate) {
-            return String.format(keyTemplate, this.index);
         }
 
         public String get(String key, String defaultValue) {
@@ -305,6 +336,16 @@ public class WeatherStorage {
         public <E extends Enum<E>> E get(String key, E defaultValue) {
             Class<? extends Enum> enumClass = defaultValue.getClass();
             return (E)Enum.valueOf(enumClass, this.preferences.getString(formatKey(key), String.valueOf(defaultValue)));
+        }
+
+        public <E extends Enum<E>> Collection<E> getEnums(String key, Class<E> enumClass) {
+            List<E> result = new ArrayList<E>();
+            int i = 0;
+            while (this.preferences.contains(formatKey(key, i))) {
+                result.add(Enum.valueOf(enumClass, this.preferences.getString(formatKey(key, i), null)));
+                i++;
+            }
+            return result;
         }
 
         public int get(String key, int defaultValue) {
