@@ -39,6 +39,8 @@ class ParcelableWeatherKeys {
     
     /** Key for condition text. */
     static final String CONDITION_TEXT = "weather_condition_text";
+    /** Key for condition type. */
+    static final String CONDITION_TYPES = "weather_condition_types";
 
     /** Key for temperature unit. */
     static final String TEMPERATURE_UNIT = "weather_temperature_unit";

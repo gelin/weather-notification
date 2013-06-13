@@ -34,6 +34,7 @@
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
     <orderEntry type="module" module-name="libweatherskin" />
+    <orderEntry type="library" name="Python 2.7.3 (/usr/bin/python2.7) interpreter library" level="application" />
   </component>
 </module>
 

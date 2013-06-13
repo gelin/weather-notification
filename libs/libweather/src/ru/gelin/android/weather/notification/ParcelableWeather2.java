@@ -30,6 +30,7 @@ import ru.gelin.android.weather.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -182,12 +183,23 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
     void writeCondition(WeatherCondition condition, Parcel dest) {
         Bundle bundle = new Bundle();
         bundle.putString(CONDITION_TEXT, condition.getConditionText());
+        writeConditionTypes(condition.getConditionTypes(), bundle);
         writeTemperature(condition.getTemperature(), bundle);
         writeHumidity(condition.getHumidity(), bundle);
         writeWind(condition.getWind(), bundle);
         writeCloudiness(condition.getCloudiness(), bundle);
         writePrecipitation(condition.getPrecipitation(), bundle);
         dest.writeBundle(bundle);
+    }
+
+    void writeConditionTypes(Collection<WeatherConditionType> types, Bundle bundle) {
+        String[] typesToStore = new String[types.size()];
+        int i = 0;
+        for (WeatherConditionType type : types) {
+            typesToStore[i] = String.valueOf(type);
+            i++;
+        }
+        bundle.putStringArray(CONDITION_TYPES, typesToStore);
     }
     
     void writeTemperature(Temperature temp, Bundle bundle) {
@@ -275,6 +287,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         Bundle bundle = in.readBundle(this.getClass().getClassLoader());
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(bundle.getString(CONDITION_TEXT));
+        readConditionTypes(bundle, condition);
         
         condition.setTemperature(readTemperature(bundle));
         condition.setHumidity(readHumidity(bundle));
@@ -283,6 +296,16 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         condition.setPrecipitation(readPrecipitation(bundle));
         
         return condition;
+    }
+
+    void readConditionTypes(Bundle bundle, SimpleWeatherCondition condition) {
+        String[] types = bundle.getStringArray(CONDITION_TYPES);
+        if (types == null) {
+            return;
+        }
+        for (String type : types) {
+            condition.addConditionType(WeatherConditionType.valueOf(type));
+        }
     }
     
     SimpleTemperature readTemperature(Bundle bundle) {
