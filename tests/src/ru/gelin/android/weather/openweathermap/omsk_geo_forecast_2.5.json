@@ -1,0 +1,113 @@
+{
+    "cod": "200",
+    "message": 0.0141,
+    "city": {
+        "id": 1496153,
+        "name": "Omsk",
+        "coord": {
+            "lon": 73.400002,
+            "lat": 55
+        },
+        "country": "RU",
+        "population": 0
+    },
+    "cnt": 4,
+    "list": [
+        {
+            "dt": 1376550000,
+            "temp": {
+                "day": 294.15,
+                "min": 287.56,
+                "max": 294.15,
+                "night": 287.56,
+                "eve": 294.15,
+                "morn": 294.15
+            },
+            "pressure": 1021.85,
+            "humidity": 76,
+            "weather": [
+                {
+                    "id": 801,
+                    "main": "Clouds",
+                    "description": "few clouds",
+                    "icon": "02d"
+                }
+            ],
+            "speed": 5.65,
+            "deg": 349,
+            "clouds": 12
+        },
+        {
+            "dt": 1376636400,
+            "temp": {
+                "day": 292.52,
+                "min": 284.11,
+                "max": 293.37,
+                "night": 285.02,
+                "eve": 293.25,
+                "morn": 284.11
+            },
+            "pressure": 1026.97,
+            "humidity": 98,
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "sky is clear",
+                    "icon": "01d"
+                }
+            ],
+            "speed": 2.1,
+            "deg": 7,
+            "clouds": 0
+        },
+        {
+            "dt": 1376722800,
+            "temp": {
+                "day": 292.85,
+                "min": 282.21,
+                "max": 293.93,
+                "night": 286.04,
+                "eve": 293.9,
+                "morn": 282.21
+            },
+            "pressure": 1026.92,
+            "humidity": 93,
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "sky is clear",
+                    "icon": "01d"
+                }
+            ],
+            "speed": 1.95,
+            "deg": 209,
+            "clouds": 0
+        },
+        {
+            "dt": 1376809200,
+            "temp": {
+                "day": 294.08,
+                "min": 283.12,
+                "max": 295.25,
+                "night": 286.39,
+                "eve": 295.16,
+                "morn": 283.12
+            },
+            "pressure": 1024.16,
+            "humidity": 90,
+            "weather": [
+                {
+                    "id": 800,
+                    "main": "Clear",
+                    "description": "sky is clear",
+                    "icon": "01d"
+                }
+            ],
+            "speed": 2.21,
+            "deg": 210,
+            "clouds": 0
+        }
+    ]
+}
