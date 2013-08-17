@@ -51,10 +51,16 @@
             "humidity": 98,
             "weather": [
                 {
-                    "id": 800,
-                    "main": "Clear",
-                    "description": "sky is clear",
-                    "icon": "01d"
+                    "id": 801,
+                    "main": "Few Clouds",
+                    "description": "few clouds",
+                    "icon": ""
+                },
+                {
+                    "id": 500,
+                    "main": "Light Rain",
+                    "description": "light rain",
+                    "icon": ""
                 }
             ],
             "speed": 2.1,
@@ -76,10 +82,16 @@
             "humidity": 93,
             "weather": [
                 {
-                    "id": 800,
-                    "main": "Clear",
-                    "description": "sky is clear",
-                    "icon": "01d"
+                    "id": 803,
+                    "main": "Clouds",
+                    "description": "broken clouds",
+                    "icon": ""
+                },
+                {
+                    "id": 501,
+                    "main": "Moderate Rain",
+                    "description": "moderate rain",
+                    "icon": ""
                 }
             ],
             "speed": 1.95,
@@ -101,10 +113,16 @@
             "humidity": 90,
             "weather": [
                 {
-                    "id": 800,
-                    "main": "Clear",
-                    "description": "sky is clear",
-                    "icon": "01d"
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "overcast clouds",
+                    "icon": ""
+                },
+                {
+                    "id": 521,
+                    "main": "Shower Rain",
+                    "description": "shower rain",
+                    "icon": ""
                 }
             ],
             "speed": 2.21,

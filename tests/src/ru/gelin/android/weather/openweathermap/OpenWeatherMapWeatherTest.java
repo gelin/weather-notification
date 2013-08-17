@@ -187,16 +187,16 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(1, conditions.get(0).getConditionTypes().size());
-        assertTrue(conditions.get(0).getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
+        assertTrue(conditions.get(0).getConditionTypes().contains(WeatherConditionType.CLOUDS_CLEAR));
         assertEquals(2, conditions.get(1).getConditionTypes().size());
-        assertTrue(conditions.get(1).getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(conditions.get(1).getConditionTypes().contains(WeatherConditionType.CLOUDS_FEW));
         assertTrue(conditions.get(1).getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
         assertEquals(2, conditions.get(2).getConditionTypes().size());
-        assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
         assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.RAIN));
         assertEquals(2, conditions.get(3).getConditionTypes().size());
         assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
-        assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
+        assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.RAIN_SHOWER));
     }
 
     public void testForecastGetConditionText() throws IOException, JSONException, WeatherException {
@@ -204,10 +204,10 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
-        assertEquals("Broken clouds", conditions.get(0).getConditionText());
+        assertEquals("Sky is clear", conditions.get(0).getConditionText());
         assertEquals("Light rain", conditions.get(1).getConditionText());
         assertEquals("Rain", conditions.get(2).getConditionText());
-        assertEquals("Light rain", conditions.get(3).getConditionText());
+        assertEquals("Shower rain", conditions.get(3).getConditionText());
     }
 
     public void testParseNoHumidity() throws IOException, JSONException, WeatherException {
