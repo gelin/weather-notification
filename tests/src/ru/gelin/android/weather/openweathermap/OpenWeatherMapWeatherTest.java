@@ -133,10 +133,10 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
-        assertEquals(278, conditions.get(0).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(278, conditions.get(1).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(278, conditions.get(2).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(276, conditions.get(3).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(287, conditions.get(0).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(284, conditions.get(1).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(282, conditions.get(2).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(283, conditions.get(3).getTemperature(TemperatureUnit.K).getLow());
     }
 
     public void testForecastGetHighTemperature() throws IOException, JSONException, WeatherException {
@@ -144,10 +144,10 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
-        assertEquals(288, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(281, conditions.get(1).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(285, conditions.get(2).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(287, conditions.get(3).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(294, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(293, conditions.get(1).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(293, conditions.get(2).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(295, conditions.get(3).getTemperature(TemperatureUnit.K).getHigh());
     }
 
     public void testForecastGetTemperature() throws IOException, JSONException, WeatherException {
@@ -156,7 +156,7 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
         //the current temp should come from the city JSON
-        assertEquals(283, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
+        assertEquals(294, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
     }
 
     public void testForecastGetPrecipitations() throws IOException, JSONException, WeatherException {
@@ -164,10 +164,10 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
-        assertEquals(Precipitation.UNKNOWN, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));  //current
-        assertEquals(0.15f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
-        assertEquals(0.47f, conditions.get(2).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
-        assertEquals(0.36f, conditions.get(3).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(0f, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));  //current
+        assertEquals(1f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(2f, conditions.get(2).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(3f, conditions.get(3).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
     }
 
     public void testForecastGetCloudiness() throws IOException, JSONException, WeatherException {

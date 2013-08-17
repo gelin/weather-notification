@@ -9,7 +9,10 @@ import ru.gelin.android.weather.notification.skin.impl.WeatherConditionFormat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  *  Weather implementation which constructs from the JSON received from openweathermap.org
@@ -131,7 +134,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     private void parseCondition(JSONObject weatherJSON) {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
-        condition.setTemperature(parseTemperature(weatherJSON));
+        condition.setTemperature(parseTemperature(weatherJSON, TemperatureFields.CURRENT_WEATHER));
         condition.setWind(parseWind(weatherJSON));
         condition.setHumidity(parseHumidity(weatherJSON));
         condition.setPrecipitation(parsePrecipitation(weatherJSON));
@@ -141,29 +144,58 @@ public class OpenWeatherMapWeather implements Weather {
         this.conditions.add(condition);
     }
 
-    private SimpleTemperature parseTemperature(JSONObject weatherJSON) {
+    static private enum TemperatureFields {
+        CURRENT_WEATHER("main", "temp", "temp_min", "temp_max"),
+        DAILY_FORECAST("temp", null, "min", "max");
+
+        private String main;
+        private String current;
+        private String min;
+        private String max;
+
+        private TemperatureFields(String main, String current, String min, String max) {
+            this.main = main;
+            this.current = current;
+            this.min = min;
+            this.max = max;
+        }
+        public String getMain() {
+            return this.main;
+        }
+        public String getCurrent() {
+            return this.current;
+        }
+        public String getMin() {
+            return this.min;
+        }
+        public String getMax() {
+            return this.max;
+        }
+    }
+
+    private SimpleTemperature parseTemperature(JSONObject weatherJSON, TemperatureFields fields) {
         AppendableTemperature temperature = new AppendableTemperature(TemperatureUnit.K);
         JSONObject main;
         try {
-            main = weatherJSON.getJSONObject("main");
+            main = weatherJSON.getJSONObject(fields.getMain());
         } catch (JSONException e) {
             //temp is optional
             return temperature;
         }
         try {
-            double currentTemp = main.getDouble("temp");
+            double currentTemp = main.getDouble(fields.getCurrent());
             temperature.setCurrent((int)currentTemp, TemperatureUnit.K);
         } catch (JSONException e) {
             //temp is optional
         }
         try {
-            double minTemp = main.getDouble("temp_min");
+            double minTemp = main.getDouble(fields.getMin());
             temperature.setLow((int)minTemp, TemperatureUnit.K);
         } catch (JSONException e) {
             //min temp is optional
         }
         try {
-            double maxTemp = main.getDouble("temp_max");
+            double maxTemp = main.getDouble(fields.getMax());
             temperature.setHigh((int)maxTemp, TemperatureUnit.K);
         } catch (JSONException e) {
             //max temp is optional
@@ -218,6 +250,16 @@ public class OpenWeatherMapWeather implements Weather {
         return precipitation;
     }
 
+    private AppendablePrecipitation parseForecastPrecipitation(JSONObject weatherJSON) {
+        AppendablePrecipitation precipitation = new AppendablePrecipitation(PrecipitationUnit.MM);
+        try {
+            precipitation.setValue((float)weatherJSON.getDouble("rain"), PrecipitationPeriod.PERIOD_3H);
+        } catch (JSONException e) {
+            //no rain
+        }
+        return precipitation;
+    }
+
     private AppendableCloudiness parseCloudiness(JSONObject weatherJSON) {
         AppendableCloudiness cloudiness = new AppendableCloudiness(CloudinessUnit.PERCENT);
         try {
@@ -246,23 +288,11 @@ public class OpenWeatherMapWeather implements Weather {
             JSONArray list = json.getJSONArray("list");
             int j = 0;
             SimpleWeatherCondition condition = getCondition(0);
-            Date conditionDate = getConditionDate(0);
-            for (; j < list.length(); j++) {
-                boolean appended = appendForecastTemperature(condition, conditionDate, list.getJSONObject(j));
-                if (!appended) {
-                    break;
-                }
-            }
+            appendForecastTemperature(condition, list.getJSONObject(0));
             condition.setConditionText(this.conditionFormat.getText(condition));
             for (int i = 1; i < 4; i++) {
                 condition = getCondition(i);
-                conditionDate = getConditionDate(i);
-                for (; j < list.length(); j++) {
-                    boolean appended = appendForecast(condition, conditionDate, list.getJSONObject(j));
-                    if (!appended) {
-                        break;
-                    }
-                }
+                appendForecast(condition, list.getJSONObject(i));
                 condition.setConditionText(this.conditionFormat.getText(condition));
             }
         } catch (JSONException e) {
@@ -284,51 +314,23 @@ public class OpenWeatherMapWeather implements Weather {
         return this.conditions.get(i);
     }
 
-    private Date getConditionDate(int i) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(roundDate(this.getTime()));
-        calendar.add(Calendar.DAY_OF_MONTH, i);
-        return calendar.getTime();
-    }
-
-    private Date roundDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        return calendar.getTime();
-    }
-
-    private boolean appendForecastTemperature(SimpleWeatherCondition condition,
-            Date conditionDate, JSONObject weatherJSON)
+    private void appendForecastTemperature(SimpleWeatherCondition condition, JSONObject weatherJSON)
             throws JSONException {
-        Date weatherDate = new Date(weatherJSON.getLong("dt") * 1000);
-        if (roundDate(weatherDate).after(conditionDate)) {
-            return false;
-        }
-        AppendableTemperature exitedTemp = (AppendableTemperature)condition.getTemperature();
-        SimpleTemperature newTemp = parseTemperature(weatherJSON);
-        exitedTemp.append(newTemp);
-        return true;
+        AppendableTemperature existedTemp = (AppendableTemperature)condition.getTemperature();
+        SimpleTemperature newTemp = parseTemperature(weatherJSON, TemperatureFields.DAILY_FORECAST);
+        existedTemp.append(newTemp);
     }
 
-    private boolean appendForecast(SimpleWeatherCondition condition,
-            Date conditionDate, JSONObject weatherJSON)
+    private void appendForecast(SimpleWeatherCondition condition, JSONObject weatherJSON)
             throws JSONException {
-        boolean result = appendForecastTemperature(condition, conditionDate, weatherJSON);
-        if (result == false) {
-            return false;
-        }
-        AppendablePrecipitation exitedPrec = (AppendablePrecipitation)condition.getPrecipitation();
-        SimplePrecipitation newPrec = parsePrecipitation(weatherJSON);
-        exitedPrec.append(newPrec);
-        AppendableCloudiness exitedCloud = (AppendableCloudiness)condition.getCloudiness();
+        appendForecastTemperature(condition, weatherJSON);
+        AppendablePrecipitation existedPrec = (AppendablePrecipitation)condition.getPrecipitation();
+        SimplePrecipitation newPrec = parseForecastPrecipitation(weatherJSON);
+        existedPrec.append(newPrec);
+        AppendableCloudiness existedCloud = (AppendableCloudiness)condition.getCloudiness();
         SimpleCloudiness newCloud = parseCloudiness(weatherJSON);
-        exitedCloud.append(newCloud);
+        existedCloud.append(newCloud);
         parseWeatherType(weatherJSON, condition);
-        return true;
     }
 
 }
