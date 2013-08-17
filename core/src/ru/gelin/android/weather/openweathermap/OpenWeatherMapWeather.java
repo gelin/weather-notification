@@ -41,7 +41,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     public OpenWeatherMapWeather(Context context, JSONObject jsonObject) throws WeatherException {
         this(context);
-        parseCityWeather(jsonObject);
+        parseCurrentWeather(jsonObject);
     }
 
     @Override
@@ -86,18 +86,17 @@ public class OpenWeatherMapWeather implements Weather {
         return this.forecastURL;
     }
 
-    void parseCityWeather(JSONObject json) throws WeatherException {
+    void parseCurrentWeather(JSONObject json) throws WeatherException {
         try {
-            JSONArray list = json.getJSONArray("list");
-            if (list.length() == 0) {
+            int code = json.getInt("cod");
+            if (code != 200) {
                 this.empty = true;
                 return;
             }
-            JSONObject weatherJSON = list.getJSONObject(0);
-            parseCityId(weatherJSON);
-            parseLocation(weatherJSON);
-            parseTime(weatherJSON);
-            parseCondition(weatherJSON);
+            parseCityId(json);
+            parseLocation(json);
+            parseTime(json);
+            parseCondition(json);
         } catch (JSONException e) {
             throw new WeatherException("cannot parse the weather", e);
         }
@@ -242,7 +241,7 @@ public class OpenWeatherMapWeather implements Weather {
         }
     }
 
-    void parseForecast(JSONObject json) throws WeatherException {
+    void parseDailyForecast(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
             int j = 0;

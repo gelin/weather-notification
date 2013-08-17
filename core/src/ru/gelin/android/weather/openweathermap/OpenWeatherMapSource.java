@@ -46,11 +46,11 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
             return new TestWeather(Integer.parseInt(location.getText().substring(1)));
         }
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(this.context);
-        weather.parseCityWeather(queryCityWeather(location));
+        weather.parseCurrentWeather(queryCurrentWeather(location));
         if (weather.isEmpty()) {
             return weather;
         }
-        weather.parseForecast(queryForecast(weather.getCityId()));
+        weather.parseDailyForecast(queryDailyForecast(weather.getCityId()));
         return weather;
     }
 
@@ -65,7 +65,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         request.addHeader("X-API-Key", API_KEY);
     }
 
-    JSONObject queryCityWeather(Location location) throws WeatherException {
+    JSONObject queryCurrentWeather(Location location) throws WeatherException {
         String url;
         if (location.isGeo()) {
             url = API_CITY_URL + location.getQuery();
@@ -80,7 +80,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         }
     }
 
-    JSONObject queryForecast(int cityId) throws WeatherException {
+    JSONObject queryDailyForecast(int cityId) throws WeatherException {
         String url = API_FORECAST_URL + String.valueOf(cityId);
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {

@@ -18,7 +18,7 @@ public class OpenWeatherMapSourceTest extends AndroidTestCase {
     public void testQueryOmskJSON() throws WeatherException, JSONException {
         OpenWeatherMapSource source = new OpenWeatherMapSource(getContext());
         Location location = new SimpleLocation("lat=54.96&lon=73.38&cnt=1", true);
-        JSONObject json = source.queryCityWeather(location);
+        JSONObject json = source.queryCurrentWeather(location);
         assertNotNull(json);
         assertEquals("Omsk", json.getJSONArray("list").getJSONObject(0).getString("name"));
     }
@@ -34,7 +34,7 @@ public class OpenWeatherMapSourceTest extends AndroidTestCase {
     public void testQueryOmskNameJSON() throws WeatherException, JSONException {
         OpenWeatherMapSource source = new OpenWeatherMapSource(getContext());
         Location location = new SimpleLocation("q=omsk", false);
-        JSONObject json = source.queryCityWeather(location);
+        JSONObject json = source.queryCurrentWeather(location);
         assertNotNull(json);
         assertEquals("Omsk", json.getJSONArray("list").getJSONObject(0).getString("name"));
     }

@@ -14,13 +14,13 @@ import java.io.Reader;
 public class WeatherUtils {
     
     public static Weather createOpenWeather(Context context) throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         return weather;
     }
 
     public static Weather createIncompleteOpenWeather(Context context) throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context, readJSON("omsk_name_2.5.json"));
         return weather;
     }
 

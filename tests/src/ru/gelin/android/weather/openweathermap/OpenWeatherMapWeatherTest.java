@@ -18,7 +18,7 @@ import java.util.TimeZone;
 public class OpenWeatherMapWeatherTest extends AndroidTestCase {
 
     public void testNotEmpty() throws WeatherException, IOException, JSONException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
     }
@@ -30,9 +30,9 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testGetTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(10, condition.getTemperature(TemperatureUnit.C).getCurrent());
+        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
     public void testParseEmptyJSON() throws JSONException {
@@ -46,97 +46,91 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testGetLocation() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         Location location = weather.getLocation();
         assertNotNull(location);
         assertEquals("Omsk", location.getText());
     }
 
     public void testGetTime() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         Date time = weather.getTime();
         assertNotNull(time);
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-        calendar.set(2012, Calendar.SEPTEMBER, 14, 05, 30, 00);
+        calendar.set(2013, Calendar.AUGUST, 15, 14, 00, 00);
         calendar.set(Calendar.MILLISECOND, 0);
         assertEquals(calendar.getTime(), time);
     }
 
     public void testGetQueryTime() throws IOException, JSONException, WeatherException {
         long now = System.currentTimeMillis();
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         assertTrue(now < weather.getQueryTime().getTime());
     }
 
     public void testGetConditionText() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
         String text = condition.getConditionText();
-        assertEquals("Broken clouds", text);
+        assertEquals("Sky is clear", text);
     }
 
     public void testGetLowTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(10, condition.getTemperature(TemperatureUnit.C).getLow());
+        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getLow());
     }
 
     public void testGetHighTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(10, condition.getTemperature(TemperatureUnit.C).getHigh());
+        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getHigh());
     }
 
     public void testGetWind() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
         Wind wind = condition.getWind(WindSpeedUnit.MPS);
         assertNotNull(wind);
-        assertEquals(5, wind.getSpeed());
-        assertEquals(WindDirection.SSE, wind.getDirection());
+        assertEquals(4, wind.getSpeed());
+        assertEquals(WindDirection.N, wind.getDirection());
     }
 
     public void testGetHumidity() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
         Humidity humidity = condition.getHumidity();
         assertNotNull(humidity);
-        assertEquals(81, humidity.getValue());
+        assertEquals(56, humidity.getValue());
     }
 
     public void testGetTemperatureUnit() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         WeatherCondition condition = weather.getConditions().get(0);
         assertEquals(TemperatureUnit.K, condition.getTemperature().getTemperatureUnit());
     }
 
-    public void testGetEmptyWeather() throws JSONException, WeatherException {
-        JSONTokener parser = new JSONTokener("{\"list\":[]}");
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), (JSONObject)parser.nextValue());
-        assertTrue(weather.isEmpty());
-    }
-
     public void testGetCityID() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         assertEquals(1496153, weather.getCityId());
     }
 
     public void testGetForecastURL() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
         assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
     }
 
     public void testForecastsNulls() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         assertEquals(4, weather.getConditions().size());
         assertNotNull(weather.getConditions().get(3).getHumidity());
         assertNotNull(weather.getConditions().get(3).getWind());
     }
 
     public void testForecastGetLowTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
         assertEquals(278, conditions.get(0).getTemperature(TemperatureUnit.K).getLow());
@@ -146,8 +140,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetHighTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
         assertEquals(288, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
@@ -157,8 +151,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetTemperature() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
         //the current temp should come from the city JSON
@@ -166,8 +160,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetPrecipitations() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(Precipitation.UNKNOWN, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));  //current
@@ -177,8 +171,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetCloudiness() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(75, conditions.get(0).getCloudiness().getValue());  //current
@@ -188,8 +182,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetConditionTypes() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
         assertEquals(1, conditions.get(0).getConditionTypes().size());
@@ -206,8 +200,8 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
     }
 
     public void testForecastGetConditionText() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_city_2.1.json"));
-        weather.parseForecast(readJSON("omsk_forecast_2.1.json"));
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<WeatherCondition> conditions = weather.getConditions();
         assertEquals(4, conditions.size());
         assertEquals("Broken clouds", conditions.get(0).getConditionText());
@@ -237,6 +231,13 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals("", weather.getLocation().getText());
         WeatherCondition condition = weather.getConditions().get(0);
         assertEquals(Temperature.UNKNOWN, condition.getTemperature(TemperatureUnit.C).getCurrent());
+    }
+
+    public void testParseBadResultCodeJSON() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{ \"cod\": \"404\"}");
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), (JSONObject)parser.nextValue());
+        assertNotNull(weather);
+        assertTrue(weather.isEmpty());
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
