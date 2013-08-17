@@ -175,10 +175,10 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
         assertEquals(4, conditions.size());
-        assertEquals(75, conditions.get(0).getCloudiness().getValue());  //current
-        assertEquals(85, conditions.get(1).getCloudiness().getValue());
-        assertEquals(82, conditions.get(2).getCloudiness().getValue());
-        assertEquals(53, conditions.get(3).getCloudiness().getValue());
+        assertEquals(0, conditions.get(0).getCloudiness().getValue());  //current
+        assertEquals(18, conditions.get(1).getCloudiness().getValue());
+        assertEquals(0, conditions.get(2).getCloudiness().getValue());
+        assertEquals(22, conditions.get(3).getCloudiness().getValue());
     }
 
     public void testForecastGetConditionTypes() throws IOException, JSONException, WeatherException {

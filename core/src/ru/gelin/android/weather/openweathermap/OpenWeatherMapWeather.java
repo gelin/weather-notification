@@ -270,6 +270,16 @@ public class OpenWeatherMapWeather implements Weather {
         return cloudiness;
     }
 
+    private AppendableCloudiness parseForecastCloudiness(JSONObject weatherJSON) {
+        AppendableCloudiness cloudiness = new AppendableCloudiness(CloudinessUnit.PERCENT);
+        try {
+            cloudiness.setValue((int)weatherJSON.getDouble("clouds"), CloudinessUnit.PERCENT);
+        } catch (JSONException e) {
+            //no clouds
+        }
+        return cloudiness;
+    }
+
     private void parseWeatherType(JSONObject weatherJSON, SimpleWeatherCondition condition) {
         try {
             JSONArray weathers = weatherJSON.getJSONArray("weather");
@@ -328,7 +338,7 @@ public class OpenWeatherMapWeather implements Weather {
         SimplePrecipitation newPrec = parseForecastPrecipitation(weatherJSON);
         existedPrec.append(newPrec);
         AppendableCloudiness existedCloud = (AppendableCloudiness)condition.getCloudiness();
-        SimpleCloudiness newCloud = parseCloudiness(weatherJSON);
+        SimpleCloudiness newCloud = parseForecastCloudiness(weatherJSON);
         existedCloud.append(newCloud);
         parseWeatherType(weatherJSON, condition);
     }
