@@ -240,6 +240,16 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertTrue(weather.isEmpty());
     }
 
+    public void testForecastGetWind() {
+        //TODO
+        fail();
+    }
+
+    public void testForecastGetHumidity() {
+        //TODO
+        fail();
+    }
+
     JSONObject readJSON(String resourceName) throws IOException, JSONException {
         Reader reader = new InputStreamReader(getClass().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();
