@@ -110,13 +110,14 @@ public class OpenWeatherMapWeather implements Weather {
     void parseDailyForecast(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("list");
-            int j = 0;
             SimpleWeatherCondition condition = getCondition(0);
-            appendForecastTemperature(condition, list.getJSONObject(0));
-            condition.setConditionText(this.conditionFormat.getText(condition));
-            for (int i = 1; i < 4; i++) {
+            if (list.length() > 0) {
+                appendForecastTemperature(condition, list.getJSONObject(0));
+                condition.setConditionText(this.conditionFormat.getText(condition));
+            }
+            for (int i = 1; i < 4 && i < list.length(); i++) {
                 condition = getCondition(i);
-                appendForecast(condition, list.getJSONObject(i));
+                parseForecast(condition, list.getJSONObject(i));
                 condition.setConditionText(this.conditionFormat.getText(condition));
             }
         } catch (JSONException e) {
@@ -171,7 +172,7 @@ public class OpenWeatherMapWeather implements Weather {
         private SimpleTemperature parseTemperature() {
             AppendableTemperature temperature = new AppendableTemperature(TemperatureUnit.K);
             JSONObject main;
-            if (!isTempExists()) {
+            if (!hasTemp()) {
                 //temp is optional
                 return temperature;
             }
@@ -196,28 +197,24 @@ public class OpenWeatherMapWeather implements Weather {
             return temperature;
         }
 
-        protected abstract boolean isTempExists();
+        protected abstract boolean hasTemp();
         protected abstract double getCurrentTemp() throws JSONException;
         protected abstract double getMinTemp() throws JSONException;
         protected abstract double getMaxTemp() throws JSONException;
 
         private SimpleWind parseWind() {
             SimpleWind wind = new SimpleWind(WindSpeedUnit.MPS);
-            JSONObject windJSON;
-            try {
-                windJSON = this.json.getJSONObject("wind");
-            } catch (JSONException e) {
-                //wind is optional
+            if (!hasWind()) {
                 return wind;
             }
             try {
-                double speed = windJSON.getDouble("speed");
-                wind.setSpeed((int)speed, WindSpeedUnit.MPS);
+                double speed = getWindSpeed();
+                wind.setSpeed((int)Math.round(speed), WindSpeedUnit.MPS);
             } catch (JSONException e) {
                 //wind speed is optional
             }
             try {
-                double deg = windJSON.getDouble("deg");
+                double deg = getWindDeg();
                 wind.setDirection(WindDirection.valueOf((int) deg));
             } catch (JSONException e) {
                 //wind direction is optional
@@ -225,6 +222,10 @@ public class OpenWeatherMapWeather implements Weather {
             wind.setText(String.format("Wind: %s, %d m/s", String.valueOf(wind.getDirection()), wind.getSpeed()));
             return wind;
         }
+
+        protected abstract boolean hasWind();
+        protected abstract double getWindSpeed() throws JSONException;
+        protected abstract double getWindDeg() throws JSONException;
 
         private SimpleHumidity parseHumidity() {
             SimpleHumidity humidity = new SimpleHumidity();
@@ -238,8 +239,8 @@ public class OpenWeatherMapWeather implements Weather {
             return humidity;
         }
 
-        private AppendablePrecipitation parsePrecipitation() {
-            AppendablePrecipitation precipitation = new AppendablePrecipitation(PrecipitationUnit.MM);
+        private SimplePrecipitation parsePrecipitation() {
+            SimplePrecipitation precipitation = new SimplePrecipitation(PrecipitationUnit.MM);
             try {
                 precipitation.setValue(getPrecipitation(), PrecipitationPeriod.PERIOD_3H);
             } catch (JSONException e) {
@@ -250,8 +251,8 @@ public class OpenWeatherMapWeather implements Weather {
 
         protected abstract float getPrecipitation() throws JSONException;
 
-        public AppendableCloudiness parseCloudiness() {
-            AppendableCloudiness cloudiness = new AppendableCloudiness(CloudinessUnit.PERCENT);
+        public SimpleCloudiness parseCloudiness() {
+            SimpleCloudiness cloudiness = new SimpleCloudiness(CloudinessUnit.PERCENT);
             try {
                 cloudiness.setValue(getCloudiness(), CloudinessUnit.PERCENT);
             } catch (JSONException e) {
@@ -283,7 +284,7 @@ public class OpenWeatherMapWeather implements Weather {
         }
 
         @Override
-        protected boolean isTempExists() {
+        protected boolean hasTemp() {
             try {
                 this.json.getJSONObject("main");
                 return true;
@@ -308,6 +309,26 @@ public class OpenWeatherMapWeather implements Weather {
         }
 
         @Override
+        protected boolean hasWind() {
+            try {
+                this.json.getJSONObject("wind");
+                return true;
+            } catch (JSONException e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected double getWindSpeed() throws JSONException {
+            return this.json.getJSONObject("wind").getDouble("speed");
+        }
+
+        @Override
+        protected double getWindDeg() throws JSONException {
+            return this.json.getJSONObject("wind").getDouble("deg");
+        }
+
+        @Override
         protected float getPrecipitation() throws JSONException {
             return (float)this.json.getJSONObject("rain").getDouble("3h");
         }
@@ -325,7 +346,7 @@ public class OpenWeatherMapWeather implements Weather {
         }
 
         @Override
-        protected boolean isTempExists() {
+        protected boolean hasTemp() {
             try {
                 this.json.getJSONObject("temp");
                 return true;
@@ -350,6 +371,21 @@ public class OpenWeatherMapWeather implements Weather {
         }
 
         @Override
+        protected boolean hasWind() {
+            return true;   //considering forecasts always have wind
+        }
+
+        @Override
+        protected double getWindSpeed() throws JSONException {
+            return this.json.getDouble("speed");
+        }
+
+        @Override
+        protected double getWindDeg() throws JSONException {
+            return this.json.getDouble("deg");
+        }
+
+        @Override
         protected float getPrecipitation() throws JSONException {
             return (float)this.json.getDouble("rain");
         }
@@ -368,8 +404,8 @@ public class OpenWeatherMapWeather implements Weather {
             condition.setTemperature(new AppendableTemperature(TemperatureUnit.K));
             condition.setHumidity(new SimpleHumidity());
             condition.setWind(new SimpleWind(WindSpeedUnit.MPS));
-            condition.setPrecipitation(new AppendablePrecipitation(PrecipitationUnit.MM));
-            condition.setCloudiness(new AppendableCloudiness(CloudinessUnit.PERCENT));
+            condition.setPrecipitation(new SimplePrecipitation(PrecipitationUnit.MM));
+            condition.setCloudiness(new SimpleCloudiness(CloudinessUnit.PERCENT));
             this.conditions.add(condition);
         }
         return this.conditions.get(i);
@@ -383,16 +419,14 @@ public class OpenWeatherMapWeather implements Weather {
         existedTemp.append(newTemp);
     }
 
-    private void appendForecast(SimpleWeatherCondition condition, JSONObject json)
+    private void parseForecast(SimpleWeatherCondition condition, JSONObject json)
             throws JSONException {
         appendForecastTemperature(condition, json);
         WeatherParser parser = new ForecastWeatherParser(json);
-        AppendablePrecipitation existedPrec = (AppendablePrecipitation)condition.getPrecipitation();
-        SimplePrecipitation newPrec = parser.parsePrecipitation();
-        existedPrec.append(newPrec);
-        AppendableCloudiness existedCloud = (AppendableCloudiness)condition.getCloudiness();
-        SimpleCloudiness newCloud = parser.parseCloudiness();
-        existedCloud.append(newCloud);
+        condition.setHumidity(parser.parseHumidity());
+        condition.setWind(parser.parseWind());
+        condition.setPrecipitation(parser.parsePrecipitation());
+        condition.setCloudiness(parser.parseCloudiness());
         parser.parseWeatherType(condition);
     }
 
