@@ -251,9 +251,15 @@ public class OpenWeatherMapWeatherTest extends AndroidTestCase {
         assertEquals(WindDirection.SW, conditions.get(3).getWind().getDirection());
     }
 
-    public void testForecastGetHumidity() {
-        //TODO
-        fail();
+    public void testForecastGetHumidity() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(getContext(), readJSON("omsk_name_2.5.json"));
+        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
+        List<WeatherCondition> conditions = weather.getConditions();
+        assertEquals(4, conditions.size());
+        assertEquals(56, conditions.get(0).getHumidity().getValue());
+        assertEquals(98, conditions.get(1).getHumidity().getValue());
+        assertEquals(93, conditions.get(2).getHumidity().getValue());
+        assertEquals(90, conditions.get(3).getHumidity().getValue());
     }
 
     JSONObject readJSON(String resourceName) throws IOException, JSONException {

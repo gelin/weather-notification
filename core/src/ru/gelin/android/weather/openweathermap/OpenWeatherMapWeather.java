@@ -230,7 +230,7 @@ public class OpenWeatherMapWeather implements Weather {
         private SimpleHumidity parseHumidity() {
             SimpleHumidity humidity = new SimpleHumidity();
             try {
-                double humidityValue = this.json.getJSONObject("main").getDouble("humidity");
+                double humidityValue = getHumidity();
                 humidity.setValue((int)humidityValue);
                 humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
             } catch (JSONException e) {
@@ -238,6 +238,8 @@ public class OpenWeatherMapWeather implements Weather {
             }
             return humidity;
         }
+
+        protected abstract double getHumidity() throws JSONException;
 
         private SimplePrecipitation parsePrecipitation() {
             SimplePrecipitation precipitation = new SimplePrecipitation(PrecipitationUnit.MM);
@@ -329,6 +331,11 @@ public class OpenWeatherMapWeather implements Weather {
         }
 
         @Override
+        protected double getHumidity() throws JSONException {
+            return this.json.getJSONObject("main").getDouble("humidity");
+        }
+
+        @Override
         protected float getPrecipitation() throws JSONException {
             return (float)this.json.getJSONObject("rain").getDouble("3h");
         }
@@ -383,6 +390,11 @@ public class OpenWeatherMapWeather implements Weather {
         @Override
         protected double getWindDeg() throws JSONException {
             return this.json.getDouble("deg");
+        }
+
+        @Override
+        protected double getHumidity() throws JSONException {
+            return this.json.getDouble("humidity");
         }
 
         @Override
