@@ -18,13 +18,11 @@ import java.util.Locale;
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
     /** Base API URL */
-    static final String API_BASE_URL = "http://openweathermap.org/data/2.1";
-    /** Find city API URL */
-    static final String API_CITY_URL = API_BASE_URL + "/find/city?";
-    /** Find by name API URL */
-    static final String API_NAME_URL = API_BASE_URL + "/find/name?";
+    static final String API_BASE_URL = "http://openweathermap.org/data/2.5";
+    /** Current weather API URL */
+    static final String API_WEATHER_URL = API_BASE_URL + "/weather?";
     /** Forecasts API URL */
-    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/city/";
+    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/daily?cnt=4&id=";
     /** API key */
     static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
 
@@ -66,12 +64,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     }
 
     JSONObject queryCurrentWeather(Location location) throws WeatherException {
-        String url;
-        if (location.isGeo()) {
-            url = API_CITY_URL + location.getQuery();
-        } else {
-            url = API_NAME_URL + location.getQuery();
-        }
+        String url = API_WEATHER_URL + location.getQuery();
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();

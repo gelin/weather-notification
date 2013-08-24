@@ -30,7 +30,7 @@ import ru.gelin.android.weather.Location;
 public class AndroidOpenWeatherMapLocation implements Location {
 
     /** Query template */
-    static final String QUERY = "lat=%s&lon=%s&cnt=1";  //lat=54.96&lon=73.38&cnt=1
+    static final String QUERY = "lat=%s&lon=%s";  //lat=54.96&lon=73.38
 
     /** Android location */
     android.location.Location location;
@@ -44,7 +44,7 @@ public class AndroidOpenWeatherMapLocation implements Location {
 
     /**
      *  Creates the query with geo coordinates. 
-     *  For example: "lat=54.96&lon=73.38&cnt=1"
+     *  For example: "lat=54.96&lon=73.38"
      */
     //@Override
     public String getQuery() {
