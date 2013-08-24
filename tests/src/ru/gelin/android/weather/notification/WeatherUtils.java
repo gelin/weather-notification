@@ -130,9 +130,9 @@ public class WeatherUtils {
     public static void checkOpenWeather(Weather weather) throws MalformedURLException {
         assertEquals("Omsk", weather.getLocation().getText());
 
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.set(2013, Calendar.AUGUST, 15, 14, 00, 00);
         calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(2012, Calendar.SEPTEMBER, 14, 5, 30, 0);
         assertEquals(calendar.getTime(), weather.getTime());
         calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.add(Calendar.MINUTE, -1);
@@ -143,59 +143,68 @@ public class WeatherUtils {
         assertEquals(4, weather.getConditions().size());
 
         WeatherCondition condition0 = weather.getConditions().get(0);
-        assertEquals("Broken clouds", condition0.getConditionText());
+        assertEquals("Sky is clear", condition0.getConditionText());
         Temperature temp0 = condition0.getTemperature(TemperatureUnit.K);
-        assertEquals(283, temp0.getCurrent());
-        assertEquals(278, temp0.getLow());
-        assertEquals(288, temp0.getHigh());
+        assertEquals(294, temp0.getCurrent());
+        assertEquals(287, temp0.getLow());
+        assertEquals(294, temp0.getHigh());
         Humidity humidity = condition0.getHumidity();
-        assertEquals("Humidity: 81%", humidity.getText());
-        assertEquals(81, humidity.getValue());
+        assertEquals("Humidity: 56%", humidity.getText());
+        assertEquals(56, humidity.getValue());
         Wind wind = condition0.getWind(WindSpeedUnit.MPS);
-        assertEquals("Wind: SSE, 5 m/s", wind.getText());
-        assertEquals(WindDirection.SSE, wind.getDirection());
-        assertEquals(5, wind.getSpeed());
+        assertEquals("Wind: N, 4 m/s", wind.getText());
+        assertEquals(WindDirection.N, wind.getDirection());
+        assertEquals(4, wind.getSpeed());
         Cloudiness cloudiness = condition0.getCloudiness(CloudinessUnit.PERCENT);
-        assertEquals(75, cloudiness.getValue());
-        assertEquals(Precipitation.UNKNOWN, condition0.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H));
+        assertEquals(0, cloudiness.getValue());
+        assertEquals(0f, condition0.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
         assertEquals(1, condition0.getConditionTypes().size());
-        assertTrue(condition0.getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
+        assertTrue(condition0.getConditionTypes().contains(WeatherConditionType.CLOUDS_CLEAR));
 
         WeatherCondition condition1 = weather.getConditions().get(1);
         assertEquals("Light rain", condition1.getConditionText());
         Temperature temp1 = condition1.getTemperature(TemperatureUnit.K);
-        assertEquals(280, temp1.getCurrent());
-        assertEquals(278, temp1.getLow());
-        assertEquals(281, temp1.getHigh());
-        assertEquals(85, condition1.getCloudiness().getValue());
-        assertEquals(0.15f, condition1.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(289, temp1.getCurrent());
+        assertEquals(284, temp1.getLow());
+        assertEquals(293, temp1.getHigh());
+        assertEquals(98, condition1.getHumidity().getValue());
+        assertEquals(WindDirection.N, condition1.getWind().getDirection());
+        assertEquals(2, condition1.getWind().getSpeed());
+        assertEquals(18, condition1.getCloudiness().getValue());
+        assertEquals(1f, condition1.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
         assertEquals(2, condition1.getConditionTypes().size());
-        assertTrue(condition1.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(condition1.getConditionTypes().contains(WeatherConditionType.CLOUDS_FEW));
         assertTrue(condition1.getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
 
         WeatherCondition condition2 = weather.getConditions().get(2);
         assertEquals("Rain", condition2.getConditionText());
         Temperature temp2 = condition2.getTemperature(TemperatureUnit.K);
-        assertEquals(282, temp2.getCurrent());
-        assertEquals(278, temp2.getLow());
-        assertEquals(285, temp2.getHigh());
-        assertEquals(82, condition2.getCloudiness().getValue());
-        assertEquals(0.47f, condition2.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(288, temp2.getCurrent());
+        assertEquals(282, temp2.getLow());
+        assertEquals(293, temp2.getHigh());
+        assertEquals(93, condition2.getHumidity().getValue());
+        assertEquals(WindDirection.SW, condition2.getWind().getDirection());
+        assertEquals(2, condition2.getWind().getSpeed());
+        assertEquals(0, condition2.getCloudiness().getValue());
+        assertEquals(2f, condition2.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
         assertEquals(2, condition2.getConditionTypes().size());
-        assertTrue(condition2.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
+        assertTrue(condition2.getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
         assertTrue(condition2.getConditionTypes().contains(WeatherConditionType.RAIN));
 
         WeatherCondition condition3 = weather.getConditions().get(3);
-        assertEquals("Light rain", condition3.getConditionText());
+        assertEquals("Shower rain", condition3.getConditionText());
         Temperature temp3 = condition3.getTemperature(TemperatureUnit.K);
-        assertEquals(282, temp3.getCurrent());
-        assertEquals(276, temp3.getLow());
-        assertEquals(287, temp3.getHigh());
-        assertEquals(53, condition3.getCloudiness().getValue());
-        assertEquals(0.36f, condition3.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(289, temp3.getCurrent());
+        assertEquals(283, temp3.getLow());
+        assertEquals(295, temp3.getHigh());
+        assertEquals(90, condition3.getHumidity().getValue());
+        assertEquals(WindDirection.SW, condition3.getWind().getDirection());
+        assertEquals(2, condition3.getWind().getSpeed());
+        assertEquals(22, condition3.getCloudiness().getValue());
+        assertEquals(3f, condition3.getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
         assertEquals(2, condition3.getConditionTypes().size());
         assertTrue(condition3.getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
-        assertTrue(condition3.getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
+        assertTrue(condition3.getConditionTypes().contains(WeatherConditionType.RAIN_SHOWER));
     }
     
     public static void checkWeather(ru.gelin.android.weather.v_0_2.Weather weather) {
