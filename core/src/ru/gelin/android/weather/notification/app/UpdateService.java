@@ -162,15 +162,14 @@ public class UpdateService extends Service implements Runnable {
 
         Location location = null;
         LocationType locationType = getLocationType();
-        if (LocationType.LOCATION_GPS.equals(locationType) || LocationType.LOCATION_NETWORK.equals(locationType)) {
-            //TODO
-            location = queryLocation();
+        if (LocationType.LOCATION_MANUAL.equals(locationType)) {
+            location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
+        } else {
+            location = queryLocation(locationType.getLocationProvider());
             if (location == null) {
                 internalHandler.sendEmptyMessage(QUERY_LOCATION);
                 return;
             }
-        } else {
-            location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         }
         synchronized(this) {
             this.location = location;
@@ -324,17 +323,17 @@ public class UpdateService extends Service implements Runnable {
     /**
      *  Queries current location using android services.
      */
-    Location queryLocation() {
+    Location queryLocation(String locationProvider) {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         if (manager == null) {
             return null;
         }
         android.location.Location androidLocation = 
-                manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                manager.getLastKnownLocation(locationProvider);
 
         if (androidLocation == null || isExpired(androidLocation.getTime())) {
             try {
-                manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                manager.requestLocationUpdates(locationProvider,
                     0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
                 return null;
             } catch (IllegalArgumentException e) {
