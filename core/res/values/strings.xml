@@ -61,4 +61,7 @@
     <string name="location_gps">By GPS satellites</string>
     <string name="location_network">By cellular or Wi-Fi network</string>
     <string name="location_manual">Manually</string>
+    <string name="location_disabled">This location detection method is disabled in the device Settings.
+\nDo you want to open Settings to enable it?</string>
+    <string name="open_settings">Open Settings</string>
 </resources>

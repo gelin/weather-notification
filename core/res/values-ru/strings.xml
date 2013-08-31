@@ -61,4 +61,7 @@
     <string name="location_gps">По спутникам GPS</string>
     <string name="location_network">По сотовым и Wi-Fi сетям</string>
     <string name="location_manual">Вручную</string>
+    <string name="location_disabled">Этот метод определения местоположения отключен в Настройках устройства.
+\nОткрыть Настройки, чтобы включить его?</string>
+    <string name="open_settings">Открыть Настройки</string>
 </resources>

@@ -61,4 +61,7 @@
     <string name="location_gps">Por satélites GPS</string>
     <string name="location_network">Por celular o una red Wi-Fi</string>
     <string name="location_manual">Manual</string>
+    <string name="location_disabled">Este método de detección de la ubicación está deshabilitado en la configuración del dispositivo.
+\n¿Desea abrir Configuración para que pueda?</string>
+    <string name="open_settings">Abra Configuración</string>
 </resources>

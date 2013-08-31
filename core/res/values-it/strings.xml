@@ -61,4 +61,7 @@
     <string name="location_gps">Dai satelliti GPS </string>
     <string name="location_network">Da cellulare o rete Wi-Fi</string>
     <string name="location_manual">Manualmente</string>
+    <string name="location_disabled">Questo metodo di rilevamento della posizione è disattivato nelle impostazioni del dispositivo.
+\nSi desidera aprire le Impostazioni per attivarlo?</string>
+    <string name="open_settings">Aprire Impostazioni</string>
 </resources>
