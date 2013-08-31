@@ -159,10 +159,11 @@ public class UpdateService extends Service implements Runnable {
     public void run() {
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
-        
-        boolean autoLocation = preferences.getBoolean(AUTO_LOCATION, AUTO_LOCATION_DEFAULT);
+
         Location location = null;
-        if (autoLocation) {
+        LocationType locationType = getLocationType();
+        if (LocationType.LOCATION_GPS.equals(locationType) || LocationType.LOCATION_NETWORK.equals(locationType)) {
+            //TODO
             location = queryLocation();
             if (location == null) {
                 internalHandler.sendEmptyMessage(QUERY_LOCATION);
@@ -311,6 +312,13 @@ public class UpdateService extends Service implements Runnable {
             PreferenceManager.getDefaultSharedPreferences(this);
         return RefreshInterval.valueOf(preferences.getString(
                 REFRESH_INTERVAL, REFRESH_INTERVAL_DEFAULT));
+    }
+
+    LocationType getLocationType() {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        return LocationType.valueOf(preferences.getString(
+                LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
     }
     
     /**

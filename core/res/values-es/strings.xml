@@ -56,4 +56,9 @@
     <string name="builtin_skin_preferences">Preferencias de skin predefinida</string>
     <string name="start_update_service_permission">iniciar servicio de actualización de clima</string>
     <string name="start_update_service_permission_description">permite a la aplicación iniciar el servicio de actualización para recibir nuevos datos del clima.</string>
+
+    <string name="location_type">Detectar ubicación</string>
+    <string name="location_gps">Por satélites GPS</string>
+    <string name="location_network">Por celular o una red Wi-Fi</string>
+    <string name="location_manual">Manual</string>
 </resources>

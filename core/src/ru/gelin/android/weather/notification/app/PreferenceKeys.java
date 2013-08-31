@@ -39,10 +39,10 @@ public class PreferenceKeys {
     /** Refresh interval default value */
     public static final String REFRESH_INTERVAL_DEFAULT = RefreshInterval.REFRESH_1H.toString();
     
-    /** Auto location preferences key */
-    static final String AUTO_LOCATION = "auto_location";
-    /** Auto location default value */
-    static final boolean AUTO_LOCATION_DEFAULT = true;
+    /** Location type preferences key */
+    static final String LOCATION_TYPE = "location_type";
+    /** Location type default value */
+    static final String LOCATION_TYPE_DEFAULT = LocationType.LOCATION_NETWORK.toString();
     
     /** Manual location preferences key */
     static final String LOCATION = "location";

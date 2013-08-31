@@ -51,4 +51,15 @@
         <item>REFRESH_1D</item>
     </string-array>
 
+    <string-array name="location_type_entries">
+        <item>@string/location_gps</item>
+        <item>@string/location_network</item>
+        <item>@string/location_manual</item>
+    </string-array>
+    <string-array name="location_type_values">
+        <item>LOCATION_GPS</item>
+        <item>LOCATION_NETWORK</item>
+        <item>LOCATION_MANUAL</item>
+    </string-array>
+
 </resources>

@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.app;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -72,8 +73,8 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         notificationPreference.setOnPreferenceChangeListener(this);
         Preference refreshInterval = findPreference(REFRESH_INTERVAL);
         refreshInterval.setOnPreferenceChangeListener(this);
-        Preference autoLocationPreference = findPreference(AUTO_LOCATION);
-        autoLocationPreference.setOnPreferenceChangeListener(this);
+        Preference locationTypePreference = findPreference(LOCATION_TYPE);
+        locationTypePreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
         
@@ -102,6 +103,16 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         startUpdate(false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+        boolean isManual = LocationType.LOCATION_MANUAL.toString().equals(
+                prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
+        //Toast.makeText(this, prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT), Toast.LENGTH_LONG).show();
+        findPreference(LOCATION).setEnabled(isManual);
+    }
+
     protected abstract void fillSkinsPreferences(List<SkinInfo> skins);
 
     //@Override
@@ -126,7 +137,13 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             startUpdate(false);
             return true;
         }
-        if (AUTO_LOCATION.equals(key) || LOCATION.equals(key)) {
+        if (LOCATION_TYPE.equals(key)) {
+            boolean isManual = LocationType.LOCATION_MANUAL.toString().equals(newValue);
+            findPreference(LOCATION).setEnabled(isManual);
+            startUpdate(true);
+            return true;
+        }
+        if (LOCATION.equals(key)) {
             startUpdate(true);
             return true;
         }
@@ -136,7 +153,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         }
         return true;
     }
-    
+
     void startUpdate(boolean force) {
         setProgressBarIndeterminateVisibility(true);
         AppUtils.startUpdateService(this, true, force);

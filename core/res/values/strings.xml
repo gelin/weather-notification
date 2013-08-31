@@ -56,4 +56,9 @@
     <string name="builtin_skin_preferences">Built-in skin preferences</string>
     <string name="start_update_service_permission">start weather update service</string>
     <string name="start_update_service_permission_description">Allows the application to start weather update service to receive the new weather values.</string>
+
+    <string name="location_type">Detect location</string>
+    <string name="location_gps">By GPS satellites</string>
+    <string name="location_network">By cellular or Wi-Fi network</string>
+    <string name="location_manual">Manually</string>
 </resources>
