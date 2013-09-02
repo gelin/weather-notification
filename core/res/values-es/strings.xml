@@ -57,11 +57,11 @@
     <string name="start_update_service_permission">iniciar servicio de actualización de clima</string>
     <string name="start_update_service_permission_description">permite a la aplicación iniciar el servicio de actualización para recibir nuevos datos del clima.</string>
 
-    <string name="location_type">Detectar ubicación</string>
-    <string name="location_gps">Por satélites GPS</string>
-    <string name="location_network">Por celular o una red Wi-Fi</string>
+    <string name="location_type">Detectar lugar</string>
+    <string name="location_gps">A través de GPS</string>
+    <string name="location_network">A través de Red celular o Wi-Fi</string>
     <string name="location_manual">Manual</string>
-    <string name="location_disabled">Este método de detección de la ubicación está deshabilitado en la configuración del dispositivo.
-\n¿Desea abrir Configuración para que pueda?</string>
-    <string name="open_settings">Abra Configuración</string>
+    <string name="location_disabled">Este método de detección esta deshabilitado en la configuración del equipo.
+\nQuieres abrir la configuración para habilitarlo?</string>
+    <string name="open_settings">Abrir configuración</string>
 </resources>

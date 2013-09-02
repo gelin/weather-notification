@@ -57,7 +57,7 @@
     <string name="start_update_service_permission">Avvia il servizio di aggiornamento</string>
     <string name="start_update_service_permission_description">Permetti all\'applicazione di avviare il servizio di aggiornamento per ricevere nuovi valori meteo.</string>
 
-    <string name="location_type">Rilevamento posizione</string>
+    <string name="location_type">Trova località</string>
     <string name="location_gps">Dai satelliti GPS </string>
     <string name="location_network">Da cellulare o rete Wi-Fi</string>
     <string name="location_manual">Manualmente</string>
