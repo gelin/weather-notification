@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2012  Denis Nelubin, Daniel Hiepler
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+    <string name="app_name">Wetter notification</string>
+    <string name="weather">Wetter</string>
+    <string name="notification">Notification</string>
+    <string name="enable_notification">Notification aktiv</string>
+    <string name="refresh_interval">Aktualisierungsintervall</string>
+    <string name="refresh_15m">Alle 15 Minuten</string>
+    <string name="refresh_30m">Alle 30 Minuten</string>
+    <string name="refresh_1h">Jede Stunde</string>
+    <string name="refresh_2h">Alle 2 Stunden</string>
+    <string name="refresh_3h">Alle 3 Stunden</string>
+    <string name="refresh_4h">Alle 4 Stunden</string>
+    <string name="refresh_6h">Alle 6 Stunden</string>
+    <string name="refresh_12h">Alle 12 Stunden</string>
+    <string name="refresh_1d">Täglich</string>
+    <string name="location">Ort</string>
+    <string name="auto_location">Automatisch erkennen</string>
+    <string name="auto_location_summary_on">Ort automatisch erkennen</string>
+    <string name="auto_location_summary_off">Ort manuell festlegen</string>
+    <string name="manual_location">Ort</string>
+    <string name="weather_update_empty">Keine Wettermeldungen für \"%s\"</string>
+    <string name="weather_update_failed">Aktualisierung der Wettermeldung gescheitert: %s</string>
+    <string name="weather_update_no_network">Aktualisierung gescheitert: Keine Netzwerkverbindung</string>
+    <string name="weather_update_unknown_location">Aktualisierung gescheitert: Ort unbekannt</string>
+    <string name="skin">Skin</string>
+    <string name="skins">Skins</string>
+    <string name="skins_preferences">Skin Einstellungen</string>
+    <string name="skins_install">Skins installieren</string>
+    <string name="skins_install_notice">Für eine bessere Bedienung SOLLTEN SKINS INSTALLIERT WERDEN. Bitte wählen Sie unten \"Skins installieren\".</string>
+    <string name="skins_install_notice_no_market">Für eine bessere Bedienung SOLLTEN SKINS INSTALLIERT WERDEN. Suchen Sie nach \"Weather Notification Skin\" Apps im Android Market und installieren Sie diese.</string>
+    <string name="builtin_skin">Default Skin</string>
+    <string name="builtin_skin_preferences">Default Skin Einstellungen</string>
+    <string name="start_update_service_permission">Wetteraktualisierungsdienst starten</string>
+    <string name="start_update_service_permission_description">Der App erlauben den Wetteraktualisierungsdienst zu starten um neue Wettermeldungen zu empfangen.</string>
+
+    <string name="location_type">Detect Standort</string>
+    <string name="location_gps">Von GPS-Satelliten</string>
+    <string name="location_network">Von Mobilfunk-oder Wi-Fi-Netzwerk</string>
+    <string name="location_manual">Manuell</string>
+    <string name="location_disabled">Dieser Ort Nachweisverfahren wird in den Geräteeinstellungen deaktiviert.
+\nSoll Einstellungen zu öffnen, um es zu aktivieren?</string>
+    <string name="open_settings">Offen Einstellungen</string>
+</resources>
