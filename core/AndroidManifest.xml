@@ -78,6 +78,13 @@
                 <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".app.PackageChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
 
         <!-- Built-in skin -->
         
@@ -113,7 +120,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    
+
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="14"/>
     <supports-screens/>
 
