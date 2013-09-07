@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2013  Denis Nelubin, Zeki Çatav
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+  <string name="app_name">Hava Durumu bildirimi</string>
+  <string name="weather">Hava Durumu</string>
+  <string name="notification">Bildirim</string>
+  <string name="enable_notification">Bildirimi etkinleştirin</string>
+  <string name="refresh_interval">Yenileme aralığı</string>
+  <string name="refresh_15m">On beş dakikada bir</string>
+  <string name="refresh_30m">Otuz dakikada bir</string>
+  <string name="refresh_1h">Saat başı</string>
+  <string name="refresh_2h">İki saatte bir</string>
+  <string name="refresh_3h">Üç saatte bir</string>
+  <string name="refresh_4h">Dört saatte bir</string>
+  <string name="refresh_6h">Altı saatte bir</string>
+  <string name="refresh_12h">Oniki saatte bir</string>
+  <string name="refresh_1d">Günde bir</string>
+  <string name="location">Yerleşim Birimi</string>
+  <string name="auto_location">Otomatik algılama</string>
+  <string name="auto_location_summary_on">Otomatik olarak geçerli konumu belirleyin</string>
+  <string name="auto_location_summary_off">Elle hava durumu konumu tanımlayın</string>
+  <string name="manual_location">Hava durumu  konumu</string>
+  <string name="weather_update_empty">\"%s\" için hava durumu bilinmiyor</string>
+  <string name="weather_update_failed">%s için hava durumu güncellemesi başarısız oldu.</string>
+  <string name="weather_update_no_network">Hava durumu güncellemesi başarısız oldu: ağ bağlantısı yok</string>
+  <string name="weather_update_unknown_location">Hava durumu güncellemesi başarısız oldu: konum bilinmemektedir</string>
+  <string name="skin">Tema</string>
+  <string name="skins">Temalar</string>
+  <string name="skins_preferences">Tema tercihleri</string>
+  <string name="skins_install">Tema kurma</string>
+  <string name="skins_install_notice">Daha iyi kullanılabilirlik için TEMA KURMANIZ GEREKİR. Bu ekranın alt kısmındaki \"Tema kurma\" seçeneğine tıklayınız.</string>
+  <string name="skins_install_notice_no_market">Daha iyi kullanılabilirlik için TEMA KURMANIZ GEREKİR. \"Weather Notification Skin\" uygulaması için Android Markette arama yapın ve bunları yükleyin.</string>
+  <string name="builtin_skin">Dahili Tema</string>
+  <string name="builtin_skin_preferences">​​Dahili tema tercihleri </string>
+  <string name="start_update_service_permission">Hava durumu güncelleme hizmetini başlat</string>
+  <string name="start_update_service_permission_description">Uygulamaya yeni hava durumu değerlerini almak için güncelleme servisini başlatma izni verir.</string>
+  <string name="location_type">Konum Algılama</string>
+  <string name="location_gps">GPS uyduları ile</string>
+  <string name="location_network">Hücresel veya Wi-Fi ağı ile</string>
+  <string name="location_manual">El ile</string>
+  <string name="location_disabled">Bu konum belirleme yöntemi cihaz ayarları tarafından engellenmiştir.
+\nEngellemeyi kaldırmak için ayarları açmak ister misiniz?</string>
+  <string name="open_settings">Ayarları aç</string>
+</resources>
