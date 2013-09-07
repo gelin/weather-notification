@@ -333,6 +333,7 @@ public class UpdateService extends Service implements Runnable {
 
         if (androidLocation == null || isExpired(androidLocation.getTime())) {
             try {
+                Log.d(TAG, "requested location update from " + locationProvider);
                 manager.requestLocationUpdates(locationProvider,
                     0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
                 return null;
