@@ -364,9 +364,9 @@ public class UpdateService extends Service implements Runnable {
     void removeLocationUpdates() {
         if (this.startIntent != null && this.startIntent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             Log.d(TAG, "location updated");
-            LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            manager.removeUpdates(getPendingIntent(this.startIntent));
         }
+        LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        manager.removeUpdates(getPendingIntent(this.startIntent));
     }
 
     /**
