@@ -23,7 +23,7 @@
 -->
 
 <resources>
-  <string name="app_name">Hava bildirim teması: beyaz metin ek</string>
-  <string name="skin_name">Beyaz metin ek</string>
-  <string name="skin_preferences">Beyaz metin ek tercihleri</string>
+    <string name="app_name">Hava bildirim teması: + işaretli beyaz metin</string>
+    <string name="skin_name">+ işaretli beyaz metin</string>
+    <string name="skin_preferences">+ işaretli beyaz metin tercihleri</string>
 </resources>
