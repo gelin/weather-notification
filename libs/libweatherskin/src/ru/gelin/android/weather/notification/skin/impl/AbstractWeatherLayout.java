@@ -50,6 +50,8 @@ public abstract class AbstractWeatherLayout {
     protected Context context;
     /** ID factory */
     ResourceIdFactory ids;
+    /** Condition text formatter */
+    WeatherConditionFormat conditionFormat;
     /** Temperature formatter */
     TemperatureFormat tempFormat;
     /** Wind formatter */
@@ -63,6 +65,7 @@ public abstract class AbstractWeatherLayout {
     protected AbstractWeatherLayout(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
+        this.conditionFormat = new WeatherConditionFormat(context);
         this.tempFormat = createTemperatureFormat();
         this.windFormat = new WindFormat(context);
         this.humidityFormat = new HumidityFormat(context);
@@ -102,7 +105,7 @@ public abstract class AbstractWeatherLayout {
             return;
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
-        setText(id("condition"), currentCondition.getConditionText());
+        setText(id("condition"), this.conditionFormat.getText(currentCondition));
         bindWindHumidity(currentCondition);
         
         SharedPreferences preferences = 
@@ -190,7 +193,7 @@ public abstract class AbstractWeatherLayout {
             Date tomorrow = addDays(weather.getTime(), i);
             setText(dayId, context.getString(string("forecast_day_format"), tomorrow));
             WeatherCondition forecastCondition = weather.getConditions().get(i);
-            setText(conditionId, forecastCondition.getConditionText());
+            setText(conditionId, this.conditionFormat.getText(forecastCondition));
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
             setText(highTempId, tempFormat.format(forecastTemp.getHigh()));
             setText(lowTempId, tempFormat.format(forecastTemp.getLow()));
