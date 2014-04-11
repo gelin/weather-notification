@@ -15,6 +15,15 @@
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
     <orderEntry type="module" module-name="libweatherskin" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar:///opt/android-sdk/add-ons/addon-yotaphone/libs/com.yotadevices.yotaphone.sdk.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

@@ -15,9 +15,6 @@
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
       </configuration>
     </facet>
-    <facet type="Python" name="Python">
-      <configuration sdkName="Python 2.7.3 (/usr/bin/python2.7)" />
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin/classes" />
@@ -32,7 +29,6 @@
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
     <orderEntry type="module" module-name="libweatherskin" />
-    <orderEntry type="library" name="Python 2.7.3 (/usr/bin/python2.7) interpreter library" level="application" />
   </component>
 </module>
 

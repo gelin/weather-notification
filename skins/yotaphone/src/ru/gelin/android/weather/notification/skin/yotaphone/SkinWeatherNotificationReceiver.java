@@ -22,35 +22,185 @@
 
 package ru.gelin.android.weather.notification.skin.whitetext;
 
+import com.yotadevices.sdk.notifications.BSNotification;
+import com.yotadevices.sdk.notifications.BSNotificationManager;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 import android.content.ComponentName;
 
 /**
- *  Extends the basic notification receiver.
- *  Overwrites the weather info activity intent and getting of the icon resource.
+ *  Weather notification receiver for Yota back screen.
  */
-public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationReceiver {
+abstract public class SkinWeatherNotificationReceiver extends WeatherNotificationReceiver {
 
-    /** Icon level shift relative to temp value */
-    static final int ICON_LEVEL_SHIFT = 100;
-    
-    @Override
-    protected ComponentName getWeatherInfoActivityComponentName() {
-        return new ComponentName(SkinWeatherNotificationReceiver.class.getPackage().getName(), 
-                WeatherInfoActivity.class.getName());
+    /** Key to store the weather in the bundle */
+    static final String WEATHER_KEY = "weather";
+
+    /** Handler to receive the weather */
+    static Handler handler;
+
+    /** Temperature formatter */
+    protected TemperatureFormat tempFormat = createTemperatureFormat();
+
+    /**
+     *  Registers the handler to receive the new weather.
+     *  The handler is owned by activity which have initiated the update.
+     *  The handler is used to update the weather displayed by the activity.
+     */
+    static synchronized void registerWeatherHandler(Handler handler) {
+        BaseWeatherNotificationReceiver.handler = handler;
+    }
+
+    /**
+     *  Unregisters the weather update handler.
+     */
+    static synchronized void unregisterWeatherHandler() {
+        BaseWeatherNotificationReceiver.handler = null;
+    }
+
+    BSNotificationManager getBSNotificationManager(Context context) {
+        return new BSNotificationManager(context);
     }
 
     @Override
-    protected int getNotificationIconId() {
-        return R.drawable.temp_icon_white;
+    protected void cancel(Context context) {
+        Log.d(Tag.TAG, "cancelling weather");
+        getBSNotificationManager(context).cancel(getNotificationId());
     }
 
     @Override
-    protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
-        return weather.getConditions().get(0).
-                getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
+    protected void notify(Context context, Weather weather) {
+        Log.d(Tag.TAG, "displaying weather: " + weather);
+
+        WeatherStorage storage = new WeatherStorage(context);
+        storage.save(weather);
+
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        TemperatureType unit = TemperatureType.valueOf(prefs.getString(
+                TEMP_UNIT, TEMP_UNIT_DEFAULT));
+        TemperatureUnit mainUnit = unit.getTemperatureUnit();
+        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
+                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
+
+        BSNotification notification = new BSNotification();
+        BSNotification.Builder builder = BSNotification.Builder();
+
+//        builder.setSmallIcon(getNotificationIconId());
+
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
+//            notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
+        } else {
+//            notification.tickerText = formatTicker(context, weather, unit);
+//            notification.iconLevel = getNotificationIconLevel(weather, mainUnit);
+        }
+
+        builder.setWhen(weather.getTime().getTime());
+//        notification.flags |= Notification.FLAG_NO_CLEAR;
+//        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+
+//        notification.contentView = new RemoteViews(context.getPackageName(),
+//                getNotificationLayoutId(context, textStyle, unit));
+//        RemoteWeatherLayout layout = createRemoteWeatherLayout(
+//                context, notification.contentView, unit);
+//        layout.bind(weather);
+        builder.setContentTitle(formatTitle(context, weather, unit))
+        builder.setContentText(formatText(context, weather, unit))
+
+        notification.contentIntent = getContentIntent(context);
+        //notification.contentIntent = getMainActivityPendingIntent(context);
+
+        getNotificationManager(context).notify(getNotificationId(), notification);
+
+        notifyHandler(weather);
     }
+
+    /**
+     *  Returns the notification ID for the skin.
+     *  Different skins withing the same application must return different results here.
+     */
+    protected int getNotificationId() {
+        return this.getClass().getName().hashCode();
+    }
+
+//    /**
+//     *  Returns the pending intent called on click on notification.
+//     *  This intent starts the weather info activity.
+//     */
+//    protected PendingIntent getContentIntent(Context context) {
+//        Intent intent = new Intent();
+//        intent.setComponent(getWeatherInfoActivityComponentName());
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        return PendingIntent.getActivity(context, 0, intent, 0);
+//    }
+
+    protected String formatTitle(Context context, Weather weather, TemperatureType unit) {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        WeatherCondition condition = weather.getConditions().get(0);
+        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
+        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
+        return context.getString(ids.id(STRING, "notification_ticker"),
+                weather.getLocation().getText(),
+                tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
+    }
+
+    protected String formatText(Context context, Weather weather, TemperatureType unit) {
+        StringBuilder forecastsText = new StringBuilder();
+        for (int i = 1; i < 4; i++) {
+            if (weather.getConditions().size() <= i) {
+                break;
+            }
+            WeatherCondition forecast = weather.getConditions().get(i);
+            Temperature temp = forecast.getTemperature(unit);
+            Date day = addDays(weather.getTime(), i);
+            forecastsText.append(context.getString(string("forecast_text"),
+                    day,
+                    tempFormat.format(temp.getHigh()),
+                    tempFormat.format(temp.getLow())));
+            forecastsText.append(SEPARATOR);
+        }
+        return forecastsText.toString();
+    }
+
+    protected void notifyHandler(Weather weather) {
+        synchronized (BaseWeatherNotificationReceiver.class) {   //monitor of static methods
+            if (handler == null) {
+                return;
+            }
+            Message message = handler.obtainMessage();
+            Bundle bundle = message.getData();
+            bundle.putParcelable(WEATHER_KEY, new ParcelableWeather2(weather));
+            message.sendToTarget();
+        }
+    }
+
+//    /**
+//     *  Returns the component name of the weather info activity
+//     */
+//    abstract protected ComponentName getWeatherInfoActivityComponentName();
+
+//    /**
+//     *  Returns the ID of the notification icon.
+//     */
+//    protected int getNotificationIconId() {
+//        return return R.drawable.temp_icon_white;
+//    }
+
+//    /**
+//     *  Returns the notification icon level.
+//     */
+//    abstract protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit);
+
+//    /**
+//     *  Creates the temperature formatter.
+//     */
+//    protected TemperatureFormat createTemperatureFormat() {
+//        return new TemperatureFormat();
+//    }
 
 }
