@@ -20,7 +20,7 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.whitetext;
+package ru.gelin.android.weather.notification.skin.yotaphone;
 
 /**
  *  Silently extends the basic config activity.

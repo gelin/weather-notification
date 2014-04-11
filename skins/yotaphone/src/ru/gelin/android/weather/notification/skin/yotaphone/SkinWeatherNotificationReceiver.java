@@ -20,22 +20,40 @@
  *  mailto:den@gelin.ru
  */
 
-package ru.gelin.android.weather.notification.skin.whitetext;
+package ru.gelin.android.weather.notification.skin.yotaphone;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import com.yotadevices.sdk.notifications.BSNotification;
 import com.yotadevices.sdk.notifications.BSNotificationManager;
+import ru.gelin.android.weather.Temperature;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import android.content.ComponentName;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.notification.ParcelableWeather2;
+import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.Tag;
+import ru.gelin.android.weather.notification.skin.impl.*;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
  *  Weather notification receiver for Yota back screen.
  */
-abstract public class SkinWeatherNotificationReceiver extends WeatherNotificationReceiver {
+public class SkinWeatherNotificationReceiver extends WeatherNotificationReceiver {
 
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
+    private static final String SEPARATOR = " ";
 
     /** Handler to receive the weather */
     static Handler handler;
@@ -49,24 +67,25 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
      *  The handler is used to update the weather displayed by the activity.
      */
     static synchronized void registerWeatherHandler(Handler handler) {
-        BaseWeatherNotificationReceiver.handler = handler;
+        SkinWeatherNotificationReceiver.handler = handler;
     }
 
     /**
      *  Unregisters the weather update handler.
      */
     static synchronized void unregisterWeatherHandler() {
-        BaseWeatherNotificationReceiver.handler = null;
+        SkinWeatherNotificationReceiver.handler = null;
     }
 
     BSNotificationManager getBSNotificationManager(Context context) {
         return new BSNotificationManager(context);
     }
 
+    
     @Override
     protected void cancel(Context context) {
         Log.d(Tag.TAG, "cancelling weather");
-        getBSNotificationManager(context).cancel(getNotificationId());
+//        getBSNotificationManager(context).cancel(getNotificationId());
     }
 
     @Override
@@ -83,11 +102,11 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
         TemperatureType unit = TemperatureType.valueOf(prefs.getString(
                 TEMP_UNIT, TEMP_UNIT_DEFAULT));
         TemperatureUnit mainUnit = unit.getTemperatureUnit();
-        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
-                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
+//        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
+//                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         BSNotification notification = new BSNotification();
-        BSNotification.Builder builder = BSNotification.Builder();
+        BSNotification.Builder builder = new BSNotification.Builder();
 
 //        builder.setSmallIcon(getNotificationIconId());
 
@@ -107,13 +126,13 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
 //        RemoteWeatherLayout layout = createRemoteWeatherLayout(
 //                context, notification.contentView, unit);
 //        layout.bind(weather);
-        builder.setContentTitle(formatTitle(context, weather, unit))
-        builder.setContentText(formatText(context, weather, unit))
+        builder.setContentTitle(formatTitle(context, weather, unit));
+        builder.setContentText(formatText(context, ids, weather, mainUnit));
 
-        notification.contentIntent = getContentIntent(context);
+//        notification.contentIntent = getContentIntent(context);
         //notification.contentIntent = getMainActivityPendingIntent(context);
 
-        getNotificationManager(context).notify(getNotificationId(), notification);
+        getBSNotificationManager(context).notify(getNotificationId(), notification);
 
         notifyHandler(weather);
     }
@@ -149,7 +168,7 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
                 tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
     }
 
-    protected String formatText(Context context, Weather weather, TemperatureType unit) {
+    protected String formatText(Context context, ResourceIdFactory ids, Weather weather, TemperatureUnit unit) {
         StringBuilder forecastsText = new StringBuilder();
         for (int i = 1; i < 4; i++) {
             if (weather.getConditions().size() <= i) {
@@ -158,13 +177,20 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
             WeatherCondition forecast = weather.getConditions().get(i);
             Temperature temp = forecast.getTemperature(unit);
             Date day = addDays(weather.getTime(), i);
-            forecastsText.append(context.getString(string("forecast_text"),
+            forecastsText.append(context.getString(ids.id(ResourceIdFactory.STRING, "forecast_text"),
                     day,
                     tempFormat.format(temp.getHigh()),
                     tempFormat.format(temp.getLow())));
             forecastsText.append(SEPARATOR);
         }
         return forecastsText.toString();
+    }
+
+    Date addDays(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, days);
+        return calendar.getTime();
     }
 
     protected void notifyHandler(Weather weather) {
@@ -196,11 +222,11 @@ abstract public class SkinWeatherNotificationReceiver extends WeatherNotificatio
 //     */
 //    abstract protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit);
 
-//    /**
-//     *  Creates the temperature formatter.
-//     */
-//    protected TemperatureFormat createTemperatureFormat() {
-//        return new TemperatureFormat();
-//    }
+    /**
+     *  Creates the temperature formatter.
+     */
+    protected TemperatureFormat createTemperatureFormat() {
+        return new TemperatureFormat();
+    }
 
 }

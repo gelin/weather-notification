@@ -31,6 +31,7 @@
     </application>
     
     <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
+    <uses-permission android:name="com.yotadevices.framework.permission.ACCESS_BACKSCREEN" />
     
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17"/>
     <supports-screens/>
