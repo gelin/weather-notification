@@ -28,6 +28,8 @@
                   android:theme="@style/Theme.Dialog"
                   />
 
+        <uses-library android:name="com.yotadevices.yotaphone.sdk.1.0" android:required="true" />
+
     </application>
     
     <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
@@ -35,5 +37,5 @@
     
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="17"/>
     <supports-screens/>
-    
+
 </manifest>

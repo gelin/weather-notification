@@ -105,7 +105,6 @@ public class SkinWeatherNotificationReceiver extends WeatherNotificationReceiver
 //        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
 //                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
-        BSNotification notification = new BSNotification();
         BSNotification.Builder builder = new BSNotification.Builder();
 
 //        builder.setSmallIcon(getNotificationIconId());
@@ -132,7 +131,7 @@ public class SkinWeatherNotificationReceiver extends WeatherNotificationReceiver
 //        notification.contentIntent = getContentIntent(context);
         //notification.contentIntent = getMainActivityPendingIntent(context);
 
-        getBSNotificationManager(context).notify(getNotificationId(), notification);
+        getBSNotificationManager(context).notify(getNotificationId(), builder.build());
 
         notifyHandler(weather);
     }
