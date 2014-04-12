@@ -28,6 +28,9 @@
                   android:theme="@style/Theme.Dialog"
                   />
 
+        <activity android:name=".ShowNotificationActivity"
+                android:theme="@android:style/Theme.NoDisplay"/>
+
         <uses-library android:name="com.yotadevices.yotaphone.sdk.1.0" android:required="true" />
 
     </application>
