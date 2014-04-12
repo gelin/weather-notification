@@ -19,7 +19,8 @@ import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
 import java.util.Calendar;
 import java.util.Date;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
+import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT_DEFAULT;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 
@@ -54,6 +55,7 @@ public class ShowNotificationActivity extends Activity {
         BSNotification.Builder builder = new BSNotification.Builder();
 
 //        builder.setSmallIcon(getNotificationIconId());
+        builder.setSmallIcon(R.drawable.icon);
 
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
 //            notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
