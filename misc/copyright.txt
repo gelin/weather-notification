@@ -1,3 +1,4 @@
-weather-few-clouds.svg Public Domain
+weather-*.svg - Tango Project icons - Public Domain.
+condition_*.svg - Tango Project icons - Public Domain.
 http://www.openclipart.org/people/warszawianka/weather-few-clouds.svg
 http://www.loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
