@@ -22,15 +22,15 @@
 #   mailto:den@gelin.ru
 #
 
-xhdpi_params_24="48x48 drawable-xhdpi"
-hdpi_params_24="36x36 drawable-hdpi"
-mdpi_params_24="24x24 drawable-mdpi"
-ldpi_params_24="18x18 drawable-ldpi"
+xhdpi_params_24="48 drawable-xhdpi"
+hdpi_params_24="36 drawable-hdpi"
+mdpi_params_24="24 drawable-mdpi"
+ldpi_params_24="18 drawable-ldpi"
 
-xhdpi_params_64="128x128 drawable-xhdpi"
-hdpi_params_64="96x96 drawable-hdpi"
-mdpi_params_64="64x64 drawable-mdpi"
-ldpi_params_64="48x48 drawable-ldpi"
+xhdpi_params_64="128 drawable-xhdpi"
+hdpi_params_64="96 drawable-hdpi"
+mdpi_params_64="64 drawable-mdpi"
+ldpi_params_64="48 drawable-ldpi"
 
 gen_image() {
     img_size=$1
@@ -41,7 +41,8 @@ gen_image() {
     file="res/$res_folder/${file_name}_${file_suffix}.png"
     echo "Generating $file"
 
-    convert -resize $img_size misc/${file_name}.svg $file
+#    convert -density $density misc/${file_name}.svg $file
+    inkscape -z -e $file -w $img_size -h $img_size misc/${file_name}.svg
 }
 
 for name in $(ls res/drawable/condition_*.xml)
