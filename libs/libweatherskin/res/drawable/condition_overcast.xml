@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- minLevel means image size in dp -->
+    <item android:maxLevel="24" android:drawable="@drawable/condition_overcast_24"/>
+    <item android:drawable="@drawable/condition_overcast_64"/>
+</level-list>
