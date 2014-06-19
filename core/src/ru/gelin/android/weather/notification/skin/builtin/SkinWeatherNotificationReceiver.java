@@ -23,9 +23,6 @@
 package ru.gelin.android.weather.notification.skin.builtin;
 
 import android.content.ComponentName;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
 
 import static ru.gelin.android.weather.notification.Tag.TAG;
@@ -40,16 +37,6 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     @Override
     protected ComponentName getWeatherInfoActivityComponentName() {
         return new ComponentName(TAG, WeatherInfoActivity.class.getName());
-    }
-
-    @Override
-    protected int getNotificationIconId() {
-        return R.drawable.status_icon;
-    }
-
-    @Override
-    protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
-        return 0;
     }
 
 }

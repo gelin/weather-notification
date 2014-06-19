@@ -174,11 +174,19 @@ public class WeatherConditionFormat {
      *  The level of the drawable defines the desired drawable size in dp.
      */
     public LevelListDrawable getDrawable(WeatherCondition condition) {
+        return (LevelListDrawable)this.context.getResources().getDrawable(getDrawableId(condition));
+    }
+
+    /**
+     *  Returns the ID of the drawable icon, suitable for this weather condition.
+     *  It's the LevelListDrawable, where the level defines the desired drawable size in dp.
+     */
+    public static int getDrawableId(WeatherCondition condition) {
         Collection<WeatherConditionType> types = condition.getConditionTypes();
         if (types == null || types.isEmpty()) {
-            return (LevelListDrawable)this.context.getResources().getDrawable(getDrawableId(WeatherConditionType.CLOUDS_CLEAR));
+            return getDrawableId(WeatherConditionType.CLOUDS_CLEAR);
         }
-        return (LevelListDrawable)this.context.getResources().getDrawable(getDrawableId(types.iterator().next()));
+        return getDrawableId(types.iterator().next());
     }
 
     static Integer getStringId(WeatherConditionType type) {

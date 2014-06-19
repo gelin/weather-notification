@@ -35,12 +35,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
 import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.R;
 import ru.gelin.android.weather.notification.skin.Tag;
+
+import java.util.List;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
@@ -98,13 +101,13 @@ abstract public class BaseWeatherNotificationReceiver extends
     
         TemperatureType unit = TemperatureType.valueOf(prefs.getString(
             TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        TemperatureUnit mainUnit = unit.getTemperatureUnit();
+        ru.gelin.android.weather.TemperatureUnit mainUnit = unit.getTemperatureUnit();
         NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
-        notification.icon = getNotificationIconId();
+        notification.icon = getNotificationIconId(weather);
 
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
             notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
@@ -155,8 +158,8 @@ abstract public class BaseWeatherNotificationReceiver extends
     protected String formatTicker(Context context, Weather weather, TemperatureType unit) {
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         WeatherCondition condition = weather.getConditions().get(0);
-        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
-        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
+        Temperature tempC = condition.getTemperature(ru.gelin.android.weather.TemperatureUnit.C);
+        Temperature tempF = condition.getTemperature(ru.gelin.android.weather.TemperatureUnit.F);
         return context.getString(ids.id(STRING, "notification_ticker"),
                 weather.getLocation().getText(),
                 tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
@@ -182,12 +185,28 @@ abstract public class BaseWeatherNotificationReceiver extends
     /**
      *  Returns the ID of the notification icon.
      */
-    abstract protected int getNotificationIconId();
-    
+    @Deprecated
+    protected int getNotificationIconId() {
+        return R.drawable.condition_clear_24;
+    };
+
+    /**
+     *  Returns the ID of the notification icon based on the current weather.
+     */
+    protected int getNotificationIconId(Weather weather) {
+        List<WeatherCondition> conditions = weather.getConditions();
+        if (conditions == null || conditions.isEmpty()) {
+            return WeatherConditionFormat.getDrawableId(WeatherConditionType.CLOUDS_CLEAR);
+        }
+        return WeatherConditionFormat.getDrawableId(weather.getConditions().iterator().next());
+    }
+
     /**
      *  Returns the notification icon level.
      */
-    abstract protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit);
+    protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
+        return 24;  //24dp for notification icon size
+    };
     
     /**
      *  Creates the temperature formatter.
