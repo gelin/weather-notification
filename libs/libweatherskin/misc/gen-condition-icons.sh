@@ -22,6 +22,11 @@
 #   mailto:den@gelin.ru
 #
 
+xhdpi_params_16="32 drawable-xhdpi"
+hdpi_params_16="24 drawable-hdpi"
+mdpi_params_16="16 drawable-mdpi"
+ldpi_params_16="12 drawable-ldpi"
+
 xhdpi_params_24="48 drawable-xhdpi"
 hdpi_params_24="36 drawable-hdpi"
 mdpi_params_24="24 drawable-mdpi"
@@ -49,6 +54,10 @@ for name in $(ls res/drawable/condition_*.xml)
 do
     name=$(basename "$name")
     name="${name%.*}"
+    gen_image $xhdpi_params_16 $name 16
+    gen_image $hdpi_params_16 $name 16
+    gen_image $mdpi_params_16 $name 16
+    gen_image $ldpi_params_16 $name 16
     gen_image $xhdpi_params_24 $name 24
     gen_image $hdpi_params_24 $name 24
     gen_image $mdpi_params_24 $name 24
