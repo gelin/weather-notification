@@ -40,7 +40,6 @@ import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.WeatherConditionType;
 import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
-import ru.gelin.android.weather.notification.skin.R;
 import ru.gelin.android.weather.notification.skin.Tag;
 
 import java.util.List;
@@ -182,14 +181,6 @@ abstract public class BaseWeatherNotificationReceiver extends
      */
     abstract protected ComponentName getWeatherInfoActivityComponentName();
     
-    /**
-     *  Returns the ID of the notification icon.
-     */
-    @Deprecated
-    protected int getNotificationIconId() {
-        return R.drawable.condition_clear_24;
-    };
-
     /**
      *  Returns the ID of the notification icon based on the current weather.
      */
