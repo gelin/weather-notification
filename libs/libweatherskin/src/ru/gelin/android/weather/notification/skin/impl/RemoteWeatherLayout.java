@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.text.method.MovementMethod;
 import android.view.View;
@@ -96,7 +97,12 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         }
         views.setTextViewText(viewId, text);
     }
-    
+
+    @Override
+    protected void setIcon(int viewId, Drawable drawable, int level) {
+        return; //TODO if necessary to display icons
+    }
+
     @Override
     protected void setVisibility(int viewId, int visibility) {
         if (skipView(viewId)) { //TODO: how to determine if the view is absent?

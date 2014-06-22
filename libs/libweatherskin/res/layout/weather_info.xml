@@ -177,7 +177,8 @@
         <TableRow
                 android:id="@+id/forecast_1"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
             <ImageView
                     android:id="@+id/forecast_condition_icon_1"
@@ -224,7 +225,8 @@
         <TableRow
                 android:id="@+id/forecast_2"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
             <ImageView
                     android:id="@+id/forecast_condition_icon_2"
@@ -271,7 +273,8 @@
         <TableRow
                 android:id="@+id/forecast_3"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
             <ImageView
                     android:id="@+id/forecast_condition_icon_3"

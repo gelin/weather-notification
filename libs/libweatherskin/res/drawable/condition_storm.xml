@@ -3,5 +3,5 @@
     <!-- maxLevel means image size in dp -->
     <item android:maxLevel="16" android:drawable="@drawable/condition_storm_16"/>
     <item android:maxLevel="24" android:drawable="@drawable/condition_storm_24"/>
-    <item android:drawable="@drawable/condition_storm_64"/>
+    <item android:maxLevel="1024" android:drawable="@drawable/condition_storm_64"/>
 </level-list>

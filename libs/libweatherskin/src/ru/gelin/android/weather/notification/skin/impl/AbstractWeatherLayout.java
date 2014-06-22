@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -45,6 +46,9 @@ import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.
 public abstract class AbstractWeatherLayout {
 
     static final String URL_TEMPLATE = "<a href=\"%s\">%s</a>";
+
+    static final int MAIN_ICON = 64;
+    static final int FORECAST_ICON = 16;
 
     /** Current context */
     protected Context context;
@@ -105,6 +109,7 @@ public abstract class AbstractWeatherLayout {
             return;
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
+        setIcon(id("condition_icon"), this.conditionFormat.getDrawable(currentCondition), MAIN_ICON);
         setText(id("condition"), this.conditionFormat.getText(currentCondition));
         bindWindHumidity(currentCondition);
         
@@ -171,28 +176,35 @@ public abstract class AbstractWeatherLayout {
     protected void bindForecasts(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
         setVisibility(id("forecasts"), View.VISIBLE);
         bindForecast(weather, unit, 1,
-                id("forecast_1"), id("forecast_day_1"),
+                id("forecast_1"),
+                id("forecast_condition_icon_1"),
+                id("forecast_day_1"),
                 id("forecast_condition_1"),
                 id("forecast_high_temp_1"), id("forecast_low_temp_1"));
         bindForecast(weather, unit, 2,
-                id("forecast_2"), id("forecast_day_2"),
+                id("forecast_2"),
+                id("forecast_condition_icon_2"),
+                id("forecast_day_2"),
                 id("forecast_condition_2"),
                 id("forecast_high_temp_2"), id("forecast_low_temp_2"));
         bindForecast(weather, unit, 3,
-                id("forecast_3"), id("forecast_day_3"),
+                id("forecast_3"),
+                id("forecast_condition_icon_3"),
+                id("forecast_day_3"),
                 id("forecast_condition_3"),
                 id("forecast_high_temp_3"), id("forecast_low_temp_3"));
     }
     
     void bindForecast(Weather weather, 
             ru.gelin.android.weather.TemperatureUnit unit, int i, 
-            int groupId, int dayId, int conditionId, 
+            int groupId, int iconId, int dayId, int conditionId,
             int highTempId, int lowTempId) {
         if (weather.getConditions().size() > i) {
             setVisibility(groupId, View.VISIBLE);
-            Date tomorrow = addDays(weather.getTime(), i);
-            setText(dayId, context.getString(string("forecast_day_format"), tomorrow));
             WeatherCondition forecastCondition = weather.getConditions().get(i);
+            Date tomorrow = addDays(weather.getTime(), i);
+            setIcon(iconId, this.conditionFormat.getDrawable(forecastCondition), FORECAST_ICON);
+            setText(dayId, context.getString(string("forecast_day_format"), tomorrow));
             setText(conditionId, this.conditionFormat.getText(forecastCondition));
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
             setText(highTempId, tempFormat.format(forecastTemp.getHigh()));
@@ -231,6 +243,8 @@ public abstract class AbstractWeatherLayout {
     }
     
     protected abstract void setText(int viewId, CharSequence text);
+
+    protected abstract void setIcon(int viewId, Drawable drawable, int level);
     
     protected abstract void setVisibility(int viewId, int visibility);
 

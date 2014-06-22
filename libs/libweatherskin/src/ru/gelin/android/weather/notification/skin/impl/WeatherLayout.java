@@ -23,8 +23,10 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.method.MovementMethod;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -55,7 +57,17 @@ public class WeatherLayout extends AbstractWeatherLayout {
         }
         textView.setText(text);
     }
-    
+
+    @Override
+    protected void setIcon(int viewId, Drawable drawable, int level) {
+        ImageView imageView = (ImageView)this.view.findViewById(viewId);
+        if (imageView == null) {
+            return;
+        }
+        imageView.setImageDrawable(drawable);
+        imageView.setImageLevel(level);
+    }
+
     @Override
     protected void setVisibility(int viewId, int visibility) {
         View view = this.view.findViewById(viewId);
