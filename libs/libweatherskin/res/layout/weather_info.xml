@@ -39,28 +39,24 @@
     
         <TextView
                 android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/close_button"
                 style="@style/WeatherInfo.Location"
                 android:text="Here"/>
 
         <TextView
                 android:id="@+id/update_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/location"
+                android:layout_toRightOf="@+id/close_button"
                 style="@style/WeatherInfo.UpdateTime"
                 android:text="updated"/>
 
         <ImageView android:id="@+id/close_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:src="@android:drawable/btn_dialog"/>
+                style="@style/WeatherInfo.CloseButton"/>
     
     </RelativeLayout>
     
@@ -73,17 +69,14 @@
 
         <ImageView
                 android:id="@+id/condition_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="5dp"
+                style="@style/WeatherInfo.ConditionIcon"
                 android:src="@drawable/condition_clear_64"/>
         
         <TextView
                 android:id="@+id/condition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/condition_icon"
                 android:layout_toLeftOf="@+id/temp"
@@ -92,8 +85,6 @@
                 
         <TextView
                 android:id="@+id/wind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/condition"
                 android:layout_toRightOf="@+id/condition_icon"
                 android:layout_toLeftOf="@+id/temp"
@@ -102,8 +93,6 @@
                 
         <TextView
                 android:id="@+id/humidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/wind"
                 android:layout_toRightOf="@+id/condition_icon"
                 android:layout_toLeftOf="@+id/temp"
@@ -120,8 +109,6 @@
 
                 <TextView
                         android:id="@+id/current_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         style="@style/WeatherInfo.CurrentTemp"
@@ -129,8 +116,6 @@
                     
                 <TextView
                         android:id="@+id/current_temp_alt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_below="@+id/current_temp"
                         android:layout_centerHorizontal="true"
                         style="@style/WeatherInfo.AltTemp"
@@ -145,22 +130,17 @@
                 
                     <TextView
                             android:id="@+id/high_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
+                            style="@style/WeatherInfo.Text"
                             android:text="X&#x00B0;"/>
 
                     <TextView
                             android:id="@+id/high_low_temp_separator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/WeatherInfo.Text"
                             android:text="/"/>
 
                     <TextView
                             android:id="@+id/low_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
+                            style="@style/WeatherInfo.Text"
                             android:text="X&#x00B0;"/>
 
                 </LinearLayout>
@@ -176,147 +156,108 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
-    
+
         <TableRow
                 android:id="@+id/forecast_1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                    android:id="@+id/forecast_day_1"
+                    style="@style/WeatherInfo.Text"
+                    android:text="Day"/>
 
             <ImageView
                     android:id="@+id/forecast_condition_icon_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    style="@style/WeatherInfo.ForecastConditionIcon"
                     android:src="@drawable/condition_clear_16"/>
-            
-            <TextView
-                    android:id="@+id/forecast_day_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Day"/>
 
             <TextView
                     android:id="@+id/forecast_condition_1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+                    style="@style/WeatherInfo.ForecastCondition"
                     android:text="Weather condition Weather condition Weather condition"/>
 
             <TextView
                     android:id="@+id/forecast_high_temp_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="/"/>
 
             <TextView
                     android:id="@+id/forecast_low_temp_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
                 
         </TableRow>
         
         <TableRow
                 android:id="@+id/forecast_2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-            <ImageView
-                    android:id="@+id/forecast_condition_icon_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/condition_clear_16"/>
+                style="@style/WeatherInfo.ForecastRow">
 
             <TextView
                     android:id="@+id/forecast_day_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="Day"/>
+
+            <ImageView
+                    android:id="@+id/forecast_condition_icon_2"
+                    style="@style/WeatherInfo.ForecastConditionIcon"
+                    android:src="@drawable/condition_clear_16"/>
 
             <TextView
                     android:id="@+id/forecast_condition_2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+                    style="@style/WeatherInfo.ForecastCondition"
                     android:text="Weather condition Weather condition Weather condition"/>
 
             <TextView
                     android:id="@+id/forecast_high_temp_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="/"/>
 
             <TextView
                     android:id="@+id/forecast_low_temp_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
                 
         </TableRow>
         
         <TableRow
                 android:id="@+id/forecast_3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                    android:id="@+id/forecast_day_3"
+                    style="@style/WeatherInfo.Text"
+                    android:text="Day"/>
 
             <ImageView
                     android:id="@+id/forecast_condition_icon_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    style="@style/WeatherInfo.ForecastConditionIcon"
                     android:src="@drawable/condition_clear_16"/>
-            
-            <TextView
-                    android:id="@+id/forecast_day_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Day"/>
 
             <TextView
                     android:id="@+id/forecast_condition_3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+                    style="@style/WeatherInfo.ForecastCondition"
                     android:text="Weather condition Weather condition Weather condition"/>
 
             <TextView
                     android:id="@+id/forecast_high_temp_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="/"/>
 
             <TextView
                     android:id="@+id/forecast_low_temp_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
             
         </TableRow>

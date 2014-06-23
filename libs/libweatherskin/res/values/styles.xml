@@ -24,6 +24,8 @@
     <style name="WeatherInfo">
         <!--parent="@android:style/TextAppearance">-->
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="WeatherInfo.Location">
@@ -37,6 +39,14 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
+    <style name="WeatherInfo.CloseButton">
+        <item name="android:src">@android:drawable/btn_dialog</item>
+    </style>
+
+    <style name="WeatherInfo.ConditionIcon">
+        <!--<item name="android:layout_margin">5dp</item>-->
+    </style>
+
     <style name="WeatherInfo.Condition">
         <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
         <item name="android:textSize">22sp</item>
@@ -45,6 +55,8 @@
     <style name="WeatherInfo.ConditionDetails">
         <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
         <item name="android:textSize">18sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
     <style name="WeatherInfo.CurrentTemp">
@@ -52,8 +64,38 @@
         <item name="android:textSize">25sp</item>
     </style>
 
-    <style name="WeatherInfo.AltTemp" parent="WeatherInfo">
+    <style name="WeatherInfo.AltTemp">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="WeatherInfo.Text">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="WeatherInfo.MultilineText">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastRow">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastConditionIcon">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastCondition">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">false</item>
     </style>
 
 </resources>
