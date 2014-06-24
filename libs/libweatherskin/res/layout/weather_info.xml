@@ -73,7 +73,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="5dp"
                 style="@style/WeatherInfo.ConditionIcon"
-                android:src="@drawable/condition_clear_64"/>
+                android:src="@drawable/condition_clear_48"/>
         
         <TextView
                 android:id="@+id/condition"

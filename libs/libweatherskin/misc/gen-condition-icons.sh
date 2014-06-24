@@ -32,6 +32,11 @@ hdpi_params_24="36 drawable-hdpi"
 mdpi_params_24="24 drawable-mdpi"
 ldpi_params_24="18 drawable-ldpi"
 
+xhdpi_params_48="96 drawable-xhdpi"
+hdpi_params_48="72 drawable-hdpi"
+mdpi_params_48="48 drawable-mdpi"
+ldpi_params_48="36 drawable-ldpi"
+
 xhdpi_params_64="128 drawable-xhdpi"
 hdpi_params_64="96 drawable-hdpi"
 mdpi_params_64="64 drawable-mdpi"
@@ -62,6 +67,10 @@ do
     gen_image $hdpi_params_24 $name 24
     gen_image $mdpi_params_24 $name 24
     gen_image $ldpi_params_24 $name 24
+    gen_image $xhdpi_params_48 $name 48
+    gen_image $hdpi_params_48 $name 48
+    gen_image $mdpi_params_48 $name 48
+    gen_image $ldpi_params_48 $name 48
     gen_image $xhdpi_params_64 $name 64
     gen_image $hdpi_params_64 $name 64
     gen_image $mdpi_params_64 $name 64

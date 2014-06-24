@@ -47,7 +47,7 @@ public abstract class AbstractWeatherLayout {
 
     static final String URL_TEMPLATE = "<a href=\"%s\">%s</a>";
 
-    static final int MAIN_ICON = 64;
+    static final int MAIN_ICON = 48;
     static final int FORECAST_ICON = 16;
 
     /** Current context */
