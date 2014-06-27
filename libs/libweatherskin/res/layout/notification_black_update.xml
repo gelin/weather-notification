@@ -37,10 +37,8 @@
 
     <LinearLayout
             android:id="@+id/temp"
-            android:layout_width="48dp"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical">
 
@@ -122,18 +120,18 @@
     <LinearLayout
             android:id="@+id/forecasts"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
             android:orientation="vertical"
             android:gravity="left">
 
         <LinearLayout
                 android:id="@+id/forecast_1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
             <TextView
@@ -169,7 +167,8 @@
         <LinearLayout
                 android:id="@+id/forecast_2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
             <TextView
@@ -205,7 +204,8 @@
         <LinearLayout
                 android:id="@+id/forecast_3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
             <TextView

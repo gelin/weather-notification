@@ -23,6 +23,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="Weather.ForecastConditionIcon">
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+
     <style name="WeatherInfo">
         <!--parent="@android:style/TextAppearance">-->
         <item name="android:textColor">?android:attr/textColorPrimary</item>

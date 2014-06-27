@@ -67,21 +67,21 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         super(context);
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        this.ids.add(ids.id("condition"));
-        this.ids.add(ids.id("wind_humidity_text"));
-        this.ids.add(ids.id("temp"));
-        this.ids.add(ids.id("current_temp"));
-        this.ids.add(ids.id("high_temp"));
-        this.ids.add(ids.id("low_temp"));
-        this.ids.add(ids.id("forecasts_text"));
+//        this.ids.add(ids.id("condition"));
+//        this.ids.add(ids.id("wind_humidity_text"));
+//        this.ids.add(ids.id("temp"));
+//        this.ids.add(ids.id("current_temp"));
+//        this.ids.add(ids.id("high_temp"));
+//        this.ids.add(ids.id("low_temp"));
+//        this.ids.add(ids.id("forecasts_text"));
         switch(unit) {      //TODO: remove multiple appearance of this switch
         case C:
         case F:
-            this.ids.add(ids.id("update_time_short"));
+//            this.ids.add(ids.id("update_time_short"));
             break;
         case CF:
         case FC:
-            this.ids.add(ids.id("current_temp_alt"));
+//            this.ids.add(ids.id("current_temp_alt"));
             break;
         }
     }
