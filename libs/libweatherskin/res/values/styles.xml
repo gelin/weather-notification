@@ -6,17 +6,19 @@
     <style name="Weather">
         <item name="android:singleLine">true</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Weather.CurrentTemp" parent="Weather">
+    <style name="Weather.CurrentTemp">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="Weather.Forecast" parent="Weather">
+    <style name="Weather.Text">
         <item name="android:ellipsize">marquee</item>
     </style>
 
-    <style name="Weather.Condition" parent="Weather.Forecast">
+    <style name="Weather.Condition" parent="Weather.Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
@@ -44,6 +46,7 @@
     </style>
 
     <style name="WeatherInfo.ConditionIcon">
+        <item name="android:gravity">center</item>
         <!--<item name="android:layout_margin">5dp</item>-->
     </style>
 

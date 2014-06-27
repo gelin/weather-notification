@@ -110,13 +110,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                style="@style/Weather.Forecast"/>
+                style="@style/Weather.Text"/>
             
             <TextView android:id="@+id/forecasts_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                style="@style/Weather.Forecast"/>
+                style="@style/Weather.Text"/>
                 
         </LinearLayout>
         
