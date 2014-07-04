@@ -23,22 +23,16 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
+import android.graphics.drawable.DrawableContainer;
 import android.text.method.MovementMethod;
-import android.view.View;
 import android.widget.RemoteViews;
-import ru.gelin.android.weather.*;
-import ru.gelin.android.weather.TemperatureUnit;
 
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT_DEFAULT;
 
 /**
  *  Utility to layout weather values to remove view.
@@ -67,21 +61,38 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         super(context);
         this.views = views;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-//        this.ids.add(ids.id("condition"));
-//        this.ids.add(ids.id("wind_humidity_text"));
-//        this.ids.add(ids.id("temp"));
-//        this.ids.add(ids.id("current_temp"));
-//        this.ids.add(ids.id("high_temp"));
-//        this.ids.add(ids.id("low_temp"));
-//        this.ids.add(ids.id("forecasts_text"));
+        this.ids.add(ids.id("condition"));
+        this.ids.add(ids.id("condition_icon"));
+        this.ids.add(ids.id("wind"));
+        this.ids.add(ids.id("humidity"));
+        this.ids.add(ids.id("temp"));
+        this.ids.add(ids.id("current_temp"));
+        this.ids.add(ids.id("high_temp"));
+        this.ids.add(ids.id("low_temp"));
+        this.ids.add(ids.id("forecasts"));
+        this.ids.add(ids.id("forecast_1"));
+        this.ids.add(ids.id("forecast_day_1"));
+        this.ids.add(ids.id("forecast_condition_icon_1"));
+        this.ids.add(ids.id("forecast_high_temp_1"));
+        this.ids.add(ids.id("forecast_low_temp_1"));
+        this.ids.add(ids.id("forecast_2"));
+        this.ids.add(ids.id("forecast_day_2"));
+        this.ids.add(ids.id("forecast_condition_icon_2"));
+        this.ids.add(ids.id("forecast_high_temp_2"));
+        this.ids.add(ids.id("forecast_low_temp_2"));
+        this.ids.add(ids.id("forecast_3"));
+        this.ids.add(ids.id("forecast_day_3"));
+        this.ids.add(ids.id("forecast_condition_icon_3"));
+        this.ids.add(ids.id("forecast_high_temp_3"));
+        this.ids.add(ids.id("forecast_low_temp_3"));
         switch(unit) {      //TODO: remove multiple appearance of this switch
         case C:
         case F:
-//            this.ids.add(ids.id("update_time_short"));
+            this.ids.add(ids.id("update_time_short"));
             break;
         case CF:
         case FC:
-//            this.ids.add(ids.id("current_temp_alt"));
+            this.ids.add(ids.id("current_temp_alt"));
             break;
         }
     }
@@ -100,7 +111,17 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
 
     @Override
     protected void setIcon(int viewId, Drawable drawable, int level) {
-        return; //TODO if necessary to display icons
+        if (skipView(viewId)) {
+            drawable.setLevel(level);
+            Drawable bitmapDrawable = drawable.getCurrent();
+            while (bitmapDrawable instanceof DrawableContainer) {
+                bitmapDrawable = drawable.getCurrent();
+            }
+            if (!(bitmapDrawable instanceof BitmapDrawable)) {
+                return;
+            }
+            views.setImageViewBitmap(viewId, ((BitmapDrawable) bitmapDrawable).getBitmap());
+        }
     }
 
     @Override
@@ -130,40 +151,4 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         setText(id("update_time_short"), text);
     }
     
-    protected void bindWindHumidity(WeatherCondition currentCondition) {
-        SharedPreferences preferences = 
-            PreferenceManager.getDefaultSharedPreferences(this.context);
-
-        WindUnit windUnit = WindUnit.valueOf(preferences.getString(
-                WS_UNIT, WS_UNIT_DEFAULT));
-        Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
-        Humidity humidity = currentCondition.getHumidity();
-        
-        StringBuilder text = new StringBuilder();
-        text.append(this.windFormat.format(wind));
-        text.append(SEPARATOR);
-        text.append(this.humidityFormat.format(humidity));
-        setText(id("wind_humidity_text"), text.toString());
-    }
-    
-    @Override
-    protected void bindForecasts(Weather weather, TemperatureUnit unit) {
-        setVisibility(id("forecasts_text"), View.VISIBLE);
-        StringBuilder forecastsText = new StringBuilder();
-        for (int i = 1; i < 4; i++) {
-            if (weather.getConditions().size() <= i) {
-                break;
-            }
-            WeatherCondition forecast = weather.getConditions().get(i);
-            Temperature temp = forecast.getTemperature(unit);
-            Date day = addDays(weather.getTime(), i);
-            forecastsText.append(context.getString(string("forecast_text"), 
-                    day, 
-                    tempFormat.format(temp.getHigh()), 
-                    tempFormat.format(temp.getLow())));
-            forecastsText.append(SEPARATOR);
-        }
-        setText(id("forecasts_text"), forecastsText.toString());
-    }
-
 }

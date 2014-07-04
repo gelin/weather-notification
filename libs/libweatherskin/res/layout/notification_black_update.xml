@@ -33,6 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             style="@style/Weather"
+            android:alpha="0.2"
             android:src="@drawable/condition_clear_64"/>
 
     <LinearLayout
@@ -109,14 +110,6 @@
             style="@style/Weather.Text"
             android:text="Humidity Humidity Humidity Humidity"/>
             
-    <!--<TextView-->
-            <!--android:id="@+id/forecasts_text"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--style="@style/Weather.Text"-->
-            <!--android:text="Day: X&#x00B0;/X&#x00B0; Day: X&#x00B0;/X&#x00B0; Day: X&#x00B0;/X&#x00B0;"/>-->
-
     <LinearLayout
             android:id="@+id/forecasts"
             android:layout_width="wrap_content"
