@@ -29,7 +29,6 @@ import android.graphics.drawable.DrawableContainer;
 import android.text.method.MovementMethod;
 import android.widget.RemoteViews;
 
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -173,8 +172,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
             setText(id("update_time_short"), "", NO_CHANGE_COLOR);
             return;
         }
-        long minutes = (new Date().getTime() - update.getTime()) / 60000;
-        String text = MessageFormat.format(this.context.getString(string("update_time_short")), minutes);
+        String text = this.context.getString(string("update_time_short"), update);
         setText(id("update_time_short"), text, NO_CHANGE_COLOR);
     }
     

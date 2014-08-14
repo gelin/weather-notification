@@ -73,10 +73,10 @@
                 
         <TextView
                 android:id="@+id/update_time_short"
-                android:layout_gravity="right"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@android:color/darker_gray"
                 style="@style/Weather"
-                android:text="&lt;15m"/>
+                android:text="18:46"/>
         
     </LinearLayout>
 
