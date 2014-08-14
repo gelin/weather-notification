@@ -50,6 +50,8 @@ public abstract class AbstractWeatherLayout {
     static final int MAIN_ICON = 48;
     static final int FORECAST_ICON = 16;
 
+    static final int NO_CHANGE_COLOR = 0;
+
     /** Current context */
     protected Context context;
     /** ID factory */
@@ -103,14 +105,14 @@ public abstract class AbstractWeatherLayout {
     
     void bindViews(Weather weather) {
         bindUpdateTime(weather.getQueryTime());
-        setText(id("location"), weather.getLocation().getText());
+        setText(id("location"), weather.getLocation().getText(), getTextColor());
         
         if (weather.getConditions().size() <= 0) {
             return;
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
         setIcon(id("condition_icon"), this.conditionFormat.getDrawable(currentCondition), MAIN_ICON);
-        setText(id("condition"), this.conditionFormat.getText(currentCondition));
+        setText(id("condition"), this.conditionFormat.getText(currentCondition), getTextColor());
         bindWindHumidity(currentCondition);
         
         SharedPreferences preferences = 
@@ -124,24 +126,24 @@ public abstract class AbstractWeatherLayout {
         Temperature mainTemp = currentCondition.getTemperature(mainUnit);
         
         setVisibility(id("temp"), View.VISIBLE);
-        setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), tempType));
+        setText(id("current_temp"), tempFormat.format(mainTemp.getCurrent(), tempType), getTextColor());
         switch(tempType) {      //TODO: remove multiple appearance of this switch
         case C: case F:
             setVisibility(id("current_temp_alt"), View.GONE);
             break;
         case CF:
-            setText(id("current_temp_alt"), tempFormat.format(tempF.getCurrent(),
-                    TemperatureType.F));
+            setText(id("current_temp_alt"),
+                    tempFormat.format(tempF.getCurrent(), TemperatureType.F), getTextColor());
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         case FC:
-            setText(id("current_temp_alt"), tempFormat.format(tempC.getCurrent(),
-                    TemperatureType.C));
+            setText(id("current_temp_alt"),
+                    tempFormat.format(tempC.getCurrent(), TemperatureType.C), getTextColor());
             setVisibility(id("current_temp_alt"), View.VISIBLE);
             break;
         }
-        setText(id("high_temp"), tempFormat.format(mainTemp.getHigh()));
-        setText(id("low_temp"), tempFormat.format(mainTemp.getLow()));
+        setText(id("high_temp"), tempFormat.format(mainTemp.getHigh()), getTextColor());
+        setText(id("low_temp"), tempFormat.format(mainTemp.getLow()), getTextColor());
         
         bindForecasts(weather, mainUnit);
 
@@ -150,13 +152,13 @@ public abstract class AbstractWeatherLayout {
     
     protected void bindUpdateTime(Date update) {
         if (update.getTime() == 0) {
-            setText(id("update_time"), "");
+            setText(id("update_time"), "", NO_CHANGE_COLOR);
         } else if (isDate(update)) {
-            setText(id("update_time"), this.context.getString(
-                    string("update_date_format"), update));
+            setText(id("update_time"),
+                    this.context.getString(string("update_date_format"), update), getTextColor());
         } else {
-            setText(id("update_time"), this.context.getString(
-                string("update_time_format"), update));
+            setText(id("update_time"),
+                    this.context.getString(string("update_time_format"), update), getTextColor());
         }
     }
     
@@ -167,10 +169,10 @@ public abstract class AbstractWeatherLayout {
         WindUnit windUnit = WindUnit.valueOf(preferences.getString(
                 WS_UNIT, WS_UNIT_DEFAULT));
         Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
-        setText(id("wind"), this.windFormat.format(wind));
+        setText(id("wind"), this.windFormat.format(wind), getTextColor());
         
         Humidity humidity = currentCondition.getHumidity();
-        setText(id("humidity"), this.humidityFormat.format(humidity));
+        setText(id("humidity"), this.humidityFormat.format(humidity), getTextColor());
     }
     
     protected void bindForecasts(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
@@ -204,11 +206,11 @@ public abstract class AbstractWeatherLayout {
             WeatherCondition forecastCondition = weather.getConditions().get(i);
             Date tomorrow = addDays(weather.getTime(), i);
             setIcon(iconId, this.conditionFormat.getDrawable(forecastCondition), FORECAST_ICON);
-            setText(dayId, context.getString(string("forecast_day_format"), tomorrow));
-            setText(conditionId, this.conditionFormat.getText(forecastCondition));
+            setText(dayId, context.getString(string("forecast_day_format"), tomorrow), getTextColor());
+            setText(conditionId, this.conditionFormat.getText(forecastCondition), getTextColor());
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
-            setText(highTempId, tempFormat.format(forecastTemp.getHigh()));
-            setText(lowTempId, tempFormat.format(forecastTemp.getLow()));
+            setText(highTempId, tempFormat.format(forecastTemp.getHigh()), getTextColor());
+            setText(lowTempId, tempFormat.format(forecastTemp.getLow()), getTextColor());
         } else {
             setVisibility(groupId, View.GONE);
         }
@@ -223,16 +225,16 @@ public abstract class AbstractWeatherLayout {
         URL url = weather.getForecastURL();
         String link = String.format(URL_TEMPLATE, url.toString(), url.getHost());
         setMovementMethod(id("forecast_url"), LinkMovementMethod.getInstance());
-        setText(id("forecast_url"), Html.fromHtml(link));
+        setText(id("forecast_url"), Html.fromHtml(link), NO_CHANGE_COLOR);
     }
     
     void emptyViews() {
-        setText(id("update_time"), "");
-        setText(id("location"), "");
-        setText(id("condition"), context.getString(string("unknown_weather")));
-        setText(id("humidity"), "");
-        setText(id("wind"), "");
-        setText(id("wind_humidity_text"), "");
+        setText(id("update_time"), "", NO_CHANGE_COLOR);
+        setText(id("location"), "", NO_CHANGE_COLOR);
+        setText(id("condition"), context.getString(string("unknown_weather")), getTextColor());
+        setText(id("humidity"), "", NO_CHANGE_COLOR);
+        setText(id("wind"), "", NO_CHANGE_COLOR);
+        setText(id("wind_humidity_text"), "", NO_CHANGE_COLOR);
         
         setVisibility(id("temp"), View.INVISIBLE);
         
@@ -242,7 +244,7 @@ public abstract class AbstractWeatherLayout {
         setVisibility(id("forecast_url"), View.INVISIBLE);
     }
     
-    protected abstract void setText(int viewId, CharSequence text);
+    protected abstract void setText(int viewId, CharSequence text, int color);
 
     protected abstract void setIcon(int viewId, Drawable drawable, int level);
     
@@ -275,5 +277,11 @@ public abstract class AbstractWeatherLayout {
     protected TemperatureFormat createTemperatureFormat() {
         return new TemperatureFormat();
     }
+
+    /**
+     *  Returns the text color to be set on all text views.
+     *  This color is passed to #setText() calls.
+     */
+    protected abstract int getTextColor();
     
 }

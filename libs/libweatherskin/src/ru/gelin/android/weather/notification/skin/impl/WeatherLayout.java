@@ -44,9 +44,14 @@ public class WeatherLayout extends AbstractWeatherLayout {
         super(context);
         this.view = view;
     }
-    
+
     @Override
-    protected void setText(int viewId, CharSequence text) {
+    protected int getTextColor() {
+        return NO_CHANGE_COLOR;
+    }
+
+    @Override
+    protected void setText(int viewId, CharSequence text, int color) {
         TextView textView = (TextView)this.view.findViewById(viewId);
         if (textView == null) {
             return;

@@ -41,25 +41,30 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     /** Separator between text values */
     static final String SEPARATOR = "   ";
-    
+
     /** View to bind. */
     RemoteViews views;
+
+    /** Text style */
+    NotificationTextStyle textStyle;
     
     /** Ids of views to update. */
     final Set<Integer> ids = new HashSet<Integer>();
     
     @Deprecated
-    public RemoteWeatherLayout(Context context, RemoteViews views, 
-            ru.gelin.android.weather.notification.skin.impl.TemperatureUnit unit) {
-        this(context, views, TemperatureType.valueOf(unit));
+    public RemoteWeatherLayout(Context context, RemoteViews views,
+                               NotificationTextStyle textStyle,
+                               ru.gelin.android.weather.notification.skin.impl.TemperatureUnit unit) {
+        this(context, views, textStyle, TemperatureType.valueOf(unit));
     }
     
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType unit) {
+    public RemoteWeatherLayout(Context context, RemoteViews views, NotificationTextStyle textStyle, TemperatureType unit) {
         super(context);
         this.views = views;
+        this.textStyle = textStyle;
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         this.ids.add(ids.id("condition"));
         this.ids.add(ids.id("condition_icon"));
@@ -96,15 +101,23 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
             break;
         }
     }
-    
+
     @Override
-    protected void setText(int viewId, CharSequence text) {
+    protected int getTextColor() {
+        return this.textStyle.getTextColor();
+    }
+
+    @Override
+    protected void setText(int viewId, CharSequence text, int color) {
         if (skipView(viewId)) { //TODO: how to determine if the view is absent?
             return;
         }
         if (text == null) {
             views.setTextViewText(viewId, "");
             return;
+        }
+        if (color != 0) {
+            views.setTextColor(viewId, color);
         }
         views.setTextViewText(viewId, text);
     }
@@ -143,12 +156,12 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
     protected void bindUpdateTime(Date update) {
         if (update.getTime() == 0) {
-            setText(id("update_time_short"), "");
+            setText(id("update_time_short"), "", NO_CHANGE_COLOR);
             return;
         }
         long minutes = (new Date().getTime() - update.getTime()) / 60000;
         String text = MessageFormat.format(this.context.getString(string("update_time_short")), minutes);
-        setText(id("update_time_short"), text);
+        setText(id("update_time_short"), text, NO_CHANGE_COLOR);
     }
     
 }

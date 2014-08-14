@@ -143,7 +143,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
         TemperatureType unit = TemperatureType.valueOf(prefs.getString(
                 TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        NotificationStyle textStyle = NotificationStyle.valueOf(prefs.getString(
+        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         notification.tickerText = formatTicker(context, weather, unit);

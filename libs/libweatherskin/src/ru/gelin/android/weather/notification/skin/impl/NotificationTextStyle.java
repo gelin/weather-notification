@@ -26,22 +26,22 @@ package ru.gelin.android.weather.notification.skin.impl;
 /**
  *  Enumeration with notification styles. 
  */
-public enum NotificationStyle {
+public enum NotificationTextStyle {
 
-    BLACK_TEXT("notification_black"),
-    WHITE_TEXT("notification_white");
+    BLACK_TEXT(0xff000000),
+    WHITE_TEXT(0xffffffff);
 
-    String layoutResName;
+    int textColor;
     
-    private NotificationStyle(String layoutResName) {
-        this.layoutResName = layoutResName;
+    private NotificationTextStyle(int textColor) {
+        this.textColor = textColor;
     }
 
     /**
-     *  Returns resource ID of the notification text layout.
+     *  Returns color of the text for this notification style.
      */
-    public String getLayoutResName() {
-        return this.layoutResName;
+    public int getTextColor() {
+        return this.textColor;
     }
     
 }
