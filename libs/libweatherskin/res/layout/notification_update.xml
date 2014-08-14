@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             style="@style/Weather"
-            android:alpha="0.2"
+            android:alpha="0.4"
             android:src="@drawable/condition_clear_64"/>
 
     <LinearLayout
@@ -111,6 +111,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal"
             android:gravity="right">
 

@@ -42,6 +42,9 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     /** Separator between text values */
     static final String SEPARATOR = "   ";
 
+    static final int MAIN_ICON = 64;
+    static final int FORECAST_ICON = 16;
+
     /** View to bind. */
     RemoteViews views;
 
@@ -123,18 +126,29 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
+    protected int getMainIconSize() {
+        return MAIN_ICON;
+    }
+
+    @Override
+    protected int getForecastIconSize() {
+        return FORECAST_ICON;
+    }
+
+    @Override
     protected void setIcon(int viewId, Drawable drawable, int level) {
         if (skipView(viewId)) {
-            drawable.setLevel(level);
-            Drawable bitmapDrawable = drawable.getCurrent();
-            while (bitmapDrawable instanceof DrawableContainer) {
-                bitmapDrawable = drawable.getCurrent();
-            }
-            if (!(bitmapDrawable instanceof BitmapDrawable)) {
-                return;
-            }
-            views.setImageViewBitmap(viewId, ((BitmapDrawable) bitmapDrawable).getBitmap());
+            return;
         }
+        drawable.setLevel(level);
+        Drawable bitmapDrawable = drawable.getCurrent();
+        while (bitmapDrawable instanceof DrawableContainer) {
+            bitmapDrawable = drawable.getCurrent();
+        }
+        if (!(bitmapDrawable instanceof BitmapDrawable)) {
+            return;
+        }
+        views.setImageViewBitmap(viewId, ((BitmapDrawable) bitmapDrawable).getBitmap());
     }
 
     @Override

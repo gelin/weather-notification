@@ -111,7 +111,7 @@ public abstract class AbstractWeatherLayout {
             return;
         }
         WeatherCondition currentCondition = weather.getConditions().get(0);
-        setIcon(id("condition_icon"), this.conditionFormat.getDrawable(currentCondition), MAIN_ICON);
+        setIcon(id("condition_icon"), this.conditionFormat.getDrawable(currentCondition), getMainIconSize());
         setText(id("condition"), this.conditionFormat.getText(currentCondition), getTextColor());
         bindWindHumidity(currentCondition);
         
@@ -205,7 +205,7 @@ public abstract class AbstractWeatherLayout {
             setVisibility(groupId, View.VISIBLE);
             WeatherCondition forecastCondition = weather.getConditions().get(i);
             Date tomorrow = addDays(weather.getTime(), i);
-            setIcon(iconId, this.conditionFormat.getDrawable(forecastCondition), FORECAST_ICON);
+            setIcon(iconId, this.conditionFormat.getDrawable(forecastCondition), getForecastIconSize());
             setText(dayId, context.getString(string("forecast_day_format"), tomorrow), getTextColor());
             setText(conditionId, this.conditionFormat.getText(forecastCondition), getTextColor());
             Temperature forecastTemp = forecastCondition.getTemperature(unit);
@@ -283,5 +283,19 @@ public abstract class AbstractWeatherLayout {
      *  This color is passed to #setText() calls.
      */
     protected abstract int getTextColor();
+
+    /**
+     *  Returns size of the main condition icon. In dp.
+     */
+    protected int getMainIconSize() {
+        return MAIN_ICON;
+    }
+
+    /**
+     *  Returns size of the forecast condition icon. In dp.
+     */
+    protected int getForecastIconSize() {
+        return FORECAST_ICON;
+    }
     
 }
