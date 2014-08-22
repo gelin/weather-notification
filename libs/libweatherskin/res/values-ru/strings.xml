@@ -118,4 +118,6 @@
     <string name="condition_windy">Ветренно</string>
     <string name="condition_hail">Град</string>
 
+    <string name="skin_tap_to_config">Нажмите для настройки</string>
+
 </resources>

@@ -47,8 +47,6 @@
     <string name="notification_ticker" formatted="false">%s %s</string>
     <!-- params: forecast day, high temp, low temp-->
     <string name="forecast_text" formatted="false">%ta: %s/%s</string>
-    <!-- params: update time -->
-    <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
 
     <!-- wind directions -->
     <string name="wind_dir_n">N</string>
@@ -133,5 +131,9 @@
     <string name="condition_hot">Hot</string>
     <string name="condition_windy">Windy</string>
     <string name="condition_hail">Hail</string>
+
+    <!-- params: update time -->
+    <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
+    <string name="skin_tap_to_config">Tap to configure</string>
 
 </resources>

@@ -142,6 +142,7 @@ public class SkinInfo {
         CheckBoxPreference pref = new CheckBoxPreference(context);
         pref.setKey(String.format(SKIN_ENABLED_PATTERN, getId()));
         pref.setTitle(getBroadcastReceiverLabel());
+        pref.setSummary(R.string.skin_tap_to_config);
         pref.setChecked(isEnabled());
         pref.setOrder(this.order);
         Intent intent = new Intent(ACTION_WEATHER_SKIN_PREFERENCES);
