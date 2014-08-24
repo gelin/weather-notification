@@ -24,7 +24,6 @@
 
 <resources>
     <string name="weather">Погода</string>
-    <string name="notification_icon_style">Цвет текста значка</string>
     <string name="notification_text_style">Цвет текста уведомления</string>
     <string name="notification_style_black_text">Черный текст</string>
     <string name="notification_style_white_text">Белый текст</string>
@@ -119,5 +118,11 @@
     <string name="condition_hail">Град</string>
 
     <string name="skin_tap_to_config">Нажмите для настройки</string>
+    <string name="notification">Уведомление</string>
+    <string name="notification_style">Тип уведомления</string>
+    <string name="notification_style_standard">Стандартное</string>
+    <string name="notification_style_custom">Специализированное</string>
+    <string name="notification_icon_style">Показывать значок погоды</string>
+    <string name="notification_forecast_style">Показывать прогноз</string>
 
 </resources>

@@ -24,15 +24,6 @@
 
 <resources>
 
-    <string-array name="notification_style_entries">
-        <item>@string/notification_style_black_text</item>
-        <item>@string/notification_style_white_text</item>
-    </string-array>
-    <string-array name="notification_style_values">
-        <item>BLACK_TEXT</item>
-        <item>WHITE_TEXT</item>
-    </string-array>
-    
     <string-array name="temp_unit_entries">
         <item>@string/celsius</item>
         <item>@string/fahrenheit</item>
@@ -55,6 +46,24 @@
         <item>MPH</item>
         <item>KMPH</item>
         <item>MPS</item>
+    </string-array>
+
+    <string-array name="notification_style_entries">
+        <item>@string/notification_style_standard</item>
+        <item>@string/notification_style_custom</item>
+    </string-array>
+    <string-array name="notification_style_values">
+        <item>STANDARD_STYLE</item>
+        <item>CUSTOM_STYLE</item>
+    </string-array>
+
+    <string-array name="notification_text_style_entries">
+        <item>@string/notification_style_black_text</item>
+        <item>@string/notification_style_white_text</item>
+    </string-array>
+    <string-array name="notification_text_style_values">
+        <item>BLACK_TEXT</item>
+        <item>WHITE_TEXT</item>
     </string-array>
 
 </resources>
