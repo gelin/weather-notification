@@ -27,16 +27,8 @@ import android.os.Build;
 /**
  *  Constants for preference keys.
  */
-public interface PreferenceKeys {
+public class PreferenceKeys {
 
-    /** Notification text style preference key */
-    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
-    /** Notification text style default value */
-    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
-            Integer.valueOf(Build.VERSION.SDK) < 11 ?   NotificationTextStyle.BLACK_TEXT.toString() :
-            Integer.valueOf(Build.VERSION.SDK) >= 20 ?  NotificationTextStyle.BLACK_TEXT.toString() :
-                                                        NotificationTextStyle.WHITE_TEXT.toString();
-    
     /** Temperature unit preference name */
     static final String TEMP_UNIT = "temp_unit";
     /** Temperature unit default value */
@@ -44,5 +36,32 @@ public interface PreferenceKeys {
     /** Wind speed unit preference name */
     static final String WS_UNIT = "ws_unit";
     static final String WS_UNIT_DEFAULT = WindUnit.MPH.toString();
+
+    /** Notification style preference key */
+    public static final String NOTIFICATION_STYLE = "notification_style";
+    /** Notification style defatul value */
+    public static final String NOTIFICATION_STYLE_DEFAULT = NotificationStyle.CUSTOM_STYLE.toString();
+
+    /** Notification text style preference key */
+    public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
+    /** Notification text style default value */
+    public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
+            Integer.valueOf(Build.VERSION.SDK) < 11 ?   NotificationTextStyle.BLACK_TEXT.toString() :
+            Integer.valueOf(Build.VERSION.SDK) >= 20 ?  NotificationTextStyle.BLACK_TEXT.toString() :
+            NotificationTextStyle.WHITE_TEXT.toString();
+
+    /** Notification icon style preference key */
+    public static final String NOTIFICATION_ICON_STYLE = "notification_icon_style";
+    /** Notification icon style default value */
+    public static final boolean NOTIFICATION_ICON_STYLE_DEFAULT = true;
+
+    /** Notification forecast style preference key */
+    public static final String NOTIFICATION_FORECAST_STYLE = "notification_forecast_style";
+    /** Notification forecast style default value */
+    public static final boolean NOTIFICATION_FORECAST_STYLE_DEFAULT = true;
+
+    private PreferenceKeys() {
+        //avoid instantiation
+    }
 
 }
