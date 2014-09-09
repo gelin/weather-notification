@@ -56,9 +56,9 @@ public class PreferenceKeys {
     public static final boolean NOTIFICATION_ICON_STYLE_DEFAULT = true;
 
     /** Notification forecast style preference key */
-    public static final String NOTIFICATION_FORECAST_STYLE = "notification_forecast_style";
+    public static final String NOTIFICATION_FORECASTS_STYLE = "notification_forecasts_style";
     /** Notification forecast style default value */
-    public static final boolean NOTIFICATION_FORECAST_STYLE_DEFAULT = true;
+    public static final boolean NOTIFICATION_FORECASTS_STYLE_DEFAULT = true;
 
     private PreferenceKeys() {
         //avoid instantiation

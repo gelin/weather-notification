@@ -44,7 +44,6 @@ import ru.gelin.android.weather.notification.skin.Tag;
 
 import java.util.List;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
@@ -55,11 +54,7 @@ abstract public class BaseWeatherNotificationReceiver extends
 
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
-    /** Layout without last update time */
-    static final String LAYOUT = "notification";
-    /** Layout with last update time */
-    static final String LAYOUT_UPDATE = "notification_update";
-    
+
     /** Handler to receive the weather */
     static Handler handler;
     
@@ -99,11 +94,11 @@ abstract public class BaseWeatherNotificationReceiver extends
         SharedPreferences prefs =
             PreferenceManager.getDefaultSharedPreferences(context);
     
-        TemperatureType unit = TemperatureType.valueOf(prefs.getString(
-            TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        ru.gelin.android.weather.TemperatureUnit mainUnit = unit.getTemperatureUnit();
-        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(prefs.getString(
-                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
+//        TemperatureType unit = TemperatureType.valueOf(prefs.getString(
+//            TEMP_UNIT, TEMP_UNIT_DEFAULT));
+//        ru.gelin.android.weather.TemperatureUnit mainUnit = unit.getTemperatureUnit();
+//        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(prefs.getString(
+//                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
 
         Notification notification = new Notification();
         
@@ -196,40 +191,47 @@ abstract public class BaseWeatherNotificationReceiver extends
     /**
      *  Returns the notification icon level.
      */
-    protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
-        return 24;  //24dp for notification icon size
-    };
+//    protected int getNotificationIconLevel(Weather weather, ru.gelin.android.weather.TemperatureUnit unit) {
+//        return 24;  //24dp for notification icon size
+//    };
     
     /**
      *  Creates the temperature formatter.
      */
-    protected TemperatureFormat createTemperatureFormat() {
-        return new TemperatureFormat();
-    }
+//    protected TemperatureFormat createTemperatureFormat() {
+//        return new TemperatureFormat();
+//    }
     
     /**
      *  Returns the notification layout id.
      */
-    protected int getNotificationLayoutId(Context context, 
-            NotificationTextStyle textStyle, TemperatureType unit) {
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        switch (unit) {
-        case C:
-        case F:
-            return ids.id(ResourceIdFactory.LAYOUT, LAYOUT_UPDATE);
-        case CF:
-        case FC:
-            return ids.id(ResourceIdFactory.LAYOUT, LAYOUT);
-        }
-        return 0;   //unknown resource
-    }
+//    protected int getNotificationLayoutId(Context context,
+//            NotificationTextStyle textStyle, TemperatureType unit) {
+//        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+//        switch (unit) {
+//        case C:
+//        case F:
+//            return ids.id(ResourceIdFactory.LAYOUT, LAYOUT_UPDATE);
+//        case CF:
+//        case FC:
+//            return ids.id(ResourceIdFactory.LAYOUT, LAYOUT);
+//        }
+//        return 0;   //unknown resource
+//    }
     
     /**
      *  Creates the remove view layout for the notification.
      */
-    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views,
-            NotificationTextStyle textStyle, TemperatureType unit) {
-        return new RemoteWeatherLayout(context, views, textStyle, unit);
+//    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views,
+//            NotificationTextStyle textStyle, TemperatureType unit) {
+//        return new RemoteWeatherLayout(context, views, textStyle, unit);
+//    }
+
+    /**
+     *  Creates the notification styler for the context.
+     */
+    protected NotificationStyler createStyler(Context context) {
+        return new NotificationStyler(context);
     }
 
 }
