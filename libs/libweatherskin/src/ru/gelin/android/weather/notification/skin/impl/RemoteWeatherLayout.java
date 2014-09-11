@@ -53,21 +53,16 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     /** Ids of views to update. */
     final Set<Integer> ids = new HashSet<Integer>();
     
-    @Deprecated
-    public RemoteWeatherLayout(Context context, RemoteViews views,
-                               NotificationTextStyle textStyle,
-                               ru.gelin.android.weather.notification.skin.impl.TemperatureUnit unit) {
-        this(context, views, textStyle, TemperatureType.valueOf(unit));
-    }
-    
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, NotificationTextStyle textStyle, TemperatureType unit) {
+    public RemoteWeatherLayout(Context context, RemoteViews views, NotificationStyler styler) {
         super(context);
         this.views = views;
-        this.textStyle = textStyle;
+        this.textStyle = styler.getTextStyle();
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+
+        //TODO move these ids to styler
         this.ids.add(ids.id("condition"));
         this.ids.add(ids.id("condition_icon"));
         this.ids.add(ids.id("wind"));
@@ -92,7 +87,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
         this.ids.add(ids.id("forecast_condition_icon_3"));
         this.ids.add(ids.id("forecast_high_temp_3"));
         this.ids.add(ids.id("forecast_low_temp_3"));
-        switch(unit) {      //TODO: remove multiple appearance of this switch
+        switch(styler.getTempType()) {      //TODO: remove multiple appearance of this switch
         case C:
         case F:
             this.ids.add(ids.id("update_time_short"));
