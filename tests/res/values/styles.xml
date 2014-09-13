@@ -1,0 +1,109 @@
+<resources>
+
+    <style name="Theme.Dialog" parent="@android:style/Theme.Dialog">
+    </style>
+
+    <style name="Weather">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Weather.CurrentTemp">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Weather.Text">
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="Weather.Condition" parent="Weather.Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Weather.ForecastConditionIcon">
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+
+    <style name="WeatherInfo">
+        <!--parent="@android:style/TextAppearance">-->
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WeatherInfo.Location">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="WeatherInfo.UpdateTime">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceSmall</item>-->
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="WeatherInfo.CloseButton">
+        <item name="android:src">@android:drawable/btn_dialog</item>
+    </style>
+
+    <style name="WeatherInfo.ConditionIcon">
+        <item name="android:gravity">center</item>
+        <!--<item name="android:layout_margin">5dp</item>-->
+    </style>
+
+    <style name="WeatherInfo.Condition">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="WeatherInfo.ConditionDetails">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceMedium</item>-->
+        <item name="android:textSize">18sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="WeatherInfo.CurrentTemp">
+        <!--<item name="android:textAppearance">?android:attr/textAppearanceLarge</item>-->
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="WeatherInfo.AltTemp">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="WeatherInfo.Text">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="WeatherInfo.MultilineText">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastRow">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastConditionIcon">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="WeatherInfo.ForecastCondition">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
+</resources>
