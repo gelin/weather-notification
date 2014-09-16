@@ -27,7 +27,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 
@@ -106,6 +108,7 @@ public class NotificationStyler {
         }
     }
 
+
     private final Context context;
 
     private final TemperatureType tempType;
@@ -113,6 +116,12 @@ public class NotificationStyler {
     private final NotificationTextStyle textStyle;
     private final boolean showIcon;
     private final boolean showForecasts;
+
+    /** Type of the notification layout */
+    final Layout layout;
+    /** Ids of layout views. */
+    final Set<Integer> ids = new HashSet<Integer>();
+
 
     public NotificationStyler(Context context) {
         this.context = context;
@@ -129,6 +138,9 @@ public class NotificationStyler {
                 NOTIFICATION_ICON_STYLE, NOTIFICATION_ICON_STYLE_DEFAULT);
         this.showForecasts = prefs.getBoolean(
                 NOTIFICATION_FORECASTS_STYLE, NOTIFICATION_FORECASTS_STYLE_DEFAULT);
+
+        this.layout = Layout.get(isShowIcon(), isShowForecasts(), isShowUpdateTime());
+        initLayoutIds();
     }
 
     public TemperatureType getTempType() {
@@ -154,13 +166,19 @@ public class NotificationStyler {
     /**
      *  Returns the notification layout id.
      */
-    protected int getLayoutId() {
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(this.context);
-        Layout layout = Layout.get(isShowIcon(), isShowForecasts(), isShowUpdateTime());
-        if (layout != null) {
-            return ids.id(ResourceIdFactory.LAYOUT, layout.name);
+    public int getLayoutId() {
+        if (this.layout == null) {
+            return 0;   //unknown resource
         }
-        return 0;   //unknown resource
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(this.context);
+        return ids.id(ResourceIdFactory.LAYOUT, layout.name);
+    }
+
+    /**
+     *  Returns true if this layout contains view with this id
+     */
+    public boolean isViewInLayout(int viewId) {
+        return this.ids.contains(viewId);
     }
 
     private boolean isShowUpdateTime() {
@@ -173,6 +191,68 @@ public class NotificationStyler {
             case FC:
                 return false;
         }
+    }
+
+    private void initLayoutIds() {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(this.context);
+
+        //basic set of ids
+        this.ids.add(ids.id("condition"));
+        this.ids.add(ids.id("wind"));
+        this.ids.add(ids.id("humidity"));
+        this.ids.add(ids.id("temp"));
+        this.ids.add(ids.id("current_temp"));
+        this.ids.add(ids.id("high_temp"));
+        this.ids.add(ids.id("low_temp"));
+
+        switch(this.layout) {
+            case CUSTOM_ICON_FORECASTS:
+            case CUSTOM_ICON:
+            case CUSTOM_FORECASTS:
+            case CUSTOM:
+                this.ids.add(ids.id("current_temp_alt"));
+                break;
+            case CUSTOM_ICON_FORECASTS_UPDATE:
+            case CUSTOM_ICON_UPDATE:
+            case CUSTOM_FORECASTS_UPDATE:
+            case CUSTOM_UPDATE:
+                this.ids.add(ids.id("update_time_short"));
+                break;
+        }
+
+        switch(this.layout) {
+            case CUSTOM_ICON_FORECASTS:
+            case CUSTOM_ICON_FORECASTS_UPDATE:
+            case CUSTOM_FORECASTS:
+            case CUSTOM_FORECASTS_UPDATE:
+                this.ids.add(ids.id("forecasts"));
+//        this.ids.add(ids.id("forecast_1"));
+                this.ids.add(ids.id("forecast_day_1"));
+                this.ids.add(ids.id("forecast_condition_icon_1"));
+                this.ids.add(ids.id("forecast_high_temp_1"));
+                this.ids.add(ids.id("forecast_low_temp_1"));
+//        this.ids.add(ids.id("forecast_2"));
+                this.ids.add(ids.id("forecast_day_2"));
+                this.ids.add(ids.id("forecast_condition_icon_2"));
+                this.ids.add(ids.id("forecast_high_temp_2"));
+                this.ids.add(ids.id("forecast_low_temp_2"));
+//        this.ids.add(ids.id("forecast_3"));
+                this.ids.add(ids.id("forecast_day_3"));
+                this.ids.add(ids.id("forecast_condition_icon_3"));
+                this.ids.add(ids.id("forecast_high_temp_3"));
+                this.ids.add(ids.id("forecast_low_temp_3"));
+                break;
+        }
+
+        switch(this.layout) {
+            case CUSTOM_ICON_FORECASTS:
+            case CUSTOM_ICON_FORECASTS_UPDATE:
+            case CUSTOM_ICON:
+            case CUSTOM_ICON_UPDATE:
+                this.ids.add(ids.id("condition_icon"));
+                break;
+        }
+
     }
 
 }

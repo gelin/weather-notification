@@ -30,8 +30,6 @@ import android.text.method.MovementMethod;
 import android.widget.RemoteViews;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *  Utility to layout weather values to remove view.
@@ -48,65 +46,25 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     RemoteViews views;
 
     /** Text style */
-    NotificationTextStyle textStyle;
-    
-    /** Ids of views to update. */
-    final Set<Integer> ids = new HashSet<Integer>();
-    
+    NotificationStyler styler;
+
     /**
      *  Creates the utility for specified context.
      */
     public RemoteWeatherLayout(Context context, RemoteViews views, NotificationStyler styler) {
         super(context);
         this.views = views;
-        this.textStyle = styler.getTextStyle();
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-
-        //TODO move these ids to styler
-        this.ids.add(ids.id("condition"));
-        this.ids.add(ids.id("condition_icon"));
-        this.ids.add(ids.id("wind"));
-        this.ids.add(ids.id("humidity"));
-        this.ids.add(ids.id("temp"));
-        this.ids.add(ids.id("current_temp"));
-        this.ids.add(ids.id("high_temp"));
-        this.ids.add(ids.id("low_temp"));
-        this.ids.add(ids.id("forecasts"));
-//        this.ids.add(ids.id("forecast_1"));
-        this.ids.add(ids.id("forecast_day_1"));
-        this.ids.add(ids.id("forecast_condition_icon_1"));
-        this.ids.add(ids.id("forecast_high_temp_1"));
-        this.ids.add(ids.id("forecast_low_temp_1"));
-//        this.ids.add(ids.id("forecast_2"));
-        this.ids.add(ids.id("forecast_day_2"));
-        this.ids.add(ids.id("forecast_condition_icon_2"));
-        this.ids.add(ids.id("forecast_high_temp_2"));
-        this.ids.add(ids.id("forecast_low_temp_2"));
-//        this.ids.add(ids.id("forecast_3"));
-        this.ids.add(ids.id("forecast_day_3"));
-        this.ids.add(ids.id("forecast_condition_icon_3"));
-        this.ids.add(ids.id("forecast_high_temp_3"));
-        this.ids.add(ids.id("forecast_low_temp_3"));
-        switch(styler.getTempType()) {      //TODO: remove multiple appearance of this switch
-        case C:
-        case F:
-            this.ids.add(ids.id("update_time_short"));
-            break;
-        case CF:
-        case FC:
-            this.ids.add(ids.id("current_temp_alt"));
-            break;
-        }
+        this.styler = styler;
     }
 
     @Override
     protected int getTextColor() {
-        return this.textStyle.getTextColor();
+        return this.styler.getTextStyle().getTextColor();
     }
 
     @Override
     protected void setText(int viewId, CharSequence text, int color) {
-        if (skipView(viewId)) { //TODO: how to determine if the view is absent?
+        if (skipView(viewId)) {
             return;
         }
         if (text == null) {
@@ -159,7 +117,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
     
     boolean skipView(int viewId) {
-        return !this.ids.contains(viewId);
+        return !this.styler.isViewInLayout(viewId);
     }
     
     protected void bindUpdateTime(Date update) {

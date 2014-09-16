@@ -123,6 +123,7 @@
             <TextView
                     android:id="@+id/forecast_day_1"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     android:textColor="@android:color/black"
                     style="@style/Weather"
                     android:text="Day"/>
@@ -130,12 +131,14 @@
             <TextView
                     android:id="@+id/forecast_day_2"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     style="@style/Weather"
                     android:text="DDay"/>
 
             <TextView
                     android:id="@+id/forecast_day_3"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     style="@style/Weather"
                     android:text="Day"/>
 
@@ -176,18 +179,21 @@
             <TextView
                     android:id="@+id/forecast_high_temp_1"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     style="@style/Weather"
                     android:text="X&#x00B0;"/>
 
             <TextView
                     android:id="@+id/forecast_high_temp_2"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     style="@style/Weather"
                     android:text="X&#x00B0;"/>
 
             <TextView
                     android:id="@+id/forecast_high_temp_3"
                     android:layout_weight="1"
+                    android:layout_gravity="right"
                     style="@style/Weather"
                     android:text="XX&#x00B0;"/>
 
@@ -226,18 +232,21 @@
             <TextView
                     android:id="@+id/forecast_low_temp_1"
                     android:layout_weight="1"
+                    android:layout_gravity="left"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
             <TextView
                     android:id="@+id/forecast_low_temp_2"
                     android:layout_weight="1"
+                    android:layout_gravity="left"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
             <TextView
                     android:id="@+id/forecast_low_temp_3"
                     android:layout_weight="1"
+                    android:layout_gravity="left"
                     style="@style/WeatherInfo.Text"
                     android:text="XX&#x00B0;"/>
 
