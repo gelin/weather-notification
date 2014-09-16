@@ -22,13 +22,18 @@
 
 package ru.gelin.android.weather.notification;
 
-import android.test.AndroidTestCase;
+import android.content.Context;
+import android.test.InstrumentationTestCase;
 import ru.gelin.android.weather.Weather;
 
-public class WeatherStorageTest extends AndroidTestCase {
+public class WeatherStorageTest extends InstrumentationTestCase {
+
+    private Context getContext() {
+        return getInstrumentation().getContext();
+    }
 
     public void testSaveLoad() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getContext());
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather1);
         Weather weather2 = storage.load();
@@ -36,7 +41,7 @@ public class WeatherStorageTest extends AndroidTestCase {
     }
 
     public void testSaveLoad2() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getContext());
         Weather weather2 = new ParcelableWeather2(weather1);
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather2);
@@ -45,7 +50,7 @@ public class WeatherStorageTest extends AndroidTestCase {
     }
 
     public void testSaveLoad3() throws Exception {
-        Weather weather1 = WeatherUtils.createOpenWeather(getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather1);
         Weather weather2 = storage.load();
@@ -53,7 +58,7 @@ public class WeatherStorageTest extends AndroidTestCase {
     }
 
     public void testSaveLoad4() throws Exception {
-        Weather weather1 = WeatherUtils.createOpenWeather(getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Weather weather2 = new ParcelableWeather2(weather1);
         WeatherStorage storage = new WeatherStorage(getContext());
         storage.save(weather2);
@@ -62,7 +67,7 @@ public class WeatherStorageTest extends AndroidTestCase {
     }
     
     public void testBackwardCompatibility() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getContext());
         WeatherStorage newStorage = new WeatherStorage(getContext());
         newStorage.save(weather1);
         
@@ -86,7 +91,7 @@ public class WeatherStorageTest extends AndroidTestCase {
     */
 
     public void testBackwardCompatibility3() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getContext());
 
         ru.gelin.android.weather.v_0_2.notification.WeatherStorage oldStorage =
                 new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
@@ -99,10 +104,10 @@ public class WeatherStorageTest extends AndroidTestCase {
 
     public void testRemoveOldConditions() throws Exception {
         WeatherStorage storage = new WeatherStorage(getContext());
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getContext());
         storage.save(weather1);
         assertEquals(4, storage.load().getConditions().size());
-        Weather weather2 = WeatherUtils.createIncompleteOpenWeather(getContext());
+        Weather weather2 = WeatherUtils.createIncompleteOpenWeather(getInstrumentation());
         storage.save(weather2);
         assertEquals(1, storage.load().getConditions().size());
     }

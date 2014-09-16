@@ -22,7 +22,7 @@
 
 package ru.gelin.android.weather.google;
 
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @SuppressWarnings("deprecation")
-public class GoogleWeatherSourceTest extends AndroidTestCase {
+public class GoogleWeatherSourceTest extends InstrumentationTestCase {
 
     //ignoring test because Google API is not available now
     public void ignoretestQueryRu() throws Exception {
@@ -94,12 +94,12 @@ public class GoogleWeatherSourceTest extends AndroidTestCase {
     }
 
     public void testDefaultTemperatureUnit() throws Exception {
-        Weather weather = WeatherUtils.createWeather();
+        Weather weather = WeatherUtils.createWeather(getInstrumentation().getContext());
         assertEquals(TemperatureUnit.F, weather.getConditions().get(0).getTemperature().getTemperatureUnit());
     }
 
     public void testDefaultWindSpeedUnit() throws Exception {
-        Weather weather = WeatherUtils.createWeather();
+        Weather weather = WeatherUtils.createWeather(getInstrumentation().getContext());
         assertEquals(WindSpeedUnit.MPH, weather.getConditions().get(0).getWind().getSpeedUnit());
     }
 

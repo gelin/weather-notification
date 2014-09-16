@@ -24,13 +24,13 @@ package ru.gelin.android.weather.notification.skin;
 
 import android.content.Intent;
 import android.os.Parcel;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.IntentParameters;
 import ru.gelin.android.weather.notification.WeatherUtils;
 
 @SuppressWarnings("deprecation")
-public class WeatherNotificationManagerTest extends AndroidTestCase {
+public class WeatherNotificationManagerTest extends InstrumentationTestCase {
     
     public void testCreateIntentDisableNotification() {
         Intent intent = WeatherNotificationManager.createIntent(false, null);
@@ -44,7 +44,7 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     }
     
     public void testCreateIntent() throws Exception {
-        Weather weather = WeatherUtils.createWeather();
+        Weather weather = WeatherUtils.createWeather(getInstrumentation().getContext());
         Intent intent = WeatherNotificationManager.createIntent(true, weather);
         //Parcel parcel = Parcel.obtain();
         //parcel.writeParcelable(intent, 0);
@@ -65,13 +65,13 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     }
 
     public void testCreateIntent2() throws Exception {
-        Weather weather = WeatherUtils.createWeather();
+        Weather weather = WeatherUtils.createWeather(getInstrumentation().getContext());
         Intent intent = WeatherNotificationManager.createIntent2(true, weather);
         Parcel parcel = Parcel.obtain();
         parcel.writeParcelable(intent, 0);
         parcel.setDataPosition(0);
-        intent = (Intent)parcel.readParcelable(getContext().getClassLoader());
-        intent.setExtrasClassLoader(getContext().getClassLoader());
+        intent = (Intent)parcel.readParcelable(getInstrumentation().getTargetContext().getClassLoader());
+        intent.setExtrasClassLoader(getInstrumentation().getTargetContext().getClassLoader());
         System.out.println(intent);
         System.out.println("extras: " + intent.getExtras().keySet());
         System.out.println("enabled: " + intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));
@@ -85,13 +85,13 @@ public class WeatherNotificationManagerTest extends AndroidTestCase {
     }
 
     public void testCreateIntent3() throws Exception {
-        Weather weather = WeatherUtils.createOpenWeather(getContext());
+        Weather weather = WeatherUtils.createOpenWeather(getInstrumentation());
         Intent intent = WeatherNotificationManager.createIntent2(true, weather);
         Parcel parcel = Parcel.obtain();
         parcel.writeParcelable(intent, 0);
         parcel.setDataPosition(0);
-        intent = (Intent)parcel.readParcelable(getContext().getClassLoader());
-        intent.setExtrasClassLoader(getContext().getClassLoader());
+        intent = (Intent)parcel.readParcelable(getInstrumentation().getTargetContext().getClassLoader());
+        intent.setExtrasClassLoader(getInstrumentation().getTargetContext().getClassLoader());
         System.out.println(intent);
         System.out.println("extras: " + intent.getExtras().keySet());
         System.out.println("enabled: " + intent.getBooleanExtra(IntentParameters.EXTRA_ENABLE_NOTIFICATION, false));

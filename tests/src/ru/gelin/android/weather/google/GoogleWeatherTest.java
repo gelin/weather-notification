@@ -22,7 +22,8 @@
 
 package ru.gelin.android.weather.google;
 
-import android.test.AndroidTestCase;
+import android.content.res.AssetManager;
+import android.test.InstrumentationTestCase;
 import ru.gelin.android.weather.*;
 
 import java.io.InputStream;
@@ -31,11 +32,18 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 @SuppressWarnings("deprecation")
-public class GoogleWeatherTest  extends AndroidTestCase {
+public class GoogleWeatherTest  extends InstrumentationTestCase {
     
+    AssetManager assets;
+
+    @Override
+    protected void setUp() throws Exception {
+        this.assets = getInstrumentation().getContext().getAssets();
+    }
+
     public void testXmlParseEn() throws Exception {
-        InputStream xml1 = getClass().getResourceAsStream("google_weather_api_en.xml");
-        InputStream xml2 = getClass().getResourceAsStream("google_weather_api_en.xml");
+        InputStream xml1 = this.assets.open("google_weather_api_en.xml");
+        InputStream xml2 = this.assets.open("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xml1, "UTF-8"), new InputStreamReader(xml2, "UTF-8"));
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
@@ -100,7 +108,7 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
     
     public void testTempConvertUS2SI() throws Exception {
-        InputStream xml = getClass().getResourceAsStream("google_weather_api_en.xml");
+        InputStream xml = this.assets.open("google_weather_api_en.xml");
 
         GoogleWeather weather = new GoogleWeather();
         GoogleWeatherParser parser = new GoogleWeatherParser(weather);
@@ -119,8 +127,8 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
 
     public void testXmlParseRu() throws Exception {
-        InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
-        InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
+        InputStream xmlru = this.assets.open("google_weather_api_ru.xml");
+        InputStream xmlus = this.assets.open("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xmlus, "UTF-8"), new InputStreamReader(xmlru, "UTF-8"));
         assertEquals("Omsk, Omsk Oblast", weather.getLocation().getText());
@@ -174,7 +182,7 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
     
     public void testTempConvertSI2US() throws Exception {
-        InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
+        InputStream xml = this.assets.open("google_weather_api_ru.xml");
         GoogleWeather weather = new GoogleWeather();
         GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new ParserHandler(weather));
@@ -186,7 +194,7 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
     
     public void testTempConvertC2F() throws Exception {
-        InputStream xml = getClass().getResourceAsStream("google_weather_api_ru.xml");
+        InputStream xml = this.assets.open("google_weather_api_ru.xml");
         GoogleWeather weather = new GoogleWeather();
         GoogleWeatherParser parser = new GoogleWeatherParser(weather);
         parser.parse(new InputStreamReader(xml, "UTF-8"), new ParserHandler(weather));
@@ -198,8 +206,8 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
 
     public void testTempConvertMPH2MPSKMPS() throws Exception {
-        InputStream xmlru = getClass().getResourceAsStream("google_weather_api_ru.xml");
-        InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
+        InputStream xmlru = this.assets.open("google_weather_api_ru.xml");
+        InputStream xmlus = this.assets.open("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xmlus, "UTF-8"), new InputStreamReader(xmlru, "UTF-8"));
         WeatherCondition condition0 = weather.getConditions().get(0);
@@ -210,8 +218,8 @@ public class GoogleWeatherTest  extends AndroidTestCase {
     }
     
     public void testUnknownWeather() throws Exception {
-        InputStream xmlun = getClass().getResourceAsStream("google_weather_api_ru_2011-03.xml");
-        InputStream xmlus = getClass().getResourceAsStream("google_weather_api_en.xml");
+        InputStream xmlun = this.assets.open("google_weather_api_ru_2011-03.xml");
+        InputStream xmlus = this.assets.open("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xmlus, "UTF-8"), new InputStreamReader(xmlun, "UTF-8"));
         assertFalse(weather.isEmpty());

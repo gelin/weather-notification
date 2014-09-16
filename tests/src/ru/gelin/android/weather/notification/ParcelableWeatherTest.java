@@ -22,21 +22,21 @@
 
 package ru.gelin.android.weather.notification;
 
-import ru.gelin.android.weather.Weather;
 import android.os.Parcel;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
+import ru.gelin.android.weather.Weather;
 
 @SuppressWarnings("deprecation")
-public class ParcelableWeatherTest extends AndroidTestCase {
+public class ParcelableWeatherTest extends InstrumentationTestCase {
 
     public void testCopyConstructor() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Weather weather2 = new ParcelableWeather(weather1);
         WeatherUtils.checkWeather(weather2, WeatherUtils.Version.V_0_2);
     }
     
     public void testWriteRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);
@@ -48,7 +48,7 @@ public class ParcelableWeatherTest extends AndroidTestCase {
     }
     
     public void testBackwardCompatibility() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);

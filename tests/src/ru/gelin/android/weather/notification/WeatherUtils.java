@@ -1,6 +1,8 @@
 package ru.gelin.android.weather.notification;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Parcel;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,25 +32,26 @@ public class WeatherUtils {
         //avoid instantiation
     }
 
-    public static Weather createWeather() throws Exception {
-        InputStream xml1 = WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml");
-        InputStream xml2 = WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml");
+    public static Weather createWeather(Context context) throws Exception {
+        AssetManager assets = context.getAssets();
+        InputStream xml1 = assets.open("google_weather_api_en.xml");
+        InputStream xml2 = assets.open("google_weather_api_en.xml");
         GoogleWeather weather = GoogleWeather.parse(
                 new InputStreamReader(xml1, "UTF-8"), new InputStreamReader(xml2, "UTF-8"));
         return weather;
     }
 
-    public static Weather createOpenWeather(Context context) throws Exception {
-        return ru.gelin.android.weather.openweathermap.WeatherUtils.createOpenWeather(context);
+    public static Weather createOpenWeather(Instrumentation instrumentation) throws Exception {
+        return ru.gelin.android.weather.openweathermap.WeatherUtils.createOpenWeather(instrumentation);
     }
 
-    public static Weather createIncompleteOpenWeather(Context context) throws Exception {
-        return ru.gelin.android.weather.openweathermap.WeatherUtils.createIncompleteOpenWeather(context);
+    public static Weather createIncompleteOpenWeather(Instrumentation instrumentation) throws Exception {
+        return ru.gelin.android.weather.openweathermap.WeatherUtils.createIncompleteOpenWeather(instrumentation);
     }
 
-    public static ru.gelin.android.weather.v_0_2.Weather createWeather_v_0_2() throws Exception {
+    public static ru.gelin.android.weather.v_0_2.Weather createWeather_v_0_2(Context context) throws Exception {
         return new ru.gelin.android.weather.v_0_2.google.GoogleWeather(
-                new InputStreamReader(WeatherUtils.class.getResourceAsStream("google_weather_api_en.xml")));
+                new InputStreamReader(context.getAssets().open("google_weather_api_en.xml")));
     }
 
     public static ru.gelin.android.weather.v_0_2.Weather convert(Weather weather) {
@@ -291,8 +294,8 @@ public class WeatherUtils {
         assertEquals(-15, temp3.getHigh());
     }
 
-    public static JSONObject readJSON(String resourceName) throws IOException, JSONException {
-        Reader reader = new InputStreamReader(WeatherUtils.class.getResourceAsStream(resourceName));
+    public static JSONObject readJSON(Context context, String assetName) throws IOException, JSONException {
+        Reader reader = new InputStreamReader(context.getAssets().open(assetName));
         StringBuilder buffer = new StringBuilder();
         int c = reader.read();
         while (c >= 0) {

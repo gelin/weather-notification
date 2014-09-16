@@ -23,25 +23,25 @@
 package ru.gelin.android.weather.notification;
 
 import android.os.Parcel;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import ru.gelin.android.weather.Weather;
 
-public class ParcelableWeather2Test extends AndroidTestCase {
+public class ParcelableWeather2Test extends InstrumentationTestCase {
 
     public void testCopyConstructor() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Weather weather2 = new ParcelableWeather2(weather1);
         WeatherUtils.checkWeather(weather2);
     }
 
     public void testCopyConstructor2() throws Exception {
-        Weather weather1 = WeatherUtils.createOpenWeather(getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Weather weather2 = new ParcelableWeather2(weather1);
         WeatherUtils.checkOpenWeather(weather2);
     }
     
     public void testWriteRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather2 weather2 = new ParcelableWeather2(weather1);
         //weather2.writeToParcel(parcel, 0);
@@ -49,13 +49,13 @@ public class ParcelableWeather2Test extends AndroidTestCase {
         int position = parcel.dataPosition();
         parcel.setDataPosition(0);
         //Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
-        Weather weather3 = (Weather)parcel.readParcelable(getContext().getClassLoader());
+        Weather weather3 = (Weather)parcel.readParcelable(getInstrumentation().getTargetContext().getClassLoader());
         assertEquals(position, parcel.dataPosition());  //read the same data as wrote
         WeatherUtils.checkWeather(weather3);
     }
 
     public void testWriteRead2() throws Exception {
-        Weather weather1 = WeatherUtils.createOpenWeather(getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather2 weather2 = new ParcelableWeather2(weather1);
         //weather2.writeToParcel(parcel, 0);
@@ -63,7 +63,7 @@ public class ParcelableWeather2Test extends AndroidTestCase {
         int position = parcel.dataPosition();
         parcel.setDataPosition(0);
         //Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
-        Weather weather3 = (Weather)parcel.readParcelable(getContext().getClassLoader());
+        Weather weather3 = (Weather)parcel.readParcelable(getInstrumentation().getTargetContext().getClassLoader());
         assertEquals(position, parcel.dataPosition());  //read the same data as wrote
         WeatherUtils.checkOpenWeather(weather3);
     }
@@ -83,7 +83,7 @@ public class ParcelableWeather2Test extends AndroidTestCase {
     
     @SuppressWarnings("deprecation")
     public void testOldVersionRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather();
+        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);
