@@ -22,14 +22,13 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.NOTIFICATION_TEXT_STYLE;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.TEMP_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.WS_UNIT;
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
-import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceGroup;
+import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
+
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
 
 /**
  *  Base class for skin configuration activity.
@@ -43,32 +42,24 @@ public class BaseConfigActivity extends UpdateNotificationActivity
         ResourceIdFactory ids = ResourceIdFactory.getInstance(this);
         addPreferencesFromResource(ids.id(XML, "skin_preferences"));
         
-        /*  TODO: why this doesn't work?
-        PreferenceScreen screen = getPreferenceScreen();
-        screen.setOnPreferenceClickListener(this);
-        screen.setOnPreferenceChangeListener(this); 
-        */
-        
-        Preference textStylePreference = findPreference(NOTIFICATION_TEXT_STYLE);
-        if (textStylePreference != null) {
-            textStylePreference.setOnPreferenceChangeListener(this);
-        }
-        Preference unitPreference = findPreference(TEMP_UNIT);
-        unitPreference.setOnPreferenceChangeListener(this);
-        Preference wsunitPreference = findPreference(WS_UNIT);
-        wsunitPreference.setOnPreferenceChangeListener(this);
+        addPreferenceListener(getPreferenceScreen());
     }
 
-    //@Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        String key = preference.getKey();
-        if (NOTIFICATION_TEXT_STYLE.equals(key) ||
-                TEMP_UNIT.equals(key)||
-                WS_UNIT.equals(key)) {
-            updateNotification();
-            return true;
+    private void addPreferenceListener(PreferenceGroup prefs) {
+        for (int i = 0; i < prefs.getPreferenceCount(); i++) {
+            Preference pref = prefs.getPreference(i);
+            if (pref instanceof PreferenceGroup) {
+                addPreferenceListener((PreferenceGroup) pref);
+            } else {
+                pref.setOnPreferenceChangeListener(this);
+            }
         }
-        return false;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        updateNotification();
+        return true;
     }
 
 }

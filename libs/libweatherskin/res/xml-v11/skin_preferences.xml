@@ -61,7 +61,7 @@
                 android:defaultValue="true"/>
 
         <CheckBoxPreference
-                android:key="notification_forecast_style"
+                android:key="notification_forecasts_style"
                 android:title="@string/notification_forecast_style"
                 android:defaultValue="true"/>
 

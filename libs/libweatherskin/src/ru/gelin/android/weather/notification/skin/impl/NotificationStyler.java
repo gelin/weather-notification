@@ -171,7 +171,7 @@ public class NotificationStyler {
             return 0;   //unknown resource
         }
         ResourceIdFactory ids = ResourceIdFactory.getInstance(this.context);
-        return ids.id(ResourceIdFactory.LAYOUT, layout.name);
+        return ids.id(ResourceIdFactory.LAYOUT, this.layout.name);
     }
 
     /**
