@@ -36,9 +36,6 @@ import java.util.Date;
  */
 public class RemoteWeatherLayout extends AbstractWeatherLayout {
     
-    /** Separator between text values */
-    static final String SEPARATOR = "   ";
-
     static final int MAIN_ICON = 64;
     static final int FORECAST_ICON = 16;
 

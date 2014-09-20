@@ -141,5 +141,9 @@
     <string name="notification_style_custom">Customized</string>
     <string name="notification_icon_style">Show weather icon</string>
     <string name="notification_forecast_style">Show forecasts</string>
+    <!-- params: temperature, weather condition -->
+    <string name="notification_content_title" formatted="false">%s&#160;&#160;&#160;%s</string>
+    <!-- params: max temperature, min temperature, wind text formatted with "humidity_caption", humidity text formatted with "wind_caption" -->
+    <string name="notification_content_text" formatted="false">%s/%s&#160;&#160;&#160;%s&#160;&#160;&#160;%s</string>
 
 </resources>

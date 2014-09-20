@@ -23,9 +23,7 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
@@ -37,7 +35,6 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
@@ -56,6 +53,8 @@ public abstract class AbstractWeatherLayout {
     protected Context context;
     /** ID factory */
     ResourceIdFactory ids;
+    /** Styler */
+    NotificationStyler styler;
     /** Condition text formatter */
     WeatherConditionFormat conditionFormat;
     /** Temperature formatter */
@@ -71,6 +70,7 @@ public abstract class AbstractWeatherLayout {
     protected AbstractWeatherLayout(Context context) {
         this.context = context;
         this.ids = ResourceIdFactory.getInstance(context);
+        this.styler = new NotificationStyler(context);
         this.conditionFormat = new WeatherConditionFormat(context);
         this.tempFormat = createTemperatureFormat();
         this.windFormat = new WindFormat(context);
@@ -114,12 +114,9 @@ public abstract class AbstractWeatherLayout {
         setIcon(id("condition_icon"), this.conditionFormat.getDrawable(currentCondition), getMainIconSize());
         setText(id("condition"), this.conditionFormat.getText(currentCondition), getTextColor());
         bindWindHumidity(currentCondition);
-        
-        SharedPreferences preferences = 
-                PreferenceManager.getDefaultSharedPreferences(this.context);
-        TemperatureType tempType = TemperatureType.valueOf(preferences.getString(
-                TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        
+
+        TemperatureType tempType = this.styler.getTempType();
+
         Temperature tempC = currentCondition.getTemperature(TemperatureUnit.C);
         Temperature tempF = currentCondition.getTemperature(TemperatureUnit.F);
         TemperatureUnit mainUnit = tempType.getTemperatureUnit();
@@ -163,11 +160,8 @@ public abstract class AbstractWeatherLayout {
     }
     
     protected void bindWindHumidity(WeatherCondition currentCondition) {
-        SharedPreferences preferences = 
-            PreferenceManager.getDefaultSharedPreferences(this.context);
-        
-        WindUnit windUnit = WindUnit.valueOf(preferences.getString(
-                WS_UNIT, WS_UNIT_DEFAULT));
+        WindUnit windUnit = this.styler.getWindUnit();
+
         Wind wind = currentCondition.getWind(windUnit.getWindSpeedUnit());
         setText(id("wind"), this.windFormat.format(wind), getTextColor());
         

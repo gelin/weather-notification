@@ -55,9 +55,6 @@ abstract public class BaseWeatherNotificationReceiver extends
     /** Handler to receive the weather */
     static Handler handler;
     
-    /** Temperature formatter */
-    protected TemperatureFormat tempFormat = createTemperatureFormat();
-    
     /**
      *  Registers the handler to receive the new weather.
      *  The handler is owned by activity which have initiated the update.
@@ -105,11 +102,8 @@ abstract public class BaseWeatherNotificationReceiver extends
         builder.setWhen(weather.getTime().getTime());
         builder.setOngoing(true);
         builder.setAutoCancel(false);
-//        notification.flags |= Notification.FLAG_NO_CLEAR;
-//        notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         builder.setContentIntent(getContentIntent(context));
-        //notification.contentIntent = getMainActivityPendingIntent(context);
 
         Notification notification = builder.build();
 
@@ -121,7 +115,9 @@ abstract public class BaseWeatherNotificationReceiver extends
                 notification.contentView = views;
                 break;
             case STANDARD_STYLE:
-                //TODO?
+                builder.setContentTitle(formatContentTitle(context, weather, styler));
+                builder.setContentText(formatContentText(context, weather, styler));
+                notification = builder.build();
                 break;
         }
 
@@ -158,7 +154,35 @@ abstract public class BaseWeatherNotificationReceiver extends
         Temperature tempF = condition.getTemperature(TemperatureUnit.F);
         return context.getString(ids.id(STRING, "notification_ticker"),
                 weather.getLocation().getText(),
-                tempFormat.format(tempC.getCurrent(), tempF.getCurrent(), unit));
+                createTemperatureFormat().format(tempC.getCurrent(), tempF.getCurrent(), unit));
+    }
+
+    protected String formatContentTitle(Context context, Weather weather, NotificationStyler styler) {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        WeatherCondition condition = weather.getConditions().get(0);
+        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
+        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
+        return context.getString(ids.id(STRING, "notification_content_title"),
+                createTemperatureFormat().format(tempC.getCurrent(), tempF.getCurrent(), styler.getTempType()),
+                createWeatherConditionFormat(context).getText(condition));
+    }
+
+    protected String formatContentText(Context context, Weather weather, NotificationStyler styler) {
+        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
+        WeatherCondition condition = weather.getConditions().get(0);
+
+        TemperatureFormat tempFormat = createTemperatureFormat();
+        TemperatureUnit tempUnit = styler.getTempType().getTemperatureUnit();
+        Temperature temp = condition.getTemperature(tempUnit);
+
+        Wind wind = condition.getWind(styler.getWindUnit().getWindSpeedUnit());
+        Humidity humidity = condition.getHumidity();
+
+        return context.getString(ids.id(STRING, "notification_content_text"),
+                tempFormat.format(temp.getHigh()),
+                tempFormat.format(temp.getLow()),
+                createWindFormat(context).format(wind),
+                createHumidityFormat(context).format(humidity));
     }
     
     protected void notifyHandler(Weather weather) {
@@ -215,6 +239,27 @@ abstract public class BaseWeatherNotificationReceiver extends
      */
     protected NotificationStyler createStyler(Context context) {
         return new NotificationStyler(context);
+    }
+
+    /**
+     *  Creates the weather condition format.
+     */
+    protected WeatherConditionFormat createWeatherConditionFormat(Context context) {
+        return new WeatherConditionFormat(context);
+    }
+
+    /**
+     *  Creates the wind format.
+     */
+    protected WindFormat createWindFormat(Context context) {
+        return new WindFormat(context);
+    }
+
+    /**
+     *  Creates the humidity format.
+     */
+    protected HumidityFormat createHumidityFormat(Context context) {
+        return new HumidityFormat(context);
     }
 
 }

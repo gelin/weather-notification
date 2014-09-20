@@ -112,6 +112,7 @@ public class NotificationStyler {
     private final Context context;
 
     private final TemperatureType tempType;
+    private final WindUnit windUnit;
     private final NotificationStyle notifyStyle;
     private final NotificationTextStyle textStyle;
     private final boolean showIcon;
@@ -130,6 +131,8 @@ public class NotificationStyler {
 
         this.tempType = TemperatureType.valueOf(prefs.getString(
                 TEMP_UNIT, TEMP_UNIT_DEFAULT));
+        this.windUnit = WindUnit.valueOf(prefs.getString(
+                WS_UNIT, WS_UNIT_DEFAULT));
         this.notifyStyle = NotificationStyle.valueOf(prefs.getString(
                 NOTIFICATION_STYLE, NOTIFICATION_STYLE_DEFAULT));
         this.textStyle = NotificationTextStyle.valueOf(prefs.getString(
@@ -144,23 +147,27 @@ public class NotificationStyler {
     }
 
     public TemperatureType getTempType() {
-        return tempType;
+        return this.tempType;
+    }
+
+    public WindUnit getWindUnit() {
+        return this.windUnit;
     }
 
     public NotificationStyle getNotifyStyle() {
-        return notifyStyle;
+        return this.notifyStyle;
     }
 
     public NotificationTextStyle getTextStyle() {
-        return textStyle;
+        return this.textStyle;
     }
 
     public boolean isShowIcon() {
-        return showIcon;
+        return this.showIcon;
     }
 
     public boolean isShowForecasts() {
-        return showForecasts;
+        return this.showForecasts;
     }
 
     /**
