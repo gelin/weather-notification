@@ -18,6 +18,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="libpreference" />
     <orderEntry type="module" module-name="libweather" />
+    <orderEntry type="library" name="android-support-v4" level="project" />
   </component>
 </module>
 

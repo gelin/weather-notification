@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 import ru.gelin.android.weather.*;
@@ -89,35 +90,41 @@ abstract public class BaseWeatherNotificationReceiver extends
         ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
         NotificationStyler styler = createStyler(context);
 
-        Notification notification = new Notification();
-        
-        notification.icon = getNotificationIconId(weather);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        builder.setSmallIcon(getNotificationIconId(weather));
 
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
-            notification.tickerText = context.getString(ids.id(STRING, "unknown_weather"));
+            builder.setTicker(context.getString(ids.id(STRING, "unknown_weather")));
         } else {
-            notification.tickerText = formatTicker(context, weather, styler.getTempType());
-            notification.iconLevel = getNotificationIconLevel(weather, styler.getTempType().getTemperatureUnit());
+            builder.setTicker(formatTicker(context, weather, styler.getTempType()));
+            builder.setSmallIcon(getNotificationIconId(weather),
+                    getNotificationIconLevel(weather, styler.getTempType().getTemperatureUnit()));
         }
 
-        notification.when = weather.getTime().getTime();
-        notification.flags |= Notification.FLAG_NO_CLEAR;
-        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+        builder.setWhen(weather.getTime().getTime());
+        builder.setOngoing(true);
+        builder.setAutoCancel(false);
+//        notification.flags |= Notification.FLAG_NO_CLEAR;
+//        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+
+        builder.setContentIntent(getContentIntent(context));
+        //notification.contentIntent = getMainActivityPendingIntent(context);
+
+        Notification notification = builder.build();
 
         switch (styler.getNotifyStyle()) {
             case CUSTOM_STYLE:
-                notification.contentView = new RemoteViews(context.getPackageName(), styler.getLayoutId());
-                RemoteWeatherLayout layout = createRemoteWeatherLayout(context, notification.contentView, styler);
+                RemoteViews views = new RemoteViews(context.getPackageName(), styler.getLayoutId());
+                RemoteWeatherLayout layout = createRemoteWeatherLayout(context, views, styler);
                 layout.bind(weather);
+                notification.contentView = views;
                 break;
             case STANDARD_STYLE:
-                //TODO
+                //TODO?
                 break;
         }
 
-        notification.contentIntent = getContentIntent(context);
-        //notification.contentIntent = getMainActivityPendingIntent(context);
-        
         getNotificationManager(context).notify(getNotificationId(), notification);
         
         notifyHandler(weather);
