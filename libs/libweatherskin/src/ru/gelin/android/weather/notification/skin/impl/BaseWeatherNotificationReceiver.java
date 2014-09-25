@@ -27,6 +27,10 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -51,6 +55,9 @@ abstract public class BaseWeatherNotificationReceiver extends
 
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
+
+    /** Large icon size */
+    static final int LARGE_ICON = 48;
 
     /** Handler to receive the weather */
     static Handler handler;
@@ -117,6 +124,10 @@ abstract public class BaseWeatherNotificationReceiver extends
             case STANDARD_STYLE:
                 builder.setContentTitle(formatContentTitle(context, weather, styler));
                 builder.setContentText(formatContentText(context, weather, styler));
+                Bitmap largeIcon = formatLargeIcon(context, weather);
+                if (largeIcon != null) {
+                    builder.setLargeIcon(largeIcon);
+                }
                 notification = builder.build();
                 break;
         }
@@ -183,6 +194,22 @@ abstract public class BaseWeatherNotificationReceiver extends
                 tempFormat.format(temp.getLow()),
                 createWindFormat(context).format(wind),
                 createHumidityFormat(context).format(humidity));
+    }
+
+    protected Bitmap formatLargeIcon(Context context, Weather weather) {
+        WeatherCondition condition = weather.getConditions().get(0);
+
+        WeatherConditionFormat format = createWeatherConditionFormat(context);
+        Drawable drawable = format.getDrawable(condition);
+        drawable.setLevel(LARGE_ICON);
+        Drawable bitmapDrawable = drawable.getCurrent();
+        while (bitmapDrawable instanceof DrawableContainer) {
+            bitmapDrawable = drawable.getCurrent();
+        }
+        if (!(bitmapDrawable instanceof BitmapDrawable)) {
+            return null;
+        }
+        return ((BitmapDrawable) bitmapDrawable).getBitmap();
     }
     
     protected void notifyHandler(Weather weather) {
