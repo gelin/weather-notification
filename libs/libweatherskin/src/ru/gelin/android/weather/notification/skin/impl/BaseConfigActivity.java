@@ -22,10 +22,12 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.XML;
@@ -40,7 +42,10 @@ public class BaseConfigActivity extends UpdateNotificationActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ResourceIdFactory ids = ResourceIdFactory.getInstance(this);
+
         addPreferencesFromResource(ids.id(XML, "skin_preferences"));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        enablePreferences(prefs.getString(PreferenceKeys.NOTIFICATION_STYLE, PreferenceKeys.NOTIFICATION_STYLE_DEFAULT));
         
         addPreferenceListener(getPreferenceScreen());
     }
@@ -58,8 +63,19 @@ public class BaseConfigActivity extends UpdateNotificationActivity
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (PreferenceKeys.NOTIFICATION_STYLE.equals(preference.getKey())) {
+            enablePreferences(newValue);
+        }
         updateNotification();
         return true;
+    }
+
+    private void enablePreferences(Object notificationStyleValue) {
+        boolean enabled = NotificationStyle.CUSTOM_STYLE.equals(
+                NotificationStyle.valueOf(String.valueOf(notificationStyleValue)));
+        findPreference(PreferenceKeys.NOTIFICATION_TEXT_STYLE).setEnabled(enabled);
+        findPreference(PreferenceKeys.NOTIFICATION_ICON_STYLE).setEnabled(enabled);
+        findPreference(PreferenceKeys.NOTIFICATION_FORECASTS_STYLE).setEnabled(enabled);
     }
 
 }
