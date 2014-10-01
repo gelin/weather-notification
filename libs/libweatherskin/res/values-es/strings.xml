@@ -25,7 +25,6 @@
 <resources>
     <string name="app_name">Notificación del clima skins</string>
     <string name="weather">Clima</string>
-    <string name="notification_icon_style">Color de icono</string>
     <string name="notification_text_style">Color de texto en la notificación</string>
     <string name="notification_style_black_text">Texto negro</string>
     <string name="notification_style_white_text">Texto blanco</string>
@@ -40,7 +39,6 @@
     <string name="forecast_day_format">%ta</string>
     <string name="notification_ticker" formatted="false">%s %s</string>
     <string name="forecast_text" formatted="false">%ta: %s/%s</string>
-    <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
     <string name="wind_dir_n">N</string>
     <string name="wind_dir_nne">NNE</string>
     <string name="wind_dir_ne">NE</string>
@@ -119,5 +117,20 @@
     <string name="condition_hot">Caliente</string>
     <string name="condition_windy">Ventoso</string>
     <string name="condition_hail">Granizo</string>
+
+    <!-- v.0.3.6 -->
+    <!-- params: update time -->
+    <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
+    <string name="skin_tap_to_config">Toque para configurar</string>
+    <string name="notification">Notificación</string>
+    <string name="notification_style">Estilo de notificación</string>
+    <string name="notification_style_standard">Estándar</string>
+    <string name="notification_style_custom">Personalizada</string>
+    <string name="notification_icon_style">Mostrar icono del clima</string>
+    <string name="notification_forecast_style">Mostrar pronostico</string>
+    <!-- params: temperature, weather condition -->
+    <string name="notification_content_title" formatted="false">%s&#160;&#160;&#160;%s</string>
+    <!-- params: max temperature, min temperature, wind text formatted with "humidity_caption", humidity text formatted with "wind_caption" -->
+    <string name="notification_content_text" formatted="false">%s/%s&#160;&#160;&#160;%s&#160;&#160;&#160;%s</string>
 
 </resources>
