@@ -31,7 +31,7 @@
             android:id="@+id/condition_icon"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="8dp"
             style="@style/Weather"
             android:alpha="0.4"
             android:src="@drawable/condition_clear_64"/>

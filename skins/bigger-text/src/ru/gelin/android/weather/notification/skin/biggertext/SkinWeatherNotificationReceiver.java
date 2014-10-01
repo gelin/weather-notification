@@ -22,10 +22,10 @@
 
 package ru.gelin.android.weather.notification.skin.biggertext;
 
+import android.content.ComponentName;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import android.content.ComponentName;
 
 /**
  *  Extends the basic notification receiver.
@@ -43,7 +43,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     @Override
-    protected int getNotificationIconId() {
+    protected int getNotificationIconId(Weather weather) {
         return R.drawable.temp_icon_light;
     }
 

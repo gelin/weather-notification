@@ -106,7 +106,7 @@ abstract public class BaseWeatherNotificationReceiver extends
                     getNotificationIconLevel(weather, styler.getTempType().getTemperatureUnit()));
         }
 
-        builder.setWhen(weather.getTime().getTime());
+        builder.setWhen(weather.getQueryTime().getTime());
         builder.setOngoing(true);
         builder.setAutoCancel(false);
 

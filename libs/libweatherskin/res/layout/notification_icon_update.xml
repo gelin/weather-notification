@@ -76,7 +76,7 @@
             android:id="@+id/condition_icon"
             android:layout_toRightOf="@id/temp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="8dp"
             style="@style/Weather"
             android:src="@drawable/condition_clear_64"/>
 
