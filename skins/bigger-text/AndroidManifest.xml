@@ -32,7 +32,7 @@
     
     <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
     
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
     <supports-screens/>
     
 </manifest>

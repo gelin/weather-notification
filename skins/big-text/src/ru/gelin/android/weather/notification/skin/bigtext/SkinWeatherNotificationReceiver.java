@@ -26,8 +26,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import ru.gelin.android.weather.TemperatureUnit;
@@ -37,7 +35,6 @@ import ru.gelin.android.weather.notification.WeatherStorage;
 import ru.gelin.android.weather.notification.skin.Tag;
 import ru.gelin.android.weather.notification.skin.impl.*;
 
-import static ru.gelin.android.weather.notification.skin.impl.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
@@ -87,20 +84,20 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     String getTemperatureText(Context context, Weather weather) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        TemperatureType type = TemperatureType.valueOf(prefs.getString(
-                TEMP_UNIT, TEMP_UNIT_DEFAULT));
+        NotificationStyler styler = createStyler(context);
+        TemperatureType type = styler.getTempType();
+        TemperatureFormat format = createTemperatureFormat();
 
         WeatherCondition condition = weather.getConditions().get(0);
         switch (type) {
             case C:
             case CF:
-                return this.tempFormat.format(condition.getTemperature(TemperatureUnit.C).getCurrent());
+                return format.format(condition.getTemperature(TemperatureUnit.C).getCurrent());
             case F:
             case FC:
-                return this.tempFormat.format(condition.getTemperature(TemperatureUnit.F).getCurrent());
+                return format.format(condition.getTemperature(TemperatureUnit.F).getCurrent());
             default:
-                return "";  //should never happens
+                return "";  //should never happen
         }
     }
 
@@ -127,7 +124,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     Notification createNotification(Context context, Weather weather) {
         Notification notification = new Notification();
 
-        notification.icon = getNotificationIconId();
+        notification.icon = getNotificationIconId(weather);
         notification.when = weather.getTime().getTime();
         notification.contentIntent = getContentIntent(context);
 
@@ -139,18 +136,12 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
     Notification createFullNotification(Context context, Weather weather) {
         Notification notification = createNotification(context, weather);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        NotificationStyler styler = createStyler(context);
+        TemperatureType tempType = styler.getTempType();
 
-        TemperatureType unit = TemperatureType.valueOf(prefs.getString(
-                TEMP_UNIT, TEMP_UNIT_DEFAULT));
-        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(prefs.getString(
-                NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
-
-        notification.tickerText = formatTicker(context, weather, unit);
-        notification.contentView = new RemoteViews(context.getPackageName(),
-                getNotificationLayoutId(context, textStyle, unit));
-        RemoteWeatherLayout layout = createRemoteWeatherLayout(
-                context, notification.contentView, unit);
+        notification.tickerText = formatTicker(context, weather, tempType);
+        notification.contentView = new RemoteViews(context.getPackageName(), styler.getLayoutId());
+        RemoteWeatherLayout layout = createRemoteWeatherLayout(context, notification.contentView, styler);
         layout.bind(weather);
 
         //notification.contentIntent = getMainActivityPendingIntent(context);
@@ -164,7 +155,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     @Override
-    protected int getNotificationIconId() {
+    protected int getNotificationIconId(Weather weather) {
         return R.drawable.char_white;   //TODO other colors
     }
 

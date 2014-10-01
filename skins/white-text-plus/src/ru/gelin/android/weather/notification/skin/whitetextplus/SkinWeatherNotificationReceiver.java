@@ -28,7 +28,7 @@ import android.widget.RemoteViews;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
+import ru.gelin.android.weather.notification.skin.impl.NotificationStyler;
 
 /**
  *  Extends the basic notification receiver.
@@ -46,7 +46,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
 
     @Override
-    protected int getNotificationIconId() {
+    protected int getNotificationIconId(Weather weather) {
         return R.drawable.temp_icon_white;
     }
 
@@ -63,8 +63,8 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     
     @Override
     protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, 
-            RemoteViews views, TemperatureType type) {
-        return new RemoteWeatherLayout(context, views, type);
+            RemoteViews views, NotificationStyler styler) {
+        return new RemoteWeatherLayout(context, views, styler);
     }
 
 }

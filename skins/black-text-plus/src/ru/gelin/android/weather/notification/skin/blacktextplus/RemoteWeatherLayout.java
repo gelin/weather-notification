@@ -24,7 +24,7 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
 
 import android.content.Context;
 import android.widget.RemoteViews;
-import ru.gelin.android.weather.notification.skin.impl.TemperatureType;
+import ru.gelin.android.weather.notification.skin.impl.NotificationStyler;
 
 /**
  *  Utility to layout weather values to remove view.
@@ -34,8 +34,8 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
     /**
      *  Creates the utility for specified context.
      */
-    public RemoteWeatherLayout(Context context, RemoteViews views, TemperatureType type) {
-        super(context, views, type);
+    public RemoteWeatherLayout(Context context, RemoteViews views, NotificationStyler styler) {
+        super(context, views, styler);
     }
     
     @Override
