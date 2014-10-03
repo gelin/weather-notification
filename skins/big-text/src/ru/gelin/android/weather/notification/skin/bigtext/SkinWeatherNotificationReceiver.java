@@ -141,7 +141,7 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
         notification.tickerText = formatTicker(context, weather, tempType);
         notification.contentView = new RemoteViews(context.getPackageName(), styler.getLayoutId());
-        RemoteWeatherLayout layout = createRemoteWeatherLayout(context, notification.contentView, styler);
+        RemoteWeatherLayout layout = getRemoteWeatherLayout(context, notification.contentView, styler);
         layout.bind(weather);
 
         //notification.contentIntent = getMainActivityPendingIntent(context);

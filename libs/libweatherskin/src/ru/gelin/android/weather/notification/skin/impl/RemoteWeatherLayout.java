@@ -113,7 +113,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
             setText(id("update_time_short"), "", NO_CHANGE_COLOR);
             return;
         }
-        String text = this.context.getString(string("update_time_short"), update);
+        String text = getContext().getString(string("update_time_short"), update);
         setText(id("update_time_short"), text, NO_CHANGE_COLOR);
     }
     

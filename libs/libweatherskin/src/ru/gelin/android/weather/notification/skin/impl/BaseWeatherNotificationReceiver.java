@@ -28,15 +28,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
-import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
 import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
 import ru.gelin.android.weather.notification.skin.Tag;
@@ -53,9 +54,6 @@ abstract public class BaseWeatherNotificationReceiver extends
 
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
-
-    /** Large icon size */
-    static final int LARGE_ICON = 48;
 
     /** Handler to receive the weather */
     static Handler handler;
@@ -88,20 +86,19 @@ abstract public class BaseWeatherNotificationReceiver extends
         
         WeatherStorage storage = new WeatherStorage(context);
         storage.save(weather);
-        
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        NotificationStyler styler = createStyler(context);
+
+        WeatherFormatter formatter = getWeatherFormatter(context, weather);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         builder.setSmallIcon(getNotificationIconId(weather));
 
         if (weather.isEmpty() || weather.getConditions().size() <= 0) {
-            builder.setTicker(context.getString(ids.id(STRING, "unknown_weather")));
+            builder.setTicker(context.getString(formatter.getIds().id(STRING, "unknown_weather")));
         } else {
-            builder.setTicker(formatTicker(context, weather, styler.getTempType()));
+            builder.setTicker(formatter.formatTicker());
             builder.setSmallIcon(getNotificationIconId(weather),
-                    getNotificationIconLevel(weather, styler.getTempType().getTemperatureUnit()));
+                    getNotificationIconLevel(weather, formatter.getStyler().getTempType().getTemperatureUnit()));
         }
 
         builder.setWhen(weather.getQueryTime().getTime());
@@ -112,17 +109,17 @@ abstract public class BaseWeatherNotificationReceiver extends
 
         Notification notification = builder.build();
 
-        switch (styler.getNotifyStyle()) {
+        switch (formatter.getStyler().getNotifyStyle()) {
             case CUSTOM_STYLE:
-                RemoteViews views = new RemoteViews(context.getPackageName(), styler.getLayoutId());
-                RemoteWeatherLayout layout = createRemoteWeatherLayout(context, views, styler);
+                RemoteViews views = new RemoteViews(context.getPackageName(), formatter.getStyler().getLayoutId());
+                RemoteWeatherLayout layout = getRemoteWeatherLayout(context, views, formatter.getStyler());
                 layout.bind(weather);
                 notification.contentView = views;
                 break;
             case STANDARD_STYLE:
-                builder.setContentTitle(formatContentTitle(context, weather, styler));
-                builder.setContentText(formatContentText(context, weather, styler));
-                Bitmap largeIcon = formatLargeIcon(context, weather);
+                builder.setContentTitle(formatter.formatContentTitle());
+                builder.setContentText(formatter.formatContentText());
+                Bitmap largeIcon = formatter.formatLargeIcon();
                 if (largeIcon != null) {
                     builder.setLargeIcon(largeIcon);
                 }
@@ -156,53 +153,6 @@ abstract public class BaseWeatherNotificationReceiver extends
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
     
-    protected String formatTicker(Context context, Weather weather, TemperatureType unit) {
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        WeatherCondition condition = weather.getConditions().get(0);
-        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
-        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
-        return context.getString(ids.id(STRING, "notification_ticker"),
-                weather.getLocation().getText(),
-                createTemperatureFormat().format(tempC.getCurrent(), tempF.getCurrent(), unit));
-    }
-
-    protected String formatContentTitle(Context context, Weather weather, NotificationStyler styler) {
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        WeatherCondition condition = weather.getConditions().get(0);
-        Temperature tempC = condition.getTemperature(TemperatureUnit.C);
-        Temperature tempF = condition.getTemperature(TemperatureUnit.F);
-        return context.getString(ids.id(STRING, "notification_content_title"),
-                createTemperatureFormat().format(tempC.getCurrent(), tempF.getCurrent(), styler.getTempType()),
-                createWeatherConditionFormat(context).getText(condition));
-    }
-
-    protected String formatContentText(Context context, Weather weather, NotificationStyler styler) {
-        ResourceIdFactory ids = ResourceIdFactory.getInstance(context);
-        WeatherCondition condition = weather.getConditions().get(0);
-
-        TemperatureFormat tempFormat = createTemperatureFormat();
-        TemperatureUnit tempUnit = styler.getTempType().getTemperatureUnit();
-        Temperature temp = condition.getTemperature(tempUnit);
-
-        Wind wind = condition.getWind(styler.getWindUnit().getWindSpeedUnit());
-        Humidity humidity = condition.getHumidity();
-
-        return context.getString(ids.id(STRING, "notification_content_text"),
-                tempFormat.format(temp.getHigh()),
-                tempFormat.format(temp.getLow()),
-                createWindFormat(context).format(wind),
-                createHumidityFormat(context).format(humidity));
-    }
-
-    protected Bitmap formatLargeIcon(Context context, Weather weather) {
-        WeatherCondition condition = weather.getConditions().get(0);
-
-        WeatherConditionFormat format = createWeatherConditionFormat(context);
-        Drawable drawable = format.getDrawable(condition);
-        drawable.setLevel(LARGE_ICON);
-        return Drawable2Bitmap.convert(drawable);
-    }
-    
     protected void notifyHandler(Weather weather) {
         synchronized (BaseWeatherNotificationReceiver.class) {   //monitor of static methods
             if (handler == null) {
@@ -214,12 +164,12 @@ abstract public class BaseWeatherNotificationReceiver extends
             message.sendToTarget();
         }
     }
-    
+
     /**
      *  Returns the component name of the weather info activity
      */
     abstract protected ComponentName getWeatherInfoActivityComponentName();
-    
+
     /**
      *  Returns the ID of the notification icon based on the current weather.
      */
@@ -237,47 +187,19 @@ abstract public class BaseWeatherNotificationReceiver extends
     protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
         return 24;  //24dp for notification icon size
     };
-    
-    /**
-     *  Creates the temperature formatter.
-     */
-    protected TemperatureFormat createTemperatureFormat() {
-        return new TemperatureFormat();
-    }
-    
+
     /**
      *  Creates the remove view layout for the notification.
      */
-    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, RemoteViews views, NotificationStyler styler) {
+    protected RemoteWeatherLayout getRemoteWeatherLayout(Context context, RemoteViews views, NotificationStyler styler) {
         return new RemoteWeatherLayout(context, views, styler);
     }
 
     /**
-     *  Creates the notification styler for the context.
+     *  Creates the weather formatter.
      */
-    protected NotificationStyler createStyler(Context context) {
-        return new NotificationStyler(context);
-    }
-
-    /**
-     *  Creates the weather condition format.
-     */
-    protected WeatherConditionFormat createWeatherConditionFormat(Context context) {
-        return new WeatherConditionFormat(context);
-    }
-
-    /**
-     *  Creates the wind format.
-     */
-    protected WindFormat createWindFormat(Context context) {
-        return new WindFormat(context);
-    }
-
-    /**
-     *  Creates the humidity format.
-     */
-    protected HumidityFormat createHumidityFormat(Context context) {
-        return new HumidityFormat(context);
+    protected WeatherFormatter getWeatherFormatter(Context context, Weather weather) {
+        return new WeatherFormatter(context, weather);
     }
 
 }

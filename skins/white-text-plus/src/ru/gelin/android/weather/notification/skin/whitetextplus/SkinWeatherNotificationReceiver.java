@@ -62,8 +62,8 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
     
     @Override
-    protected RemoteWeatherLayout createRemoteWeatherLayout(Context context, 
-            RemoteViews views, NotificationStyler styler) {
+    protected RemoteWeatherLayout getRemoteWeatherLayout(Context context,
+                                                         RemoteViews views, NotificationStyler styler) {
         return new RemoteWeatherLayout(context, views, styler);
     }
 
