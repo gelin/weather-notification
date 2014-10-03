@@ -23,9 +23,7 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.text.method.MovementMethod;
 import android.widget.RemoteViews;
 
@@ -90,14 +88,7 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
             return;
         }
         drawable.setLevel(level);
-        Drawable bitmapDrawable = drawable.getCurrent();
-        while (bitmapDrawable instanceof DrawableContainer) {
-            bitmapDrawable = drawable.getCurrent();
-        }
-        if (!(bitmapDrawable instanceof BitmapDrawable)) {
-            return;
-        }
-        views.setImageViewBitmap(viewId, ((BitmapDrawable) bitmapDrawable).getBitmap());
+        views.setImageViewBitmap(viewId, Drawable2Bitmap.convert(drawable));
     }
 
     @Override

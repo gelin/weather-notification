@@ -35,11 +35,11 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
 
     /** Icon level shift relative to temp value */
     static final int ICON_LEVEL_SHIFT = 100;
-    
-    @Override
-    protected ComponentName getWeatherInfoActivityComponentName() {
-        return new ComponentName(SkinWeatherNotificationReceiver.class.getPackage().getName(), 
-                WeatherInfoActivity.class.getName());
+
+        @Override
+        protected ComponentName getWeatherInfoActivityComponentName() {
+            return new ComponentName(SkinWeatherNotificationReceiver.class.getPackage().getName(),
+                    WeatherInfoActivity.class.getName());
     }
 
     @Override
@@ -52,5 +52,15 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
         return weather.getConditions().get(0).
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
     }
+
+    //TODO
+//    protected Bitmap formatLargeIcon(Context context, Weather weather) {
+//        WeatherCondition condition = weather.getConditions().get(0);
+//
+//        WeatherConditionFormat format = createWeatherConditionFormat(context);
+//        Drawable drawable = format.getDrawable(condition);
+//        drawable.setLevel(LARGE_ICON);
+//        return Drawable2Bitmap.convert(drawable);
+//    }
 
 }

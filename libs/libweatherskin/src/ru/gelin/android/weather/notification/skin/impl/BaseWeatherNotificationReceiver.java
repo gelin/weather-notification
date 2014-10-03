@@ -28,9 +28,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -202,14 +200,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         WeatherConditionFormat format = createWeatherConditionFormat(context);
         Drawable drawable = format.getDrawable(condition);
         drawable.setLevel(LARGE_ICON);
-        Drawable bitmapDrawable = drawable.getCurrent();
-        while (bitmapDrawable instanceof DrawableContainer) {
-            bitmapDrawable = drawable.getCurrent();
-        }
-        if (!(bitmapDrawable instanceof BitmapDrawable)) {
-            return null;
-        }
-        return ((BitmapDrawable) bitmapDrawable).getBitmap();
+        return Drawable2Bitmap.convert(drawable);
     }
     
     protected void notifyHandler(Weather weather) {
