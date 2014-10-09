@@ -23,6 +23,7 @@
 package ru.gelin.android.weather.notification.skin.biggertext;
 
 import android.content.ComponentName;
+import android.content.Context;
 import ru.gelin.android.weather.TemperatureUnit;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver;
@@ -53,14 +54,8 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
                 getTemperature(unit).getCurrent() + ICON_LEVEL_SHIFT;
     }
 
-    //TODO
-//    protected Bitmap formatLargeIcon(Context context, Weather weather) {
-//        WeatherCondition condition = weather.getConditions().get(0);
-//
-//        WeatherConditionFormat format = createWeatherConditionFormat(context);
-//        Drawable drawable = format.getDrawable(condition);
-//        drawable.setLevel(LARGE_ICON);
-//        return Drawable2Bitmap.convert(drawable);
-//    }
-
+    @Override
+    protected WeatherFormatter getWeatherFormatter(Context context, Weather weather) {
+        return new WeatherFormatter(context, weather);
+    }
 }
