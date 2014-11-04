@@ -5,6 +5,7 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
  */
 public class TemperatureFormat extends ru.gelin.android.weather.notification.skin.impl.TemperatureFormat {
 
+    @Override
     protected String signedValue(int value) {
         if (value > 0) {
             return "+" + value;

@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.blacktextplus;
 
 import android.content.Context;
 import android.view.View;
+import ru.gelin.android.weather.Weather;
 
 /**
  *  Utility to layout weather values to view.
@@ -35,8 +36,7 @@ public class WeatherLayout extends ru.gelin.android.weather.notification.skin.im
     }
 
     @Override
-    protected TemperatureFormat createTemperatureFormat() {
-        return new TemperatureFormat();
+    protected WeatherFormatter getWeatherFormatter(Context context, Weather weather) {
+        return new WeatherFormatter(context, weather);
     }
-
 }
