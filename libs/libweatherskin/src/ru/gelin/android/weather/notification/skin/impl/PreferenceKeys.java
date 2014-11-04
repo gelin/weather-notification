@@ -47,7 +47,6 @@ public class PreferenceKeys {
     /** Notification text style default value */
     public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
             Integer.valueOf(Build.VERSION.SDK) < 11 ?   NotificationTextStyle.BLACK_TEXT.toString() :
-            Integer.valueOf(Build.VERSION.SDK) >= 20 ?  NotificationTextStyle.BLACK_TEXT.toString() :
             NotificationTextStyle.WHITE_TEXT.toString();
 
     /** Notification icon style preference key */

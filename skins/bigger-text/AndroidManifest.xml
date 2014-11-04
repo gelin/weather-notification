@@ -3,7 +3,7 @@
       package="ru.gelin.android.weather.notification.skin.biggertext"
       android:versionCode="16"
       android:versionName="0.3.6"
-      android:installLocation="preferExternal"
+      android:installLocation="auto"
       android:sharedUserId="ru.gelin.android.weather.notification">
 
     <application android:icon="@drawable/icon" android:label="@string/app_name"
@@ -32,7 +32,7 @@
     
     <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
     
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>
     <supports-screens/>
     
 </manifest>
