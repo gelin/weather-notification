@@ -57,14 +57,14 @@ public class SkinWeatherNotificationReceiver extends BaseWeatherNotificationRece
     }
     
     @Override
-    protected TemperatureFormat createTemperatureFormat() {
-        return new TemperatureFormat();
-    }
-    
-    @Override
     protected RemoteWeatherLayout getRemoteWeatherLayout(Context context,
                                                          RemoteViews views, NotificationStyler styler) {
         return new RemoteWeatherLayout(context, views, styler);
+    }
+
+    @Override
+    protected WeatherFormatter getWeatherFormatter(Context context, Weather weather) {
+        return new WeatherFormatter(context, weather);
     }
 
 }

@@ -24,6 +24,7 @@ package ru.gelin.android.weather.notification.skin.whitetextplus;
 
 import android.content.Context;
 import android.widget.RemoteViews;
+import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.skin.impl.NotificationStyler;
 
 /**
@@ -39,8 +40,7 @@ public class RemoteWeatherLayout extends ru.gelin.android.weather.notification.s
     }
     
     @Override
-    protected TemperatureFormat createTemperatureFormat() {
-        return new TemperatureFormat();
+    protected WeatherFormatter getWeatherFormatter(Context context, Weather weather) {
+        return new WeatherFormatter(context, weather);
     }
-
 }
