@@ -32,6 +32,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 import ru.gelin.android.weather.notification.AppUtils;
@@ -112,6 +114,24 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
                 prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
         //Toast.makeText(this, prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT), Toast.LENGTH_LONG).show();
         findPreference(LOCATION).setEnabled(isManual);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.debug_menu_item:
+                Intent intent = new Intent(this, DebugActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     protected abstract void fillSkinsPreferences(List<SkinInfo> skins);

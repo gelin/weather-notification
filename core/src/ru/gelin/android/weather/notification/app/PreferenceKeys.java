@@ -54,4 +54,9 @@ public class PreferenceKeys {
     /** Skins install preferences key */
     static final String SKINS_INSTALL = "skins_install";
 
+    /** API Debug preference key */
+    static final String API_DEBUG = "api_debug";
+    /** API Debug default value */
+    static final boolean API_DEBUG_DEFAULT = false;
+
 }

@@ -64,4 +64,10 @@
     <string name="location_disabled">This location detection method is disabled in the device Settings.
 \nDo you want to open Settings to enable it?</string>
     <string name="open_settings">Open Settings</string>
+
+    <!-- v.0.3.6 -->
+    <string name="debug">Debug</string>
+    <string name="api_debug">API Debug</string>
+    <string name="api_debug_summary">Each request to Weather API will be saved as a file to \'%s\'</string>
+
 </resources>

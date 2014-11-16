@@ -22,28 +22,24 @@
 
 package ru.gelin.android.weather.notification.app;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import ru.gelin.android.weather.notification.R;
 
-public class MainActivity extends Activity {
+/**
+ *  The activity with debug preferences.
+ */
+public class DebugActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(getIntent());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setClass(this, MainActivity2.class);
-        try {
-            if (Integer.parseInt(Build.VERSION.SDK) >= 14) {
-                intent.setClass(this, MainActivity4.class);
-            }
-        } catch (NumberFormatException e) {
-            //pass to MainActivity2
-        }
-        startActivity(intent);
-        finish();
+        addPreferencesFromResource(R.xml.debug_preferences);
+
+        DebugSettings settings = new DebugSettings(this);
+        Preference apiDebugPref = findPreference(PreferenceKeys.API_DEBUG);
+        apiDebugPref.setSummary(getString(R.string.api_debug_summary, settings.getDebugDir()));
     }
 
 }
