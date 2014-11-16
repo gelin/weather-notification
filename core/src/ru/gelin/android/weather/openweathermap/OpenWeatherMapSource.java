@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.source.DebugDumper;
 import ru.gelin.android.weather.source.HttpWeatherSource;
 
 import java.io.IOException;
@@ -26,10 +27,12 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     /** API key */
     static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
 
-    Context context;
+    private final Context context;
+    private final DebugDumper debugDumper;
 
     public OpenWeatherMapSource(Context context) {
         this.context = context;
+        this.debugDumper = new DebugDumper(context, API_BASE_URL);
     }
 
     @Override
@@ -96,7 +99,9 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         } catch (IOException e) {
             throw new WeatherException("can't read weather", e);
         }
-        return result.toString();
+        String content = result.toString();
+        this.debugDumper.dump(url, content);
+        return content;
     }
 
 }
