@@ -50,8 +50,11 @@ public class DebugSettings {
         if (Integer.parseInt(Build.VERSION.SDK) >= 8) {
             return this.context.getExternalFilesDir("debug");
         } else {
-            return new File(Environment.getExternalStorageDirectory(),
-                    "Android/data/" + this.context.getPackageName() + "debug");
+            File android = new File(Environment.getExternalStorageDirectory(), "Android");
+            File data = new File(android, "data");
+            File pkg = new File(data, this.context.getPackageName());
+            File debug = new File(pkg, "debug");
+            return debug;
         }
     }
 
