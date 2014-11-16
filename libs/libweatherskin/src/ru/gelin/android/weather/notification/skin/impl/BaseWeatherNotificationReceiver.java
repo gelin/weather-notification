@@ -108,7 +108,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         builder.setContentIntent(getContentIntent(context));
 
         //Lollipop notification on lock screen
-        builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         Notification notification = builder.build();
 
@@ -189,7 +189,7 @@ abstract public class BaseWeatherNotificationReceiver extends
      */
     protected int getNotificationIconLevel(Weather weather, TemperatureUnit unit) {
         return 24;  //24dp for notification icon size
-    };
+    }
 
     /**
      *  Creates the remove view layout for the notification.
