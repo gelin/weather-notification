@@ -178,6 +178,7 @@
 
             <TextView
                     android:id="@+id/forecast_high_temp_1"
+                    android:gravity="right"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
@@ -213,6 +214,7 @@
 
             <TextView
                     android:id="@+id/forecast_high_temp_2"
+                    android:gravity="right"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
@@ -248,6 +250,7 @@
 
             <TextView
                     android:id="@+id/forecast_high_temp_3"
+                    android:gravity="right"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
 
