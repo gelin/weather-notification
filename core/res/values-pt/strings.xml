@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2015  Denis Nelubin, Daniel Rocha
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+    <string name="app_name">Notificação de tempo</string>
+    <string name="weather">Tempo</string>
+    <string name="notification">Notificação</string>
+    <string name="enable_notification">Ativar notificação</string>
+    <string name="refresh_interval">Intervalo de atualização</string>
+    <string name="refresh_15m">15 minutos</string>
+    <string name="refresh_30m">30 minutos</string>
+    <string name="refresh_1h">1 hora</string>
+    <string name="refresh_2h">2 horas</string>
+    <string name="refresh_3h">3 horas</string>
+    <string name="refresh_4h">4 horas</string>
+    <string name="refresh_6h">6 horas</string>
+    <string name="refresh_12h">12 horas</string>
+    <string name="refresh_1d">Todos os dias</string>
+    <string name="location">Localização</string>
+    <string name="auto_location">Detetar automaticamente</string>
+    <string name="auto_location_summary_on">Detetar automaticamente o local atual</string>
+    <string name="auto_location_summary_off">Definir o local manualmente</string>
+    <string name="manual_location">Local</string>
+    <string name="weather_update_empty">Tempo para \"%s\" é desconhecido</string>
+    <string name="weather_update_failed">Atualização do tempo falhou: %s</string>
+    <string name="weather_update_no_network">Atualização do tempo falhou: sem ligação à rede</string>
+    <string name="weather_update_unknown_location">Atualização do tempo falhou: localização desconhecida</string>
+    <string name="skin">Tema</string>
+    <string name="skins">Temas</string>
+    <string name="skins_preferences">Preferências dos temas</string>
+    <string name="skins_install">Instalar temas</string>
+    <string name="skins_install_notice">TEMAS DEVEM SER INSTALADOS para uma melhor usabilidade. Por favor clique em \"Instalar temas\" no fim desta página.</string>
+    <string name="skins_install_notice_no_market">TEMAS DEVEM SER INSTALADOS para uma melhor usabilidade. Procure por \"Weather Notification Skin\" na loja de aplicações.</string>
+    <string name="builtin_skin">Tema predefinido</string>
+    <string name="builtin_skin_preferences">Preferências do tema predefinido</string>
+    <string name="start_update_service_permission">Iniciar serviço de atualização de tempo</string>
+    <string name="start_update_service_permission_description">Premite à aplicação iniciar o serviço de atualização de tempo para receber novas previsões.</string>
+
+    <string name="location_type">Detetar localização</string>
+    <string name="location_gps">Por satélites GPS</string>
+    <string name="location_network">Por Wi-Fi ou redes móveis</string>
+    <string name="location_manual">Manualmente</string>
+    <string name="location_disabled">Este método de localização está desativado nas definições do dispositivo.
+\nPretende abrir as definições e ativar?</string>
+    <string name="open_settings">Abrir as definições</string>
+
+    <!-- v.0.3.6 -->
+    <string name="debug">Debug</string>
+    <string name="api_debug">API Debug</string>
+    <string name="api_debug_summary">Cada pedido à API irá ser gravado em \'%s\'</string>
+
+</resources>
