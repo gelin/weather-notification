@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class OpenWeatherMapWeather implements Weather {
 
-    String FORECAST_URL_TEMPLATE="http://m.openweathermap.org/city/%d#forecast";
+    String FORECAST_URL_TEMPLATE="http://openweathermap.org/city/%d";
 
     /** City ID */
     int cityId = 0;
