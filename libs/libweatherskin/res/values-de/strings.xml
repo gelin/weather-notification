@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+#   Android Weather Notification.
+#   Copyright (C) 2015  Denis Nelubin aka Gelin, Jochen Sprickerhof
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#   
+#   http://gelin.ru
+#   mailto:den@gelin.ru
+-->
+
+<resources>
+    <string name="app_name">Weather notification skin library</string>
+    <string name="weather">Wetter</string>
+    <string name="notification_text_style">Notification Textfarbe</string>
+    <string name="notification_style_black_text">Schwarzer Text</string>
+    <string name="notification_style_white_text">Weißer Text</string>
+    <string name="temp_unit">Temperatureinheit</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="celsius_and_fahrenheit">Celsius(Fahrenheit)</string>
+    <string name="fahrenheit_and_celsius">Fahrenheit(Celsius)</string>
+    <!-- it's the date in dayofweek, yyyy-mm-dd hh:mm format -->
+    <!-- see http://developer.android.com/reference/java/util/Formatter.html -->
+    <!-- params: update time -->
+    <string name="update_time_format" formatted="false">%ta, %&lt;td.%&lt;tm.%&lt;tY %&lt;tH:%&lt;tM</string>
+    <!-- params: update time, it's the date in dayofweek, dd.mm.yyyy format -->
+    <string name="update_date_format" formatted="false">%ta, %&lt;td-%&lt;tm-%&lY;td</string>
+    <string name="unknown_weather">Wetter unbekannt</string>
+    <!-- params: forecast time, it's the date in dayofweek format -->
+    <string name="forecast_day_format">%ta</string>
+    <!-- params: location, temperature -->
+    <string name="notification_ticker" formatted="false">%s %s</string>
+    <!-- params: forecast day, high temp, low temp-->
+    <string name="forecast_text" formatted="false">%ta: %s/%s</string>
+
+    <!-- wind directions -->
+    <string name="wind_dir_n">N</string>
+    <string name="wind_dir_nne">NNO</string>
+    <string name="wind_dir_ne">NO</string>
+    <string name="wind_dir_ene">ONO</string>
+    <string name="wind_dir_e">O</string>
+    <string name="wind_dir_ese">OSO</string>
+    <string name="wind_dir_se">SO</string>
+    <string name="wind_dir_sse">SSO</string>
+    <string name="wind_dir_s">S</string>
+    <string name="wind_dir_ssw">SSW</string>
+    <string name="wind_dir_sw">SW</string>
+    <string name="wind_dir_wsw">WSW</string>
+    <string name="wind_dir_w">W</string>
+    <string name="wind_dir_wnw">WNW</string>
+    <string name="wind_dir_nw">NW</string>
+    <string name="wind_dir_nnw">NNW</string>
+
+    <string name="wind_speed_unit">Windgeschwindigkeit</string>
+    <string name="wind_speed_unit_mph">mph</string>
+    <string name="wind_speed_unit_mps">m/s</string>
+    <string name="wind_speed_unit_kmph">km/h</string>
+
+    <!-- params: humidity in percents -->
+    <string name="humidity_caption" formatted="false">Luftfeuchtigkeit: %d%%</string>
+    <!-- params: wind direction, wind speed, wind speed unit -->
+    <string name="wind_caption" formatted="false">Wind: %s, %d %s</string>
+
+    <!-- weather conditions -->
+    <string name="condition_thunderstorm_rain_light">Gewitter mit leichtem Regen</string>
+    <string name="condition_thunderstorm_rain">Gewitter mit Regen</string>
+    <string name="condition_thunderstorm_rain_heavy">Gewitter mit schwerem Regen</string>
+    <string name="condition_thunderstorm_light">Leichte Gewitter</string>
+    <string name="condition_thunderstorm">Gewitter</string>
+    <string name="condition_thunderstorm_heavy">Schwere Gewitter</string>
+    <string name="condition_thunderstorm_ragged">Einige Gewitter</string>
+    <string name="condition_thunderstorm_drizzle_light">Gewitter mit leichtem Nieselregen</string>
+    <string name="condition_thunderstorm_drizzle">Gewitter mit Nieselregen</string>
+    <string name="condition_thunderstorm_drizzle_heavy">Gewitter mit starkem Nieselregen</string>
+
+    <string name="condition_drizzle_light">Leichtes Nieseln</string>
+    <string name="condition_drizzle">Nieseln</string>
+    <string name="condition_drizzle_heavy">Schwarzes Nieseln</string>
+    <string name="condition_drizzle_rain_light">Leichter Nieselregen</string>
+    <string name="condition_drizzle_rain">Nieselregen</string>
+    <string name="condition_drizzle_rain_heavy">Schwerer Nieselregen</string>
+    <string name="condition_drizzle_shower">Nieselschauer</string>
+
+    <string name="condition_rain_light">Leichter Regen</string>
+    <string name="condition_rain">Regen</string>
+    <string name="condition_rain_heavy">Schwerer Regen</string>
+    <string name="condition_rain_very_heavy">Sehr starker Regen</string>
+    <string name="condition_rain_extreme">Starkregen</string>
+    <string name="condition_rain_freezing">Eisregen</string>
+    <string name="condition_rain_shower_light">Leichte Regenschauer</string>
+    <string name="condition_rain_shower">Regenschauer</string>
+    <string name="condition_rain_shower_heavy">Schwere Regenschauer</string>
+
+    <string name="condition_snow_light">Leichter Schneefall</string>
+    <string name="condition_snow">Schnee</string>
+    <string name="condition_snow_heavy">Schwrer Schneefall</string>
+    <string name="condition_sleet">Graupel</string>
+    <string name="condition_snow_shower">Schneeregen</string>
+
+    <string name="condition_mist">Trüb</string>
+    <string name="condition_smoke">Rauch</string>
+    <string name="condition_haze">Dunst</string>
+    <string name="condition_sand_whirls">Sand/Staubsturm</string>
+    <string name="condition_fog">Nebel</string>
+
+    <string name="condition_clouds_clear">Klarer Himmel</string>
+    <string name="condition_clouds_few">Ein paar Wolken</string>
+    <string name="condition_clouds_scattered">Aufgelockerte Bewölkung</string>
+    <string name="condition_clouds_broken">Aufgerissene Bewölkung</string>
+    <string name="condition_clouds_overcast">Wolkenbedeckt</string>
+
+    <string name="condition_tornado">Tornado</string>
+    <string name="condition_tropical_storm">Tropensturm</string>
+    <string name="condition_hurricane">Hurrikan</string>
+    <string name="condition_cold">Kalt</string>
+    <string name="condition_hot">Heiß</string>
+    <string name="condition_windy">Windig</string>
+    <string name="condition_hail">Hagel</string>
+
+    <!-- v.0.3.6 -->
+    <!-- params: update time -->
+    <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
+    <string name="skin_tap_to_config">Tap to configure</string>
+    <string name="notification">Notification</string>
+    <string name="notification_style">Notification style</string>
+    <string name="notification_style_standard">Standard</string>
+    <string name="notification_style_custom">Customized</string>
+    <string name="notification_icon_style">Show weather icon</string>
+    <string name="notification_forecast_style">Show forecasts</string>
+    <!-- params: temperature, weather condition -->
+    <string name="notification_content_title" formatted="false">%s&#160;&#160;&#160;%s</string>
+    <!-- params: max temperature, min temperature, wind text formatted with "humidity_caption", humidity text formatted with "wind_caption" -->
+    <string name="notification_content_text" formatted="false">%s/%s&#160;&#160;&#160;%s&#160;&#160;&#160;%s</string>
+
+</resources>
