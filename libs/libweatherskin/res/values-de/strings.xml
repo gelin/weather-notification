@@ -38,7 +38,7 @@
     <!-- params: update time -->
     <string name="update_time_format" formatted="false">%ta, %&lt;td.%&lt;tm.%&lt;tY %&lt;tH:%&lt;tM</string>
     <!-- params: update time, it's the date in dayofweek, dd.mm.yyyy format -->
-    <string name="update_date_format" formatted="false">%ta, %&lt;td-%&lt;tm-%&lY;td</string>
+    <string name="update_date_format" formatted="false">%ta, %&lt;td.%&lt;tm.%&lt;tY</string>
     <string name="unknown_weather">Wetter unbekannt</string>
     <!-- params: forecast time, it's the date in dayofweek format -->
     <string name="forecast_day_format">%ta</string>
