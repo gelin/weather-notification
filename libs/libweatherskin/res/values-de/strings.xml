@@ -134,13 +134,13 @@
     <!-- v.0.3.6 -->
     <!-- params: update time -->
     <string name="update_time_short" formatted="false">%tH:%&lt;tM</string>
-    <string name="skin_tap_to_config">Tap to configure</string>
-    <string name="notification">Notification</string>
-    <string name="notification_style">Notification style</string>
+    <string name="skin_tap_to_config">Antippen zum konfigurieren</string>
+    <string name="notification">Benachrichtigung</string>
+    <string name="notification_style">Benachrichtigungsstil</string>
     <string name="notification_style_standard">Standard</string>
-    <string name="notification_style_custom">Customized</string>
-    <string name="notification_icon_style">Show weather icon</string>
-    <string name="notification_forecast_style">Show forecasts</string>
+    <string name="notification_style_custom">Angepasst</string>
+    <string name="notification_icon_style">Wettericon anzeigen</string>
+    <string name="notification_forecast_style">Vorhersage anzeigen</string>
     <!-- params: temperature, weather condition -->
     <string name="notification_content_title" formatted="false">%s&#160;&#160;&#160;%s</string>
     <!-- params: max temperature, min temperature, wind text formatted with "humidity_caption", humidity text formatted with "wind_caption" -->
