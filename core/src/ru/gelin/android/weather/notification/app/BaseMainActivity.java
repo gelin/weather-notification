@@ -23,8 +23,10 @@
 package ru.gelin.android.weather.notification.app;
 
 import android.app.AlertDialog;
-import android.content.*;
-import android.location.LocationManager;
+import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -162,7 +164,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             LocationType locationType = LocationType.valueOf(String.valueOf(newValue));
             boolean isManual = LocationType.LOCATION_MANUAL.equals(locationType);
             findPreference(LOCATION).setEnabled(isManual);
-            checkLocationProviderEnabled(locationType.getLocationProvider());
+            checkLocationProviderEnabled(locationType);
             startUpdate(true);
             return true;
         }
@@ -182,12 +184,8 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         AppUtils.startUpdateService(this, true, force);
     }
 
-    void checkLocationProviderEnabled(String locationProvider) {
-        if (locationProvider == null) {
-            return;
-        }
-        LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        if (!manager.isProviderEnabled(locationProvider)) {
+    void checkLocationProviderEnabled(LocationType locationType) {
+        if (!locationType.isProviderEnabled(this)) {
             final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             boolean hasSettings = intent.resolveActivity(getPackageManager()) != null;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

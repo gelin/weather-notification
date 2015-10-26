@@ -33,7 +33,7 @@ public class SimpleLocation implements Location {
     /**
      *  Creates the location.
      *  Geo is false here.
-     *  @param locationText query and the text value.
+     *  @param text query and the text value.
      */
     public SimpleLocation(String text) {
         this(text, false);
@@ -41,7 +41,7 @@ public class SimpleLocation implements Location {
 
     /**
      *  Creates the location.
-     *  @param locationText query and the text value.
+     *  @param text query and the text value.
      *  @param geo flag
      */
     public SimpleLocation(String text, boolean geo) {

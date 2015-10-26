@@ -38,6 +38,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.notification.R;
@@ -75,7 +76,7 @@ public class UpdateService extends Service implements Runnable {
     /**
      *  Lock used when maintaining update thread.
      */
-    private static Object staticLock = new Object();
+    private static final Object staticLock = new Object();
     /**
      *  Flag if there is an update thread already running. We only launch a new
      *  thread if one isn't already running.
@@ -165,7 +166,7 @@ public class UpdateService extends Service implements Runnable {
         if (LocationType.LOCATION_MANUAL.equals(locationType)) {
             location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         } else {
-            location = queryLocation(locationType.getLocationProvider());
+            location = queryLocation(locationType);
             if (location == null) {
                 internalHandler.sendEmptyMessage(QUERY_LOCATION);
                 return;
@@ -323,15 +324,19 @@ public class UpdateService extends Service implements Runnable {
     /**
      *  Queries current location using android services.
      */
-    Location queryLocation(String locationProvider) {
+    Location queryLocation(LocationType locationType) {
         LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         if (manager == null) {
             return null;
         }
+        String locationProvider = locationType.getLocationProvider();
         android.location.Location androidLocation = 
                 manager.getLastKnownLocation(locationProvider);
 
         if (androidLocation == null || isExpired(androidLocation.getTime())) {
+            if (!locationType.isProviderEnabled(this)) {
+                return new SimpleLocation(null);    // don't try to query disabled provider
+            }
             try {
                 Log.d(TAG, "requested location update from " + locationProvider);
                 manager.requestLocationUpdates(locationProvider,

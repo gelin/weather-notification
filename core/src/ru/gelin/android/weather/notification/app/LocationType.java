@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.notification.app;
 
+import android.content.Context;
 import android.location.LocationManager;
 
 /**
@@ -23,6 +24,21 @@ public enum LocationType {
      */
     public String getLocationProvider() {
         return this.locationProvider;
+    }
+
+    /**
+     *  Returns true if the location provider related to this location type is enabled.
+     */
+    public boolean isProviderEnabled(Context context) {
+        LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        if (manager == null) {
+            return false;
+        }
+        String provider = getLocationProvider();
+        if (provider == null) {
+            return true;
+        }
+        return manager.isProviderEnabled(provider);
     }
 
 }
