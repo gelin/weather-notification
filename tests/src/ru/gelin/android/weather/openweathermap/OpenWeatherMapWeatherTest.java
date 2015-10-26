@@ -117,7 +117,7 @@ public class OpenWeatherMapWeatherTest extends InstrumentationTestCase {
 
     public void testGetForecastURL() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(getInstrumentation());
-        assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
+        assertEquals(new URL("http://openweathermap.org/city/1496153"), weather.getForecastURL());
     }
 
     public void testForecastsNulls() throws Exception {

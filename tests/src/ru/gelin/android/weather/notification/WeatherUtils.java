@@ -141,7 +141,7 @@ public class WeatherUtils {
         calendar.add(Calendar.MINUTE, -1);
         assertTrue(weather.getQueryTime().after(calendar.getTime()));
 
-        assertEquals(new URL("http://m.openweathermap.org/city/1496153#forecast"), weather.getForecastURL());
+        assertEquals(new URL("http://openweathermap.org/city/1496153"), weather.getForecastURL());
 
         assertEquals(4, weather.getConditions().size());
 
