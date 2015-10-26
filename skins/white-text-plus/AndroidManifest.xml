@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ru.gelin.android.weather.notification.skin.whitetextplus"
-      android:versionCode="17"
-      android:versionName="0.3.6"
+      android:versionCode="18"
+      android:versionName="0.3.7"
       android:installLocation="auto"
       android:sharedUserId="ru.gelin.android.weather.notification">
 
