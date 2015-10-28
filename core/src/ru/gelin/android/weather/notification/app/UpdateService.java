@@ -38,7 +38,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleLocation;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.notification.R;
@@ -48,6 +47,7 @@ import ru.gelin.android.weather.openweathermap.AndroidOpenWeatherMapLocation;
 import ru.gelin.android.weather.openweathermap.NameOpenWeatherMapLocation;
 import ru.gelin.android.weather.openweathermap.OpenWeatherMapSource;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
 
 import static ru.gelin.android.weather.notification.AppUtils.EXTRA_FORCE;
@@ -104,7 +104,8 @@ public class UpdateService extends Service implements Runnable {
             this.startIntent = intent;
             if (intent != null) {
                 this.verbose = intent.getBooleanExtra(EXTRA_VERBOSE, false);
-                this.force = intent.getBooleanExtra(EXTRA_FORCE, false);
+                this.force = intent.getBooleanExtra(EXTRA_FORCE,
+                        intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)); // force weather update if location update came
             }
         }
         
@@ -167,10 +168,6 @@ public class UpdateService extends Service implements Runnable {
             location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
         } else {
             location = queryLocation(locationType);
-            if (location == null) {
-                internalHandler.sendEmptyMessage(QUERY_LOCATION);
-                return;
-            }
         }
         synchronized(this) {
             this.location = location;
@@ -199,65 +196,72 @@ public class UpdateService extends Service implements Runnable {
     /**
      *  Handles weather update result.
      */
-    final Handler internalHandler = new Handler() {
+    final Handler internalHandler = new UpdateHandler(new WeakReference<UpdateService>(this));
+
+    static class UpdateHandler extends Handler {
+
+        private final WeakReference<UpdateService> serviceRef;
+
+        public UpdateHandler(WeakReference<UpdateService> serviceRef) {
+            this.serviceRef = serviceRef;
+        }
+
         @Override
         public void handleMessage(Message msg) {
             synchronized(staticLock) {
                 threadRunning = false;
             }
-            
-            WeatherStorage storage = new WeatherStorage(UpdateService.this);
-            switch (msg.what) {
-            case SUCCESS:
-                synchronized(UpdateService.this) {
-                    Log.i(TAG, "received weather: " +
-                            weather.getLocation().getText() + " " + weather.getTime());
-                    if (weather.isEmpty()) {
-                        storage.updateTime();
-                    } else {
-                        storage.save(weather);  //saving only non-empty weather
-                    }
-                    scheduleNextRun(weather.getTime().getTime());
-                    if (verbose && weather.isEmpty()) {
-                        Toast.makeText(UpdateService.this,
-                                getString(R.string.weather_update_empty, location.getText()), 
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-            case FAILURE:
-                synchronized(UpdateService.this) {
-                    Log.w(TAG, "failed to update weather", updateError);
-                    storage.updateTime();
-                    if (verbose) {
-                        Toast.makeText(UpdateService.this, 
-                                getString(R.string.weather_update_failed, updateError.getMessage()), 
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-            case UNKNOWN_LOCATION:
-                synchronized(UpdateService.this) {
-                    Log.w(TAG, "failed to get location");
-                    storage.updateTime();
-                    if (verbose) {
-                        Toast.makeText(UpdateService.this, 
-                                getString(R.string.weather_update_unknown_location), 
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-            case QUERY_LOCATION:
-                synchronized(UpdateService.this) {
-                    Log.d(TAG, "quering new location");
-                    //storage.updateTime();     //don't signal about update
-                }
-                break;
+
+            UpdateService service = this.serviceRef.get();
+            if (service == null) {
+                return;
             }
-            WeatherNotificationManager.update(UpdateService.this);
-            stopSelf();
+            WeatherStorage storage = new WeatherStorage(service);
+            synchronized(service) {
+                switch (msg.what) {
+                    case SUCCESS:
+                        Log.i(TAG, "received weather: " +
+                                service.weather.getLocation().getText() + " " + service.weather.getTime());
+                        if (service.weather.isEmpty()) {
+                            storage.updateTime();
+                        } else {
+                            storage.save(service.weather);  //saving only non-empty weather
+                        }
+                        service.scheduleNextRun(service.weather.getTime().getTime());
+                        if (service.verbose && service.weather.isEmpty()) {
+                            Toast.makeText(service,
+                                    service.getString(R.string.weather_update_empty, service.location.getText()),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case FAILURE:
+                        Log.w(TAG, "failed to update weather", service.updateError);
+                        storage.updateTime();
+                        if (service.verbose) {
+                            Toast.makeText(service,
+                                    service.getString(R.string.weather_update_failed, service.updateError.getMessage()),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case UNKNOWN_LOCATION:
+                        Log.w(TAG, "failed to get location");
+                        storage.updateTime();
+                        if (service.verbose) {
+                            Toast.makeText(service,
+                                    service.getString(R.string.weather_update_unknown_location),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case QUERY_LOCATION:
+                        Log.d(TAG, "quering new location");
+                        //storage.updateTime();     //don't signal about update
+                        break;
+                }
+            }
+            WeatherNotificationManager.update(service);
+            service.stopSelf();
         }
-    };
+    }
     
     /**
      *  Check availability of network connections.
@@ -333,21 +337,25 @@ public class UpdateService extends Service implements Runnable {
         android.location.Location androidLocation = 
                 manager.getLastKnownLocation(locationProvider);
 
-        if (androidLocation == null || isExpired(androidLocation.getTime())) {
-            if (!locationType.isProviderEnabled(this)) {
-                return new SimpleLocation(null);    // don't try to query disabled provider
-            }
+        if (androidLocation != null && !isExpired(androidLocation.getTime())) {
+            return new AndroidOpenWeatherMapLocation(androidLocation);  //actual location
+        }
+
+        Location location = androidLocation == null ? null :
+                new AndroidOpenWeatherMapLocation(androidLocation);     //expired location, if exists
+
+        if (locationType.isProviderEnabled(this)) {
             try {
-                Log.d(TAG, "requested location update from " + locationProvider);
+                Log.d(TAG, "requesting location update from " + locationProvider);
                 manager.requestLocationUpdates(locationProvider,
-                    0, 0, getPendingIntent(this.startIntent));  //try to update immediately 
-                return null;
-            } catch (IllegalArgumentException e) {
-                return null;    //no location provider
+                        0, 0, getPendingIntent(this.startIntent));  //try to update immediately
+                return location;
+            } catch (IllegalArgumentException e) {  //no location provider
+                return location;
             }
         }
 
-        return new AndroidOpenWeatherMapLocation(androidLocation);
+        return location;
     }
 
     /**
