@@ -1,7 +1,6 @@
 package ru.gelin.android.weather.openweathermap;
 
 import android.content.Context;
-import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -18,14 +17,14 @@ import java.util.Locale;
  */
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
-    /** Base API URL */
-    static final String API_BASE_URL = "http://openweathermap.org/data/2.5";
-    /** Current weather API URL */
-    static final String API_WEATHER_URL = API_BASE_URL + "/weather?";
-    /** Forecasts API URL */
-    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/daily?cnt=4&id=";
     /** API key */
     static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
+    /** Base API URL */
+    static final String API_BASE_URL = "http://api.openweathermap.org/data/2.5";
+    /** Current weather API URL */
+    static final String API_WEATHER_URL = API_BASE_URL + "/weather?APPID=" + API_KEY + "&";
+    /** Forecasts API URL */
+    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/daily?APPID=" + API_KEY + "&cnt=4&id=";
 
     private final Context context;
     private final DebugDumper debugDumper;
@@ -59,11 +58,6 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
     public Weather query(Location location, Locale locale) throws WeatherException {
         return query(location);
         //TODO: what to do with locale?
-    }
-
-    @Override
-    protected void prepareRequest(HttpGet request) {
-        request.addHeader("X-API-Key", API_KEY);
     }
 
     JSONObject queryCurrentWeather(Location location) throws WeatherException {
