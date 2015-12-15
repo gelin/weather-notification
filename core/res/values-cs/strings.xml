@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather notification</string>
+    <string name="location">Umístění</string>
+    <string name="debug">Debug</string>
+    <string name="enable_notification">Zapnout upozornění</string>
+    <string name="location_gps">Pomocí satelitní GPS </string>
+    <string name="location_manual">Ručně</string>
+    <string name="location_network">Pomocí mobilní nebo Wi-Fi sítě</string>
+    <string name="location_type">Zjistit umístění</string>
+    <string name="manual_location">Poloha počasí</string>
+    <string name="api_debug_summary">Každý požadavek na Weather API bude uložen jako soubor do \'%s\'</string>
+    <string name="auto_location">Auto detekce</string>
+    <string name="auto_location_summary_off">Určete místo počasí ručně</string>
+    <string name="auto_location_summary_on">Automaticky detekovat aktuální umístění</string>
+    <string name="builtin_skin">Vestavěný skin</string>
+    <string name="builtin_skin_preferences">Vestavšný skin v preferencich</string>
+    <string name="location_disabled">Tato metoda detekce umístění je zakázána v nastavení přístroje. \nChcete otevřít nastavení, aby byla zapnuta?</string>
+    <string name="weather_update_unknown_location">Aktualizace počasí se nezdařila: poloha není známa.</string>
+    <string name="weather_update_no_network">Aktualizace počasí se nezdařila : žádná síťová připojení.</string>
+    <string name="weather_update_failed">Aktualizace počasí se nezdařila %s</string>
+    <string name="weather_update_empty">Počasí pro \"%s\" není známé.</string>
+    <string name="weather">Počasí</string>
+    <string name="start_update_service_permission_description">Umožňuje aplikaci spuštění aktualizace počasí služby přijímat nové hodnoty počasí.</string>
+    <string name="start_update_service_permission">spustit aktualizační službu počasí</string>
+    <string name="skins_preferences">Skins preferences</string>
+    <string name="skins_install_notice_no_market">Měli byste nainstalovat skiny pro lepší použitelnost. Vyhledávání \" Počasí Oznámení skin \" aplikací v Android Marketu a nainstalovat.</string>
+    <string name="skins_install_notice">Měli byste nainstalovat skiny pro lepší použitelnost. Prosím, klikněte na \"Install skins \" na spodní části obrazovky.</string>
+    <string name="skins_install">Install skins</string>
+    <string name="skins">Skins</string>
+    <string name="skin">Skin</string>
+    <string name="refresh_interval">interval aktualizace</string>
+    <string name="refresh_6h">Kařdých 6 hodin</string>
+    <string name="refresh_4h">Kařdé 4 hodiny</string>
+    <string name="refresh_3h">Kařdé 3 hodiny</string>
+    <string name="refresh_30m">Kařdých 30 minut</string>
+    <string name="refresh_2h">Kařdé 2 hodiny</string>
+    <string name="refresh_1h">Každou hodinu</string>
+    <string name="refresh_1d">Kařdý den</string>
+    <string name="refresh_15m">Kařdých 15 minut</string>
+    <string name="refresh_12h">Kařdých 12 hodin</string>
+    <string name="open_settings">Otevřete nastavení</string>
+    <string name="notification">Upozornění</string>
+</resources>
