@@ -16,3 +16,4 @@ buildin skins/white-text
 buildin skins/black-text-plus
 buildin skins/white-text-plus
 buildin skins/bigger-text
+buildin skins/tulip-one
