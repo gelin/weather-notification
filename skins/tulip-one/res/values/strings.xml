@@ -20,7 +20,7 @@
   -->
 
 <resources>
-	<string name="app_name">Weather notification skin: Tulip One</string>
-    <string name="skin_name">Tulip One</string>
-    <string name="skin_preferences">Tulip One preferences</string>
+	<string name="app_name">Weather notification skin: Tulpen One</string>
+    <string name="skin_name">Tulpen One</string>
+    <string name="skin_preferences">Tulpen One preferences</string>
 </resources>
