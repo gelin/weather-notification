@@ -143,4 +143,12 @@
     <!-- params: max temperature, min temperature, wind text formatted with "humidity_caption", humidity text formatted with "wind_caption" -->
     <string name="notification_content_text" formatted="false">%s/%s&#160;&#160;&#160;%s&#160;&#160;&#160;%s</string>
 
+    <!-- v.0.3.7 -->
+    <string name="notification_back_style">Notification background color</string>
+    <string name="notification_style_default_back">Default background</string>
+    <string name="notification_style_white_back">White background</string>
+    <string name="notification_style_black_back">Black background</string>
+    <!-- constant value, do not translate -->
+    <string name="DEFAULT_NOTIFICATION_TEXT_STYLE">BLACK_TEXT</string>
+
 </resources>

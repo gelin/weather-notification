@@ -21,24 +21,25 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 
 /**
- *  Enumeration with notification text styles.
+ *  Enumeration with notification background styles.
  */
-public enum NotificationTextStyle {
+public enum NotificationBackStyle {
 
-    BLACK_TEXT(0xff000000),
-    WHITE_TEXT(0xffffffff);
+    DEFAULT_BACK(0x00000000),   // full transparent
+    WHITE_BACK(0xffffffff),
+    BLACK_BACK(0xff000000);
 
-    int textColor;
-    
-    private NotificationTextStyle(int textColor) {
-        this.textColor = textColor;
+    int backColor;
+
+    private NotificationBackStyle(int backColor) {
+        this.backColor = backColor;
     }
 
     /**
-     *  Returns color of the text for this notification style.
+     *  Returns color of the background for this notification style.
      */
-    public int getTextColor() {
-        return this.textColor;
+    public int getBackColor() {
+        return this.backColor;
     }
     
 }

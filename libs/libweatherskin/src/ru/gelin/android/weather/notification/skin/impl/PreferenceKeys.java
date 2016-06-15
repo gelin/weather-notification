@@ -43,8 +43,13 @@ public class PreferenceKeys {
     public static final String NOTIFICATION_TEXT_STYLE = "notification_text_style";
     /** Notification text style default value */
     public static final String NOTIFICATION_TEXT_STYLE_DEFAULT =
-            Integer.valueOf(Build.VERSION.SDK) < 11 ?   NotificationTextStyle.BLACK_TEXT.toString() :
+            Integer.valueOf(Build.VERSION.SDK) < 11 || Integer.valueOf(Build.VERSION.SDK) >= 21 ?   NotificationTextStyle.BLACK_TEXT.toString() :
             NotificationTextStyle.WHITE_TEXT.toString();
+
+    /** Notification background style preference key */
+    public static final String NOTIFICATION_BACK_STYLE = "notification_back_style";
+    /** Notification background style default value */
+    public static final String NOTIFICATION_BACK_STYLE_DEFAULT = "DEFAULT_BACK";
 
     /** Notification icon style preference key */
     public static final String NOTIFICATION_ICON_STYLE = "notification_icon_style";

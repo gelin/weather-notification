@@ -21,6 +21,7 @@ package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceGroup;
@@ -41,8 +42,7 @@ public class BaseConfigActivity extends UpdateNotificationActivity
         ResourceIdFactory ids = ResourceIdFactory.getInstance(this);
 
         addPreferencesFromResource(ids.id(XML, "skin_preferences"));
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        enablePreferences(prefs.getString(PreferenceKeys.NOTIFICATION_STYLE, PreferenceKeys.NOTIFICATION_STYLE_DEFAULT));
+        enablePreferences(getValue(PreferenceKeys.NOTIFICATION_STYLE, PreferenceKeys.NOTIFICATION_STYLE_DEFAULT));
         
         addPreferenceListener(getPreferenceScreen());
     }
@@ -60,8 +60,13 @@ public class BaseConfigActivity extends UpdateNotificationActivity
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (PreferenceKeys.NOTIFICATION_STYLE.equals(preference.getKey())) {
+        String key = preference.getKey();
+        if (PreferenceKeys.NOTIFICATION_STYLE.equals(key)) {
             enablePreferences(newValue);
+        } else if (PreferenceKeys.NOTIFICATION_TEXT_STYLE.equals(key)) {
+            checkBackgroundStyle(newValue);
+        } else if (PreferenceKeys.NOTIFICATION_BACK_STYLE.equals(key)) {
+            checkTextStyle(newValue);
         }
         updateNotification();
         return true;
@@ -71,8 +76,54 @@ public class BaseConfigActivity extends UpdateNotificationActivity
         boolean enabled = NotificationStyle.CUSTOM_STYLE.equals(
                 NotificationStyle.valueOf(String.valueOf(notificationStyleValue)));
         findPreference(PreferenceKeys.NOTIFICATION_TEXT_STYLE).setEnabled(enabled);
+        findPreference(PreferenceKeys.NOTIFICATION_BACK_STYLE).setEnabled(enabled);
         findPreference(PreferenceKeys.NOTIFICATION_ICON_STYLE).setEnabled(enabled);
         findPreference(PreferenceKeys.NOTIFICATION_FORECASTS_STYLE).setEnabled(enabled);
+    }
+
+    private void checkBackgroundStyle(Object textStyleValue) {
+        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(String.valueOf(textStyleValue));
+        NotificationBackStyle backStyle = NotificationBackStyle.valueOf(
+                getValue(PreferenceKeys.NOTIFICATION_BACK_STYLE, PreferenceKeys.NOTIFICATION_BACK_STYLE_DEFAULT));
+        switch (textStyle) {
+            case BLACK_TEXT:
+                if (NotificationBackStyle.BLACK_BACK.equals(backStyle)) {
+                    setValue(PreferenceKeys.NOTIFICATION_BACK_STYLE, NotificationBackStyle.DEFAULT_BACK.toString());
+                }
+                break;
+            case WHITE_TEXT:
+                if (NotificationBackStyle.WHITE_BACK.equals(backStyle)) {
+                    setValue(PreferenceKeys.NOTIFICATION_BACK_STYLE, NotificationBackStyle.DEFAULT_BACK.toString());
+                }
+        }
+    }
+
+    private void checkTextStyle(Object backStyleValue) {
+        NotificationBackStyle backStyle = NotificationBackStyle.valueOf(String.valueOf(backStyleValue));
+        NotificationTextStyle textStyle = NotificationTextStyle.valueOf(
+                getValue(PreferenceKeys.NOTIFICATION_TEXT_STYLE, PreferenceKeys.NOTIFICATION_TEXT_STYLE_DEFAULT));
+        switch (backStyle) {
+            case BLACK_BACK:
+                if (NotificationTextStyle.BLACK_TEXT.equals(textStyle)) {
+                    setValue(PreferenceKeys.NOTIFICATION_TEXT_STYLE, NotificationTextStyle.WHITE_TEXT.toString());
+                }
+                break;
+            case WHITE_BACK:
+                if (NotificationTextStyle.WHITE_TEXT.equals(textStyle)) {
+                    setValue(PreferenceKeys.NOTIFICATION_TEXT_STYLE, NotificationTextStyle.BLACK_TEXT.toString());
+                }
+        }
+    }
+
+    private String getValue(String prefKey, String defaultValue) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getString(prefKey, defaultValue);
+    }
+
+    private void setValue(String prefKey, String value) {
+        ListPreference pref = (ListPreference)findPreference(prefKey);
+        pref.setValue(value);
+        pref.setSummary(pref.getEntry());
     }
 
 }

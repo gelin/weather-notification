@@ -122,4 +122,10 @@
     <string name="notification_icon_style">Показывать значок погоды</string>
     <string name="notification_forecast_style">Показывать прогноз</string>
 
+    <!-- v.0.3.7 -->
+    <string name="notification_back_style">Цвет фона уведомления</string>
+    <string name="notification_style_default_back">Фон по умолчанию</string>
+    <string name="notification_style_white_back">Белый фон</string>
+    <string name="notification_style_black_back">Черный фон</string>
+
 </resources>

@@ -50,7 +50,14 @@
                 android:title="@string/notification_text_style"
                 android:entries="@array/notification_text_style_entries"
                 android:entryValues="@array/notification_text_style_values"
-                android:defaultValue="BLACK_TEXT"/>
+                android:defaultValue="@string/DEFAULT_NOTIFICATION_TEXT_STYLE"/>
+
+        <ru.gelin.android.preference.SummaryListPreference
+                android:key="notification_back_style"
+                android:title="@string/notification_back_style"
+                android:entries="@array/notification_back_style_entries"
+                android:entryValues="@array/notification_back_style_values"
+                android:defaultValue="DEFAULT_BACK"/>
 
         <CheckBoxPreference
                 android:key="notification_icon_style"

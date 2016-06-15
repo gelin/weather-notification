@@ -63,4 +63,15 @@
         <item>WHITE_TEXT</item>
     </string-array>
 
+    <string-array name="notification_back_style_entries">
+        <item>@string/notification_style_default_back</item>
+        <item>@string/notification_style_white_back</item>
+        <item>@string/notification_style_black_back</item>
+    </string-array>
+    <string-array name="notification_back_style_values">
+        <item>DEFAULT_BACK</item>
+        <item>WHITE_BACK</item>
+        <item>BLACK_BACK</item>
+    </string-array>
+
 </resources>
