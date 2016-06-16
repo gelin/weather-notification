@@ -48,6 +48,16 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
+    protected int getBackColor() {
+        return NO_CHANGE_COLOR;
+    }
+
+    @Override
+    protected void setBackColor(int viewId, int color) {
+        // don't want to change color here
+    }
+
+    @Override
     protected void setText(int viewId, CharSequence text, int color) {
         TextView textView = (TextView)this.view.findViewById(viewId);
         if (textView == null) {

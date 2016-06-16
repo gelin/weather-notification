@@ -112,6 +112,7 @@ public class NotificationStyler {
     private final WindUnit windUnit;
     private final NotificationStyle notifyStyle;
     private final NotificationTextStyle textStyle;
+    private final NotificationBackStyle backStyle;
     private final boolean showIcon;
     private final boolean showForecasts;
 
@@ -134,6 +135,8 @@ public class NotificationStyler {
                 NOTIFICATION_STYLE, NOTIFICATION_STYLE_DEFAULT));
         this.textStyle = NotificationTextStyle.valueOf(prefs.getString(
                 NOTIFICATION_TEXT_STYLE, NOTIFICATION_TEXT_STYLE_DEFAULT));
+        this.backStyle = NotificationBackStyle.valueOf(prefs.getString(
+                NOTIFICATION_BACK_STYLE, NOTIFICATION_BACK_STYLE_DEFAULT));
         this.showIcon = prefs.getBoolean(
                 NOTIFICATION_ICON_STYLE, NOTIFICATION_ICON_STYLE_DEFAULT);
         this.showForecasts = prefs.getBoolean(
@@ -157,6 +160,10 @@ public class NotificationStyler {
 
     public NotificationTextStyle getTextStyle() {
         return this.textStyle;
+    }
+
+    public NotificationBackStyle getBackStyle() {
+        return this.backStyle;
     }
 
     public boolean isShowIcon() {

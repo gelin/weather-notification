@@ -55,6 +55,18 @@ public class RemoteWeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
+    protected int getBackColor() {
+        return this.styler.getBackStyle().getBackColor();
+    }
+
+    @Override
+    protected void setBackColor(int viewId, int color) {
+        if (color != 0) {
+            views.setInt(viewId, "setBackgroundColor", color);
+        }
+    }
+
+    @Override
     protected void setText(int viewId, CharSequence text, int color) {
         if (skipView(viewId)) {
             return;

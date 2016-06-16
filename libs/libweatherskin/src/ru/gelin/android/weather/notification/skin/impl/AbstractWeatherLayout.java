@@ -95,6 +95,8 @@ public abstract class AbstractWeatherLayout {
     void bindViews(Weather weather) {
         WeatherFormatter formatter = getWeatherFormatter(getContext(), weather);
 
+        setBackColor(id("content"), getBackColor());
+
         bindUpdateTime(weather.getQueryTime());
         setText(id("location"), weather.getLocation().getText(), getTextColor());
         
@@ -219,6 +221,8 @@ public abstract class AbstractWeatherLayout {
     }
     
     void emptyViews() {
+        setBackColor(id("content"), getBackColor());
+
         setText(id("update_time"), "", NO_CHANGE_COLOR);
         setText(id("location"), "", NO_CHANGE_COLOR);
         setText(id("condition"), getContext().getString(string("unknown_weather")), getTextColor());
@@ -233,7 +237,9 @@ public abstract class AbstractWeatherLayout {
 
         setVisibility(id("forecast_url"), View.INVISIBLE);
     }
-    
+
+    protected abstract void setBackColor(int viewId, int color);
+
     protected abstract void setText(int viewId, CharSequence text, int color);
 
     protected abstract void setIcon(int viewId, Drawable drawable, int level);
@@ -266,6 +272,11 @@ public abstract class AbstractWeatherLayout {
      *  This color is passed to #setText() calls.
      */
     protected abstract int getTextColor();
+
+    /**
+     *  Returns the background color to be set for the whole notification view.
+     */
+    protected abstract int getBackColor();
 
     /**
      *  Returns size of the main condition icon. In dp.
