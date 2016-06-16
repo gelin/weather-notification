@@ -20,7 +20,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ru.gelin.android.weather.notification.skin.tulipone"
-      android:versionCode="2"
+      android:versionCode="3"
       android:versionName="0.1"
       android:installLocation="auto"
       android:sharedUserId="ru.gelin.android.weather.notification">
