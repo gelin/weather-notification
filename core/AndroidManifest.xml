@@ -21,10 +21,30 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="ru.gelin.android.weather.notification"
-      android:versionCode="51"
-      android:versionName="0.3.8">
-    
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+      android:versionCode="52"
+      android:versionName="0.3.9">
+
+    <permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"
+                android:label="@string/start_update_service_permission"
+                android:description="@string/start_update_service_permission_description"
+                android:permissionGroup="android.permission-group.DEVELOPMENT_TOOLS"
+                android:protectionLevel="normal"/>
+
+    <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="25"/>
+
+    <supports-screens/>
+
+    <application android:icon="@drawable/icon"
+                 android:label="@string/app_name"
+                 android:allowBackup="true">
         
         <activity android:name=".app.MainActivity"
                   android:label="@string/app_name"
@@ -88,7 +108,7 @@
         <!-- Built-in skin -->
         
         <receiver android:name=".skin.builtin.SkinWeatherNotificationReceiver"
-        		android:label="@string/builtin_skin">
+                  android:label="@string/builtin_skin">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE_2"/>
             </intent-filter>
@@ -106,22 +126,5 @@
                   android:theme="@style/Theme.Dialog"/>
 
     </application>
-    
-    <permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"
-            android:label="@string/start_update_service_permission"
-            android:description="@string/start_update_service_permission_description"
-            android:permissionGroup="android.permission-group.DEVELOPMENT_TOOLS"
-            android:protectionLevel="normal"/>
-    
-    <uses-permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="14"/>
-    <supports-screens/>
 
 </manifest>

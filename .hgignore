@@ -1,12 +1,15 @@
-glob:bin/*
-glob:gen/*
-glob:.settings/*
-glob:tmp/*
-glob:local.properties
-glob:build.properties
-glob:upload.credentials.properties
-glob:.idea
-glob:*.bak
-glob:ant.properties
 syntax: glob
+
+bin/*
+gen/*
+.settings/*
+tmp/*
+local.properties
+build.properties
+upload.credentials.properties
+.idea
+*.bak
+ant.properties
 proguard-project.txt
+
+core/res/values/keys.xml
