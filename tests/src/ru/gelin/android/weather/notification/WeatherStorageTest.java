@@ -29,23 +29,6 @@ public class WeatherStorageTest extends InstrumentationTestCase {
         return getInstrumentation().getContext();
     }
 
-    public void testSaveLoad() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getContext());
-        WeatherStorage storage = new WeatherStorage(getContext());
-        storage.save(weather1);
-        Weather weather2 = storage.load();
-        WeatherUtils.checkWeather(weather2);
-    }
-
-    public void testSaveLoad2() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getContext());
-        Weather weather2 = new ParcelableWeather2(weather1);
-        WeatherStorage storage = new WeatherStorage(getContext());
-        storage.save(weather2);
-        Weather weather3 = storage.load();
-        WeatherUtils.checkWeather(weather3);
-    }
-
     public void testSaveLoad3() throws Exception {
         Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         WeatherStorage storage = new WeatherStorage(getContext());
@@ -62,18 +45,20 @@ public class WeatherStorageTest extends InstrumentationTestCase {
         Weather weather3 = storage.load();
         WeatherUtils.checkOpenWeather(weather3);
     }
+
+// Ignoring tests for old weather version 0.2.
     
-    public void testBackwardCompatibility() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getContext());
-        WeatherStorage newStorage = new WeatherStorage(getContext());
-        newStorage.save(weather1);
-        
-        ru.gelin.android.weather.v_0_2.notification.WeatherStorage storage = 
-            new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
-        ru.gelin.android.weather.v_0_2.Weather weather2 = storage.load();
-        
-        WeatherUtils.checkWeather(weather2);
-    }
+//    public void testBackwardCompatibility() throws Exception {
+//        Weather weather1 = WeatherUtils.createWeather(getContext());
+//        WeatherStorage newStorage = new WeatherStorage(getContext());
+//        newStorage.save(weather1);
+//
+//        ru.gelin.android.weather.v_0_2.notification.WeatherStorage storage =
+//            new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
+//        ru.gelin.android.weather.v_0_2.Weather weather2 = storage.load();
+//
+//        WeatherUtils.checkWeather(weather2);
+//    }
 
     /*  Don't want to support saving of the old weather by the new storage
     public void testBackwardCompatibility2() throws Exception {
@@ -87,21 +72,21 @@ public class WeatherStorageTest extends InstrumentationTestCase {
     }
     */
 
-    public void testBackwardCompatibility3() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getContext());
-
-        ru.gelin.android.weather.v_0_2.notification.WeatherStorage oldStorage =
-                new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
-        oldStorage.save(WeatherUtils.convert(weather1));
-
-        ru.gelin.android.weather.v_0_2.Weather weather2 = oldStorage.load();
-
-        WeatherUtils.checkWeather(weather2);
-    }
+//    public void testBackwardCompatibility3() throws Exception {
+//        Weather weather1 = WeatherUtils.createWeather(getContext());
+//
+//        ru.gelin.android.weather.v_0_2.notification.WeatherStorage oldStorage =
+//                new ru.gelin.android.weather.v_0_2.notification.WeatherStorage(getContext());
+//        oldStorage.save(WeatherUtils.convert(weather1));
+//
+//        ru.gelin.android.weather.v_0_2.Weather weather2 = oldStorage.load();
+//
+//        WeatherUtils.checkWeather(weather2);
+//    }
 
     public void testRemoveOldConditions() throws Exception {
         WeatherStorage storage = new WeatherStorage(getContext());
-        Weather weather1 = WeatherUtils.createWeather(getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         storage.save(weather1);
         assertEquals(4, storage.load().getConditions().size());
         Weather weather2 = WeatherUtils.createIncompleteOpenWeather(getInstrumentation());

@@ -25,32 +25,12 @@ import ru.gelin.android.weather.Weather;
 
 public class ParcelableWeather2Test extends InstrumentationTestCase {
 
-    public void testCopyConstructor() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
-        Weather weather2 = new ParcelableWeather2(weather1);
-        WeatherUtils.checkWeather(weather2);
-    }
-
     public void testCopyConstructor2() throws Exception {
         Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Weather weather2 = new ParcelableWeather2(weather1);
         WeatherUtils.checkOpenWeather(weather2);
     }
     
-    public void testWriteRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
-        Parcel parcel = Parcel.obtain();
-        ParcelableWeather2 weather2 = new ParcelableWeather2(weather1);
-        //weather2.writeToParcel(parcel, 0);
-        parcel.writeParcelable(weather2, 0);
-        int position = parcel.dataPosition();
-        parcel.setDataPosition(0);
-        //Weather weather3 = ParcelableWeather2.CREATOR.createFromParcel(parcel);
-        Weather weather3 = (Weather)parcel.readParcelable(getInstrumentation().getTargetContext().getClassLoader());
-        assertEquals(position, parcel.dataPosition());  //read the same data as wrote
-        WeatherUtils.checkWeather(weather3);
-    }
-
     public void testWriteRead2() throws Exception {
         Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Parcel parcel = Parcel.obtain();
@@ -80,7 +60,7 @@ public class ParcelableWeather2Test extends InstrumentationTestCase {
     
     @SuppressWarnings("deprecation")
     public void testOldVersionRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
+        Weather weather1 = WeatherUtils.createOpenWeather(getInstrumentation());
         Parcel parcel = Parcel.obtain();
         ParcelableWeather weather2 = new ParcelableWeather(weather1);
         weather2.writeToParcel(parcel, 0);

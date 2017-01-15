@@ -19,40 +19,40 @@
 
 package ru.gelin.android.weather.notification;
 
-import android.os.Parcel;
 import android.test.InstrumentationTestCase;
-import ru.gelin.android.weather.Weather;
 
 @SuppressWarnings("deprecation")
 public class ParcelableWeatherTest extends InstrumentationTestCase {
 
-    public void testCopyConstructor() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
-        Weather weather2 = new ParcelableWeather(weather1);
-        WeatherUtils.checkWeather(weather2, WeatherUtils.Version.V_0_2);
-    }
+// Ignoring tests for weather version 0.2.
+
+//    public void testCopyConstructor() throws Exception {
+//        Weather weather1 = WeatherUtils.createWeather(getInstrumentation());
+//        Weather weather2 = new ParcelableWeather(weather1);
+//        WeatherUtils.checkWeather(weather2, WeatherUtils.Version.V_0_2);
+//    }
     
-    public void testWriteRead() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
-        Parcel parcel = Parcel.obtain();
-        ParcelableWeather weather2 = new ParcelableWeather(weather1);
-        weather2.writeToParcel(parcel, 0);
-        int position = parcel.dataPosition();
-        parcel.setDataPosition(0);
-        Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
-        assertEquals(position, parcel.dataPosition());  //read the same data as write
-        WeatherUtils.checkWeather(weather3, WeatherUtils.Version.V_0_2);
-    }
-    
-    public void testBackwardCompatibility() throws Exception {
-        Weather weather1 = WeatherUtils.createWeather(getInstrumentation().getContext());
-        Parcel parcel = Parcel.obtain();
-        ParcelableWeather weather2 = new ParcelableWeather(weather1);
-        weather2.writeToParcel(parcel, 0);
-        parcel.setDataPosition(0);
-        ru.gelin.android.weather.v_0_2.Weather weather3 = 
-            ru.gelin.android.weather.v_0_2.notification.ParcelableWeather.CREATOR.createFromParcel(parcel);
-        WeatherUtils.checkWeather(weather3);
-    }
+//    public void testWriteRead() throws Exception {
+//        Weather weather1 = WeatherUtils.createWeather(getInstrumentation());
+//        Parcel parcel = Parcel.obtain();
+//        ParcelableWeather weather2 = new ParcelableWeather(weather1);
+//        weather2.writeToParcel(parcel, 0);
+//        int position = parcel.dataPosition();
+//        parcel.setDataPosition(0);
+//        Weather weather3 = ParcelableWeather.CREATOR.createFromParcel(parcel);
+//        assertEquals(position, parcel.dataPosition());  //read the same data as write
+//        WeatherUtils.checkWeather(weather3, WeatherUtils.Version.V_0_2);
+//    }
+
+//    public void testBackwardCompatibility() throws Exception {
+//        Weather weather1 = WeatherUtils.createWeather(getInstrumentation());
+//        Parcel parcel = Parcel.obtain();
+//        ParcelableWeather weather2 = new ParcelableWeather(weather1);
+//        weather2.writeToParcel(parcel, 0);
+//        parcel.setDataPosition(0);
+//        ru.gelin.android.weather.v_0_2.Weather weather3 =
+//            ru.gelin.android.weather.v_0_2.notification.ParcelableWeather.CREATOR.createFromParcel(parcel);
+//        WeatherUtils.checkWeather(weather3);
+//    }
 
 }

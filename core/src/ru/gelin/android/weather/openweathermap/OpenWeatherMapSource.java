@@ -23,12 +23,16 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.TestWeather;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherException;
+import ru.gelin.android.weather.WeatherSource;
 import ru.gelin.android.weather.source.DebugDumper;
 import ru.gelin.android.weather.source.HttpWeatherSource;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Locale;
 
 /**
@@ -101,7 +105,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
 
     String readJSON(String url) throws WeatherException {
         StringBuilder result = new StringBuilder();
-        InputStreamReader reader = getReaderForURL(url);
+        Reader reader = getReaderForURL(url);
         char[] buf = new char[1024];
         try {
             int read = reader.read(buf);
