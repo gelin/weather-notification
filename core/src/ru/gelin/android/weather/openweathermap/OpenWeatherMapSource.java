@@ -33,6 +33,8 @@ import ru.gelin.android.weather.source.HttpWeatherSource;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 /**
@@ -40,21 +42,17 @@ import java.util.Locale;
  */
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
-    /** API key */
-    static final String API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
     /** Base API URL */
     static final String API_BASE_URL = "http://api.openweathermap.org/data/2.5";
-    /** Current weather API URL */
-    static final String API_WEATHER_URL = API_BASE_URL + "/weather?APPID=" + API_KEY + "&";
-    /** Forecasts API URL */
-    static final String API_FORECAST_URL = API_BASE_URL + "/forecast/daily?APPID=" + API_KEY + "&cnt=4&id=";
 
     private final Context context;
     private final DebugDumper debugDumper;
+    private final OpenWeatherMapApiKey key;
 
     public OpenWeatherMapSource(Context context) {
         this.context = context;
         this.debugDumper = new DebugDumper(context, API_BASE_URL);
+        this.key = new OpenWeatherMapApiKey(context);
     }
 
     @Override
@@ -83,8 +81,16 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         //TODO: what to do with locale?
     }
 
+    String getWeatherUrl(Location location) {
+        try {
+            return API_BASE_URL + "/weather?APPID=" + URLEncoder.encode(key.getKey(), "UTF-8") + "&" + location.getQuery();
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     JSONObject queryCurrentWeather(Location location) throws WeatherException {
-        String url = API_WEATHER_URL + location.getQuery();
+        String url = getWeatherUrl(location);
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();
@@ -93,8 +99,17 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         }
     }
 
+    String getForecastUrl(int cityId) {
+        try {
+            return API_BASE_URL + "/forecast/daily?APPID=" +
+                    URLEncoder.encode(key.getKey(), "UTF-8") + "&cnt=4&id=" + String.valueOf(cityId);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     JSONObject queryDailyForecast(int cityId) throws WeatherException {
-        String url = API_FORECAST_URL + String.valueOf(cityId);
+        String url = getForecastUrl(cityId);
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();
