@@ -39,4 +39,12 @@ public class OpenWeatherMapApiKeyTest extends AndroidTestCase {
         prefs.edit().remove(OpenWeatherMapApiKey.PREFERENCE_KEY).commit();
     }
 
+    public void testEmptyKeyInPreferences() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefs.edit().putString(OpenWeatherMapApiKey.PREFERENCE_KEY, "").commit();
+        OpenWeatherMapApiKey key = new OpenWeatherMapApiKey(getContext());
+        assertTrue(key.getKey().startsWith("840ed2"));
+        prefs.edit().remove(OpenWeatherMapApiKey.PREFERENCE_KEY).commit();
+    }
+
 }

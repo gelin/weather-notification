@@ -67,4 +67,10 @@
     <string name="api_debug">API Debug</string>
     <string name="api_debug_summary">Each request to Weather API will be saved as a file to \'%s\'</string>
 
+    <!-- v.0.3.9 -->
+    <string name="openweathermap">OpenWeatherMap</string>
+    <string name="owm_api_key">API Key</string>
+    <string name="owm_api_key_description">Enter your own API Key</string>
+    <string name="owm_api_key_description_full">Take your own API Key from\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
+
 </resources>

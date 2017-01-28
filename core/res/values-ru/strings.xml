@@ -61,4 +61,11 @@
     <string name="location_disabled">Этот метод определения местоположения отключен в Настройках устройства.
 \nОткрыть Настройки, чтобы включить его?</string>
     <string name="open_settings">Открыть Настройки</string>
+
+    <!-- v.0.3.9 -->
+    <string name="openweathermap">OpenWeatherMap</string>
+    <string name="owm_api_key">Ключ API</string>
+    <string name="owm_api_key_description">Введите свой ключ API</string>
+    <string name="owm_api_key_description_full">Получите свой ключ API на\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
+
 </resources>

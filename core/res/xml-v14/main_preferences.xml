@@ -59,7 +59,18 @@
             android:key="weather"/>
     
     </PreferenceCategory>
-    
+
+    <PreferenceCategory android:title="@string/openweathermap">
+
+        <EditTextPreference
+                android:key="openweathermap_api_key"
+                android:title="@string/owm_api_key"
+                android:summary="@string/owm_api_key_description"
+                android:dialogMessage="@string/owm_api_key_description_full"
+                android:singleLine="true"/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="skins_category" 
         android:title="@string/skin">

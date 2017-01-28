@@ -57,7 +57,11 @@ public class OpenWeatherMapApiKey {
 
     private String getKeyFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(PREFERENCE_KEY, null);
+        String key = prefs.getString(PREFERENCE_KEY, "");
+        if (key.length() == 0) {
+            return null;
+        }
+        return key;
     }
 
     private String getKeyFromResources() {
