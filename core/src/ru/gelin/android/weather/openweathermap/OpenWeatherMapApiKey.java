@@ -30,7 +30,7 @@ import android.preference.PreferenceManager;
 public class OpenWeatherMapApiKey {
 
     /** Default API key */
-    private static final String DEFAULT_API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
+    static final String DEFAULT_API_KEY = "616a1aaacb2a1e3e3ca80c8e78455f76";
 
     /** API key preference name */
     public static final String PREFERENCE_KEY = "openweathermap_api_key";
