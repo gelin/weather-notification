@@ -62,12 +62,12 @@
 
     <PreferenceCategory android:title="@string/openweathermap">
 
-        <EditTextPreference
-            android:key="openweathermap_api_key"
-            android:title="@string/owm_api_key"
-            android:summary="@string/owm_api_key_description"
-            android:dialogMessage="@string/owm_api_key_description_full"
-            android:singleLine="true"/>
+        <ru.gelin.android.preference.ClickableEditTextPreference
+                android:key="openweathermap_api_key"
+                android:title="@string/owm_api_key"
+                android:summary="@string/owm_api_key_description"
+                android:dialogMessage="@string/owm_api_key_description_full"
+                android:singleLine="true"/>
 
     </PreferenceCategory>
     
