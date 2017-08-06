@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2010—2016 Denis Nelubin and others.
+  ~
+  ~ This file is part of Weather Notification.
+  ~
+  ~ Weather Notification is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Weather Notification is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Weather Notification.  If not, see http://www.gnu.org/licenses/.
+  -->
+
+<resources>
+    <string name="app_name">Weather notification</string>
+    <string name="weather">Weather</string>
+    <string name="notification">Notification</string>
+    <string name="enable_notification">Enable notification</string>
+    <string name="refresh_interval">Refresh interval</string>
+    <string name="refresh_15m">Every fifteen minutes</string>
+    <string name="refresh_30m">Every thirty minutes</string>
+    <string name="refresh_1h">Every hour</string>
+    <string name="refresh_2h">Every two hours</string>
+    <string name="refresh_3h">Every three hours</string>
+    <string name="refresh_4h">Every four hours</string>
+    <string name="refresh_6h">Every six hours</string>
+    <string name="refresh_12h">Every twelve hours</string>
+    <string name="refresh_1d">Every day</string>
+    <string name="location">Location</string>
+    <string name="auto_location">Auto detect</string>
+    <string name="auto_location_summary_on">Automatically detect the current location</string>
+    <string name="auto_location_summary_off">Define the weather location manually</string>
+    <string name="manual_location">Weather location</string>
+    <string name="weather_update_empty">Weather for \"%s\" is unknown</string>
+    <string name="weather_update_failed">Weather update failed: %s</string>
+    <string name="weather_update_no_network">Weather update failed: no network connections</string>
+    <string name="weather_update_unknown_location">Weather update failed: location is unknown</string>
+    <string name="skin">Skin</string>
+    <string name="skins">Skins</string>
+    <string name="skins_preferences">Skins preferences</string>
+    <string name="skins_install">Install skins</string>
+    <string name="skins_install_notice">You SHOULD INSTALL SKINS for better usability. Please click on \"Install skins\" on the bottom of this screen.</string>
+    <string name="skins_install_notice_no_market">You SHOULD INSTALL SKINS for better usability. Search \"Weather Notification Skin\" applications in Android Market and install them.</string>
+    <string name="builtin_skin">Built-in skin</string>
+    <string name="builtin_skin_preferences">Built-in skin preferences</string>
+    <string name="start_update_service_permission">start weather update service</string>
+    <string name="start_update_service_permission_description">Allows the application to start weather update service to receive the new weather values.</string>
+
+    <string name="location_type">Detect location</string>
+    <string name="location_gps">By GPS satellites</string>
+    <string name="location_network">By cellular or Wi-Fi network</string>
+    <string name="location_manual">Manually</string>
+    <string name="location_disabled">This location detection method is disabled in the device Settings.
+\nDo you want to open Settings to enable it?</string>
+    <string name="open_settings">Open Settings</string>
+
+    <!-- v.0.3.6 -->
+    <string name="debug">Debug</string>
+    <string name="api_debug">API Debug</string>
+    <string name="api_debug_summary">Each request to Weather API will be saved as a file to \'%s\'</string>
+
+    <!-- v.0.3.9 -->
+    <string name="openweathermap">OpenWeatherMap</string>
+    <string name="owm_api_key">API Key</string>
+    <string name="owm_api_key_description">Enter your own API Key</string>
+    <string name="owm_api_key_description_full">Take your own API Key from\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
+
+</resources>
