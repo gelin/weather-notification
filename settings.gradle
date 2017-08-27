@@ -13,3 +13,5 @@ include ':skin-bigger-text'
 project(':skin-bigger-text').projectDir = new File(settingsDir, './skins/bigger-text')
 include ':skin-black-text'
 project(':skin-black-text').projectDir = new File(settingsDir, './skins/black-text')
+include ':skin-black-text-plus'
+project(':skin-black-text-plus').projectDir = new File(settingsDir, './skins/black-text-plus')
