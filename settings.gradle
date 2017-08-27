@@ -1,4 +1,6 @@
 include ':libpreference'
 project(':libpreference').projectDir = new File(settingsDir, './libs/libpreference')
+include ':libweather'
+project(':libweather').projectDir = new File(settingsDir, './libs/libweather')
 
 include ':core'

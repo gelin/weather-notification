@@ -19,27 +19,13 @@
 
 package ru.gelin.android.weather.notification;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import ru.gelin.android.weather.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ru.gelin.android.weather.Humidity;
-import ru.gelin.android.weather.Location;
-import ru.gelin.android.weather.SimpleHumidity;
-import ru.gelin.android.weather.SimpleLocation;
-import ru.gelin.android.weather.SimpleTemperature;
-import ru.gelin.android.weather.SimpleWeather;
-import ru.gelin.android.weather.SimpleWeatherCondition;
-import ru.gelin.android.weather.SimpleWind;
-import ru.gelin.android.weather.Temperature;
-import ru.gelin.android.weather.TemperatureUnit;
-import ru.gelin.android.weather.UnitSystem;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.WeatherCondition;
-import ru.gelin.android.weather.Wind;
-import ru.gelin.android.weather.WindSpeedUnit;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  *  This parcelable weather allows to save only weather params which were used in version 0.2 of the application.
