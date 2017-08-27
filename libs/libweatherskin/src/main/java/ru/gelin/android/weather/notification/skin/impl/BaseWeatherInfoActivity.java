@@ -19,20 +19,21 @@
 
 package ru.gelin.android.weather.notification.skin.impl;
 
-import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
-import static ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver.WEATHER_KEY;
-import ru.gelin.android.weather.Weather;
-import ru.gelin.android.weather.notification.WeatherStorage;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageButton;
+import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.AppUtils;
+import ru.gelin.android.weather.notification.WeatherStorage;
+
+import static ru.gelin.android.weather.notification.skin.impl.BaseWeatherNotificationReceiver.WEATHER_KEY;
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.LAYOUT;
 
 /**
  *  Base class for weather info activity.

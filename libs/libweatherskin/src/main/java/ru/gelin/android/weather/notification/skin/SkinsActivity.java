@@ -19,13 +19,13 @@
 
 package ru.gelin.android.weather.notification.skin;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceScreen;
+
+import java.util.List;
 
 public class SkinsActivity extends UpdateNotificationActivity 
         implements OnPreferenceChangeListener {
