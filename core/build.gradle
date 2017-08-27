@@ -18,17 +18,38 @@ android {
         versionCode 53
         versionName '0.3.10'
     }
-//    buildTypes {
-//        release {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//        }
-//    }
 
     lintOptions {
         checkReleaseBuilds true
         abortOnError false
     }
+
+    signingConfigs {
+        release
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+if (project.hasProperty('storeFile')) {
+    android.signingConfigs.release.storeFile = file(storeFile)
+}
+if (project.hasProperty('storePassword')) {
+    android.signingConfigs.release.storePassword = storePassword
+} else {
+    android.signingConfigs.release.storePassword = System.getenv('STORE_PASSWORD')
+}
+if (project.hasProperty('keyAlias')) {
+    android.signingConfigs.release.keyAlias = keyAlias
+}
+if (project.hasProperty('keyPassword')) {
+    android.signingConfigs.release.keyPassword = keyPassword
+} else {
+    android.signingConfigs.release.keyPassword = System.getenv('KEY_PASSWORD')
 }
 
 dependencies {
