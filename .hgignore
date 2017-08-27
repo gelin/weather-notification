@@ -13,5 +13,6 @@ ant.properties
 proguard-project.txt
 .gradle/*
 build/*
+*.iml
 
 core/main/res/values/keys.xml

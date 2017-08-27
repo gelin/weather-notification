@@ -1,1 +1,4 @@
+include ':libpreference'
+project(':libpreference').projectDir = new File(settingsDir, './libs/libpreference')
+
 include ':core'
