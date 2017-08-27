@@ -21,3 +21,5 @@ project(':skin-tulip-one').projectDir = new File(settingsDir, './skins/tulip-one
 //project(':skin-v11').projectDir = new File(settingsDir, './skins/v11')
 include ':skin-white-text'
 project(':skin-white-text').projectDir = new File(settingsDir, './skins/white-text')
+include ':skin-white-text-plus'
+project(':skin-white-text-plus').projectDir = new File(settingsDir, './skins/white-text-plus')

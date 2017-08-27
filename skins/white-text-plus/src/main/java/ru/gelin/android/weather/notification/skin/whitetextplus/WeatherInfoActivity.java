@@ -19,9 +19,9 @@
 
 package ru.gelin.android.weather.notification.skin.whitetextplus;
 
-import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
 import android.content.Context;
 import android.view.View;
+import ru.gelin.android.weather.notification.skin.impl.BaseWeatherInfoActivity;
 
 /**
  *  Extends the basic weather info activity.
