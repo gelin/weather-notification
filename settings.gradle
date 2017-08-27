@@ -17,3 +17,5 @@ include ':skin-black-text-plus'
 project(':skin-black-text-plus').projectDir = new File(settingsDir, './skins/black-text-plus')
 include ':skin-tulip-one'
 project(':skin-tulip-one').projectDir = new File(settingsDir, './skins/tulip-one')
+//include ':skin-v11'
+//project(':skin-v11').projectDir = new File(settingsDir, './skins/v11')
