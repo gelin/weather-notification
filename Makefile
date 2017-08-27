@@ -2,11 +2,32 @@
 build:
 	./gradlew assembleDebug
 
-.PHONY: core-build
-core-build:
-	./gradlew :core:assembleDebug
-
-.PHONY: core-release
-core-release:
+.PHONY: release
+release:
 	@stty -echo && read -p "Key password: " pwd && stty echo && \
-	STORE_PASSWORD=$$pwd KEY_PASSWORD=$$pwd ./gradlew :core:assembleRelease
+	STORE_PASSWORD=$$pwd KEY_PASSWORD=$$pwd ./gradlew assembleRelease
+
+.PHONY: %-build
+%-build:
+	./gradlew :$*:assembleDebug
+
+.PHONY: %-release
+%-release:
+	@stty -echo && read -p "Key password: " pwd && stty echo && \
+	STORE_PASSWORD=$$pwd KEY_PASSWORD=$$pwd ./gradlew :$*:assembleRelease
+
+SKINNAMES = bigger-text black-text black-text-plus tulip-one white-text white-text-plus
+SKINS = $(addprefix skin-,$(SKINNAMES))
+APPS = core $(SKINS)
+
+.PHONY: list
+list:
+	@echo $(APPS)
+
+BUILDS = $(addsuffix -build,$(APPS))
+.PHONY: $(BUILDS)
+$(BUILDS): %-build
+
+RELEASES = $(addsuffix -release,$(APPS))
+.PHONY: $(RELEASES)
+$(RELEASES): %-release
