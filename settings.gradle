@@ -6,3 +6,6 @@ include ':libweatherskin'
 project(':libweatherskin').projectDir = new File(settingsDir, './libs/libweatherskin')
 
 include ':core'
+
+//include ':skin-big-text'
+//project(':skin-big-text').projectDir = new File(settingsDir, './skins/big-text')
