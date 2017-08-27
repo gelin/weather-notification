@@ -23,11 +23,3 @@ APPS = core $(SKINS)
 .PHONY: list
 list:
 	@echo $(APPS)
-
-BUILDS = $(addsuffix -build,$(APPS))
-.PHONY: $(BUILDS)
-$(BUILDS): %-build
-
-RELEASES = $(addsuffix -release,$(APPS))
-.PHONY: $(RELEASES)
-$(RELEASES): %-release
