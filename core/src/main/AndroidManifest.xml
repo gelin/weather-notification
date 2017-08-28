@@ -20,9 +20,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="ru.gelin.android.weather.notification"
-      android:versionCode="52"
-      android:versionName="0.3.9">
+      package="ru.gelin.android.weather.notification">
 
     <permission android:name="ru.gelin.android.weather.notification.START_UPDATE_SERVICE"
                 android:label="@string/start_update_service_permission"
@@ -38,14 +36,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="25"/>
+    <uses-sdk/>
 
     <supports-screens/>
 
-    <application android:icon="@drawable/icon"
+    <application android:name=".app.CoreApplication"
+                 android:icon="@drawable/icon"
                  android:label="@string/app_name"
                  android:allowBackup="true">
-        
+
         <activity android:name=".app.MainActivity"
                   android:label="@string/app_name"
                   android:theme="@android:style/Theme.NoDisplay">
@@ -74,14 +73,14 @@
         </activity>
 
         <activity android:name=".app.DebugActivity"/>
-        
+
         <service android:name=".app.UpdateService"
                 android:permission="ru.gelin.android.weather.notification.START_UPDATE_SERVICE">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_START_UPDATE_SERVICE"/>
             </intent-filter>
         </service>
-        
+
         <receiver android:name=".app.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -106,21 +105,21 @@
         </receiver>
 
         <!-- Built-in skin -->
-        
+
         <receiver android:name=".skin.builtin.SkinWeatherNotificationReceiver"
                   android:label="@string/builtin_skin">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_UPDATE_2"/>
             </intent-filter>
         </receiver>
-        
+
         <activity android:name=".skin.builtin.SkinConfigActivity"
                   android:label="@string/builtin_skin_preferences">
             <intent-filter>
                 <action android:name="ru.gelin.android.weather.notification.ACTION_WEATHER_SKIN_PREFERENCES"/>
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".skin.builtin.WeatherInfoActivity"
                   android:label="@string/weather"
                   android:theme="@style/Theme.Dialog"/>

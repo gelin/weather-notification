@@ -31,6 +31,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -61,13 +62,13 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main_preferences);
-        
+
         /*  TODO: why this doesn't work?
         PreferenceScreen screen = getPreferenceScreen();
         screen.setOnPreferenceClickListener(this);
-        screen.setOnPreferenceChangeListener(this); 
+        screen.setOnPreferenceChangeListener(this);
         */
-        
+
         Preference weatherPreference = findPreference(WEATHER);
         weatherPreference.setOnPreferenceClickListener(this);
         weatherPreference.setOnPreferenceChangeListener(this);
@@ -79,7 +80,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         locationTypePreference.setOnPreferenceChangeListener(this);
         Preference locationPreference = findPreference(LOCATION);
         locationPreference.setOnPreferenceChangeListener(this);
-        
+
         Preference skinsInstallPreference = findPreference(SKINS_INSTALL);
         Intent skinsInstallIntent = new Intent(Intent.ACTION_VIEW, SKIN_SEARCH_URI);
         skinsInstallPreference.setIntent(skinsInstallIntent);
@@ -88,31 +89,33 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             PreferenceCategory skinsCategory = (PreferenceCategory)findPreference(SKINS_CATEGORY);
             skinsCategory.removePreference(skinsInstallPreference);
         }
-        
+
         SkinManager sm = new SkinManager(this);
         List<SkinInfo> skins = sm.getInstalledSkins();
 
         fillSkinsPreferences(skins);
 
         if (skins.size() <= 1) {
-            Toast.makeText(this, 
+            Toast.makeText(this,
                     marketActivity == null ?
                             R.string.skins_install_notice_no_market :
-                            R.string.skins_install_notice, 
+                            R.string.skins_install_notice,
                     Toast.LENGTH_LONG).show();
         }
-        
+
         startUpdate(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-        boolean isManual = LocationType.LOCATION_MANUAL.toString().equals(
-                prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
+        LocationType locationType = LocationType.valueOf(prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
+        boolean isManual = locationType.equals(LocationType.LOCATION_MANUAL);
         //Toast.makeText(this, prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT), Toast.LENGTH_LONG).show();
         findPreference(LOCATION).setEnabled(isManual);
+        checkAndRequestPermissions(locationType);
     }
 
     @Override
@@ -161,6 +164,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             LocationType locationType = LocationType.valueOf(String.valueOf(newValue));
             boolean isManual = LocationType.LOCATION_MANUAL.equals(locationType);
             findPreference(LOCATION).setEnabled(isManual);
+            checkAndRequestPermissions(locationType);
             checkLocationProviderEnabled(locationType);
             startUpdate(true);
             return true;
@@ -181,6 +185,15 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         AppUtils.startUpdateService(this, true, force);
     }
 
+    void checkAndRequestPermissions(LocationType locationType) {
+        if (locationType.isPermissionGranted(this)) {
+            return;
+        }
+        ActivityCompat.requestPermissions(this,
+                new String[] {locationType.getPermission()},
+                locationType.getPermissionRequest());
+    }
+
     void checkLocationProviderEnabled(LocationType locationType) {
         if (!locationType.isProviderEnabled(this)) {
             final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -198,5 +211,5 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             builder.show();
         }
     }
-    
+
 }
