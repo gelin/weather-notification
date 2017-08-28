@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '26.0.1'
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 25
+        versionCode 1
+        versionName '1.0'
+    }
+//    buildTypes {
+//        release {
+//            runProguard false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//        }
+//    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+
+}

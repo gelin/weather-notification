@@ -1,0 +1,25 @@
+include ':libpreference'
+project(':libpreference').projectDir = new File(settingsDir, './libs/libpreference')
+include ':libweather'
+project(':libweather').projectDir = new File(settingsDir, './libs/libweather')
+include ':libweatherskin'
+project(':libweatherskin').projectDir = new File(settingsDir, './libs/libweatherskin')
+
+include ':core'
+
+//include ':skin-big-text'
+//project(':skin-big-text').projectDir = new File(settingsDir, './skins/big-text')
+include ':skin-bigger-text'
+project(':skin-bigger-text').projectDir = new File(settingsDir, './skins/bigger-text')
+include ':skin-black-text'
+project(':skin-black-text').projectDir = new File(settingsDir, './skins/black-text')
+include ':skin-black-text-plus'
+project(':skin-black-text-plus').projectDir = new File(settingsDir, './skins/black-text-plus')
+include ':skin-tulip-one'
+project(':skin-tulip-one').projectDir = new File(settingsDir, './skins/tulip-one')
+//include ':skin-v11'
+//project(':skin-v11').projectDir = new File(settingsDir, './skins/v11')
+include ':skin-white-text'
+project(':skin-white-text').projectDir = new File(settingsDir, './skins/white-text')
+include ':skin-white-text-plus'
+project(':skin-white-text-plus').projectDir = new File(settingsDir, './skins/white-text-plus')

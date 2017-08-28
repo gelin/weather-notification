@@ -11,5 +11,8 @@ upload.credentials.properties
 *.bak
 ant.properties
 proguard-project.txt
+.gradle/*
+build/*
+*.iml
 
-core/res/values/keys.xml
+core/main/res/values/keys.xml
