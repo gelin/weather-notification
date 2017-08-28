@@ -21,8 +21,15 @@
 
 package ru.gelin.android.weather.source;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import ru.gelin.android.weather.notification.R;
+import ru.gelin.android.weather.notification.app.DebugActivity;
 import ru.gelin.android.weather.notification.app.DebugSettings;
 import ru.gelin.android.weather.notification.app.Tag;
 
@@ -59,11 +66,13 @@ public class DebugDumper {
         BAD_CHARS.add('=');
     }
 
+    private final Context context;
     private final DebugSettings settings;
     private final File path;
     private final String prefix;
 
     public DebugDumper(Context context, String prefix) {
+        this.context = context;
         this.settings = new DebugSettings(context);
         this.path = settings.getDebugDir();
         this.prefix = prefix;
@@ -71,6 +80,9 @@ public class DebugDumper {
 
     public void dump(String url, String content) {
         if (!this.settings.isAPIDebug()) {
+            return;
+        }
+        if (!checkAndRequestPermission()) {
             return;
         }
         File dumpFile = getDumpFile(url);
@@ -100,6 +112,44 @@ public class DebugDumper {
         }
         fileName.append(".txt");
         return new File(this.path, fileName.toString());
+    }
+
+    /**
+     * Checks is the permission to write the dump file is granted, asks for it if necessary.
+     * @return does the permission granted
+     */
+    boolean checkAndRequestPermission() {
+        if (settings.isPermissionGranted()) {
+            return true;
+        }
+        displayPermissionNotification();
+        return false;
+    }
+
+    void displayPermissionNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        builder.setSmallIcon(R.drawable.status_icon);
+        builder.setContentTitle(context.getString(R.string.permission_required));
+        builder.setContentText(context.getString(R.string.permission_required_details));
+
+        builder.setWhen(System.currentTimeMillis());
+        builder.setOngoing(false);
+        builder.setAutoCancel(true);
+
+        Intent intent = new Intent(context, DebugActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        builder.setContentIntent(PendingIntent.getActivity(context, 0, intent, 0));
+
+        //Lollipop notification on lock screen
+        builder.setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+
+        Notification notification = builder.build();
+
+        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, notification);
     }
 
 }

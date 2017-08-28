@@ -19,15 +19,20 @@
 
 package ru.gelin.android.weather.notification.app;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.ActivityCompat;
 import ru.gelin.android.weather.notification.R;
+
+import static ru.gelin.android.weather.notification.app.PermissionRequests.WRITE_EXTERNAL_STORAGE_REQUEST;
+import static ru.gelin.android.weather.notification.app.PreferenceKeys.API_DEBUG;
 
 /**
  *  The activity with debug preferences.
  */
-public class DebugActivity extends PreferenceActivity {
+public class DebugActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,38 @@ public class DebugActivity extends PreferenceActivity {
         DebugSettings settings = new DebugSettings(this);
         Preference apiDebugPref = findPreference(PreferenceKeys.API_DEBUG);
         apiDebugPref.setSummary(getString(R.string.api_debug_summary, settings.getDebugDir()));
+        apiDebugPref.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        DebugSettings settings = new DebugSettings(this);
+        checkAndRequestPermissions(settings);
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String key = preference.getKey();
+        if (API_DEBUG.equals(key)) {
+            DebugSettings settings = new DebugSettings(this, newValue);
+            checkAndRequestPermissions(settings);
+            return true;
+        }
+        return true;
+    }
+
+    void checkAndRequestPermissions(DebugSettings settings) {
+        if (settings.isPermissionGranted()) {
+            return;
+        }
+        if (!settings.isAPIDebug()) {
+            return;
+        }
+        // TODO: avoid infinite loop when permission is not granted
+        ActivityCompat.requestPermissions(this,
+            new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+            WRITE_EXTERNAL_STORAGE_REQUEST);
     }
 
 }

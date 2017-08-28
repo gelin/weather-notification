@@ -189,9 +189,13 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         if (locationType.isPermissionGranted(this)) {
             return;
         }
-        ActivityCompat.requestPermissions(this,
-                new String[] {locationType.getPermission()},
+        String permission = locationType.getPermission();
+        if (permission != null) {
+            // TODO: avoid infinite loop when permission is not granted
+            ActivityCompat.requestPermissions(this,
+                new String[] { permission },
                 locationType.getPermissionRequest());
+        }
     }
 
     void checkLocationProviderEnabled(LocationType locationType) {

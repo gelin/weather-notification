@@ -19,11 +19,14 @@
 
 package ru.gelin.android.weather.notification.app;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 
 import java.io.File;
 
@@ -33,9 +36,15 @@ import java.io.File;
 public class DebugSettings {
 
     private final Context context;
+    private final Object newValue;
 
     public DebugSettings(Context context) {
+        this(context, null);
+    }
+
+    public DebugSettings(Context context, Object newValue) {
         this.context = context;
+        this.newValue = newValue;
     }
 
     /**
@@ -59,8 +68,19 @@ public class DebugSettings {
      *  Returns true if the debug for API is enabled.
      */
     public boolean isAPIDebug() {
+        if (newValue instanceof Boolean) {
+            return (Boolean)newValue;
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
         return prefs.getBoolean(PreferenceKeys.API_DEBUG, PreferenceKeys.API_DEBUG_DEFAULT);
+    }
+
+    /**
+     * Returns true if it's granted to write debug file.
+     */
+    public boolean isPermissionGranted() {
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return permissionCheck == PackageManager.PERMISSION_GRANTED;
     }
 
 }

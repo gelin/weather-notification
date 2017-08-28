@@ -397,9 +397,9 @@ public class UpdateService extends Service implements Runnable {
         builder.setAutoCancel(true);
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0));
 
         //Lollipop notification on lock screen
@@ -419,6 +419,7 @@ public class UpdateService extends Service implements Runnable {
         if (manager == null) {
             return new NameOpenWeatherMapLocation(query, null);
         }
+        // TODO: check permissions here
         android.location.Location androidLocation =
                 manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return new NameOpenWeatherMapLocation(query, androidLocation);
