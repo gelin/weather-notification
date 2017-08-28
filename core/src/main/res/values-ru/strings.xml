@@ -68,4 +68,8 @@
     <string name="owm_api_key_description">Введите свой ключ API</string>
     <string name="owm_api_key_description_full">Получите свой ключ API на\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
 
+    <!-- v.0.3.10 -->
+    <string name="permission_required">Требуются разрешения</string>
+    <string name="permission_required_details">Нажмите здесь, чтобы открыть настройки Уведомления о погоде</string>
+
 </resources>

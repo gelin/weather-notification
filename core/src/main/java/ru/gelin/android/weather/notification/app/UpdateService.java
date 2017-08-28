@@ -19,9 +19,7 @@
 
 package ru.gelin.android.weather.notification.app;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +30,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 import ru.gelin.android.weather.Location;
@@ -69,7 +68,7 @@ public class UpdateService extends Service implements Runnable {
     static final int UNKNOWN_LOCATION = 2;
     /** Update message when querying new location */
     static final int QUERY_LOCATION = 3;
-    
+
     /**
      *  Lock used when maintaining update thread.
      */
@@ -79,7 +78,7 @@ public class UpdateService extends Service implements Runnable {
      *  thread if one isn't already running.
      */
     static boolean threadRunning = false;
-    
+
     /** Verbose flag */
     boolean verbose = false;
     /** Force flag */
@@ -96,7 +95,7 @@ public class UpdateService extends Service implements Runnable {
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        
+
         synchronized(this) {
             this.startIntent = intent;
             if (intent != null) {
@@ -105,20 +104,20 @@ public class UpdateService extends Service implements Runnable {
                         intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)); // force weather update if location update came
             }
         }
-        
+
         removeLocationUpdates();
-        
+
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
-        
+
         WeatherStorage storage = new WeatherStorage(UpdateService.this);
         Weather weather = storage.load();
         long lastUpdate = weather.getTime().getTime();
         boolean notificationEnabled = preferences.getBoolean(
                 ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
-        
+
         scheduleNextRun(lastUpdate);
-        
+
         synchronized(staticLock) {
             if (threadRunning) {
                 return;     // only start processing thread if not already running
@@ -134,7 +133,7 @@ public class UpdateService extends Service implements Runnable {
             if (!isNetworkAvailable()) {    //no network
                 skipUpdate(storage, "skipping update, no network");
                 if (verbose) {
-                    Toast.makeText(UpdateService.this, 
+                    Toast.makeText(UpdateService.this,
                             getString(R.string.weather_update_no_network),
                             Toast.LENGTH_LONG).show();
                 }
@@ -146,14 +145,14 @@ public class UpdateService extends Service implements Runnable {
             }
         }
     }
-    
+
     void skipUpdate(WeatherStorage storage, String logMessage) {
         stopSelf();
         Log.d(TAG, logMessage);
         storage.updateTime();
         WeatherNotificationManager.update(this);
     }
-    
+
     //@Override
     public void run() {
         SharedPreferences preferences =
@@ -169,12 +168,12 @@ public class UpdateService extends Service implements Runnable {
         synchronized(this) {
             this.location = location;
         }
-        
+
         if (location == null || location.isEmpty()) {
             internalHandler.sendEmptyMessage(UNKNOWN_LOCATION);
             return;
         }
- 
+
         WeatherSource source = new OpenWeatherMapSource(this);
         try {
             Weather weather = source.query(location);
@@ -189,7 +188,7 @@ public class UpdateService extends Service implements Runnable {
             internalHandler.sendEmptyMessage(FAILURE);
         }
     }
-    
+
     /**
      *  Handles weather update result.
      */
@@ -259,13 +258,13 @@ public class UpdateService extends Service implements Runnable {
             service.stopSelf();
         }
     }
-    
+
     /**
      *  Check availability of network connections.
      *  Returns true if any network connection is available.
      */
     boolean isNetworkAvailable() {
-        ConnectivityManager manager = 
+        ConnectivityManager manager =
             (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
         if (info == null) {
@@ -273,7 +272,7 @@ public class UpdateService extends Service implements Runnable {
         }
         return info.isAvailable();
     }
-    
+
     /**
      *  Returns true if the last update time is expired.
      *  @param  timestamp  timestamp value to check
@@ -283,7 +282,7 @@ public class UpdateService extends Service implements Runnable {
         RefreshInterval interval = getRefreshInterval();
         return timestamp + interval.getInterval() < now;
     }
-    
+
     void scheduleNextRun(long lastUpdate) {
         long now = System.currentTimeMillis();
         RefreshInterval interval = getRefreshInterval();
@@ -296,7 +295,7 @@ public class UpdateService extends Service implements Runnable {
 
         boolean notificationEnabled = PreferenceManager.getDefaultSharedPreferences(this).
                 getBoolean(ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
-        
+
         AlarmManager alarmManager = (AlarmManager)getSystemService(
                 Context.ALARM_SERVICE);
         if (notificationEnabled) {
@@ -307,7 +306,7 @@ public class UpdateService extends Service implements Runnable {
             alarmManager.cancel(pendingIntent);
         }
     }
-    
+
     RefreshInterval getRefreshInterval() {
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
@@ -321,7 +320,7 @@ public class UpdateService extends Service implements Runnable {
         return LocationType.valueOf(preferences.getString(
                 LOCATION_TYPE, LOCATION_TYPE_DEFAULT));
     }
-    
+
     /**
      *  Queries current location using android services.
      */
@@ -330,29 +329,86 @@ public class UpdateService extends Service implements Runnable {
         if (manager == null) {
             return null;
         }
-        String locationProvider = locationType.getLocationProvider();
-        android.location.Location androidLocation = 
+
+        LocationType allowedLocationType = checkAndRequestPermission(locationType);
+
+        if (allowedLocationType.isPermissionGranted(this)) {
+
+            String locationProvider = allowedLocationType.getLocationProvider();
+            android.location.Location androidLocation =
                 manager.getLastKnownLocation(locationProvider);
 
-        if (androidLocation != null && !isExpired(androidLocation.getTime())) {
-            return new AndroidOpenWeatherMapLocation(androidLocation);  //actual location
-        }
+            if (androidLocation != null && !isExpired(androidLocation.getTime())) {
+                return new AndroidOpenWeatherMapLocation(androidLocation);  //actual location
+            }
 
-        Location location = androidLocation == null ? null :
+            Location location = androidLocation == null ? null :
                 new AndroidOpenWeatherMapLocation(androidLocation);     //expired location, if exists
 
-        if (locationType.isProviderEnabled(this)) {
-            try {
-                Log.d(TAG, "requesting location update from " + locationProvider);
-                manager.requestLocationUpdates(locationProvider,
+            if (allowedLocationType.isProviderEnabled(this)) {
+                try {
+                    Log.d(TAG, "requesting location update from " + locationProvider);
+                    manager.requestLocationUpdates(locationProvider,
                         0, 0, getPendingIntent(this.startIntent));  //try to update immediately
-                return location;
-            } catch (IllegalArgumentException e) {  //no location provider
-                return location;
+                    return location;
+                } catch (IllegalArgumentException e) {  //no location provider
+                    return location;
+                }
             }
+
+            return location;
+
         }
 
-        return location;
+        return null;
+    }
+
+    /**
+     * Checks is the permission of the specified location type is granted, asks for it if necessary.
+     * @param locationType the desired location type
+     * @return the actual location type which is allowed to perform
+     */
+    LocationType checkAndRequestPermission(LocationType locationType) {
+        if (locationType.isPermissionGranted(this)) {
+            return locationType;
+        }
+        LocationType lowerLocationType = locationType.getLowerPermissionType();
+        if (lowerLocationType == null) {
+            return locationType;
+        }
+        if (lowerLocationType.isPermissionGranted(this)) {
+            return lowerLocationType;
+        }
+
+        displayPermissionNotification();
+
+        return checkAndRequestPermission(lowerLocationType);
+    }
+
+    void displayPermissionNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        builder.setSmallIcon(R.drawable.status_icon);
+        builder.setContentTitle(getString(R.string.permission_required));
+        builder.setContentText(getString(R.string.permission_required_details));
+
+        builder.setWhen(System.currentTimeMillis());
+        builder.setOngoing(false);
+        builder.setAutoCancel(true);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        builder.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0));
+
+        //Lollipop notification on lock screen
+        builder.setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+
+        Notification notification = builder.build();
+
+        NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, notification);
     }
 
     /**
@@ -392,7 +448,7 @@ public class UpdateService extends Service implements Runnable {
         }
         return PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
-    
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;

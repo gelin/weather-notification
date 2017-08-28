@@ -73,4 +73,8 @@
     <string name="owm_api_key_description">Enter your own API Key</string>
     <string name="owm_api_key_description_full">Take your own API Key from\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
 
+    <!-- v.0.3.10 -->
+    <string name="permission_required">Permissions are required</string>
+    <string name="permission_required_details">Tap here to open Weather notification settings</string>
+
 </resources>
