@@ -19,13 +19,13 @@
 
 package ru.gelin.android.weather;
 
+import android.test.AndroidTestCase;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-import android.test.AndroidTestCase;
-
 public class SimpleWeatherTest  extends AndroidTestCase {
-    
+
     public void testIsEmpty() {
         SimpleWeather weather = new SimpleWeather();
         assertTrue(weather.isEmpty());
@@ -36,7 +36,7 @@ public class SimpleWeatherTest  extends AndroidTestCase {
         weather.conditions.add(new SimpleWeatherCondition());
         assertFalse(weather.isEmpty()); //????
     }
-    
+
     public void testNullConditions() {
         SimpleWeather weather = new SimpleWeather();
         assertNotNull(weather.getConditions());

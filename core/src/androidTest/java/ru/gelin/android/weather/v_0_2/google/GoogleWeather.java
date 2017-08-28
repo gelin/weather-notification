@@ -19,6 +19,15 @@
 
 package ru.gelin.android.weather.v_0_2.google;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+import ru.gelin.android.weather.v_0_2.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.ParseException;
@@ -26,17 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import ru.gelin.android.weather.v_0_2.*;
 
 /**
  *  Weather, provided by Google API.
@@ -47,13 +45,13 @@ public class GoogleWeather implements Weather {
     static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     /** Format for times in the XML */
     static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-    
+
     Location location = new SimpleLocation("");
     Date date = new Date(0);
     Date time = new Date(0);
     UnitSystem unit = UnitSystem.SI;
     List<WeatherCondition> conditions = new ArrayList<WeatherCondition>();
-    
+
     /**
      *  Creates the weather from the input stream with XML
      *  received from API.
@@ -65,12 +63,12 @@ public class GoogleWeather implements Weather {
             throw new WeatherException("cannot parse xml", e);
         }
     }
-    
+
     //@Override
     public Location getLocation() {
         return this.location;
     }
-    
+
     //@Override
     public Date getTime() {
         if (this.time.after(this.date)) {   //sometimes time is 0, but the date has correct value
@@ -84,18 +82,18 @@ public class GoogleWeather implements Weather {
     public UnitSystem getUnitSystem() {
         return this.unit;
     }
-    
+
     //@Override
     public List<WeatherCondition> getConditions() {
         return this.conditions;
     }
-    
+
     //@Override
     public boolean isEmpty() {
         return this.conditions.isEmpty();
     }
-    
-    void parse(Reader xml) 
+
+    void parse(Reader xml)
             throws SAXException, ParserConfigurationException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(true);   //WTF??? Harmony's Expat is so...
@@ -105,7 +103,7 @@ public class GoogleWeather implements Weather {
         //explicitly decoding from UTF-8 because Google misses encoding in XML preamble
         parser.parse(new InputSource(xml), new ApiXmlHandler());
     }
-    
+
     /**
      *  Sets the location.
      *  Used by the weather source if the location, returned from API is empty.
@@ -113,17 +111,17 @@ public class GoogleWeather implements Weather {
     void setLocation(Location location) {
         this.location = location;
     }
-    
+
     static enum HandlerState {
         CURRENT_CONDITIONS, FIRST_FORECAST, NEXT_FORECAST;
     }
-    
+
     class ApiXmlHandler extends DefaultHandler {
-        
+
         HandlerState state;
         SimpleWeatherCondition condition;
         SimpleTemperature temperature;
-        
+
         @Override
         public void startElement(String uri, String localName,
                 String qName, Attributes attributes) throws SAXException {
@@ -201,13 +199,13 @@ public class GoogleWeather implements Weather {
                 }
             }
         }
-        
+
         //@Override
         //public void endElement(String uri, String localName, String qName)
         //        throws SAXException {
         //    boolean dummy = true;
         //}
-        
+
         void addCondition() {
             condition = new SimpleWeatherCondition();
             temperature = new SimpleTemperature(GoogleWeather.this.unit);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010—2016 Denis Nelubin and others.
+ * Copyright 2010—2017 Denis Nelubin and others.
  *
  * This file is part of Weather Notification.
  *
@@ -19,27 +19,19 @@
 
 package ru.gelin.android.weather.v_0_2.notification;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import ru.gelin.android.weather.v_0_2.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import ru.gelin.android.weather.v_0_2.Location;
-import ru.gelin.android.weather.v_0_2.SimpleLocation;
-import ru.gelin.android.weather.v_0_2.SimpleTemperature;
-import ru.gelin.android.weather.v_0_2.SimpleWeather;
-import ru.gelin.android.weather.v_0_2.SimpleWeatherCondition;
-import ru.gelin.android.weather.v_0_2.Temperature;
-import ru.gelin.android.weather.v_0_2.UnitSystem;
-import ru.gelin.android.weather.v_0_2.Weather;
-import ru.gelin.android.weather.v_0_2.WeatherCondition;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class ParcelableWeather extends SimpleWeather implements Parcelable {
 
     public ParcelableWeather() {
     }
-    
+
     /**
      *  Copy constructor.
      */
@@ -84,7 +76,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         }
         setConditions(copyConditions);
     }
-    
+
     //@Override
     public int describeContents() {
         return 0;
@@ -126,7 +118,7 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
             dest.writeString(condition.getWindText());
         }
     }
-    
+
     private ParcelableWeather(Parcel in) {
         setLocation(new SimpleLocation(in.readString()));
         setTime(new Date(in.readLong()));
@@ -151,9 +143,9 @@ public class ParcelableWeather extends SimpleWeather implements Parcelable {
         }
         setConditions(conditions);
     }
-    
-    public static final Parcelable.Creator<ParcelableWeather> CREATOR = 
-            new Parcelable.Creator<ParcelableWeather>() {
+
+    public static final Creator<ParcelableWeather> CREATOR =
+            new Creator<ParcelableWeather>() {
         public ParcelableWeather createFromParcel(Parcel in) {
             return new ParcelableWeather(in);
         }

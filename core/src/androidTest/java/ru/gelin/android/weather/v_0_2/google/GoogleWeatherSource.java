@@ -19,6 +19,11 @@
 
 package ru.gelin.android.weather.v_0_2.google;
 
+import ru.gelin.android.weather.v_0_2.Location;
+import ru.gelin.android.weather.v_0_2.Weather;
+import ru.gelin.android.weather.v_0_2.WeatherException;
+import ru.gelin.android.weather.v_0_2.WeatherSource;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -27,11 +32,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.Locale;
-
-import ru.gelin.android.weather.v_0_2.Location;
-import ru.gelin.android.weather.v_0_2.Weather;
-import ru.gelin.android.weather.v_0_2.WeatherException;
-import ru.gelin.android.weather.v_0_2.WeatherSource;
 
 /**
  *  Weather source which takes weather from the Google API.
@@ -44,7 +44,7 @@ public class GoogleWeatherSource implements WeatherSource {
     static final String ENCODING = "UTF-8";
     /** Charset pattern */
     static final String CHARSET = "charset=";
-    
+
     //@Override
     public Weather query(Location location) throws WeatherException {
         return query(location, Locale.getDefault());
@@ -55,7 +55,7 @@ public class GoogleWeatherSource implements WeatherSource {
             throws WeatherException {
         String fullUrl;
         try {
-            fullUrl = String.format(API_URL, 
+            fullUrl = String.format(API_URL,
                     URLEncoder.encode(location.getQuery(), ENCODING),
                     URLEncoder.encode(locale.getLanguage(), ENCODING));
         } catch (UnsupportedEncodingException uee) {
@@ -78,18 +78,18 @@ public class GoogleWeatherSource implements WeatherSource {
             if (weather.getLocation().isEmpty()) {
                 weather.setLocation(location);  //set original location
             }
-            return weather; 
+            return weather;
         } catch (UnsupportedEncodingException uee) {
             throw new WeatherException("unsupported charset: " + charset, uee);
         } catch (IOException ie) {
             throw new WeatherException("cannot read URL: " + fullUrl, ie);
         }
     }
-    
+
     static String getCharset(URLConnection connection) {
         return getCharset(connection.getContentType());
     }
-    
+
     static String getCharset(String contentType) {
         if (contentType == null) {
             return ENCODING;
