@@ -50,6 +50,7 @@ import static ru.gelin.android.weather.notification.AppUtils.EXTRA_FORCE;
 import static ru.gelin.android.weather.notification.AppUtils.EXTRA_VERBOSE;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION_DEFAULT;
+import static ru.gelin.android.weather.notification.app.PermissionNotifications.ACCESS_LOCATION_NOTIFICATION;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
 import static ru.gelin.android.weather.notification.app.Tag.TAG;
 
@@ -408,7 +409,7 @@ public class UpdateService extends Service implements Runnable {
         Notification notification = builder.build();
 
         NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, notification);
+        manager.notify(ACCESS_LOCATION_NOTIFICATION, notification);
     }
 
     /**

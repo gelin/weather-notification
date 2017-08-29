@@ -20,10 +20,8 @@
 package ru.gelin.android.weather.notification.app;
 
 import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.app.NotificationManager;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +45,7 @@ import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 import java.util.List;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.app.PermissionNotifications.ACCESS_LOCATION_NOTIFICATION;
 import static ru.gelin.android.weather.notification.app.PermissionRequests.ACCESS_COARSE_LOCATION_REQUEST;
 import static ru.gelin.android.weather.notification.app.PermissionRequests.ACCESS_FINE_LOCATION_REQUEST;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
@@ -233,7 +232,10 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
                     int result = grantResults[i];
                     if (LocationType.LOCATION_GPS.getPermission().equals(permission)
                         || LocationType.LOCATION_NETWORK.getPermission().equals(permission)) {
-                        if (result != PackageManager.PERMISSION_GRANTED) {
+                        if (result == PackageManager.PERMISSION_GRANTED) {
+                            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                            manager.cancel(ACCESS_LOCATION_NOTIFICATION);
+                        } else {
                             disableWhatRequiresPermissions();
                         }
                     }

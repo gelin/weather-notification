@@ -43,6 +43,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
+import static ru.gelin.android.weather.notification.app.PermissionNotifications.WRITE_EXTERNAL_STORAGE_NOTIFICATION;
+
 /**
  *  Saves the query result to a file.
  */
@@ -149,7 +151,7 @@ public class DebugDumper {
         Notification notification = builder.build();
 
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, notification);
+        manager.notify(WRITE_EXTERNAL_STORAGE_NOTIFICATION, notification);
     }
 
 }

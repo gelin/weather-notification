@@ -20,6 +20,8 @@
 package ru.gelin.android.weather.notification.app;
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -27,6 +29,7 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.ActivityCompat;
 import ru.gelin.android.weather.notification.R;
 
+import static ru.gelin.android.weather.notification.app.PermissionNotifications.WRITE_EXTERNAL_STORAGE_NOTIFICATION;
 import static ru.gelin.android.weather.notification.app.PermissionRequests.WRITE_EXTERNAL_STORAGE_REQUEST;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.API_DEBUG;
 
@@ -85,7 +88,10 @@ public class DebugActivity extends PreferenceActivity implements Preference.OnPr
                 String permission = permissions[i];
                 int result = grantResults[i];
                 if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission)) {
-                    if (result != PackageManager.PERMISSION_GRANTED) {
+                    if (result == PackageManager.PERMISSION_GRANTED) {
+                        NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                        manager.cancel(WRITE_EXTERNAL_STORAGE_NOTIFICATION);
+                    } else {
                         disableWhatRequiresPermissions();
                     }
                 }
