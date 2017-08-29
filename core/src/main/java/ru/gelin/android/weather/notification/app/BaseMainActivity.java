@@ -24,12 +24,14 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
@@ -45,6 +47,8 @@ import ru.gelin.android.weather.notification.skin.UpdateNotificationActivity;
 import java.util.List;
 
 import static ru.gelin.android.weather.notification.PreferenceKeys.ENABLE_NOTIFICATION;
+import static ru.gelin.android.weather.notification.app.PermissionRequests.ACCESS_COARSE_LOCATION_REQUEST;
+import static ru.gelin.android.weather.notification.app.PermissionRequests.ACCESS_FINE_LOCATION_REQUEST;
 import static ru.gelin.android.weather.notification.app.PreferenceKeys.*;
 
 /**
@@ -214,6 +218,35 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
                    .setNegativeButton(android.R.string.cancel, null);
             builder.show();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode)
+        {
+            case ACCESS_COARSE_LOCATION_REQUEST:
+            case ACCESS_FINE_LOCATION_REQUEST:
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    int result = grantResults[i];
+                    if (LocationType.LOCATION_GPS.getPermission().equals(permission)
+                        || LocationType.LOCATION_NETWORK.getPermission().equals(permission)) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            disableWhatRequiresPermissions();
+                        }
+                    }
+                }
+        }
+    }
+
+    void disableWhatRequiresPermissions() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().putString(LOCATION_TYPE, LocationType.LOCATION_MANUAL.toString()).commit();
+
+        finish();
+        startActivity(getIntent());
     }
 
 }
