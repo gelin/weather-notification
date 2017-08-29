@@ -20,6 +20,7 @@
 package ru.gelin.android.weather.notification.app;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -70,10 +71,34 @@ public class DebugActivity extends PreferenceActivity implements Preference.OnPr
         if (!settings.isAPIDebug()) {
             return;
         }
-        // TODO: avoid infinite loop when permission is not granted
         ActivityCompat.requestPermissions(this,
             new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
             WRITE_EXTERNAL_STORAGE_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int result = grantResults[i];
+                if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission)) {
+                    if (result != PackageManager.PERMISSION_GRANTED) {
+                        disableWhatRequiresPermissions();
+                    }
+                }
+            }
+        }
+    }
+
+    void disableWhatRequiresPermissions() {
+        DebugSettings settings = new DebugSettings(this);
+        settings.setAPIDebug(false);
+
+        finish();
+        startActivity(getIntent());
     }
 
 }

@@ -419,9 +419,10 @@ public class UpdateService extends Service implements Runnable {
         if (manager == null) {
             return new NameOpenWeatherMapLocation(query, null);
         }
-        // TODO: check permissions here
-        android.location.Location androidLocation =
-                manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        android.location.Location androidLocation = null;
+        if (LocationType.LOCATION_NETWORK.isPermissionGranted(this)) {
+            androidLocation = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
         return new NameOpenWeatherMapLocation(query, androidLocation);
     }
 

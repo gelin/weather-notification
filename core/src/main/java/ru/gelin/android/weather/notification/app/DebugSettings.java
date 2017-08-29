@@ -65,7 +65,7 @@ public class DebugSettings {
     }
 
     /**
-     *  Returns true if the debug for API is enabled.
+     * Returns true if the debug for API is enabled.
      */
     public boolean isAPIDebug() {
         if (newValue instanceof Boolean) {
@@ -73,6 +73,14 @@ public class DebugSettings {
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
         return prefs.getBoolean(PreferenceKeys.API_DEBUG, PreferenceKeys.API_DEBUG_DEFAULT);
+    }
+
+    /**
+     * Sets the API debug flag.
+     */
+    public void setAPIDebug(boolean enable) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.context);
+        prefs.edit().putBoolean(PreferenceKeys.API_DEBUG, enable).commit();
     }
 
     /**
