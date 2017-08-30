@@ -23,3 +23,11 @@ APPS = core $(SKINS)
 .PHONY: list
 list:
 	@echo $(APPS)
+
+.PHONY: clean
+clean:
+	./gradlew clean
+
+.PHONY: javadoc
+javadoc:
+	./gradlew aggregateJavadocs

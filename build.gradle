@@ -14,3 +14,35 @@ allprojects {
         jcenter()
     }
 }
+
+class JavadocAggregationPlugin implements Plugin<Project> {
+    static final String AGGREGATE_JAVADOCS_TASK_NAME = 'aggregateJavadocs'
+
+    def javadocProjects = [
+        ':libweather',
+        ':libweatherskin',
+        ':core'
+    ]
+
+    @Override
+    void apply(Project project) {
+        Project rootProject = project.rootProject
+        rootProject.gradle.projectsEvaluated {
+            Set<Project> javadocProjects = getProjectsToProcess(rootProject)
+            rootProject.task(AGGREGATE_JAVADOCS_TASK_NAME, type: Javadoc) {
+                description = 'Aggregates Javadoc API documentation of all subprojects.'
+                group = JavaBasePlugin.DOCUMENTATION_GROUP
+                dependsOn javadocProjects.debugJavadoc
+                source javadocProjects.debugJavadoc.source
+                destinationDir rootProject.file("$rootProject.buildDir/docs/javadoc") //Javadoc destination directory
+                classpath = rootProject.files(javadocProjects.debugJavadoc.classpath)
+            }
+        }
+    }
+
+    private Set<Project> getProjectsToProcess(Project rootProject) {
+        rootProject.subprojects.findAll { subproject -> subproject.path in javadocProjects }
+    }
+}
+
+apply plugin: JavadocAggregationPlugin
