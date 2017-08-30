@@ -33,9 +33,18 @@ class JavadocAggregationPlugin implements Plugin<Project> {
                 description = 'Aggregates Javadoc API documentation of all subprojects.'
                 group = JavaBasePlugin.DOCUMENTATION_GROUP
                 dependsOn javadocProjects.debugJavadoc
+
+                title 'Weather API Specification'
                 source javadocProjects.debugJavadoc.source
                 destinationDir rootProject.file("$rootProject.buildDir/docs/javadoc") //Javadoc destination directory
                 classpath = rootProject.files(javadocProjects.debugJavadoc.classpath)
+                options.group('libweather', ['ru.gelin.android.weather', 'ru.gelin.android.weather.notification']).
+                        group('libweatherskin', ['ru.gelin.android.weather.notification.skin', 'ru.gelin.android.weather.notification.skin.impl']).
+                        group('coreapp', ['ru.gelin.android.weather.google',
+                                          'ru.gelin.android.weather.notification.app',
+                                          'ru.gelin.android.weather.notification.skin.builtin',
+                                          'ru.gelin.android.weather.openweathermap',
+                                          'ru.gelin.android.weather.source'])
             }
         }
     }
