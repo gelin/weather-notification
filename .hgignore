@@ -15,4 +15,4 @@ proguard-project.txt
 build/*
 *.iml
 
-core/main/res/values/keys.xml
+core/src/main/res/values/keys.xml
