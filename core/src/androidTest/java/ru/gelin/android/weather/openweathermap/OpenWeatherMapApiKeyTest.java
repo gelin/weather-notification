@@ -28,7 +28,7 @@ public class OpenWeatherMapApiKeyTest extends AndroidTestCase {
     public void testDefaultKey() {
         OpenWeatherMapApiKey key = new OpenWeatherMapApiKey(getContext());
 //        assertEquals(OpenWeatherMapApiKey.DEFAULT_API_KEY, key.getKey());
-        assertTrue(key.getKey().startsWith("840ed2"));
+        assertTrue(key.getKey().startsWith("4aba43"));
     }
 
     public void testKeyFromPreferences() {
@@ -43,7 +43,7 @@ public class OpenWeatherMapApiKeyTest extends AndroidTestCase {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         prefs.edit().putString(OpenWeatherMapApiKey.PREFERENCE_KEY, "").commit();
         OpenWeatherMapApiKey key = new OpenWeatherMapApiKey(getContext());
-        assertTrue(key.getKey().startsWith("840ed2"));
+        assertTrue(key.getKey().startsWith("4aba43"));
         prefs.edit().remove(OpenWeatherMapApiKey.PREFERENCE_KEY).commit();
     }
 
