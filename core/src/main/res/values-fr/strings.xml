@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2010—2016 Denis Nelubin and others.
+  ~
+  ~ This file is part of Weather Notification.
+  ~
+  ~ Weather Notification is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Weather Notification is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Weather Notification.  If not, see http://www.gnu.org/licenses/.
+  -->
+
+<resources>
+    <string name="app_name">Notification météo</string>
+    <string name="weather">Météo</string>
+    <string name="notification">Notification</string>
+    <string name="enable_notification">Activer la notification</string>
+    <string name="refresh_interval">Période de rafraîchissement</string>
+    <string name="refresh_15m">Toutes les quinze minutes</string>
+    <string name="refresh_30m">Toutes les trente minutes</string>
+    <string name="refresh_1h">Toutes les heures</string>
+    <string name="refresh_2h">Toutes les deux heures</string>
+    <string name="refresh_3h">Toutes les trois heures</string>
+    <string name="refresh_4h">Toutes les quatre heures</string>
+    <string name="refresh_6h">Toutes les six heures</string>
+    <string name="refresh_12h">Toutes les douze heures</string>
+    <string name="refresh_1d">Chaque jour</string>
+    <string name="location">Position</string>
+    <string name="auto_location">Détecter automatiquement</string>
+    <string name="auto_location_summary_on">Détecter votre position automatiquement</string>
+    <string name="auto_location_summary_off">Définir votre position manuellement</string>
+    <string name="manual_location">Position météo</string>
+    <string name="weather_update_empty">La météo à \"%s\" est inconnue</string>
+    <string name="weather_update_failed">Échec de la mise à jour météo: %s</string>
+    <string name="weather_update_no_network">Échec de la mise à jour météo: pas de réseau</string>
+    <string name="weather_update_unknown_location">Échec de la mise à jour météo: position inconnue</string>
+    <string name="skin">Thème</string>
+    <string name="skins">Thèmes</string>
+    <string name="skins_preferences">Paramètres du thème</string>
+    <string name="skins_install">Installer des thèmes</string>
+    <string name="skins_install_notice">Vous DEVRIEZ INSTALLER DES THÈMES pour tirer parti de l\'application. Veuillez appuyer sur \"Installer des thèmes\" en bas de cet écran.</string>
+    <string name="skins_install_notice_no_market">Vous DEVRIEZ INSTALLER DES THÈMES pour tirer parti de l\'application. Recherchez \"Weather Notification Skin\" dans le store d\'applications pour en installer.</string>
+    <string name="builtin_skin">Thème intégré</string>
+    <string name="builtin_skin_preferences">Paramètres du thème intégré</string>
+    <string name="start_update_service_permission">démarrer le service de mise à jour météo</string>
+    <string name="start_update_service_permission_description">Permet à l\'application de démarrer le service de mise à jour météo pour recevoir les nouvelles valeurs météorologiques.</string>
+
+    <string name="location_type">Détecter la position</string>
+    <string name="location_gps">Par satellites GPS</string>
+    <string name="location_network">Par Wi-Fi ou données cellulaires</string>
+    <string name="location_manual">Manuellement</string>
+    <string name="location_disabled">Cette méthode de localisation est désactivée dans les paramètres de l\'appareil.
+\nVoulez-vous ouvrir les paramètres pour l\'activer?</string>
+    <string name="open_settings">Ouvrir les paramètres</string>
+
+    <!-- v.0.3.6 -->
+    <string name="debug">Débogage</string>
+    <string name="api_debug">Débogage API</string>
+    <string name="api_debug_summary">Chaque requête à l\'API météo sera sauvegardée dans un fichier sous \'%s\'</string>
+
+    <!-- v.0.3.9 -->
+    <string name="openweathermap">OpenWeatherMap</string>
+    <string name="owm_api_key">Clé API</string>
+    <string name="owm_api_key_description">Entrez votre propre clé API</string>
+    <string name="owm_api_key_description_full">Obtenez-la depuis\n<a href="http://openweathermap.org/appid\">http://openweathermap.org/appid</a></string>
+
+    <!-- v.0.3.10 -->
+    <string name="permission_required">Des autorisations sont requises</string>
+    <string name="permission_required_details">Appuyez ici pour ouvrir les paramètres de notification météo</string>
+
+</resources>
