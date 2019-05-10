@@ -1,20 +1,21 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
     }
 }
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.1'
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 18
         versionName '0.3.7'
     }
@@ -52,7 +53,7 @@ if (project.hasProperty('keyPassword')) {
 }
 
 dependencies {
-    compile project(':libpreference')
-    compile project(':libweather')
-    compile project(':libweatherskin')
+    implementation project(':libpreference')
+    implementation project(':libweather')
+    implementation project(':libweatherskin')
 }

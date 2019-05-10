@@ -3,55 +3,64 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
+    }
+    // https://medium.com/@ali.muzaffar/gradle-configure-variables-for-all-android-project-modules-in-one-place-5a6e56cd384e
+    project.ext {
+        buildToolsVersion = "28.0.3"
+        minSdkVersion=14
+        targetSdkVersion=28
+        compileSdkVersion=28
     }
 }
 
-class JavadocAggregationPlugin implements Plugin<Project> {
-    static final String AGGREGATE_JAVADOCS_TASK_NAME = 'aggregateJavadocs'
-
-    def javadocProjects = [
-        ':libweather',
-        ':libweatherskin',
-        ':core'
-    ]
-
-    @Override
-    void apply(Project project) {
-        Project rootProject = project.rootProject
-        rootProject.gradle.projectsEvaluated {
-            Set<Project> javadocProjects = getProjectsToProcess(rootProject)
-            rootProject.task(AGGREGATE_JAVADOCS_TASK_NAME, type: Javadoc) {
-                description = 'Aggregates Javadoc API documentation of all subprojects.'
-                group = JavaBasePlugin.DOCUMENTATION_GROUP
-                dependsOn javadocProjects.debugJavadoc
-
-                title 'Weather API Specification'
-                source javadocProjects.debugJavadoc.source
-                destinationDir rootProject.file("$rootProject.buildDir/docs/javadoc") //Javadoc destination directory
-                classpath = rootProject.files(javadocProjects.debugJavadoc.classpath)
-                options.group('libweather', ['ru.gelin.android.weather', 'ru.gelin.android.weather.notification']).
-                        group('libweatherskin', ['ru.gelin.android.weather.notification.skin', 'ru.gelin.android.weather.notification.skin.impl']).
-                        group('coreapp', ['ru.gelin.android.weather.google',
-                                          'ru.gelin.android.weather.notification.app',
-                                          'ru.gelin.android.weather.notification.skin.builtin',
-                                          'ru.gelin.android.weather.openweathermap',
-                                          'ru.gelin.android.weather.source'])
-            }
-        }
-    }
-
-    private Set<Project> getProjectsToProcess(Project rootProject) {
-        rootProject.subprojects.findAll { subproject -> subproject.path in javadocProjects }
-    }
-}
-
-apply plugin: JavadocAggregationPlugin
+//class JavadocAggregationPlugin implements Plugin<Project> {
+//    static final String AGGREGATE_JAVADOCS_TASK_NAME = 'aggregateJavadocs'
+//
+//    def javadocProjects = [
+//        ':libweather',
+//        ':libweatherskin',
+//        ':core'
+//    ]
+//
+//    @Override
+//    void apply(Project project) {
+//        Project rootProject = project.rootProject
+//        rootProject.gradle.projectsEvaluated {
+//            Set<Project> javadocProjects = getProjectsToProcess(rootProject)
+//            rootProject.task(AGGREGATE_JAVADOCS_TASK_NAME, type: Javadoc) {
+//                description = 'Aggregates Javadoc API documentation of all subprojects.'
+//                group = JavaBasePlugin.DOCUMENTATION_GROUP
+//                dependsOn javadocProjects.debugJavadoc
+//
+//                title 'Weather API Specification'
+//                source javadocProjects.debugJavadoc.source
+//                destinationDir rootProject.file("$rootProject.buildDir/docs/javadoc") //Javadoc destination directory
+//                classpath = rootProject.files(javadocProjects.debugJavadoc.classpath)
+//                options.group('libweather', ['ru.gelin.android.weather', 'ru.gelin.android.weather.notification']).
+//                        group('libweatherskin', ['ru.gelin.android.weather.notification.skin', 'ru.gelin.android.weather.notification.skin.impl']).
+//                        group('coreapp', ['ru.gelin.android.weather.google',
+//                                          'ru.gelin.android.weather.notification.app',
+//                                          'ru.gelin.android.weather.notification.skin.builtin',
+//                                          'ru.gelin.android.weather.openweathermap',
+//                                          'ru.gelin.android.weather.source'])
+//            }
+//        }
+//    }
+//
+//    private Set<Project> getProjectsToProcess(Project rootProject) {
+//        rootProject.subprojects.findAll { subproject -> subproject.path in javadocProjects }
+//    }
+//}
+//
+//apply plugin: JavadocAggregationPlugin

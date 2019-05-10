@@ -1,20 +1,21 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
     }
 }
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.1'
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 55
         versionName '0.3.11'
     }
@@ -52,32 +53,32 @@ if (project.hasProperty('keyPassword')) {
     android.signingConfigs.release.keyPassword = System.getenv('KEY_PASSWORD')
 }
 
-android.applicationVariants.all { variant ->
-    task("${variant.name}Javadoc", type: Javadoc) {
-        destinationDir = project.file("$project.buildDir/docs/javadoc/$project.name")
-        source = variant.javaCompile.source
-
-        title = "core API"
-
-        options.links("http://docs.oracle.com/javase/7/docs/api/");
-        options.linksOffline("http://d.android.com/reference","${android.sdkDirectory}/docs/reference");
-
-        // First add all of your dependencies to the classpath, then add the android jars
-        classpath += files(variant.javaCompile.classpath.files)
-        classpath += files(android.getBootClasspath())
-
-        // We're excluding these generated files
-        exclude '**/BuildConfig.java'
-        exclude '**/R.java'
-    }
-}
+//android.applicationVariants.all { variant ->
+//    task("${variant.name}Javadoc", type: Javadoc) {
+//        destinationDir = project.file("$project.buildDir/docs/javadoc/$project.name")
+//        source = variant.javaCompileProvider.source
+//
+//        title = "core API"
+//
+//        options.links("http://docs.oracle.com/javase/7/docs/api/");
+//        options.linksOffline("http://d.android.com/reference","${android.sdkDirectory}/docs/reference");
+//
+//        // First add all of your dependencies to the classpath, then add the android jars
+//        classpath += files(variant.javaCompileProvider.classpath.files)
+//        classpath += files(android.getBootClasspath())
+//
+//        // We're excluding these generated files
+//        exclude '**/BuildConfig.java'
+//        exclude '**/R.java'
+//    }
+//}
 
 dependencies {
-    compile project(':libpreference')
-    compile project(':libweather')
-    compile project(':libweatherskin')
-    compile 'com.android.support:support-compat:25.3.1'
+    implementation project(':libpreference')
+    implementation project(':libweather')
+    implementation project(':libweatherskin')
+    implementation "com.android.support:support-compat:$androidSupportLibraryVersion"
 
-    androidTestCompile 'com.android.support:support-annotations:25.3.1'
-    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestImplementation "com.android.support:support-annotations:$androidSupportLibraryVersion"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
