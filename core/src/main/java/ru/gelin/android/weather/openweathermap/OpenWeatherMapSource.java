@@ -43,7 +43,7 @@ import java.util.Locale;
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
     /** Base API URL */
-    static final String API_BASE_URL = "http://api.openweathermap.org/data/2.5";
+    static final String API_BASE_URL = "https://api.openweathermap.org/data/2.5";
 
     private final Context context;
     private final DebugDumper debugDumper;
@@ -71,7 +71,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         if (weather.isEmpty()) {
             return weather;
         }
-        weather.parseDailyForecast(queryDailyForecast(weather.getCityId()));
+        weather.parseDailyForecast(queryDailyForecast(location));
         return weather;
     }
 
@@ -99,17 +99,17 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         }
     }
 
-    String getForecastUrl(int cityId) {
+    String getForecastUrl(Location location) {
         try {
-            return API_BASE_URL + "/forecast/daily?APPID=" +
-                    URLEncoder.encode(key.getKey(), "UTF-8") + "&cnt=4&id=" + String.valueOf(cityId);
+            return API_BASE_URL + "/onecall?exclude=current,hourly,minutely&APPID=" +
+                    URLEncoder.encode(key.getKey(), "UTF-8") + "&" + location.getQuery();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    JSONObject queryDailyForecast(int cityId) throws WeatherException {
-        String url = getForecastUrl(cityId);
+    JSONObject queryDailyForecast(Location location) throws WeatherException {
+        String url = getForecastUrl(location);
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();
