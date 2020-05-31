@@ -17,11 +17,17 @@ android {
         targetSdkVersion project.ext.targetSdkVersion
         versionCode 55
         versionName '0.3.11'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     lintOptions {
         checkReleaseBuilds true
         abortOnError false
+    }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 
     signingConfigs {
@@ -78,6 +84,8 @@ dependencies {
     implementation project(':libweatherskin')
     implementation "com.android.support:support-compat:$androidSupportLibraryVersion"
 
-    androidTestImplementation "com.android.support:support-annotations:$androidSupportLibraryVersion"
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }
