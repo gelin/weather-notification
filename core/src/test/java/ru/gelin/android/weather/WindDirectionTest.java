@@ -21,7 +21,6 @@ package ru.gelin.android.weather;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class WindDirectionTest {
 
     public void testConvertWindDirection() {

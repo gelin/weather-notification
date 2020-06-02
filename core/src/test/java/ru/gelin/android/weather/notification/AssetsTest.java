@@ -21,14 +21,19 @@ package ru.gelin.android.weather.notification;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Build;
 import androidx.test.core.app.ApplicationProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
 
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class AssetsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();

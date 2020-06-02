@@ -20,11 +20,15 @@
 package ru.gelin.android.weather.openweathermap;
 
 import android.content.Context;
+import android.os.Build;
 import androidx.test.core.app.ApplicationProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import ru.gelin.android.weather.Humidity;
 import ru.gelin.android.weather.Location;
 import ru.gelin.android.weather.PrecipitationPeriod;
@@ -48,7 +52,8 @@ import java.util.TimeZone;
 import static org.junit.Assert.*;
 import static ru.gelin.android.weather.notification.WeatherUtils.readJSON;
 
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class OpenWeatherMapWeatherTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();

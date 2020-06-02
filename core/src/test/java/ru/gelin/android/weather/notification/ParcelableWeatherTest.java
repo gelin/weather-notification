@@ -19,7 +19,6 @@
 
 package ru.gelin.android.weather.notification;
 
-
 public class ParcelableWeatherTest {
 
 // Ignoring tests for weather version 0.2.

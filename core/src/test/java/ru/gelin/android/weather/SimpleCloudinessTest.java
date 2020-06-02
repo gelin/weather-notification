@@ -23,7 +23,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class SimpleCloudinessTest {
 
     @Test
@@ -39,7 +38,6 @@ public class SimpleCloudinessTest {
         internalTestOkta2Percent(8, 100);
     }
 
-    @Test
     void internalTestOkta2Percent(int okta, int percent) {
         SimpleCloudiness cloud1 = new SimpleCloudiness(CloudinessUnit.OKTA);
         cloud1.setValue(okta, CloudinessUnit.OKTA);

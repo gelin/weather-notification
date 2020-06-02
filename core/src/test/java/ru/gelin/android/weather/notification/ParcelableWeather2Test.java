@@ -20,15 +20,20 @@
 package ru.gelin.android.weather.notification;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Parcel;
 import androidx.test.core.app.ApplicationProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import ru.gelin.android.weather.Weather;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class ParcelableWeather2Test {
 
     private final Context context = ApplicationProvider.getApplicationContext();

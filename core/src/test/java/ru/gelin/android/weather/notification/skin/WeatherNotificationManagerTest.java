@@ -21,16 +21,21 @@ package ru.gelin.android.weather.notification.skin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Parcel;
 import androidx.test.core.app.ApplicationProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.notification.IntentParameters;
 import ru.gelin.android.weather.notification.WeatherUtils;
 
 import static org.junit.Assert.*;
 
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class WeatherNotificationManagerTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();

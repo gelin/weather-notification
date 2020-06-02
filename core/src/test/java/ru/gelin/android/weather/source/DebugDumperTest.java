@@ -20,15 +20,21 @@
 package ru.gelin.android.weather.source;
 
 import android.content.Context;
+import android.os.Build;
 import androidx.test.core.app.ApplicationProvider;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class DebugDumperTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();

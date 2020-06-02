@@ -26,7 +26,6 @@ import ru.gelin.android.weather.TemperatureUnit;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class AppendableTemperatureTest {
 
     @Test

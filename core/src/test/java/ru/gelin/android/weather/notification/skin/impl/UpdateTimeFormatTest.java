@@ -28,7 +28,6 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class UpdateTimeFormatTest {
 
     //static final String FORMAT = "{0,choice,15#<15m|30#<30m|60#<1h|120#<2h|180#<3h|240#<4h|300#<5h|360#<6h|720#<12h|1440#<1d|2880#<2d|2880<>2d}";

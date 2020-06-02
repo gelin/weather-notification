@@ -20,16 +20,21 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.content.Context;
+import android.os.Build;
 import androidx.test.core.app.ApplicationProvider;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import ru.gelin.android.weather.SimpleWeatherCondition;
 import ru.gelin.android.weather.WeatherConditionType;
 import ru.gelin.android.weather.notification.skin.R;
 
 import static org.junit.Assert.assertEquals;
 
-
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.P})
 public class WeatherConditionFormatTest {
 
     WeatherConditionFormat format;

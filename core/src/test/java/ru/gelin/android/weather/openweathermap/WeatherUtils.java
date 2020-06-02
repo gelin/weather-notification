@@ -24,7 +24,6 @@ import android.content.Context;
 
 import static ru.gelin.android.weather.notification.WeatherUtils.readJSON;
 
-
 public class WeatherUtils {
 
     public static OpenWeatherMapWeather createOpenWeather(Instrumentation instrumentation) throws Exception {
