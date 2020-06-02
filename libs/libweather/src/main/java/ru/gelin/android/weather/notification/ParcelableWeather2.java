@@ -37,7 +37,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
 
     /** Parcelable representation version */
     static final int VERSION = 2;
-    
+
     public ParcelableWeather2() {
     }
 
@@ -88,7 +88,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
                 copyTemp.setHigh(temp.getHigh(), tempUnit);
             }
             copyCondition.setTemperature(copyTemp);
-            
+
             Humidity hum = condition.getHumidity();
             SimpleHumidity copyHum = new SimpleHumidity();
             if (hum != null) {
@@ -96,7 +96,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
                 copyHum.setText(hum.getText());
             }
             copyCondition.setHumidity(copyHum);
-            
+
             Wind wind = condition.getWind();
             SimpleWind copyWind = new SimpleWind(WindSpeedUnit.MPS);
             if (wind != null) {
@@ -131,7 +131,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         setConditions(copyConditions);
     }
-    
+
     //@Override
     public int describeContents() {
         return 0;
@@ -145,11 +145,11 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             writeCondition(condition, dest);
         }
     }
-    
+
     void writeVersion(Parcel dest) {
         dest.writeInt(VERSION);
     }
-    
+
     void writeCommonParams(Parcel dest) {
         Bundle bundle = new Bundle();
         Location location = getLocation();
@@ -176,7 +176,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         dest.writeBundle(bundle);
     }
-    
+
     void writeCondition(WeatherCondition condition, Parcel dest) {
         Bundle bundle = new Bundle();
         bundle.putString(CONDITION_TEXT, condition.getConditionText());
@@ -198,7 +198,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         bundle.putStringArray(CONDITION_TYPES, typesToStore);
     }
-    
+
     void writeTemperature(Temperature temp, Bundle bundle) {
         if (temp == null) {
             return;
@@ -208,7 +208,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         bundle.putInt(LOW_TEMP, temp.getLow());
         bundle.putInt(HIGH_TEMP, temp.getHigh());
     }
-    
+
     void writeHumidity(Humidity humidity, Bundle bundle) {
         if (humidity == null) {
             return;
@@ -216,7 +216,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         bundle.putString(HUMIDITY_TEXT, humidity.getText());
         bundle.putInt(HUMIDITY_VALUE, humidity.getValue());
     }
-    
+
     void writeWind(Wind wind, Bundle bundle) {
         if (wind == null) {
             return;
@@ -243,12 +243,17 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         bundle.putInt(PRECIPITATION_PERIOD, PrecipitationPeriod.PERIOD_1H.getHours());
         bundle.putFloat(PRECIPITATION_VALUE, precipitation.getValue(PrecipitationPeriod.PERIOD_1H));
     }
-    
+
     private ParcelableWeather2(Parcel in) {
-        int version = in.readInt();
-        if (version != VERSION) {
-            return;
+        try {
+            int version = in.readInt();
+            if (version != VERSION) {
+                return;
+            }
+        } catch (Exception e) {
+            return; // cant read int version at the beginning of the parcel
         }
+
         int conditionsSize = readCommonParams(in);
         List<WeatherCondition> conditions = new ArrayList<WeatherCondition>(conditionsSize);
         for (int i = 0; i < conditionsSize; i++) {
@@ -259,7 +264,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         setConditions(conditions);
     }
-    
+
     /**
      *  Reads and sets common weather params.
      *  @return number of conditions
@@ -276,7 +281,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         }
         return bundle.getInt(CONDITIONS_NUMBER);
     }
-    
+
     WeatherCondition readCondition(Parcel in) {
         if (in.dataAvail() == 0) {
             return null;
@@ -285,13 +290,13 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         SimpleWeatherCondition condition = new SimpleWeatherCondition();
         condition.setConditionText(bundle.getString(CONDITION_TEXT));
         readConditionTypes(bundle, condition);
-        
+
         condition.setTemperature(readTemperature(bundle));
         condition.setHumidity(readHumidity(bundle));
         condition.setWind(readWind(bundle));
         condition.setCloudiness(readCloudiness(bundle));
         condition.setPrecipitation(readPrecipitation(bundle));
-        
+
         return condition;
     }
 
@@ -304,7 +309,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
             condition.addConditionType(WeatherConditionType.valueOf(type));
         }
     }
-    
+
     SimpleTemperature readTemperature(Bundle bundle) {
         TemperatureUnit unit;
         try {
@@ -318,7 +323,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         temp.setHigh(bundle.getInt(HIGH_TEMP), unit);
         return temp;
     }
-    
+
     SimpleHumidity readHumidity(Bundle bundle) {
         if (!bundle.containsKey(HUMIDITY_VALUE)) {
             return null;
@@ -328,7 +333,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         hum.setText(bundle.getString(HUMIDITY_TEXT));
         return hum;
     }
-    
+
     SimpleWind readWind(Bundle bundle) {
         WindSpeedUnit unit;
         try {
@@ -384,7 +389,7 @@ public class ParcelableWeather2 extends SimpleWeather implements Parcelable {
         precipitation.setValue(bundle.getFloat(PRECIPITATION_VALUE), period);
         return precipitation;
     }
-    
+
     public static final Parcelable.Creator<ParcelableWeather2> CREATOR =
             new Parcelable.Creator<ParcelableWeather2>() {
         public ParcelableWeather2 createFromParcel(Parcel in) {

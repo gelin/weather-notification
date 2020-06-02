@@ -19,13 +19,23 @@
 
 package ru.gelin.android.weather.notification;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.os.Parcel;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.Cloudiness;
+import ru.gelin.android.weather.CloudinessUnit;
+import ru.gelin.android.weather.Humidity;
+import ru.gelin.android.weather.PrecipitationPeriod;
+import ru.gelin.android.weather.Temperature;
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
+import ru.gelin.android.weather.Wind;
+import ru.gelin.android.weather.WindDirection;
+import ru.gelin.android.weather.WindSpeedUnit;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,16 +58,8 @@ public class WeatherUtils {
         //avoid instantiation
     }
 
-    public static Weather createOpenWeather(Instrumentation instrumentation) throws Exception {
-        return ru.gelin.android.weather.openweathermap.WeatherUtils.createOpenWeather(instrumentation);
-    }
-
     public static Weather createOpenWeather(Context context) throws Exception {
         return ru.gelin.android.weather.openweathermap.WeatherUtils.createOpenWeather(context);
-    }
-
-    public static Weather createIncompleteOpenWeather(Instrumentation instrumentation) throws Exception {
-        return ru.gelin.android.weather.openweathermap.WeatherUtils.createIncompleteOpenWeather(instrumentation);
     }
 
     public static Weather createIncompleteOpenWeather(Context context) throws Exception {
@@ -262,8 +264,8 @@ public class WeatherUtils {
         assertEquals(-15, temp3.getHigh());
     }
 
-    public static JSONObject readJSON(Context context, String assetName) throws IOException, JSONException {
-        Reader reader = new InputStreamReader(context.getAssets().open(assetName));
+    public static JSONObject readJSON(String resourceName) throws IOException, JSONException {
+        Reader reader = new InputStreamReader(WeatherUtils.class.getClassLoader().getResourceAsStream(resourceName));
         StringBuilder buffer = new StringBuilder();
         int c = reader.read();
         while (c >= 0) {

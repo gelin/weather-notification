@@ -113,7 +113,7 @@ public class OpenWeatherMapWeatherTest {
     public void testGetQueryTime() throws Exception {
         long now = System.currentTimeMillis();
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
-        assertTrue(now < weather.getQueryTime().getTime());
+        assertTrue(now <= weather.getQueryTime().getTime());
     }
 
     @Test
@@ -269,7 +269,7 @@ public class OpenWeatherMapWeatherTest {
     @Test
     public void testParseNoHumidity() throws IOException, JSONException, WeatherException {
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-                readJSON(context, "omsk_name_no_humidity_2.5.json"));
+                readJSON("omsk_name_no_humidity_2.5.json"));
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
         WeatherCondition condition = weather.getConditions().get(0);
