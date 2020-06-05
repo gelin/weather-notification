@@ -25,6 +25,9 @@ import ru.gelin.android.weather.source.HttpWeatherSource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *  Wrapper for a text query to ask OpenWeatherMap.org API by the city name.
  *  The lat and lon parameters are passed to API for tracking purposes.
@@ -34,7 +37,7 @@ public class NameOpenWeatherMapLocation implements Location {
     /** Query template */
     static final String QUERY = "q=%s";  //q=omsk
     /** Query template */
-    static final String QUERY_WITH_LOCATION = "q=%s&lat=%s&lon=%s";  //q=omsk&lat=54.96&lon=73.38
+    static final String QUERY_WITH_LOCATION = "lat=%s&lon=%s";  //q=omsk&lat=54.96&lon=73.38
 
     /** Name */
     String name;
@@ -47,6 +50,17 @@ public class NameOpenWeatherMapLocation implements Location {
     public NameOpenWeatherMapLocation(String name, android.location.Location location) {
         this.name = name;
         this.location = location;
+
+        if (name != null) {
+            String pattern = "(-?\\d+\\.\\d+)\\s+(-?\\d+\\.\\d+)";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(name);
+            if (m.find()) {
+                this.location = new android.location.Location(android.location.LocationManager.PASSIVE_PROVIDER);
+                this.location.setLatitude(Double.parseDouble(m.group(1)));
+                this.location.setLongitude(Double.parseDouble(m.group(2)));
+            }
+        }
     }
 
     /**
@@ -60,7 +74,6 @@ public class NameOpenWeatherMapLocation implements Location {
                         URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
             } else {
                 return String.format(QUERY_WITH_LOCATION,
-                    URLEncoder.encode(this.name, HttpWeatherSource.ENCODING),
                     String.valueOf(location.getLatitude()),
                     String.valueOf(location.getLongitude()));
             }
@@ -73,7 +86,7 @@ public class NameOpenWeatherMapLocation implements Location {
     public String getText() {
         return this.name;
     }
-    
+
     //@Override
     public boolean isEmpty() {
         return this.name == null;

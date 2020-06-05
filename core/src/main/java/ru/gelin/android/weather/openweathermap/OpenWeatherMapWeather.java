@@ -128,7 +128,7 @@ public class OpenWeatherMapWeather implements Weather {
 
     void parseDailyForecast(JSONObject json) throws WeatherException {
         try {
-            JSONArray list = json.getJSONArray("list");
+            JSONArray list = json.getJSONArray("daily");
             SimpleWeatherCondition condition = getCondition(0);
             if (list.length() > 0) {
                 appendForecastTemperature(condition, list.getJSONObject(0));
