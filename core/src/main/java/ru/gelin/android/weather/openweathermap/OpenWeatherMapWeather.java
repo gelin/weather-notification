@@ -23,7 +23,25 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.gelin.android.weather.*;
+import ru.gelin.android.weather.CloudinessUnit;
+import ru.gelin.android.weather.Location;
+import ru.gelin.android.weather.PrecipitationPeriod;
+import ru.gelin.android.weather.PrecipitationUnit;
+import ru.gelin.android.weather.SimpleCloudiness;
+import ru.gelin.android.weather.SimpleHumidity;
+import ru.gelin.android.weather.SimpleLocation;
+import ru.gelin.android.weather.SimplePrecipitation;
+import ru.gelin.android.weather.SimpleTemperature;
+import ru.gelin.android.weather.SimpleWeatherCondition;
+import ru.gelin.android.weather.SimpleWind;
+import ru.gelin.android.weather.TemperatureUnit;
+import ru.gelin.android.weather.UnitSystem;
+import ru.gelin.android.weather.Weather;
+import ru.gelin.android.weather.WeatherCondition;
+import ru.gelin.android.weather.WeatherConditionType;
+import ru.gelin.android.weather.WeatherException;
+import ru.gelin.android.weather.WindDirection;
+import ru.gelin.android.weather.WindSpeedUnit;
 import ru.gelin.android.weather.notification.skin.impl.WeatherConditionFormat;
 
 import java.net.MalformedURLException;
@@ -32,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *  Weather implementation which constructs from the JSON received from openweathermap.org
@@ -51,7 +70,7 @@ public class OpenWeatherMapWeather implements Weather {
     /** Query time */
     Date queryTime = new Date();
     /** Weather conditions */
-    List<SimpleWeatherCondition> conditions = new ArrayList<SimpleWeatherCondition>();
+    List<SimpleWeatherCondition> conditions = new ArrayList<>();
     /** Emptyness flag */
     boolean empty = true;
     /** Condition text format */
@@ -126,7 +145,7 @@ public class OpenWeatherMapWeather implements Weather {
         this.empty = false;
     }
 
-    void parseDailyForecast(JSONObject json) throws WeatherException {
+    void parseOneCallResult(JSONObject json) throws WeatherException {
         try {
             JSONArray list = json.getJSONArray("daily");
             SimpleWeatherCondition condition = getCondition(0);
@@ -134,7 +153,7 @@ public class OpenWeatherMapWeather implements Weather {
                 appendForecastTemperature(condition, list.getJSONObject(0));
                 condition.setConditionText(this.conditionFormat.getText(condition));
             }
-            for (int i = 1; i < 4 && i < list.length(); i++) {
+            for (int i = 1; i < list.length(); i++) {
                 condition = getCondition(i);
                 parseForecast(condition, list.getJSONObject(i));
                 condition.setConditionText(this.conditionFormat.getText(condition));
@@ -238,7 +257,7 @@ public class OpenWeatherMapWeather implements Weather {
             } catch (JSONException e) {
                 //wind direction is optional
             }
-            wind.setText(String.format("Wind: %s, %d m/s", String.valueOf(wind.getDirection()), wind.getSpeed()));
+            wind.setText(String.format(Locale.US, "Wind: %s, %d m/s", wind.getDirection(), wind.getSpeed()));
             return wind;
         }
 
@@ -251,7 +270,7 @@ public class OpenWeatherMapWeather implements Weather {
             try {
                 double humidityValue = getHumidity();
                 humidity.setValue((int)humidityValue);
-                humidity.setText(String.format("Humidity: %d%%", humidity.getValue()));
+                humidity.setText(String.format(Locale.US, "Humidity: %d%%", humidity.getValue()));
             } catch (JSONException e) {
                 //humidity is optional
             }
@@ -403,12 +422,12 @@ public class OpenWeatherMapWeather implements Weather {
 
         @Override
         protected double getWindSpeed() throws JSONException {
-            return this.json.getDouble("speed");
+            return this.json.getDouble("wind_speed");
         }
 
         @Override
         protected double getWindDeg() throws JSONException {
-            return this.json.getDouble("deg");
+            return this.json.getDouble("wind_deg");
         }
 
         @Override
@@ -442,16 +461,14 @@ public class OpenWeatherMapWeather implements Weather {
         return this.conditions.get(i);
     }
 
-    private void appendForecastTemperature(SimpleWeatherCondition condition, JSONObject json)
-            throws JSONException {
+    private void appendForecastTemperature(SimpleWeatherCondition condition, JSONObject json) {
         WeatherParser parser = new ForecastWeatherParser(json);
         AppendableTemperature existedTemp = (AppendableTemperature)condition.getTemperature();
         SimpleTemperature newTemp = parser.parseTemperature();
         existedTemp.append(newTemp);
     }
 
-    private void parseForecast(SimpleWeatherCondition condition, JSONObject json)
-            throws JSONException {
+    private void parseForecast(SimpleWeatherCondition condition, JSONObject json) {
         appendForecastTemperature(condition, json);
         WeatherParser parser = new ForecastWeatherParser(json);
         condition.setHumidity(parser.parseHumidity());

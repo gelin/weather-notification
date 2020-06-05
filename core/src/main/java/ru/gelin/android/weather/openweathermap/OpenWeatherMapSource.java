@@ -66,12 +66,15 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         if (location.getText().startsWith("+")) {
             return new TestWeather(Integer.parseInt(location.getText().substring(1)));
         }
+
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(this.context);
+
         weather.parseCurrentWeather(queryCurrentWeather(location));
         if (weather.isEmpty()) {
             return weather;
         }
-        weather.parseDailyForecast(queryDailyForecast(location));
+        // TODO: do onecall using location from the previous result
+        weather.parseOneCallResult(queryOneCallForecast(location));
         return weather;
     }
 
@@ -81,9 +84,16 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         //TODO: what to do with locale?
     }
 
-    String getWeatherUrl(Location location) {
+    JSONObject queryOneCallForecast(Location location) throws WeatherException {
+        String url = getOneCallUrl(location, "current,minutely,hourly");
+        return queryJSON(url);
+    }
+
+    String getOneCallUrl(Location location, String exclude) {
         try {
-            return API_BASE_URL + "/weather?APPID=" + URLEncoder.encode(key.getKey(), "UTF-8") + "&" + location.getQuery();
+            return API_BASE_URL + "/onecall?exclude=" + exclude +
+                "&appid=" + URLEncoder.encode(key.getKey(), "UTF-8") +
+                "&" + location.getQuery();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -91,30 +101,24 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
 
     JSONObject queryCurrentWeather(Location location) throws WeatherException {
         String url = getWeatherUrl(location);
-        JSONTokener parser = new JSONTokener(readJSON(url));
-        try {
-            return (JSONObject)parser.nextValue();
-        } catch (JSONException e) {
-            throw new WeatherException("can't parse weather", e);
-        }
+        return queryJSON(url);
     }
 
-    String getForecastUrl(Location location) {
+    String getWeatherUrl(Location location) {
         try {
-            return API_BASE_URL + "/onecall?exclude=current,hourly,minutely&APPID=" +
-                    URLEncoder.encode(key.getKey(), "UTF-8") + "&" + location.getQuery();
+            return API_BASE_URL + "/weather?appid=" + URLEncoder.encode(key.getKey(), "UTF-8") +
+                "&" + location.getQuery();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    JSONObject queryDailyForecast(Location location) throws WeatherException {
-        String url = getForecastUrl(location);
+    JSONObject queryJSON(String url) throws WeatherException {
         JSONTokener parser = new JSONTokener(readJSON(url));
         try {
             return (JSONObject)parser.nextValue();
         } catch (JSONException e) {
-            throw new WeatherException("can't parse forecast", e);
+            throw new WeatherException("can't parse JSON", e);
         }
     }
 

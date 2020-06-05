@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": 73.4,
+        "lat": 55
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 289.15,
+        "feels_like": 285.68,
+        "temp_min": 289.15,
+        "temp_max": 289.15,
+        "pressure": 1020,
+        "humidity": 44
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3,
+        "deg": 330
+    },
+    "clouds": {
+        "all": 46
+    },
+    "dt": 1591378205,
+    "sys": {
+        "type": 1,
+        "id": 8960,
+        "country": "RU",
+        "sunrise": 1591309890,
+        "sunset": 1591371519
+    },
+    "timezone": 21600,
+    "id": 1496153,
+    "name": "Omsk",
+    "cod": 200
+}

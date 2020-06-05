@@ -25,16 +25,16 @@ import static ru.gelin.android.weather.notification.WeatherUtils.readJSON;
 
 public class WeatherUtils {
 
-    public static OpenWeatherMapWeather createOpenWeather(Context context) throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-            readJSON("omsk_name_2.5.json"));
-        weather.parseDailyForecast(readJSON("omsk_name_forecast_2.5.json"));
+    public static OpenWeatherMapWeather createIncompleteOpenWeather(Context context) throws Exception {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context);
+        weather.parseCurrentWeather(readJSON("omsk_25_weather.json"));
         return weather;
     }
 
-    public static OpenWeatherMapWeather createIncompleteOpenWeather(Context context) throws Exception {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-            readJSON("omsk_name_2.5.json"));
+    public static OpenWeatherMapWeather createOpenWeather(Context context) throws Exception {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context);
+        weather.parseCurrentWeather(readJSON("omsk_25_weather.json"));
+        weather.parseOneCallResult(readJSON("omsk_25_onecall_forecast.json"));
         return weather;
     }
 

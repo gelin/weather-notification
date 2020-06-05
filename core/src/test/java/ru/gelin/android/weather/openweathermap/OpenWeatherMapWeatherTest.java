@@ -58,11 +58,32 @@ public class OpenWeatherMapWeatherTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
+    @Test(expected = WeatherException.class)
+    public void testParseEmptyJSON() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{}");
+        new OpenWeatherMapWeather(context, (JSONObject)parser.nextValue());
+    }
+
     @Test
-    public void testNotEmpty() throws Exception {
-        OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
+    public void testParseBadResultCodeJSON() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{ \"cod\": \"404\"}");
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
+            (JSONObject)parser.nextValue());
+        assertNotNull(weather);
+        assertTrue(weather.isEmpty());
+    }
+
+    @Test
+    public void testParseMinimalJSON() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{\"id\": 1496153,\"cod\": 200}");
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
+            (JSONObject)parser.nextValue());
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
+        assertEquals(1496153, weather.getCityId());
+        assertEquals("", weather.getLocation().getText());
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(Temperature.UNKNOWN, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
     @Test
@@ -73,21 +94,17 @@ public class OpenWeatherMapWeatherTest {
     }
 
     @Test
-    public void testGetTemperature() throws Exception {
+    public void testNotEmpty() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
-        WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getCurrent());
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
     }
 
     @Test
-    public void testParseEmptyJSON() throws JSONException {
-        JSONTokener parser = new JSONTokener("{}");
-        try {
-            new OpenWeatherMapWeather(context, (JSONObject)parser.nextValue());
-            fail();
-        } catch (WeatherException e) {
-            //passed
-        }
+    public void testGetTemperature() throws Exception {
+        OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(16, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
     @Test
@@ -103,8 +120,8 @@ public class OpenWeatherMapWeatherTest {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
         Date time = weather.getTime();
         assertNotNull(time);
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-        calendar.set(2013, Calendar.AUGUST, 15, 14, 0, 0);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.set(2020, Calendar.JUNE, 5, 17, 30, 5);
         calendar.set(Calendar.MILLISECOND, 0);
         assertEquals(calendar.getTime(), time);
     }
@@ -121,21 +138,21 @@ public class OpenWeatherMapWeatherTest {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
         WeatherCondition condition = weather.getConditions().get(0);
         String text = condition.getConditionText();
-        assertEquals("Sky is clear", text);
+        assertEquals("Scattered clouds", text);
     }
 
     @Test
     public void testGetLowTemperature() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getLow());
+        assertEquals(16, condition.getTemperature(TemperatureUnit.C).getLow());
     }
 
     @Test
     public void testGetHighTemperature() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
         WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getHigh());
+        assertEquals(16, condition.getTemperature(TemperatureUnit.C).getHigh());
     }
 
     @Test
@@ -144,8 +161,8 @@ public class OpenWeatherMapWeatherTest {
         WeatherCondition condition = weather.getConditions().get(0);
         Wind wind = condition.getWind(WindSpeedUnit.MPS);
         assertNotNull(wind);
-        assertEquals(4, wind.getSpeed());
-        assertEquals(WindDirection.N, wind.getDirection());
+        assertEquals(3, wind.getSpeed());
+        assertEquals(WindDirection.NNW, wind.getDirection());
     }
 
     @Test
@@ -154,7 +171,7 @@ public class OpenWeatherMapWeatherTest {
         WeatherCondition condition = weather.getConditions().get(0);
         Humidity humidity = condition.getHumidity();
         assertNotNull(humidity);
-        assertEquals(56, humidity.getValue());
+        assertEquals(44, humidity.getValue());
     }
 
     @Test
@@ -179,7 +196,7 @@ public class OpenWeatherMapWeatherTest {
     @Test
     public void testForecastsNulls() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
-        assertEquals(4, weather.getConditions().size());
+        assertEquals(8, weather.getConditions().size());
         assertNotNull(weather.getConditions().get(3).getHumidity());
         assertNotNull(weather.getConditions().get(3).getWind());
     }
@@ -188,140 +205,155 @@ public class OpenWeatherMapWeatherTest {
     public void testForecastGetLowTemperature() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
+        assertEquals(8, conditions.size());
         assertEquals(287, conditions.get(0).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(284, conditions.get(1).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(282, conditions.get(2).getTemperature(TemperatureUnit.K).getLow());
-        assertEquals(283, conditions.get(3).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(283, conditions.get(1).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(287, conditions.get(2).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(288, conditions.get(3).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(289, conditions.get(4).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(286, conditions.get(5).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(288, conditions.get(6).getTemperature(TemperatureUnit.K).getLow());
+        assertEquals(288, conditions.get(7).getTemperature(TemperatureUnit.K).getLow());
     }
 
     @Test
     public void testForecastGetHighTemperature() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
-        assertEquals(294, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(293, conditions.get(1).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(293, conditions.get(2).getTemperature(TemperatureUnit.K).getHigh());
-        assertEquals(295, conditions.get(3).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(8, conditions.size());
+        assertEquals(289, conditions.get(0).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(295, conditions.get(1).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(296, conditions.get(2).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(298, conditions.get(3).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(299, conditions.get(4).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(299, conditions.get(5).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(296, conditions.get(6).getTemperature(TemperatureUnit.K).getHigh());
+        assertEquals(300, conditions.get(7).getTemperature(TemperatureUnit.K).getHigh());
     }
 
     @Test
     public void testForecastGetTemperature() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
+        assertEquals(8, conditions.size());
         //the current temp should come from the city JSON
-        assertEquals(294, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
+        assertEquals(289, conditions.get(0).getTemperature(TemperatureUnit.K).getCurrent());
     }
 
     @Test
     public void testForecastGetPrecipitations() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
-        assertEquals(4, conditions.size());
+        assertEquals(8, conditions.size());
         assertEquals(0f, conditions.get(0).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);  //current
-        assertEquals(1f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
-        assertEquals(2f, conditions.get(2).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
-        assertEquals(3f, conditions.get(3).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_1H), 0.01f);
+        assertEquals(0.67f, conditions.get(1).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(0f, conditions.get(2).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(0f, conditions.get(3).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(1.24f, conditions.get(4).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(0.21f, conditions.get(5).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(0f, conditions.get(6).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
+        assertEquals(0f, conditions.get(7).getPrecipitation().getValue(PrecipitationPeriod.PERIOD_3H), 0.01f);
     }
 
     @Test
     public void testForecastGetCloudiness() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
-        assertEquals(4, conditions.size());
-        assertEquals(0, conditions.get(0).getCloudiness().getValue());  //current
-        assertEquals(18, conditions.get(1).getCloudiness().getValue());
-        assertEquals(0, conditions.get(2).getCloudiness().getValue());
-        assertEquals(22, conditions.get(3).getCloudiness().getValue());
+        assertEquals(8, conditions.size());
+        assertEquals(46, conditions.get(0).getCloudiness().getValue());  //current
+        assertEquals(46, conditions.get(1).getCloudiness().getValue());
+        assertEquals(25, conditions.get(2).getCloudiness().getValue());
+        assertEquals(65, conditions.get(3).getCloudiness().getValue());
+        assertEquals(24, conditions.get(4).getCloudiness().getValue());
+        assertEquals(3, conditions.get(5).getCloudiness().getValue());
+        assertEquals(17, conditions.get(6).getCloudiness().getValue());
+        assertEquals(22, conditions.get(7).getCloudiness().getValue());
     }
 
     @Test
     public void testForecastGetConditionTypes() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<SimpleWeatherCondition> conditions = weather.getOpenWeatherMapConditions();
-        assertEquals(4, conditions.size());
+        assertEquals(8, conditions.size());
         assertEquals(1, conditions.get(0).getConditionTypes().size());
-        assertTrue(conditions.get(0).getConditionTypes().contains(WeatherConditionType.CLOUDS_CLEAR));
-        assertEquals(2, conditions.get(1).getConditionTypes().size());
-        assertTrue(conditions.get(1).getConditionTypes().contains(WeatherConditionType.CLOUDS_FEW));
+        assertTrue(conditions.get(0).getConditionTypes().contains(WeatherConditionType.CLOUDS_SCATTERED));
+        assertEquals(1, conditions.get(1).getConditionTypes().size());
         assertTrue(conditions.get(1).getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
-        assertEquals(2, conditions.get(2).getConditionTypes().size());
-        assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
-        assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.RAIN));
-        assertEquals(2, conditions.get(3).getConditionTypes().size());
-        assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.CLOUDS_OVERCAST));
-        assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.RAIN_SHOWER));
+        assertEquals(1, conditions.get(2).getConditionTypes().size());
+        assertTrue(conditions.get(2).getConditionTypes().contains(WeatherConditionType.CLOUDS_SCATTERED));
+        assertEquals(1, conditions.get(3).getConditionTypes().size());
+        assertTrue(conditions.get(3).getConditionTypes().contains(WeatherConditionType.CLOUDS_BROKEN));
+        assertEquals(1, conditions.get(4).getConditionTypes().size());
+        assertTrue(conditions.get(4).getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
+        assertEquals(1, conditions.get(5).getConditionTypes().size());
+        assertTrue(conditions.get(5).getConditionTypes().contains(WeatherConditionType.RAIN_LIGHT));
+        assertEquals(1, conditions.get(6).getConditionTypes().size());
+        assertTrue(conditions.get(6).getConditionTypes().contains(WeatherConditionType.CLOUDS_FEW));
+        assertEquals(1, conditions.get(7).getConditionTypes().size());
+        assertTrue(conditions.get(7).getConditionTypes().contains(WeatherConditionType.CLOUDS_FEW));
     }
 
     @Test
     public void testForecastGetConditionText() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
-        assertEquals("Sky is clear", conditions.get(0).getConditionText());
+        assertEquals(8, conditions.size());
+        assertEquals("Scattered clouds", conditions.get(0).getConditionText());
         assertEquals("Light rain", conditions.get(1).getConditionText());
-        assertEquals("Rain", conditions.get(2).getConditionText());
-        assertEquals("Shower rain", conditions.get(3).getConditionText());
-    }
-
-    @Test
-    public void testParseNoHumidity() throws IOException, JSONException, WeatherException {
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-                readJSON("omsk_name_no_humidity_2.5.json"));
-        assertNotNull(weather);
-        assertFalse(weather.isEmpty());
-        WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getCurrent());
-    }
-
-    @Test
-    public void testParseMinimalJSON() throws JSONException, WeatherException {
-        JSONTokener parser = new JSONTokener("{\"id\": 1496153,\"cod\": 200}");
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-                (JSONObject)parser.nextValue());
-        assertNotNull(weather);
-        assertFalse(weather.isEmpty());
-        assertEquals(1496153, weather.getCityId());
-        assertEquals("", weather.getLocation().getText());
-        WeatherCondition condition = weather.getConditions().get(0);
-        assertEquals(Temperature.UNKNOWN, condition.getTemperature(TemperatureUnit.C).getCurrent());
-    }
-
-    @Test
-    public void testParseBadResultCodeJSON() throws JSONException, WeatherException {
-        JSONTokener parser = new JSONTokener("{ \"cod\": \"404\"}");
-        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
-                (JSONObject)parser.nextValue());
-        assertNotNull(weather);
-        assertTrue(weather.isEmpty());
+        assertEquals("Scattered clouds", conditions.get(2).getConditionText());
+        assertEquals("Broken clouds", conditions.get(3).getConditionText());
+        assertEquals("Light rain", conditions.get(4).getConditionText());
+        assertEquals("Light rain", conditions.get(5).getConditionText());
+        assertEquals("Few clouds", conditions.get(6).getConditionText());
+        assertEquals("Few clouds", conditions.get(7).getConditionText());
     }
 
     @Test
     public void testForecastGetWind() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
-        assertEquals(4, conditions.get(0).getWind().getSpeed());
-        assertEquals(WindDirection.N, conditions.get(0).getWind().getDirection());
-        assertEquals(2, conditions.get(1).getWind().getSpeed());
+        assertEquals(8, conditions.size());
+        assertEquals(3, conditions.get(0).getWind().getSpeed());
+        assertEquals(WindDirection.NNW, conditions.get(0).getWind().getDirection());
+        assertEquals(6, conditions.get(1).getWind().getSpeed());
         assertEquals(WindDirection.N, conditions.get(1).getWind().getDirection());
-        assertEquals(2, conditions.get(2).getWind().getSpeed());
-        assertEquals(WindDirection.SW, conditions.get(2).getWind().getDirection());
-        assertEquals(2, conditions.get(3).getWind().getSpeed());
-        assertEquals(WindDirection.SW, conditions.get(3).getWind().getDirection());
+        assertEquals(4, conditions.get(2).getWind().getSpeed());
+        assertEquals(WindDirection.NNW, conditions.get(2).getWind().getDirection());
+        assertEquals(4, conditions.get(3).getWind().getSpeed());
+        assertEquals(WindDirection.WNW, conditions.get(3).getWind().getDirection());
+        assertEquals(5, conditions.get(4).getWind().getSpeed());
+        assertEquals(WindDirection.NNW, conditions.get(4).getWind().getDirection());
+        assertEquals(3, conditions.get(5).getWind().getSpeed());
+        assertEquals(WindDirection.N, conditions.get(5).getWind().getDirection());
+        assertEquals(6, conditions.get(6).getWind().getSpeed());
+        assertEquals(WindDirection.N, conditions.get(6).getWind().getDirection());
+        assertEquals(4, conditions.get(7).getWind().getSpeed());
+        assertEquals(WindDirection.WSW, conditions.get(7).getWind().getDirection());
     }
 
     @Test
     public void testForecastGetHumidity() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createOpenWeather(context);
         List<WeatherCondition> conditions = weather.getConditions();
-        assertEquals(4, conditions.size());
-        assertEquals(56, conditions.get(0).getHumidity().getValue());
-        assertEquals(98, conditions.get(1).getHumidity().getValue());
-        assertEquals(93, conditions.get(2).getHumidity().getValue());
-        assertEquals(90, conditions.get(3).getHumidity().getValue());
+        assertEquals(8, conditions.size());
+        assertEquals(44, conditions.get(0).getHumidity().getValue());
+        assertEquals(46, conditions.get(1).getHumidity().getValue());
+        assertEquals(38, conditions.get(2).getHumidity().getValue());
+        assertEquals(42, conditions.get(3).getHumidity().getValue());
+        assertEquals(51, conditions.get(4).getHumidity().getValue());
+        assertEquals(41, conditions.get(5).getHumidity().getValue());
+        assertEquals(42, conditions.get(6).getHumidity().getValue());
+        assertEquals(48, conditions.get(7).getHumidity().getValue());
+    }
+
+    @Test
+    public void testParseNoHumidity() throws IOException, JSONException, WeatherException {
+        OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
+            readJSON("omsk_name_no_humidity_2.5.json"));
+        assertNotNull(weather);
+        assertFalse(weather.isEmpty());
+        WeatherCondition condition = weather.getConditions().get(0);
+        assertEquals(21, condition.getTemperature(TemperatureUnit.C).getCurrent());
     }
 
 }
