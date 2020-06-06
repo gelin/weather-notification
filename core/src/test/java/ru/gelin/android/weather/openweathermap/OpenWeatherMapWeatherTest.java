@@ -112,7 +112,11 @@ public class OpenWeatherMapWeatherTest {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
         Location location = weather.getLocation();
         assertNotNull(location);
+        assertFalse(location.isEmpty());
         assertEquals("Omsk", location.getText());
+        // geo coordinates are taken from the response
+        assertTrue(location.isGeo());
+        assertEquals("lat=55.0&lon=73.4", location.getQuery());
     }
 
     @Test
@@ -190,7 +194,7 @@ public class OpenWeatherMapWeatherTest {
     @Test
     public void testGetForecastURL() throws Exception {
         OpenWeatherMapWeather weather = WeatherUtils.createIncompleteOpenWeather(context);
-        assertEquals(new URL("http://openweathermap.org/city/1496153"), weather.getForecastURL());
+        assertEquals(new URL("https://openweathermap.org/city/1496153"), weather.getForecastURL());
     }
 
     @Test

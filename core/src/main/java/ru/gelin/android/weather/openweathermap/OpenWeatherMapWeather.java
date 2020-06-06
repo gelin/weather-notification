@@ -57,14 +57,14 @@ import java.util.Locale;
  */
 public class OpenWeatherMapWeather implements Weather {
 
-    String FORECAST_URL_TEMPLATE="http://openweathermap.org/city/%d";
+    String FORECAST_URL_TEMPLATE="https://openweathermap.org/city/%d";
 
     /** City ID */
     int cityId = 0;
     /** Forecast URL */
     URL forecastURL;
     /** Weather location */
-    SimpleLocation location = new SimpleLocation("");
+    Location location = new SimpleLocation("");
     /** Weather time */
     Date time = new Date();
     /** Query time */
@@ -174,7 +174,12 @@ public class OpenWeatherMapWeather implements Weather {
 
     private void parseLocation(JSONObject json) {
         try {
-            this.location = new SimpleLocation(json.getString("name"), false);
+            JSONObject coord = json.getJSONObject("coord");
+            this.location = new OpenWeatherMapCityLocation(
+                json.getString("name"),
+                coord.getDouble("lat"),
+                coord.getDouble("lon")
+            );
         } catch (JSONException e) {
             this.location = new SimpleLocation("", false);
         }

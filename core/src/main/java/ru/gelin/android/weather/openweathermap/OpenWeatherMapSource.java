@@ -73,8 +73,9 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         if (weather.isEmpty()) {
             return weather;
         }
-        // TODO: do onecall using location from the previous result
-        weather.parseOneCallResult(queryOneCallForecast(location));
+        if (weather.getLocation().isGeo()) {    // extracts geo coord from the weather and do onecall with lat/lon
+            weather.parseOneCallResult(queryOneCallForecast(weather.getLocation()));
+        }
         return weather;
     }
 

@@ -82,11 +82,11 @@ public class OpenWeatherMapSourceTest {
     @Test
     public void testQueryOmskForecasts() throws WeatherException {
         WeatherSource source = new OpenWeatherMapSource(context);
-        Location location = new SimpleLocation("lat=54.96&lon=73.38&cnt=4", true);
+        Location location = new SimpleLocation("lat=54.96&lon=73.38", true);
         Weather weather = source.query(location);
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
-        assertEquals(4, weather.getConditions().size());
+        assertEquals(8, weather.getConditions().size());
     }
 
     @Test

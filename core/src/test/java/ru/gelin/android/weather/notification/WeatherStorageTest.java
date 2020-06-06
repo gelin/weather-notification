@@ -98,7 +98,7 @@ public class WeatherStorageTest {
         WeatherStorage storage = new WeatherStorage(context);
         Weather weather1 = WeatherUtils.createOpenWeather(context);
         storage.save(weather1);
-        assertEquals(4, storage.load().getConditions().size());
+        assertEquals(8, storage.load().getConditions().size());
         Weather weather2 = WeatherUtils.createIncompleteOpenWeather(context);
         storage.save(weather2);
         assertEquals(1, storage.load().getConditions().size());
