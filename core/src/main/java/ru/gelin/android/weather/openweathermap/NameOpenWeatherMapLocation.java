@@ -37,64 +37,59 @@ public class NameOpenWeatherMapLocation implements Location {
     /** Query template */
     static final String QUERY = "q=%s";  //q=omsk
     /** Query template */
-    static final String QUERY_WITH_LOCATION = "lat=%s&lon=%s";  //q=omsk&lat=54.96&lon=73.38
+    static final String QUERY_WITH_LOCATION = "lat=%s&lon=%s";  //lat=54.96&lon=73.38
+    /** Lat,lon name template */
+    static final Pattern LAT_LON_PATTERN = Pattern.compile("(-?\\d+\\.?\\d*)\\s*[,;]?\\s*(-?\\d+\\.?\\d*)");
 
     /** Name */
     String name;
-    /** Android location */
-    android.location.Location location;
+    /** Query */
+    String query;
+    /** Does it location contains geo coordinates? */
+    boolean isGeo = false;
 
     /**
-     *  Creates the location for the name and android location
+     *  Creates the location for the name.
+     *  The name can be a city name of "lat,lon" pair.
      */
-    public NameOpenWeatherMapLocation(String name, android.location.Location location) {
+    public NameOpenWeatherMapLocation(String name) {
         this.name = name;
-        this.location = location;
+        try {
+            this.query = String.format(QUERY, URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
 
         if (name != null) {
-            String pattern = "(-?\\d+\\.\\d+)\\s+(-?\\d+\\.\\d+)";
-            Pattern r = Pattern.compile(pattern);
-            Matcher m = r.matcher(name);
+            Matcher m = LAT_LON_PATTERN.matcher(name);
             if (m.find()) {
-                this.location = new android.location.Location(android.location.LocationManager.PASSIVE_PROVIDER);
-                this.location.setLatitude(Double.parseDouble(m.group(1)));
-                this.location.setLongitude(Double.parseDouble(m.group(2)));
+                this.isGeo = true;
+                this.query = String.format(QUERY_WITH_LOCATION, m.group(1), m.group(2));
             }
         }
     }
 
     /**
-     *  Creates the query with name.
+     *  Creates the query with name or lat/lon.
      */
-    //@Override
+    @Override
     public String getQuery() {
-        try {
-            if (this.location == null) {
-                return String.format(QUERY,
-                        URLEncoder.encode(this.name, HttpWeatherSource.ENCODING));
-            } else {
-                return String.format(QUERY_WITH_LOCATION,
-                    String.valueOf(location.getLatitude()),
-                    String.valueOf(location.getLongitude()));
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);  //never happens
-        }
+        return this.query;
     }
 
-    //@Override
+    @Override
     public String getText() {
         return this.name;
     }
 
-    //@Override
+    @Override
     public boolean isEmpty() {
         return this.name == null;
     }
 
     @Override
     public boolean isGeo() {
-        return false;
+        return isGeo;
     }
 
 }

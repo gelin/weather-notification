@@ -21,15 +21,56 @@ package ru.gelin.android.weather.openweathermap;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class NameOpenWeatherMapLocationTest {
 
     @Test
     public void testNullLocation() {
-        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("test", null);
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("test");
+        assertFalse(location.isGeo());
         assertEquals("test", location.getText());
         assertEquals("q=test", location.getQuery());
+    }
+
+    @Test
+    public void testLatLonLocation1() {
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("55,73");
+        assertTrue(location.isGeo());
+        assertEquals("55,73", location.getText());
+        assertEquals("lat=55&lon=73", location.getQuery());
+    }
+
+    @Test
+    public void testLatLonLocation2() {
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("55.0 , 73.4");
+        assertTrue(location.isGeo());
+        assertEquals("55.0 , 73.4", location.getText());
+        assertEquals("lat=55.0&lon=73.4", location.getQuery());
+    }
+
+    @Test
+    public void testLatLonLocation3() {
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("55.0  73.4");
+        assertTrue(location.isGeo());
+        assertEquals("55.0  73.4", location.getText());
+        assertEquals("lat=55.0&lon=73.4", location.getQuery());
+    }
+
+    @Test
+    public void testLatLonLocation4() {
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("-55.0,-73.4");
+        assertTrue(location.isGeo());
+        assertEquals("-55.0,-73.4", location.getText());
+        assertEquals("lat=-55.0&lon=-73.4", location.getQuery());
+    }
+
+    @Test
+    public void testLatLonLocation5() {
+        NameOpenWeatherMapLocation location = new NameOpenWeatherMapLocation("Omsk 55.0,73.4");
+        assertTrue(location.isGeo());
+        assertEquals("Omsk 55.0,73.4", location.getText());
+        assertEquals("lat=55.0&lon=73.4", location.getQuery());
     }
 
 }

@@ -159,7 +159,7 @@ public class UpdateService extends Service implements Runnable {
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
 
-        Location location = null;
+        Location location;
         LocationType locationType = getLocationType();
         if (LocationType.LOCATION_MANUAL.equals(locationType)) {
             location = createSearchLocation(preferences.getString(LOCATION, LOCATION_DEFAULT));
@@ -193,7 +193,7 @@ public class UpdateService extends Service implements Runnable {
     /**
      *  Handles weather update result.
      */
-    final Handler internalHandler = new UpdateHandler(new WeakReference<UpdateService>(this));
+    final Handler internalHandler = new UpdateHandler(new WeakReference<>(this));
 
     static class UpdateHandler extends Handler {
 
@@ -214,7 +214,7 @@ public class UpdateService extends Service implements Runnable {
                 return;
             }
             WeatherStorage storage = new WeatherStorage(service);
-            synchronized(service) {
+            synchronized(this.serviceRef) {
                 switch (msg.what) {
                     case SUCCESS:
                         Log.i(TAG, "received weather: " +
@@ -416,15 +416,7 @@ public class UpdateService extends Service implements Runnable {
      *  Creates the location to search the location by the entered string.
      */
     Location createSearchLocation(String query) {
-        LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        if (manager == null) {
-            return new NameOpenWeatherMapLocation(query, null);
-        }
-        android.location.Location androidLocation = null;
-        if (LocationType.LOCATION_NETWORK.isPermissionGranted(this)) {
-            androidLocation = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        return new NameOpenWeatherMapLocation(query, androidLocation);
+        return new NameOpenWeatherMapLocation(query);
     }
 
     /**
