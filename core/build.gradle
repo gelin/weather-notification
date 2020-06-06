@@ -78,6 +78,12 @@ if (project.hasProperty('keyPassword')) {
 //    }
 //}
 
+task printVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
+
 dependencies {
     implementation project(':libpreference')
     implementation project(':libweather')
