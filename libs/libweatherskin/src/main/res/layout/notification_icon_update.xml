@@ -20,83 +20,89 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+                android:id="@+id/content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
     <LinearLayout
-            android:id="@+id/temp"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical">
+        android:id="@+id/temp"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
 
         <TextView
-                android:id="@+id/current_temp"
-                style="@style/Weather.CurrentTemp"
-                android:text="X&#x00B0;"/>
+            android:id="@+id/current_temp"
+            style="@style/Weather.CurrentTemp"
+            android:text="X&#x00B0;"/>
 
         <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal|bottom">
-                
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal|bottom">
+
             <TextView
-                    android:id="@+id/high_temp"
-                    style="@style/Weather"
-                    android:text="X&#x00B0;"/>
-                        
+                android:id="@+id/high_temp"
+                style="@style/Weather"
+                android:text="X&#x00B0;"/>
+
             <TextView
-                    android:text="/"
-                    android:textColor="@android:color/darker_gray"
-                    style="@style/Weather"/>
-                        
+                android:text="/"
+                android:textColor="@android:color/darker_gray"
+                style="@style/Weather"/>
+
             <TextView
-                    android:id="@+id/low_temp"
-                    style="@style/Weather"
-                    android:text="X&#x00B0;"/>
-                        
+                android:id="@+id/low_temp"
+                style="@style/Weather"
+                android:text="X&#x00B0;"/>
+
         </LinearLayout>
 
         <TextView
-                android:id="@+id/update_time_short"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/darker_gray"
-                style="@style/Weather"
-                android:text="18:46"/>
+            android:id="@+id/update_time_short"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/darker_gray"
+            style="@style/Weather"
+            android:text="18:46"/>
 
     </LinearLayout>
 
     <ImageView
-            android:id="@+id/condition_icon"
-            android:layout_toRightOf="@id/temp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            style="@style/Weather"
-            android:src="@drawable/condition_clear_64"/>
+        android:id="@+id/condition_icon"
+        android:layout_toRightOf="@id/temp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        style="@style/Weather"
+        android:src="@drawable/condition_clear_64"/>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/current_weather"
+        android:layout_toRightOf="@+id/condition_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="left|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
             android:id="@+id/condition"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/condition_icon"
             style="@style/Weather.Condition"
             android:text="Weather condition Weather condition Weather condition"/>
 
-    <TextView
+        <TextView
             android:id="@+id/wind"
-            android:layout_below="@+id/condition"
-            android:layout_toRightOf="@+id/condition_icon"
             style="@style/Weather.Text"
             android:text="Wind Wind Wind Wind"/>
 
-    <TextView
+        <TextView
             android:id="@+id/humidity"
-            android:layout_below="@+id/wind"
-            android:layout_toRightOf="@+id/condition_icon"
             style="@style/Weather.Text"
             android:text="Humidity Humidity Humidity Humidity"/>
-            
+
+    </LinearLayout>
+
 </RelativeLayout>
