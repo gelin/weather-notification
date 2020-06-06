@@ -77,4 +77,9 @@
     <string name="permission_required">Permissions are required</string>
     <string name="permission_required_details">Tap here to open Weather notification settings</string>
 
+    <!-- v.0.3.11 -->
+    <string name="status_bar_icon_style">Status bar icon</string>
+    <string name="status_bar_temperature_icon">Temperature</string>
+    <string name="status_bar_weather_condition_icon">Weather condition</string>
+
 </resources>

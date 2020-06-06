@@ -72,4 +72,9 @@
     <string name="permission_required">Требуются разрешения</string>
     <string name="permission_required_details">Нажмите здесь, чтобы открыть настройки Уведомления о погоде</string>
 
+    <!-- v.0.3.11 -->
+    <string name="status_bar_icon_style">Значок в статусной строке</string>
+    <string name="status_bar_temperature_icon">Температура</string>
+    <string name="status_bar_weather_condition_icon">Погодные условия</string>
+
 </resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2010—2020 Denis Nelubin and others.
+  ~
+  ~ This file is part of Weather Notification.
+  ~
+  ~ Weather Notification is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Weather Notification is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Weather Notification.  If not, see http://www.gnu.org/licenses/.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ru.gelin.android.preference.SummaryListPreference
+            android:key="temp_unit"
+            android:title="@string/temp_unit"
+            android:entries="@array/temp_unit_entries"
+            android:entryValues="@array/temp_unit_values"
+            android:defaultValue="C"/>
+
+    <ru.gelin.android.preference.SummaryListPreference
+            android:key="ws_unit"
+            android:title="@string/wind_speed_unit"
+            android:entries="@array/wind_speed_unit_entries"
+            android:entryValues="@array/wind_speed_unit_values"
+            android:defaultValue="MPH"/>
+
+    <PreferenceCategory
+            android:title="@string/notification">
+
+        <ru.gelin.android.preference.SummaryListPreference
+            android:key="status_bar_icon_style"
+            android:title="@string/status_bar_icon_style"
+            android:entries="@array/status_bar_icon_style_entries"
+            android:entryValues="@array/status_bar_icon_style_values"
+            android:defaultValue="STATUS_BAR_TEMPERATURE"/>
+
+        <ru.gelin.android.preference.SummaryListPreference
+                android:key="notification_style"
+                android:title="@string/notification_style"
+                android:entries="@array/notification_style_entries"
+                android:entryValues="@array/notification_style_values"
+                android:defaultValue="CUSTOM_STYLE"/>
+
+        <ru.gelin.android.preference.SummaryListPreference
+                android:key="notification_text_style"
+                android:title="@string/notification_text_style"
+                android:entries="@array/notification_text_style_entries"
+                android:entryValues="@array/notification_text_style_values"
+                android:defaultValue="@string/DEFAULT_NOTIFICATION_TEXT_STYLE"/>
+
+        <ru.gelin.android.preference.SummaryListPreference
+                android:key="notification_back_style"
+                android:title="@string/notification_back_style"
+                android:entries="@array/notification_back_style_entries"
+                android:entryValues="@array/notification_back_style_values"
+                android:defaultValue="DEFAULT_BACK"/>
+
+        <CheckBoxPreference
+                android:key="notification_icon_style"
+                android:title="@string/notification_icon_style"
+                android:defaultValue="true"/>
+
+        <CheckBoxPreference
+                android:key="notification_forecasts_style"
+                android:title="@string/notification_forecast_style"
+                android:defaultValue="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

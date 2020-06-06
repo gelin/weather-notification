@@ -59,4 +59,13 @@
         <item>LOCATION_MANUAL</item>
     </string-array>
 
+    <string-array name="status_bar_icon_style_entries">
+        <item>@string/status_bar_weather_condition_icon</item>
+        <item>@string/status_bar_temperature_icon</item>
+    </string-array>
+    <string-array name="status_bar_icon_style_values">
+        <item>STATUS_BAR_WEATHER_CONDITION</item>
+        <item>STATUS_BAR_TEMPERATURE</item>
+    </string-array>
+
 </resources>
