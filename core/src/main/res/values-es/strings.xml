@@ -47,8 +47,6 @@
     <string name="skins">Skins</string>
     <string name="skins_preferences">Preferencias de skin</string>
     <string name="skins_install">Instalar skins</string>
-    <string name="skins_install_notice">Deberías de instalar skins para un uso mejor. Haz clic en \"Instalar skins\" al final de esta pantalla.</string>
-    <string name="skins_install_notice_no_market">Deberías de instalar skins para un uso mejor. Buscar \"Weather Notification Skin\" en Android market para instalarlas.</string>
     <string name="builtin_skin">Skin predefinida</string>
     <string name="builtin_skin_preferences">Preferencias de skin predefinida</string>
     <string name="start_update_service_permission">iniciar servicio de actualización de clima</string>

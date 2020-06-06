@@ -47,8 +47,6 @@
     <string name="skins">Skins</string>
     <string name="skins_preferences">Opzioni skins</string>
     <string name="skins_install">Installa skins</string>
-    <string name="skins_install_notice">DOVRESTI INSTALLARE LE SKINS per una migliore esperienza. Clicca su \"Installa skins\" alla fine della schermata.</string>
-    <string name="skins_install_notice_no_market">DOVRESTI INSTALLARE LE SKINS per una migliore esperienza. Cerca \"Weather Notification Skin\" in Google Play e installale.</string>
     <string name="builtin_skin">Skin predefinita</string>
     <string name="builtin_skin_preferences">Opzioni skin predefinita</string>
     <string name="start_update_service_permission">Avvia il servizio di aggiornamento</string>

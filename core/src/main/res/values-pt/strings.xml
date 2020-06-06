@@ -47,8 +47,6 @@
     <string name="skins">Temas</string>
     <string name="skins_preferences">Preferências dos temas</string>
     <string name="skins_install">Instalar temas</string>
-    <string name="skins_install_notice">TEMAS DEVEM SER INSTALADOS para uma melhor usabilidade. Por favor clique em \"Instalar temas\" no fim desta página.</string>
-    <string name="skins_install_notice_no_market">TEMAS DEVEM SER INSTALADOS para uma melhor usabilidade. Procure por \"Weather Notification Skin\" na loja de aplicações.</string>
     <string name="builtin_skin">Tema predefinido</string>
     <string name="builtin_skin_preferences">Preferências do tema predefinido</string>
     <string name="start_update_service_permission">Iniciar serviço de atualização de tempo</string>

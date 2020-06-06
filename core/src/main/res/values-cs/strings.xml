@@ -43,8 +43,6 @@
     <string name="start_update_service_permission_description">Umožňuje aplikaci spuštění aktualizace počasí služby přijímat nové hodnoty počasí.</string>
     <string name="start_update_service_permission">spustit aktualizační službu počasí</string>
     <string name="skins_preferences">Skins preferences</string>
-    <string name="skins_install_notice_no_market">Měli byste nainstalovat skiny pro lepší použitelnost. Vyhledávání \" Počasí Oznámení skin \" aplikací v Android Marketu a nainstalovat.</string>
-    <string name="skins_install_notice">Měli byste nainstalovat skiny pro lepší použitelnost. Prosím, klikněte na \"Install skins \" na spodní části obrazovky.</string>
     <string name="skins_install">Install skins</string>
     <string name="skins">Skins</string>
     <string name="skin">Skin</string>

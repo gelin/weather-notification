@@ -21,7 +21,11 @@ package ru.gelin.android.weather.notification.app;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
-import android.content.*;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,7 +39,6 @@ import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 import ru.gelin.android.weather.notification.AppUtils;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
@@ -97,14 +100,6 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         List<SkinInfo> skins = sm.getInstalledSkins();
 
         fillSkinsPreferences(skins);
-
-        if (skins.size() <= 1) {
-            Toast.makeText(this,
-                    marketActivity == null ?
-                            R.string.skins_install_notice_no_market :
-                            R.string.skins_install_notice,
-                    Toast.LENGTH_LONG).show();
-        }
 
         startUpdate(false);
     }

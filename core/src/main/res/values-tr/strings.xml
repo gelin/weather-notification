@@ -47,8 +47,6 @@
   <string name="skins">Temalar</string>
   <string name="skins_preferences">Tema tercihleri</string>
   <string name="skins_install">Tema kurma</string>
-  <string name="skins_install_notice">Daha iyi kullanılabilirlik için TEMA KURMANIZ GEREKİR. Bu ekranın alt kısmındaki \"Tema kurma\" seçeneğine tıklayınız.</string>
-  <string name="skins_install_notice_no_market">Daha iyi kullanılabilirlik için TEMA KURMANIZ GEREKİR. \"Weather Notification Skin\" uygulaması için Android Markette arama yapın ve bunları yükleyin.</string>
   <string name="builtin_skin">Dahili Tema</string>
   <string name="builtin_skin_preferences">​​Dahili tema tercihleri </string>
   <string name="start_update_service_permission">Hava durumu güncelleme hizmetini başlat</string>
