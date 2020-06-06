@@ -20,6 +20,8 @@
 package ru.gelin.android.weather.notification.skin.impl;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -37,6 +39,7 @@ import ru.gelin.android.weather.WeatherCondition;
 import ru.gelin.android.weather.WeatherConditionType;
 import ru.gelin.android.weather.notification.ParcelableWeather2;
 import ru.gelin.android.weather.notification.WeatherStorage;
+import ru.gelin.android.weather.notification.skin.R;
 import ru.gelin.android.weather.notification.skin.Tag;
 
 import java.util.List;
@@ -52,25 +55,31 @@ abstract public class BaseWeatherNotificationReceiver extends
     /** Key to store the weather in the bundle */
     static final String WEATHER_KEY = "weather";
 
+    /**
+     * Channel ID for notifications.
+     * See: https://stackoverflow.com/questions/43093260/notification-not-showing-in-oreo
+     */
+    static final String NOTIFICATION_CHANNEL_ID = "weather_notification";
+
     /** Handler to receive the weather */
     static Handler handler;
-    
+
     /**
      *  Registers the handler to receive the new weather.
      *  The handler is owned by activity which have initiated the update.
-     *  The handler is used to update the weather displayed by the activity. 
+     *  The handler is used to update the weather displayed by the activity.
      */
     static synchronized void registerWeatherHandler(Handler handler) {
         BaseWeatherNotificationReceiver.handler = handler;
     }
-    
+
     /**
      *  Unregisters the weather update handler.
      */
     static synchronized void unregisterWeatherHandler() {
         BaseWeatherNotificationReceiver.handler = null;
     }
-    
+
     @Override
     protected void cancel(Context context) {
         Log.d(Tag.TAG, "cancelling weather");
@@ -80,13 +89,13 @@ abstract public class BaseWeatherNotificationReceiver extends
     @Override
     protected void notify(Context context, Weather weather) {
         Log.d(Tag.TAG, "displaying weather: " + weather);
-        
+
         WeatherStorage storage = new WeatherStorage(context);
         storage.save(weather);
 
         WeatherFormatter formatter = getWeatherFormatter(context, weather);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
 
         builder.setSmallIcon(getNotificationIconId(weather));
 
@@ -127,8 +136,14 @@ abstract public class BaseWeatherNotificationReceiver extends
                 break;
         }
 
-        getNotificationManager(context).notify(getNotificationId(), notification);
-        
+        NotificationManager manager = getNotificationManager(context);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                context.getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(channel);
+        }
+        manager.notify(getNotificationId(), notification);
+
         notifyHandler(weather);
     }
 
@@ -152,7 +167,7 @@ abstract public class BaseWeatherNotificationReceiver extends
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
-    
+
     protected void notifyHandler(Weather weather) {
         synchronized (BaseWeatherNotificationReceiver.class) {   //monitor of static methods
             if (handler == null) {
