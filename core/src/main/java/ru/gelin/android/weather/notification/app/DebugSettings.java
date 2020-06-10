@@ -23,8 +23,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 
@@ -53,15 +51,7 @@ public class DebugSettings {
      *  May return null if the external storage is not available.
      */
     public File getDebugDir() {
-        if (Integer.parseInt(Build.VERSION.SDK) >= 8) {
-            return this.context.getExternalFilesDir("debug");
-        } else {
-            File android = new File(Environment.getExternalStorageDirectory(), "Android");
-            File data = new File(android, "data");
-            File pkg = new File(data, this.context.getPackageName());
-            File debug = new File(pkg, "debug");
-            return debug;
-        }
+        return this.context.getExternalFilesDir("debug");
     }
 
     /**

@@ -17,7 +17,7 @@ allprojects {
     }
     // https://medium.com/@ali.muzaffar/gradle-configure-variables-for-all-android-project-modules-in-one-place-5a6e56cd384e
     project.ext {
-        minSdkVersion=14
+        minSdkVersion=21
         targetSdkVersion=29
         compileSdkVersion=29
     }
