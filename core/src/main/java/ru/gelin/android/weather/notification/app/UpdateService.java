@@ -312,7 +312,7 @@ public class UpdateService extends Service implements Runnable {
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (notificationEnabled) {
-            Log.i(TAG, "scheduling update to " + new Date(now + jobInfo.getMinLatencyMillis()));
+            Log.d(TAG, "scheduling update to " + new Date(now + jobInfo.getMinLatencyMillis()));
             jobScheduler.schedule(jobInfo);
         } else {
             Log.d(TAG, "cancelling update schedule");

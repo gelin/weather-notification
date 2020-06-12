@@ -38,7 +38,6 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import ru.gelin.android.weather.notification.AppUtils;
 import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.notification.skin.SkinInfo;
@@ -65,7 +64,6 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);    //before super()!
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main_preferences);
 
@@ -136,11 +134,27 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
 
     protected abstract void fillSkinsPreferences(List<SkinInfo> skins);
 
+    void showProgressBar() {
+        WeatherPreference preference = (WeatherPreference) findPreference(WEATHER);
+        if (preference == null) {
+            return;
+        }
+        preference.showProgressBar();
+    }
+
+    void hideProgressBar() {
+        WeatherPreference preference = (WeatherPreference) findPreference(WEATHER);
+        if (preference == null) {
+            return;
+        }
+        preference.hideProgressBar();
+    }
+
     //@Override
     public boolean onPreferenceClick(Preference preference) {
         String key = preference.getKey();
         if (WEATHER.equals(key)) {
-            setProgressBarIndeterminateVisibility(true);
+            showProgressBar();
             return true;
         }
         return false;
@@ -150,7 +164,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         if (WEATHER.equals(key)) {
-            setProgressBarIndeterminateVisibility(false);
+            hideProgressBar();
             return true;
         }
         if (ENABLE_NOTIFICATION.equals(key) || REFRESH_INTERVAL.equals(key)) {
@@ -179,7 +193,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
     }
 
     void startUpdate(boolean force) {
-        setProgressBarIndeterminateVisibility(true);
+        showProgressBar();
         AppUtils.startUpdateService(this, true, force);
     }
 

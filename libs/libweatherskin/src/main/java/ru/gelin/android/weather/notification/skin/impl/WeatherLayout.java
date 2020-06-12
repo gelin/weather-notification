@@ -30,10 +30,10 @@ import android.widget.TextView;
  *  Utility to layout weather values to view.
  */
 public class WeatherLayout extends AbstractWeatherLayout {
-    
+
     /** View to bind. */
     View view;
-    
+
     /**
      *  Creates the utility for specified context.
      */
@@ -43,22 +43,22 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
-    protected int getTextColor() {
+    public int getTextColor() {
         return NO_CHANGE_COLOR;
     }
 
     @Override
-    protected int getBackColor() {
+    public int getBackColor() {
         return NO_CHANGE_COLOR;
     }
 
     @Override
-    protected void setBackColor(int viewId, int color) {
+    public void setBackColor(int viewId, int color) {
         // don't want to change color here
     }
 
     @Override
-    protected void setText(int viewId, CharSequence text, int color) {
+    public void setText(int viewId, CharSequence text, int color) {
         TextView textView = (TextView)this.view.findViewById(viewId);
         if (textView == null) {
             return;
@@ -71,7 +71,7 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
-    protected void setIcon(int viewId, Drawable drawable, int level) {
+    public void setIcon(int viewId, Drawable drawable, int level) {
         ImageView imageView = (ImageView)this.view.findViewById(viewId);
         if (imageView == null) {
             return;
@@ -81,7 +81,7 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
-    protected void setVisibility(int viewId, int visibility) {
+    public void setVisibility(int viewId, int visibility) {
         View view = this.view.findViewById(viewId);
         if (view == null) {
             return;
@@ -90,7 +90,7 @@ public class WeatherLayout extends AbstractWeatherLayout {
     }
 
     @Override
-    protected void setMovementMethod(int viewId, MovementMethod method) {
+    public void setMovementMethod(int viewId, MovementMethod method) {
         View view = this.view.findViewById(viewId);
         if (!(view instanceof TextView)) {
             return;

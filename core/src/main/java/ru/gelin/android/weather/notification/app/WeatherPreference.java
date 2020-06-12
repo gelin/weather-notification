@@ -34,6 +34,8 @@ import ru.gelin.android.weather.notification.skin.impl.WeatherLayout;
 
 public class WeatherPreference extends Preference implements OnSharedPreferenceChangeListener {
 
+    private WeatherLayout layout;
+
     public WeatherPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.weather);
@@ -52,23 +54,23 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
         super.onBindView(view);
         Context context = getContext();
         WeatherStorage storage = new WeatherStorage(context);
-        WeatherLayout layout = new WeatherLayout(context, view);
+        this.layout = new WeatherLayout(context, view);
         Weather weather = storage.load();
         layout.bind(weather);
     }
-    
+
     @Override
     protected void onClick() {
         super.onClick();
         AppUtils.startUpdateService(getContext(), true, true);
     }
-    
+
     @Override
     protected void onAttachedToHierarchy(PreferenceManager preferenceManager) {
         super.onAttachedToHierarchy(preferenceManager);
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
-    
+
     //@Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
@@ -77,6 +79,20 @@ public class WeatherPreference extends Preference implements OnSharedPreferenceC
         }
         callChangeListener(sharedPreferences.getAll().get(key));
         notifyChanged();
+    }
+
+    public void showProgressBar() {
+        if (this.layout == null) {
+            return;
+        }
+        this.layout.setVisibility(R.id.update_progress, View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        if (this.layout == null) {
+            return;
+        }
+        this.layout.setVisibility(R.id.update_progress, View.GONE);
     }
 
 }
