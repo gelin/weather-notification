@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <!-- android:padding="10sp" -->
-    
+
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp">
-    
+
         <TextView
                 android:id="@+id/location"
                 android:layout_alignParentTop="true"
@@ -54,9 +54,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 style="@style/WeatherInfo.CloseButton"/>
-    
+
     </RelativeLayout>
-    
+
     <RelativeLayout
             android:id="@+id/current_condition"
             android:layout_width="fill_parent"
@@ -71,7 +71,7 @@
                 android:layout_marginRight="5dp"
                 style="@style/WeatherInfo.ConditionIcon"
                 android:src="@drawable/condition_clear_48"/>
-        
+
         <TextView
                 android:id="@+id/condition"
                 android:layout_alignParentTop="true"
@@ -79,7 +79,7 @@
                 android:layout_toLeftOf="@+id/temp"
                 style="@style/WeatherInfo.Condition"
                 android:text="Weather condition Weather condition Weather condition"/>
-                
+
         <TextView
                 android:id="@+id/wind"
                 android:layout_below="@+id/condition"
@@ -87,7 +87,7 @@
                 android:layout_toLeftOf="@+id/temp"
                 style="@style/WeatherInfo.ConditionDetails"
                 android:text="Wind Wind Wind Wind Wind Wind"/>
-                
+
         <TextView
                 android:id="@+id/humidity"
                 android:layout_below="@+id/wind"
@@ -110,7 +110,7 @@
                         android:layout_centerHorizontal="true"
                         style="@style/WeatherInfo.CurrentTemp"
                         android:text="X&#x00B0;"/>
-                    
+
                 <TextView
                         android:id="@+id/current_temp_alt"
                         android:layout_below="@+id/current_temp"
@@ -124,7 +124,7 @@
                         android:layout_below="@+id/current_temp_alt"
                         android:layout_centerHorizontal="true"
                         android:orientation="horizontal">
-                
+
                     <TextView
                             android:id="@+id/high_temp"
                             style="@style/WeatherInfo.Text"
@@ -141,11 +141,11 @@
                             android:text="X&#x00B0;"/>
 
                 </LinearLayout>
-                        
+
             </RelativeLayout>
 
     </RelativeLayout>
-    
+
     <TableLayout
             android:id="@+id/forecasts"
             android:layout_width="fill_parent"
@@ -187,9 +187,9 @@
                     android:id="@+id/forecast_low_temp_1"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
-                
+
         </TableRow>
-        
+
         <TableRow
                 android:id="@+id/forecast_2"
                 style="@style/WeatherInfo.ForecastRow">
@@ -223,9 +223,9 @@
                     android:id="@+id/forecast_low_temp_2"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
-                
+
         </TableRow>
-        
+
         <TableRow
                 android:id="@+id/forecast_3"
                 style="@style/WeatherInfo.ForecastRow">
@@ -259,9 +259,153 @@
                     android:id="@+id/forecast_low_temp_3"
                     style="@style/WeatherInfo.Text"
                     android:text="X&#x00B0;"/>
-            
+
         </TableRow>
-    
+
+        <TableRow
+            android:id="@+id/forecast_4"
+            style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                android:id="@+id/forecast_day_4"
+                style="@style/WeatherInfo.Text"
+                android:text="Day"/>
+
+            <ImageView
+                android:id="@+id/forecast_condition_icon_4"
+                style="@style/WeatherInfo.ForecastConditionIcon"
+                android:src="@drawable/condition_clear_16"/>
+
+            <TextView
+                android:id="@+id/forecast_condition_4"
+                style="@style/WeatherInfo.ForecastCondition"
+                android:text="Weather condition Weather condition Weather condition"/>
+
+            <TextView
+                android:id="@+id/forecast_high_temp_4"
+                android:gravity="right"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+            <TextView
+                style="@style/WeatherInfo.Text"
+                android:text="/"/>
+
+            <TextView
+                android:id="@+id/forecast_low_temp_4"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/forecast_5"
+            style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                android:id="@+id/forecast_day_5"
+                style="@style/WeatherInfo.Text"
+                android:text="Day"/>
+
+            <ImageView
+                android:id="@+id/forecast_condition_icon_5"
+                style="@style/WeatherInfo.ForecastConditionIcon"
+                android:src="@drawable/condition_clear_16"/>
+
+            <TextView
+                android:id="@+id/forecast_condition_5"
+                style="@style/WeatherInfo.ForecastCondition"
+                android:text="Weather condition Weather condition Weather condition"/>
+
+            <TextView
+                android:id="@+id/forecast_high_temp_5"
+                android:gravity="right"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+            <TextView
+                style="@style/WeatherInfo.Text"
+                android:text="/"/>
+
+            <TextView
+                android:id="@+id/forecast_low_temp_5"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/forecast_6"
+            style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                android:id="@+id/forecast_day_6"
+                style="@style/WeatherInfo.Text"
+                android:text="Day"/>
+
+            <ImageView
+                android:id="@+id/forecast_condition_icon_6"
+                style="@style/WeatherInfo.ForecastConditionIcon"
+                android:src="@drawable/condition_clear_16"/>
+
+            <TextView
+                android:id="@+id/forecast_condition_6"
+                style="@style/WeatherInfo.ForecastCondition"
+                android:text="Weather condition Weather condition Weather condition"/>
+
+            <TextView
+                android:id="@+id/forecast_high_temp_6"
+                android:gravity="right"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+            <TextView
+                style="@style/WeatherInfo.Text"
+                android:text="/"/>
+
+            <TextView
+                android:id="@+id/forecast_low_temp_6"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/forecast_7"
+            style="@style/WeatherInfo.ForecastRow">
+
+            <TextView
+                android:id="@+id/forecast_day_7"
+                style="@style/WeatherInfo.Text"
+                android:text="Day"/>
+
+            <ImageView
+                android:id="@+id/forecast_condition_icon_7"
+                style="@style/WeatherInfo.ForecastConditionIcon"
+                android:src="@drawable/condition_clear_16"/>
+
+            <TextView
+                android:id="@+id/forecast_condition_7"
+                style="@style/WeatherInfo.ForecastCondition"
+                android:text="Weather condition Weather condition Weather condition"/>
+
+            <TextView
+                android:id="@+id/forecast_high_temp_7"
+                android:gravity="right"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+            <TextView
+                style="@style/WeatherInfo.Text"
+                android:text="/"/>
+
+            <TextView
+                android:id="@+id/forecast_low_temp_7"
+                style="@style/WeatherInfo.Text"
+                android:text="X&#x00B0;"/>
+
+        </TableRow>
+
     </TableLayout>
 
     <TextView
@@ -274,13 +418,13 @@
             android:gravity="right|center_vertical"
             android:visibility="invisible"
             android:text="http://openweathermap.org"/>
-    
-    <LinearLayout 
+
+    <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
-    
+
         <ImageButton
                 android:id="@+id/refresh_button"
                 android:layout_width="fill_parent"
@@ -288,7 +432,7 @@
                 android:layout_weight="1"
                 android:src="@android:drawable/ic_menu_rotate"
                 android:scaleType="center"/>
-            
+
         <ImageButton
                 android:id="@+id/preferences_button"
                 android:layout_width="fill_parent"
@@ -296,7 +440,7 @@
                 android:layout_weight="1"
                 android:src="@android:drawable/ic_menu_preferences"
                 android:scaleType="center"/>
-            
+
     </LinearLayout>
-    
+
 </LinearLayout>
