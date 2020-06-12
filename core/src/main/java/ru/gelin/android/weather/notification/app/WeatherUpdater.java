@@ -187,7 +187,8 @@ class WeatherUpdater implements Runnable {
         builder
             .setMinimumLatency(delay)
             .setOverrideDeadline(delay + JOB_DELAY)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setPersisted(true);
         if (Build.VERSION.SDK_INT >= 26) {
             builder
                 .setRequiresBatteryNotLow(true);
