@@ -80,7 +80,7 @@
             </intent-filter>
         </service>
 
-        <service android:name=".app.UpdateServiceJob"
+        <service android:name=".app.UpdateJobService"
                  android:permission="android.permission.BIND_JOB_SERVICE"
                  android:exported="true">
         </service>

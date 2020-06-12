@@ -81,12 +81,19 @@ public class AppUtils {
      *  not expired.
      */
     public static void startUpdateService(Context context, boolean verbose, boolean force) {
+        context.startService(getUpdateServiceIntent(context, verbose, force));
+    }
+
+    /**
+     * Creates intent to start the update service
+     */
+    public static Intent getUpdateServiceIntent(Context context, boolean verbose, boolean force) {
         Intent startIntent = new Intent(ACTION_START_UPDATE_SERVICE);
         startIntent.setPackage(APP_PACKAGE_NAME);
         //startIntent.setClassName(UpdateService.class.getPackage().getName(), UpdateService.class.getName());
         startIntent.putExtra(EXTRA_VERBOSE, verbose);
         startIntent.putExtra(EXTRA_FORCE, force);
-        context.startService(startIntent);
+        return startIntent;
     }
 
     private AppUtils() {
