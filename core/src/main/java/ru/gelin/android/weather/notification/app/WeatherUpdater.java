@@ -181,6 +181,7 @@ class WeatherUpdater implements Runnable {
         }
 
         long delay = nextUpdate - now;
+//        delay = 2000; // 2 seconds for test
 
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(context, UpdateJobService.class));
         builder
