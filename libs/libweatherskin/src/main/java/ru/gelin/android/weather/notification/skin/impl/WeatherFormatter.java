@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import ru.gelin.android.weather.*;
 import ru.gelin.android.weather.TemperatureUnit;
 
+import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.DRAWABLE;
 import static ru.gelin.android.weather.notification.skin.impl.ResourceIdFactory.STRING;
 
 /**
@@ -65,7 +66,12 @@ public class WeatherFormatter {
     }
 
     protected String formatTicker() {
-        WeatherCondition condition = getWeather().getConditions().get(0);
+        Weather weather = getWeather();
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
+            return getContext().getString(getIds().id(STRING, "unknown_weather"));
+        }
+
+        WeatherCondition condition = weather.getConditions().get(0);
         Temperature tempC = condition.getTemperature(TemperatureUnit.C);
         Temperature tempF = condition.getTemperature(TemperatureUnit.F);
         return getContext().getString(
@@ -78,6 +84,11 @@ public class WeatherFormatter {
     }
 
     protected String formatContentTitle() {
+        Weather weather = getWeather();
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
+            return getContext().getString(getIds().id(STRING, "unknown_weather"));
+        }
+
         WeatherCondition condition = getWeather().getConditions().get(0);
         Temperature tempC = condition.getTemperature(TemperatureUnit.C);
         Temperature tempF = condition.getTemperature(TemperatureUnit.F);
@@ -91,6 +102,11 @@ public class WeatherFormatter {
     }
 
     protected String formatContentText() {
+        Weather weather = getWeather();
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
+            return "";
+        }
+
         WeatherCondition condition = getWeather().getConditions().get(0);
 
         TemperatureFormat tempFormat = getTemperatureFormat();
@@ -108,6 +124,13 @@ public class WeatherFormatter {
     }
 
     protected Bitmap formatLargeIcon() {
+        Weather weather = getWeather();
+        if (weather.isEmpty() || weather.getConditions().size() <= 0) {
+            Drawable drawable = getContext().getDrawable(getIds().id(DRAWABLE, "condition_clear"));
+            drawable.setLevel(LARGE_ICON);
+            return Drawable2Bitmap.convert(drawable);
+        }
+
         WeatherCondition condition = getWeather().getConditions().get(0);
 
         WeatherConditionFormat format = getWeatherConditionFormat();

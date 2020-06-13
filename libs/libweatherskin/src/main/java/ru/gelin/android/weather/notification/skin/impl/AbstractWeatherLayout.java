@@ -168,23 +168,23 @@ public abstract class AbstractWeatherLayout {
     protected void bindForecasts(Weather weather, WeatherFormatter formatter) {
         setVisibility(id("forecasts"), View.VISIBLE);
         bindForecast(weather, formatter, 1,
-                id("forecast_1"),
-                id("forecast_condition_icon_1"),
-                id("forecast_day_1"),
-                id("forecast_condition_1"),
-                id("forecast_high_temp_1"), id("forecast_low_temp_1"));
+            id("forecast_1"),
+            id("forecast_condition_icon_1"),
+            id("forecast_day_1"),
+            id("forecast_condition_1"),
+            id("forecast_high_temp_1"), id("forecast_low_temp_1"));
         bindForecast(weather, formatter, 2,
-                id("forecast_2"),
-                id("forecast_condition_icon_2"),
-                id("forecast_day_2"),
-                id("forecast_condition_2"),
-                id("forecast_high_temp_2"), id("forecast_low_temp_2"));
+            id("forecast_2"),
+            id("forecast_condition_icon_2"),
+            id("forecast_day_2"),
+            id("forecast_condition_2"),
+            id("forecast_high_temp_2"), id("forecast_low_temp_2"));
         bindForecast(weather, formatter, 3,
-                id("forecast_3"),
-                id("forecast_condition_icon_3"),
-                id("forecast_day_3"),
-                id("forecast_condition_3"),
-                id("forecast_high_temp_3"), id("forecast_low_temp_3"));
+            id("forecast_3"),
+            id("forecast_condition_icon_3"),
+            id("forecast_day_3"),
+            id("forecast_condition_3"),
+            id("forecast_high_temp_3"), id("forecast_low_temp_3"));
         bindForecast(weather, formatter, 4,
             id("forecast_4"),
             id("forecast_condition_icon_4"),
