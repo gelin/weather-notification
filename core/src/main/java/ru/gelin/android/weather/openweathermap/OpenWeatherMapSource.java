@@ -28,6 +28,7 @@ import ru.gelin.android.weather.TestWeather;
 import ru.gelin.android.weather.Weather;
 import ru.gelin.android.weather.WeatherException;
 import ru.gelin.android.weather.WeatherSource;
+import ru.gelin.android.weather.notification.R;
 import ru.gelin.android.weather.source.DebugDumper;
 import ru.gelin.android.weather.source.HttpWeatherSource;
 
@@ -42,16 +43,15 @@ import java.util.Locale;
  */
 public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSource {
 
-    /** Base API URL */
-    static final String API_BASE_URL = "https://api.openweathermap.org/data/2.5";
-
     private final Context context;
+    private final String apiBaseUrl;
     private final DebugDumper debugDumper;
     private final OpenWeatherMapApiKey key;
 
     public OpenWeatherMapSource(Context context) {
         this.context = context;
-        this.debugDumper = new DebugDumper(context, API_BASE_URL);
+        this.apiBaseUrl = context.getString(R.string.openweathermap_api_base_url);
+        this.debugDumper = new DebugDumper(context, apiBaseUrl);
         this.key = new OpenWeatherMapApiKey(context);
     }
 
@@ -92,7 +92,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
 
     String getOneCallUrl(Location location, String exclude) {
         try {
-            return API_BASE_URL + "/onecall?exclude=" + exclude +
+            return apiBaseUrl + "/onecall?exclude=" + exclude +
                 "&appid=" + URLEncoder.encode(key.getKey(), "UTF-8") +
                 "&" + location.getQuery();
         } catch (UnsupportedEncodingException e) {
@@ -107,7 +107,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
 
     String getWeatherUrl(Location location) {
         try {
-            return API_BASE_URL + "/weather?appid=" + URLEncoder.encode(key.getKey(), "UTF-8") +
+            return apiBaseUrl + "/weather?appid=" + URLEncoder.encode(key.getKey(), "UTF-8") +
                 "&" + location.getQuery();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
@@ -119,7 +119,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         try {
             return (JSONObject)parser.nextValue();
         } catch (JSONException e) {
-            throw new WeatherException("can't parse JSON", e);
+            throw new WeatherException("can't parse JSON: " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -134,7 +134,7 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
                 read = reader.read(buf);
             }
         } catch (IOException e) {
-            throw new WeatherException("can't read weather", e);
+            throw new WeatherException("can't read weather: " + e.getLocalizedMessage(), e);
         }
         String content = result.toString();
         this.debugDumper.dump(url, content);

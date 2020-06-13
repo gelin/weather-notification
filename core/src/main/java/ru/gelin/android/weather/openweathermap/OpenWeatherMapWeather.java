@@ -140,7 +140,7 @@ public class OpenWeatherMapWeather implements Weather {
             WeatherParser parser = new CurrentWeatherParser(json);
             parser.parseCondition();
         } catch (JSONException e) {
-            throw new WeatherException("cannot parse the weather", e);
+            throw new WeatherException("cannot parse the weather: " + e.getLocalizedMessage(), e);
         }
         this.empty = false;
     }
@@ -159,7 +159,7 @@ public class OpenWeatherMapWeather implements Weather {
                 condition.setConditionText(this.conditionFormat.getText(condition));
             }
         } catch (JSONException e) {
-            throw new WeatherException("cannot parse forecasts", e);
+            throw new WeatherException("cannot parse forecasts: " + e.getLocalizedMessage(), e);
         }
     }
 

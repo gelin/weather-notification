@@ -53,7 +53,7 @@ public class HttpWeatherSource {
             connection.addRequestProperty("User-Agent", USER_AGENT);
             prepareConnection(connection);
         } catch (Exception e) {
-            throw new WeatherException("Can't prepare http connection", e);
+            throw new WeatherException("Can't prepare http connection: " + e.getLocalizedMessage(), e);
         }
 
         try {
@@ -65,7 +65,7 @@ public class HttpWeatherSource {
             InputStream inputStream = connection.getInputStream();
             return new InputStreamReader(inputStream, encoding);
         } catch (Exception e) {
-            throw new WeatherException("Problem communicating with API", e);
+            throw new WeatherException("Problem communicating with API: " + e.getLocalizedMessage(), e);
         }
     }
 
