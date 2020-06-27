@@ -23,9 +23,11 @@ import android.util.Log;
 import ru.gelin.android.weather.WeatherException;
 import ru.gelin.android.weather.notification.app.Tag;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -56,14 +58,22 @@ public class HttpWeatherSource {
             throw new WeatherException("Can't prepare http connection: " + e.getLocalizedMessage(), e);
         }
 
+        String encoding = ENCODING;
         try {
             connection.connect();
-            String encoding = connection.getContentEncoding();
+            encoding = connection.getContentEncoding();
             if (encoding == null) {
                 encoding = ENCODING;
             }
             InputStream inputStream = connection.getInputStream();
             return new InputStreamReader(inputStream, encoding);
+        } catch (IOException e) {
+            Log.w(Tag.TAG, "Failed to read " + url, e);
+            try {
+                return new InputStreamReader(connection.getErrorStream(), encoding);
+            } catch (UnsupportedEncodingException uee) {
+                throw new WeatherException(uee);
+            }
         } catch (Exception e) {
             throw new WeatherException("Problem communicating with API: " + e.getLocalizedMessage(), e);
         }

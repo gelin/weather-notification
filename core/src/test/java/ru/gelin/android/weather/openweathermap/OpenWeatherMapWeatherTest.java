@@ -64,13 +64,39 @@ public class OpenWeatherMapWeatherTest {
         new OpenWeatherMapWeather(context, (JSONObject)parser.nextValue());
     }
 
-    @Test
+    @Test(expected = WeatherException.class)
     public void testParseBadResultCodeJSON() throws JSONException, WeatherException {
         JSONTokener parser = new JSONTokener("{ \"cod\": \"404\"}");
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context,
             (JSONObject)parser.nextValue());
-        assertNotNull(weather);
-        assertTrue(weather.isEmpty());
+//        assertNotNull(weather);
+//        assertTrue(weather.isEmpty());
+    }
+
+    @Test
+    public void testParseTooManyRequestCodeForCurrentWeather() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{ \"cod\": 429, \"message\": \"too many requests\"}");
+        try {
+            OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context);
+            weather.parseCurrentWeather((JSONObject) parser.nextValue());
+            fail();
+        } catch (TooManyRequestsException e) {
+            assertEquals("too many requests", e.getMessage());
+            assertEquals("too many requests", e.getLocalizedMessage());
+        }
+    }
+
+    @Test
+    public void testParseTooManyRequestCodeForOneCall() throws JSONException, WeatherException {
+        JSONTokener parser = new JSONTokener("{ \"cod\": 429, \"message\": \"too many requests\"}");
+        try {
+            OpenWeatherMapWeather weather = new OpenWeatherMapWeather(context);
+            weather.parseOneCallResult((JSONObject) parser.nextValue());
+            fail();
+        } catch (TooManyRequestsException e) {
+            assertEquals("too many requests", e.getMessage());
+            assertEquals("too many requests", e.getLocalizedMessage());
+        }
     }
 
     @Test

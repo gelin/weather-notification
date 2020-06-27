@@ -129,24 +129,21 @@ public class OpenWeatherMapWeather implements Weather {
 
     void parseCurrentWeather(JSONObject json) throws WeatherException {
         try {
-            int code = json.getInt("cod");
-            if (code != 200) {
-                this.empty = true;
-                return;
-            }
+            checkCode(json);
             parseCityId(json);
             parseLocation(json);
             parseTime(json);
             WeatherParser parser = new CurrentWeatherParser(json);
             parser.parseCondition();
         } catch (JSONException e) {
-            throw new WeatherException("cannot parse the weather: " + e.getLocalizedMessage(), e);
+            throw new WeatherException("Failed parsing current weather: " + e.getLocalizedMessage(), e);
         }
         this.empty = false;
     }
 
     void parseOneCallResult(JSONObject json) throws WeatherException {
         try {
+            checkCode(json);
             JSONArray list = json.getJSONArray("daily");
             SimpleWeatherCondition condition = getCondition(0);
             if (list.length() > 0) {
@@ -159,7 +156,33 @@ public class OpenWeatherMapWeather implements Weather {
                 condition.setConditionText(this.conditionFormat.getText(condition));
             }
         } catch (JSONException e) {
-            throw new WeatherException("cannot parse forecasts: " + e.getLocalizedMessage(), e);
+            throw new WeatherException("Failed parsing one call response: " + e.getLocalizedMessage(), e);
+        }
+    }
+
+    void checkCode(JSONObject json) throws WeatherException {
+        try {
+            if (!json.has("cod")) {
+                return;
+            }
+            int code = json.getInt("cod");
+            switch (code) {
+                case 200: return;
+                case 429:
+                    if (json.has("message")) {
+                        throw new TooManyRequestsException(json.getString("message"));
+                    } else {
+                        throw new TooManyRequestsException();
+                    }
+                default:
+                    if (json.has("message")) {
+                        throw new WeatherException("Got " + code + " response from API: " + json.getString("message"));
+                    } else {
+                        throw new WeatherException("Got " + code + " response from API");
+                    }
+            }
+        } catch (JSONException e) {
+            throw new WeatherException("Failed parsing response code: " + e.getLocalizedMessage(), e);
         }
     }
 
