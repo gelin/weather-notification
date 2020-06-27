@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.IBinder;
 import android.util.Log;
+import ru.gelin.android.weather.notification.AppUtils;
 
 import static ru.gelin.android.weather.notification.AppUtils.EXTRA_FORCE;
 import static ru.gelin.android.weather.notification.AppUtils.EXTRA_VERBOSE;
@@ -84,7 +85,12 @@ public class UpdateService extends Service {
      *  @param  intent to wrap into the pending intent or null
      */
     PendingIntent getPendingIntent(Intent intent) {
-        Intent serviceIntent = new Intent(intent);
+        Intent serviceIntent;
+        if (intent == null) {
+            serviceIntent = AppUtils.getUpdateServiceIntent(this, false, false);
+        } else {
+            serviceIntent = new Intent(intent);
+        }
         return PendingIntent.getService(this, 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
