@@ -19,8 +19,15 @@
 
 package ru.gelin.android.weather.notification;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
+
+import static ru.gelin.android.weather.notification.Tag.TAG;
 
 /**
  *  Static methods to start main app services and activites.
@@ -42,6 +49,12 @@ public class AppUtils {
     public static String EXTRA_VERBOSE = "verbose";
     /** Force extra name for the service start intent. */
     public static String EXTRA_FORCE = "force";
+
+    static final int JOB_ID = 1;
+    static final long JOB_DELAY = 5 * 1000;       // want to start service in 5 seconds
+    static final long JOB_UPLOAD_BYTES = 256;
+    static final long JOB_DOWNLOAD_BYTES = 4 * 1024;
+    static final String JOB_SERVICE_CLASS = "ru.gelin.android.weather.notification.app.UpdateJobService";
 
     /**
      *  Returns intent to start the main activity.
@@ -81,7 +94,12 @@ public class AppUtils {
      *  not expired.
      */
     public static void startUpdateService(Context context, boolean verbose, boolean force) {
-        context.startService(getUpdateServiceIntent(context, verbose, force));
+        try {
+            context.startService(getUpdateServiceIntent(context, verbose, force));
+        } catch (IllegalStateException e) {
+            Log.w(TAG, "Failed to start background service, it's illegal now");
+            scheduleServiceJob(context);
+        }
     }
 
     /**
@@ -98,6 +116,27 @@ public class AppUtils {
 
     private AppUtils() {
         //avoid instantiation
+    }
+
+    static void scheduleServiceJob(Context context) {
+        Log.d(TAG, "Scheduling update service start");
+        JobInfo jobInfo = getJobInfo(context);
+
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(jobInfo);
+    }
+
+    static JobInfo getJobInfo(Context context) {
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(context, JOB_SERVICE_CLASS));
+        builder
+            .setMinimumLatency(0)
+            .setOverrideDeadline(JOB_DELAY);
+        if (Build.VERSION.SDK_INT >= 28) {
+            builder
+                .setEstimatedNetworkBytes(JOB_DOWNLOAD_BYTES, JOB_UPLOAD_BYTES)
+                .setPrefetch(true);
+        }
+        return builder.build();
     }
 
 }
