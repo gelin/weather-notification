@@ -75,4 +75,7 @@
     <string name="status_bar_temperature_icon">Температура</string>
     <string name="status_bar_weather_condition_icon">Погодные условия</string>
 
+    <!-- v.0.3.12 -->
+    <string name="owm_api_key_failure_notice">Вам следует получить свой ключ к OpenWeatherMap API.</string>
+
 </resources>

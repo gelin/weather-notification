@@ -29,6 +29,7 @@ import ru.gelin.android.weather.notification.skin.WeatherNotificationManager;
 import ru.gelin.android.weather.openweathermap.AndroidOpenWeatherMapLocation;
 import ru.gelin.android.weather.openweathermap.NameOpenWeatherMapLocation;
 import ru.gelin.android.weather.openweathermap.OpenWeatherMapSource;
+import ru.gelin.android.weather.openweathermap.TooManyRequestsException;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
@@ -65,6 +66,8 @@ class WeatherUpdater implements Runnable {
     static final int UNKNOWN_LOCATION = 2;
     /** Update message when querying new location */
     static final int QUERY_LOCATION = 3;
+    /** Update message when API key failed */
+    static final int API_KEY_FAILURE = 4;
 
     private final Context context;
 
@@ -263,10 +266,15 @@ class WeatherUpdater implements Runnable {
         WeatherSource source = new OpenWeatherMapSource(context);
         try {
             Weather weather = source.query(location);
-            synchronized(this) {
+            synchronized (this) {
                 this.weather = weather;
             }
             internalHandler.sendEmptyMessage(SUCCESS);
+        } catch (TooManyRequestsException e) {
+            synchronized(this) {
+                this.updateError = e;
+            }
+            internalHandler.sendEmptyMessage(API_KEY_FAILURE);
         } catch (Exception e) {
             synchronized(this) {
                 this.updateError = e;
@@ -438,6 +446,16 @@ class WeatherUpdater implements Runnable {
                         storage.updateTime();
                         if (updater.verbose) {
                             Toast.makeText(updater.context,
+                                updater.context.getString(R.string.weather_update_failed, updater.updateError.getMessage()),
+                                Toast.LENGTH_LONG).show();
+                        }
+                        break;
+                    case API_KEY_FAILURE:
+                        Log.w(TAG, "failed to request API", updater.updateError);
+                        storage.updateTime();
+                        if (updater.verbose) {
+                            Toast.makeText(updater.context,
+                                updater.context.getString(R.string.owm_api_key_failure_notice) + "\n\n" +
                                 updater.context.getString(R.string.weather_update_failed, updater.updateError.getMessage()),
                                 Toast.LENGTH_LONG).show();
                         }

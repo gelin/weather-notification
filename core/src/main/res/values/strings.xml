@@ -80,4 +80,7 @@
     <string name="status_bar_temperature_icon">Temperature</string>
     <string name="status_bar_weather_condition_icon">Weather condition</string>
 
+    <!-- v.0.3.12 -->
+    <string name="owm_api_key_failure_notice">You need to take your own OpenWeatherMap API key.</string>
+
 </resources>
