@@ -92,7 +92,7 @@ public class OpenWeatherMapSourceTest {
     @Test
     public void testQueryTestLocationPlus() throws WeatherException {
         WeatherSource source = new OpenWeatherMapSource(context);
-        Location location = new SimpleLocation("+25", false);
+        Location location = new SimpleLocation("_TEST_+25", false);
         Weather weather = source.query(location);
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
@@ -103,7 +103,7 @@ public class OpenWeatherMapSourceTest {
     @Test
     public void testQueryTestLocationMinus() throws WeatherException {
         WeatherSource source = new OpenWeatherMapSource(context);
-        Location location = new SimpleLocation("-25", false);
+        Location location = new SimpleLocation("_TEST_-25", false);
         Weather weather = source.query(location);
         assertNotNull(weather);
         assertFalse(weather.isEmpty());
