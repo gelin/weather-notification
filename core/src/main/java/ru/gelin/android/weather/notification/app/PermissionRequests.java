@@ -31,6 +31,8 @@ public class PermissionRequests {
 
     public static final int ACCESS_FINE_LOCATION_REQUEST = 1;
 
-    public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 2;
+    public static final int ACCESS_BACKGROUND_LOCATION_REQUEST = 2;
+
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 3;
 
 }

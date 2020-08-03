@@ -30,9 +30,12 @@ import android.support.v4.content.ContextCompat;
  * Location can be defined by GPS (fine), by Wi-Fi or cellular network signal (coarse) or manually (search string).
  */
 public enum LocationType {
-
     LOCATION_MANUAL(null, null, PermissionRequests.NULL_REQUEST, null),
     LOCATION_NULL(null, null, PermissionRequests.NULL_REQUEST, null),
+    LOCATION_BACKGROUND(null,
+        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+        PermissionRequests.ACCESS_BACKGROUND_LOCATION_REQUEST,
+        null),
     LOCATION_NETWORK(
         LocationManager.NETWORK_PROVIDER,
         Manifest.permission.ACCESS_COARSE_LOCATION,

@@ -112,6 +112,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         //Toast.makeText(this, prefs.getString(LOCATION_TYPE, LOCATION_TYPE_DEFAULT), Toast.LENGTH_LONG).show();
         findPreference(LOCATION).setEnabled(isManual);
         checkAndRequestPermissions(locationType);
+        checkAndRequestPermissions(LocationType.LOCATION_BACKGROUND);
     }
 
     @Override
@@ -177,6 +178,7 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
             boolean isManual = LocationType.LOCATION_MANUAL.equals(locationType);
             findPreference(LOCATION).setEnabled(isManual);
             checkAndRequestPermissions(locationType);
+            checkAndRequestPermissions(LocationType.LOCATION_BACKGROUND);
             checkLocationProviderEnabled(locationType);
             startUpdate(true);
             return true;
