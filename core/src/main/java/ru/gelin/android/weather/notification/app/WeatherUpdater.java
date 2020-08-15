@@ -1,5 +1,6 @@
 package ru.gelin.android.weather.notification.app;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -158,6 +159,14 @@ class WeatherUpdater implements Runnable {
     }
 
     void scheduleNextRun(long lastUpdate) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            scheduleNextRunWithJobScheduler(lastUpdate);
+        } else {
+            scheduleNextRunWithAlarmManager(lastUpdate);
+        }
+    }
+
+    void scheduleNextRunWithJobScheduler(long lastUpdate) {
         long now = System.currentTimeMillis();
 
         JobInfo jobInfo = getJobInfo(lastUpdate);
@@ -209,6 +218,34 @@ class WeatherUpdater implements Runnable {
             PreferenceManager.getDefaultSharedPreferences(context);
         return RefreshInterval.valueOf(preferences.getString(
             REFRESH_INTERVAL, REFRESH_INTERVAL_DEFAULT));
+    }
+
+    void scheduleNextRunWithAlarmManager(long lastUpdate) {
+        long now = System.currentTimeMillis();
+        RefreshInterval interval = getRefreshInterval();
+        long nextUpdate = lastUpdate + interval.getInterval();
+        if (nextUpdate <= now) {
+            nextUpdate = now + interval.getInterval();
+        }
+
+        PendingIntent pendingIntent = getPendingIntent();
+
+        boolean notificationEnabled = PreferenceManager.getDefaultSharedPreferences(context).
+            getBoolean(ENABLE_NOTIFICATION, ENABLE_NOTIFICATION_DEFAULT);
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if (notificationEnabled) {
+            Log.d(TAG, "scheduling update to " + new Date(nextUpdate));
+            alarmManager.set(AlarmManager.RTC, nextUpdate, pendingIntent);
+        } else {
+            Log.d(TAG, "cancelling update schedule");
+            alarmManager.cancel(pendingIntent);
+        }
+    }
+
+    PendingIntent getPendingIntent() {
+        Intent serviceIntent = new Intent(context, UpdateService.class);
+        return PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     void skipUpdate(WeatherStorage storage, String logMessage) {
