@@ -111,6 +111,30 @@ public class OpenWeatherMapSourceTest {
         assertEquals(-25, weather.getConditions().get(0).getTemperature(TemperatureUnit.C).getCurrent());
     }
 
+    @Test
+    public void testQueryLocationWithPositiveGeoCoordinates() throws WeatherException {
+        WeatherSource source = new OpenWeatherMapSource(context);
+        Location location = new NameOpenWeatherMapLocation("55.0,73.4");
+        Weather weather = source.query(location);
+        assertNotNull(weather);
+        assertTrue(weather instanceof OpenWeatherMapWeather);
+        assertFalse(weather.isEmpty());
+        assertEquals("Omsk", weather.getLocation().getText());
+        assertEquals(8, weather.getConditions().size());
+    }
+
+    @Test
+    public void testQueryLocationWithNegativeGeoCoordinates() throws WeatherException {
+        WeatherSource source = new OpenWeatherMapSource(context);
+        Location location = new NameOpenWeatherMapLocation("-34.8,-56.3");
+        Weather weather = source.query(location);
+        assertNotNull(weather);
+        assertTrue(weather instanceof OpenWeatherMapWeather);
+        assertFalse(weather.isEmpty());
+        assertEquals("Pajas Blancas", weather.getLocation().getText());
+        assertEquals(8, weather.getConditions().size());
+    }
+
 //    In API 2.5 the city name is not localized
 //
 //    public void testQueryOmskJSON_RU() throws WeatherException, JSONException {

@@ -60,11 +60,14 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         if (location == null) {
             throw new WeatherException("null location");
         }
-        if (location.getText().startsWith("-")) {
-            return new TestWeather(Integer.parseInt(location.getText()));
-        }
-        if (location.getText().startsWith("+")) {
-            return new TestWeather(Integer.parseInt(location.getText().substring(1)));
+
+        if (!location.isGeo()) {    // if the location contains geo coordinates, skipping this test hack
+            if (location.getText().startsWith("-")) {
+                return new TestWeather(Integer.parseInt(location.getText()));
+            }
+            if (location.getText().startsWith("+")) {
+                return new TestWeather(Integer.parseInt(location.getText().substring(1)));
+            }
         }
 
         OpenWeatherMapWeather weather = new OpenWeatherMapWeather(this.context);
