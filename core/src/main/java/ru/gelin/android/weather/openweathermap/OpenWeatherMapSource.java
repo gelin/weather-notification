@@ -62,11 +62,15 @@ public class OpenWeatherMapSource extends HttpWeatherSource implements WeatherSo
         }
 
         if (!location.isGeo()) {    // if the location contains geo coordinates, skipping this test hack
-            if (location.getText().startsWith("-")) {
-                return new TestWeather(Integer.parseInt(location.getText()));
-            }
-            if (location.getText().startsWith("+")) {
-                return new TestWeather(Integer.parseInt(location.getText().substring(1)));
+            try {
+                if (location.getText().startsWith("-")) {
+                    return new TestWeather(Integer.parseInt(location.getText()));
+                }
+                if (location.getText().startsWith("+")) {
+                    return new TestWeather(Integer.parseInt(location.getText().substring(1)));
+                }
+            } catch (NumberFormatException nfe) {
+                // ignore and continue
             }
         }
 
