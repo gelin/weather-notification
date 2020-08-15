@@ -26,7 +26,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -201,12 +200,10 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         if (locationType.isPermissionGranted(this)) {
             return;
         }
-        String permission = locationType.getPermission();
-        if (permission != null) {
-            // TODO: avoid infinite loop when permission is not granted
-            ActivityCompat.requestPermissions(this,
-                new String[] { permission },
-                locationType.getPermissionRequest());
+        String[] permissions = locationType.getPermissions();
+        if (permissions != null) {
+            // TODO: avoid infinite loop when permissions are not granted
+            ActivityCompat.requestPermissions(this, permissions, locationType.getPermissionRequest());
         }
     }
 
@@ -236,18 +233,12 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         {
             case ACCESS_COARSE_LOCATION_REQUEST:
             case ACCESS_FINE_LOCATION_REQUEST:
-                for (int i = 0; i < permissions.length; i++) {
-                    String permission = permissions[i];
-                    int result = grantResults[i];
-                    if (LocationType.LOCATION_GPS.getPermission().equals(permission)
-                        || LocationType.LOCATION_NETWORK.getPermission().equals(permission)) {
-                        if (result == PackageManager.PERMISSION_GRANTED) {
-                            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                            manager.cancel(ACCESS_LOCATION_NOTIFICATION);
-                        } else {
-                            disableWhatRequiresPermissions();
-                        }
-                    }
+                if (LocationType.LOCATION_GPS.isPermissionGranted(permissions, grantResults)
+                        || LocationType.LOCATION_NETWORK.isPermissionGranted(permissions, grantResults)) {
+                    NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                    manager.cancel(ACCESS_LOCATION_NOTIFICATION);
+                } else {
+                    disableWhatRequiresPermissions();
                 }
         }
     }

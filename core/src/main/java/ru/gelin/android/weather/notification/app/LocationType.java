@@ -20,10 +20,16 @@
 package ru.gelin.android.weather.notification.app;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Location types.
@@ -35,26 +41,30 @@ public enum LocationType {
     LOCATION_NULL(null, null, PermissionRequests.NULL_REQUEST, null),
     LOCATION_NETWORK(
         LocationManager.NETWORK_PROVIDER,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Build.VERSION.SDK_INT >= 29
+            ? new String[] { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION }
+            : new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
         PermissionRequests.ACCESS_COARSE_LOCATION_REQUEST,
         LOCATION_NULL),
     LOCATION_GPS(
         LocationManager.GPS_PROVIDER,
-        Manifest.permission.ACCESS_FINE_LOCATION,
+        Build.VERSION.SDK_INT >= 29
+            ? new String[] { Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION }
+            : new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
         PermissionRequests.ACCESS_FINE_LOCATION_REQUEST,
         LOCATION_NETWORK);
 
     private String locationProvider;
-    private String permission;
+    private String[] permissions;
     private int permissionRequest;
     private LocationType lowerPermissionType;
 
     private LocationType(String locationProvider,
-                         String permission,
+                         String[] permissions,
                          int permissionRequest,
                          LocationType lowerPermissionType) {
         this.locationProvider = locationProvider;
-        this.permission = permission;
+        this.permissions = permissions;
         this.permissionRequest = permissionRequest;
         this.lowerPermissionType = lowerPermissionType;
     }
@@ -67,10 +77,10 @@ public enum LocationType {
     }
 
     /**
-     * Returns the permission necessary to use this location provider.
+     * Returns the permissions necessary to use this location provider.
      */
-    public String getPermission() {
-        return this.permission;
+    public String[] getPermissions() {
+        return this.permissions;
     }
 
     /**
@@ -107,12 +117,38 @@ public enum LocationType {
      * Returns true if usage of this location provider is permitted by the user.
      */
     public boolean isPermissionGranted(Context context) {
-        String permission = getPermission();
-        if (permission == null) {
+        String[] permissions = getPermissions();
+        if (permissions == null) {
             return false;
         }
-        int permissionCheck = ContextCompat.checkSelfPermission(context, permission);
-        return permissionCheck == PackageManager.PERMISSION_GRANTED;
+
+        for (String permission : permissions) {
+            int permissionCheck = ContextCompat.checkSelfPermission(context, permission);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if the same set of permissions are granted.
+     * @param permissions the set of permissions received in {@link Activity#onRequestPermissionsResult(int, String[], int[])}
+     * @param grantResults the set of results received in {@link Activity#onRequestPermissionsResult(int, String[], int[])}
+     */
+    public boolean isPermissionGranted(String[] permissions, int[] grantResults) {
+        Set<String> requiredPermissions = new HashSet<>(Arrays.asList(getPermissions()));
+        Set<String> receivedPermissions = new HashSet<>(Arrays.asList(permissions));
+        if (!requiredPermissions.containsAll(receivedPermissions)) {
+            return false;
+        }
+
+        for (int grant : grantResults) {
+            if (grant != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
