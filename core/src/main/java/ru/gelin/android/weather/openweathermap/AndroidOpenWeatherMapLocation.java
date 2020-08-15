@@ -26,8 +26,11 @@ import ru.gelin.android.weather.Location;
  */
 public class AndroidOpenWeatherMapLocation implements Location {
 
-    /** Query template */
-    static final String QUERY = "lat=%s&lon=%s";  //lat=54.96&lon=73.38
+    /** Format for {@link #getQuery()} */
+    static final String QUERY_FORMAT = "lat=%s&lon=%s";  //lat=54.96&lon=73.38
+
+    /** Format for {@link #getText()} */
+    static final String TEXT_FORMAT = "%s,%s";
 
     /** Android location */
     android.location.Location location;
@@ -40,7 +43,7 @@ public class AndroidOpenWeatherMapLocation implements Location {
     }
 
     /**
-     *  Creates the query with geo coordinates. 
+     *  Creates the query with geo coordinates.
      *  For example: "lat=54.96&lon=73.38"
      */
     //@Override
@@ -48,9 +51,8 @@ public class AndroidOpenWeatherMapLocation implements Location {
         if (location == null) {
             return "";
         }
-        return String.format(QUERY,
-                String.valueOf(location.getLatitude()),
-                String.valueOf(location.getLongitude()));
+        return String.format(QUERY_FORMAT, location.getLatitude(), location.getLongitude());
+            // the double values must be (implicitly) passed via String.valueOf() to avoid locale conversion
     }
 
     //@Override
@@ -58,13 +60,9 @@ public class AndroidOpenWeatherMapLocation implements Location {
         if (location == null) {
             return "";
         }
-        return android.location.Location.convert(location.getLatitude(),
-                    android.location.Location.FORMAT_DEGREES) +
-                    "," +
-                    android.location.Location.convert(location.getLongitude(),
-                    android.location.Location.FORMAT_DEGREES);
+        return String.format(TEXT_FORMAT, location.getLatitude(), location.getLongitude());
     }
-    
+
     //@Override
     public boolean isEmpty() {
         return this.location == null;
