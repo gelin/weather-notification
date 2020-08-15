@@ -98,7 +98,9 @@ public class AppUtils {
             context.startService(getUpdateServiceIntent(context, verbose, force));
         } catch (IllegalStateException e) {
             Log.w(TAG, "Failed to start background service, it's illegal now");
-            scheduleServiceJob(context);
+            if (Build.VERSION.SDK_INT >= 21) {
+                scheduleServiceJob(context);
+            }
         }
     }
 
@@ -130,7 +132,9 @@ public class AppUtils {
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(context, JOB_SERVICE_CLASS));
         builder
             .setMinimumLatency(0)
-            .setOverrideDeadline(JOB_DELAY);
+            .setOverrideDeadline(JOB_DELAY)
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setPersisted(true);
         if (Build.VERSION.SDK_INT >= 28) {
             builder
                 .setEstimatedNetworkBytes(JOB_DOWNLOAD_BYTES, JOB_UPLOAD_BYTES)
