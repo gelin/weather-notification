@@ -78,4 +78,7 @@
     <!-- v.0.3.12 -->
     <string name="owm_api_key_failure_notice">Вам следует получить свой ключ к OpenWeatherMap API.</string>
 
+    <!-- v0.3.14 -->
+    <string name="background_location_permission_disclosure">Это приложение собирает данные о местоположении для отображения текущей погоды и прогнозов погоды в том месте, где вы находитесь, даже если приложение закрыто или не используется. Эти данные также предоставляются OpenWeatherMap.</string>
+
 </resources>

@@ -196,14 +196,35 @@ public abstract class BaseMainActivity extends UpdateNotificationActivity
         AppUtils.startUpdateService(this, true, force);
     }
 
-    void checkAndRequestPermissions(LocationType locationType) {
+    void checkAndRequestPermissions(final LocationType locationType) {
         if (locationType.isPermissionGranted(this)) {
             return;
         }
-        String[] permissions = locationType.getPermissions();
+        final String[] permissions = locationType.getPermissions();
         if (permissions != null) {
-            // TODO: avoid infinite loop when permissions are not granted
-            ActivityCompat.requestPermissions(this, permissions, locationType.getPermissionRequest());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.background_location_permission_disclosure)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // TODO: avoid infinite loop when permissions are not granted
+                        ActivityCompat.requestPermissions(BaseMainActivity.this, permissions, locationType.getPermissionRequest());
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        disableWhatRequiresPermissions();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        disableWhatRequiresPermissions();
+                    }
+                });
+            builder.show();
         }
     }
 

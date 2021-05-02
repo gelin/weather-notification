@@ -83,4 +83,7 @@
     <!-- v.0.3.12 -->
     <string name="owm_api_key_failure_notice">You need to take your own OpenWeatherMap API key.</string>
 
+    <!-- v0.3.14 -->
+    <string name="background_location_permission_disclosure">This app collects location data to display the current weather and forecasts at your current location even when the app is closed or not in use. This data is also provided to OpenWeatherMap.</string>
+
 </resources>
