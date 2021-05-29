@@ -19,7 +19,7 @@ release:
 .PHONY: core-copy
 core-copy:
 	rsync -av core/build/outputs/apk/release/core-release.apk \
-		ftp.gelin.ru:domains/gelin.ru/public_html/android/weather-notification/weather-notification-$(shell ./gradlew -q core:printVersionName).apk
+		ftp.gelin.ru:domains/gelin.ru/public_html/android/weather-notification/apks/weather-notification-$(shell ./gradlew -q core:printVersionName).apk
 
 SKINNAMES = bigger-text black-text black-text-plus tulip-one white-text white-text-plus
 SKINS = $(addprefix skin-,$(SKINNAMES))
